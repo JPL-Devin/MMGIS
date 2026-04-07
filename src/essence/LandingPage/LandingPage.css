@@ -371,3 +371,12 @@
         display: none;
     }
 }
+
+@media (prefers-reduced-motion: reduce) {
+  .landingPageMission {
+    transition: none;
+  }
+  #attributions {
+    transition: none;
+  }
+}

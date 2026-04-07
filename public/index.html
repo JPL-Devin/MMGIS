@@ -10,7 +10,7 @@
     />
     <meta
       name="viewport"
-      content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0"
+      content="width=device-width, initial-scale=1.0"
     />
     <meta name="theme-color" content="#1d1f20" />
     <meta name="description" content="#{LINK_PREVIEW_DESCRIPTION}" />
@@ -313,11 +313,22 @@
           margin: 0px 8px 0px 8px;
         }
       }
+
+      @media (prefers-reduced-motion: reduce) {
+        .planet:before, .planet:after,
+        .planet2:before, .planet2:after,
+        .planet3:before, .planet3:after {
+          animation: none;
+        }
+        #loading2 span {
+          animation: none;
+          opacity: 1;
+        }
+      }
     </style>
   </head>
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
-    <div id="root"></div>
     <div class="LoadingPage">
       <div class="planet"></div>
       <div class="planet2"></div>
@@ -393,7 +404,10 @@
             '██║ ╚═╝ ██║██║ ╚═╝ ██║╚██████╔╝██║███████║' + ` v${mmgisglobal.version} (${mmgisglobal.NODE_ENV})\n` +
             '╚═╝     ╚═╝╚═╝     ╚═╝ ╚═════╝ ╚═╝╚══════╝' + ' https://github.com/NASA-AMMOS/MMGIS');
     </script>
+    <main id="main-content">
+      <div id="root"></div>
+      <div id="main-container"></div>
+    </main>
+    <footer></footer>
   </body>
-  <div id="main-container"></div>
-  <footer></footer>
 </html>
