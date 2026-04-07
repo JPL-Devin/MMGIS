@@ -76,6 +76,7 @@ export default {
                     'title',
                     'Splash Image Credit: NASA/JPL-Caltech/Univ. of Arizona'
                 )
+                .attr('aria-label', 'Splash image credit information')
             imageCreditLink.append($('<i>').attr('class', 'mdi mdi-information-outline mdi-14px'))
             imageCredit.append(imageCreditLink)
 
@@ -112,7 +113,7 @@ export default {
             var titleDiv = $('<div>')
                 .attr('id', 'title')
                 .css('z-index', '200')
-            const titleP = $('<p>')
+            const titleP = $('<h1>')
                 .attr('class', 'unselectable')
                 .css({
                     'font-size': '40px',
@@ -266,7 +267,7 @@ export default {
                                     "<a class='attributionTitle_license' href='https://www.apache.org/licenses/LICENSE-2.0' target='_blank' rel='noreferrer'>" +
                                         'Apache-2.0' +
                                     '</a>',
-                                    "<a class='attributionTitle_github mdi mdi-github-circle mdi-36px' href='https://github.com/NASA-AMMOS/MMGIS' target='_blank' rel='noreferrer'></a>",
+                                    "<a class='attributionTitle_github mdi mdi-github-circle mdi-36px' href='https://github.com/NASA-AMMOS/MMGIS' target='_blank' rel='noreferrer' aria-label='MMGIS GitHub repository'></a>",
                                 '</div>',
                             '</div>',
                             '<ul>',
@@ -307,7 +308,7 @@ export default {
                                     '</a>',
                                 "<a class='attribution_github mdi mdi-github-circle mdi-18px' href='" +
                                     a.githublink +
-                                    "' target='_blank' rel='noreferrer'></a>",
+                                    "' target='_blank' rel='noreferrer' aria-label='" + a.library + " GitHub repository'></a>",
                             '</div>',
                         '</li>',
                     ].join('\n')
