@@ -212,7 +212,7 @@ const Measure = () => {
                             id='measureLOSCheck'
                             onChange={MeasureTool.changeLOS}
                         />
-                        <label htmlFor='measureLOSCheck'></label>
+                        <label htmlFor='measureLOSCheck'><span className='visually-hidden'>Enable line of sight</span></label>
                     </div>
                 </div>
                 <div id='measureObserverHeight'>
@@ -225,6 +225,7 @@ const Measure = () => {
                             defaultValue={LOS.observerHeight}
                             placeholder={0}
                             id='measureObserverHeightInput'
+                            aria-label='Observer height'
                             onChange={MeasureTool.changeLOSObserverHeight}
                         />
                         <div className='measureToolInputUnit'>m</div>
@@ -240,6 +241,7 @@ const Measure = () => {
                             defaultValue={LOS.targetHeight}
                             placeholder={0}
                             id='measureTargetHeightInput'
+                            aria-label='Target height'
                             onChange={MeasureTool.changeLOSTargetHeight}
                         />
                         <div className='measureToolInputUnit'>m</div>
@@ -254,6 +256,7 @@ const Measure = () => {
                             defaultValue={0}
                             placeholder={0}
                             id='measureSpeedInput'
+                            aria-label='Travel speed'
                             onChange={MeasureTool.changeSpeed}
                         />
 
