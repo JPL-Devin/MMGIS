@@ -153,8 +153,9 @@ var Viewer_ = {
             })
         $('#viewer').append(this.imageGif)
 
-        const gifImage = $('<img>')
-            .attr('id', 'gifImage')
+                const gifImage = $('<img>')
+                    .attr('id', 'gifImage')
+                    .attr('alt', '')
             .css({
                 'max-width': '100%',
                 'max-height': '100%',
@@ -674,25 +675,25 @@ function buildToolBar() {
                             '<li style="height: 19px; line-height: 19px;">',
                                 '<div style="display: flex; justify-content: space-between;">',
                                     '<div style="font-size: 13px;">Rotation</div>',
-                                    '<input class="viewer_rotationslider slider2" style="background: #444444; width: 120px;" type="range" min="0" max="360" step="1" value="0" default="0">',
+                                    '<input class="viewer_rotationslider slider2" aria-label="Rotation" style="background: #444444; width: 120px;" type="range" min="0" max="360" step="1" value="0" default="0">',
                                 '</div>',
                             '</li>',
                             '<li style="height: 19px; line-height: 19px;">',
                                 '<div style="display: flex; justify-content: space-between;">',
                                     '<div style="font-size: 13px;">Brightness</div>',
-                                    '<input class="viewer_filterslider viewer_filterslider_brightness slider2" style="background: #444444; width: 120px;" type="range" min="0.25" max="2" step="0.05" value="1" default="1">',
+                                    '<input class="viewer_filterslider viewer_filterslider_brightness slider2" aria-label="Brightness" style="background: #444444; width: 120px;" type="range" min="0.25" max="2" step="0.05" value="1" default="1">',
                                 '</div>',
                             '</li>',
                             '<li style="height: 19px; line-height: 19px;">',
                                 '<div style="display: flex; justify-content: space-between;">',
                                     '<div style="font-size: 13px;">Contrast</div>',
-                                    '<input class="viewer_filterslider viewer_filterslider_contrast slider2" style="background: #444444; width: 120px;" type="range" min="0.25" max="6" step="0.05" value="1" default="1">',
+                                    '<input class="viewer_filterslider viewer_filterslider_contrast slider2" aria-label="Contrast" style="background: #444444; width: 120px;" type="range" min="0.25" max="6" step="0.05" value="1" default="1">',
                                 '</div>',
                             '</li>',
                             '<li style="height: 19px; line-height: 19px;">',
                                 '<div style="display: flex; justify-content: space-between;">',
                                     '<div style="font-size: 13px;">Saturation</div>',
-                                    '<input class="viewer_filterslider viewer_filterslider_saturate slider2" style="background: #444444; width: 120px;" type="range" min="0" max="2" step="0.05" value="1" default="1">',
+                                    '<input class="viewer_filterslider viewer_filterslider_saturate slider2" aria-label="Saturation" style="background: #444444; width: 120px;" type="range" min="0" max="2" step="0.05" value="1" default="1">',
                                 '</div>',
                             '</li>',
                         '</ul>',
@@ -764,8 +765,9 @@ function buildToolBar() {
     Viewer_.toolBar.append(Viewer_.toolBarhelp)
 
     //I know, I know; it's not in the toolbar.
-    const oc = $('<button>')
-        .attr('id', 'viewerDeviceOrientationButton')
+        const oc = $('<button>')
+            .attr('id', 'viewerDeviceOrientationButton')
+            .attr('aria-label', 'Toggle tilt control')
     Viewer_.imagePanorama.append(oc)
 
     oc.append($('<i>')

@@ -125,11 +125,11 @@ const TimeUI = {
             `<div id="mmgisTimeUIMain">`,
                 `<div class="mmgisTimeUIInput" id="mmgisTimeUIStartWrapper">`,
                 `<span>Start Time</span>`,
-                `<input id="mmgisTimeUIStart"/>`,
+                `<input id="mmgisTimeUIStart" aria-label="Start time"/>`,
             `</div>`,
             `<div class="mmgisTimeUIInput" id="mmgisTimeUIStartWrapperFake">`,
                 `<span>Start Time</span>`,
-                `<input id="mmgisTimeUIStartFake" type="text"/>`,
+                `<input id="mmgisTimeUIStartFake" type="text" aria-label="Start time display"/>`,
             `</div>`,
         ].join('\n')
 
@@ -152,11 +152,11 @@ const TimeUI = {
         markup += [
                 `<div class="mmgisTimeUIInput" id="mmgisTimeUIEndWrapper">`,
                     `<span>End Time</span>`,
-                    `<input id="mmgisTimeUIEnd"/>`,
+                    `<input id="mmgisTimeUIEnd" aria-label="End time"/>`,
                 `</div>`,
                 `<div class="mmgisTimeUIInput" id="mmgisTimeUIEndWrapperFake">`,
                     `<span>End Time</span>`,
-                    `<input id="mmgisTimeUIEndFake" type="text"/>`,
+                    `<input id="mmgisTimeUIEndFake" type="text" aria-label="End time display"/>`,
                 `</div>`,
             `</div>`,
         ].join('\n')
@@ -249,7 +249,7 @@ const TimeUI = {
                 `<div id='mmgisTimeUIStep'>`,
                     `<div>Step</div>`,
                     `<div style="display: flex;">`,
-                        `<input id='mmgisTimeUIRateInput' type="number" min="0" max="99" step="0.5" value="1" default="1" placeholder="1">`,
+                        `<input id='mmgisTimeUIRateInput' aria-label="Playback step multiplier" type="number" min="0" max="99" step="0.5" value="1" default="1" placeholder="1">`,
                         `<div id='mmgisTimeUIStepDropdown' class='ui dropdown short'></div>`,
                     `</div>`,
                 `</div>`,
