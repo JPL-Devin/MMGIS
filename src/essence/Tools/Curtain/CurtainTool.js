@@ -74,7 +74,7 @@ const Curtain = () => {
                                     }}
                                     id='checkbox_curtainKeepOn'
                                 />
-                                <label htmlFor='checkbox_curtainKeepOn'></label>
+                                <label htmlFor='checkbox_curtainKeepOn'><span className='visually-hidden'>Keep curtain on in 3D</span></label>
                             </div>
                         </div>
                     </div>
@@ -141,6 +141,7 @@ const Curtain = () => {
                                         min='1'
                                         max='4'
                                         step='0.1'
+                                        aria-label='3D vertical exaggeration'
                                         value={verticalExag}
                                         onChange={(e) => {
                                             CurtainTool.set3DVerticalOptions(
@@ -167,6 +168,7 @@ const Curtain = () => {
                                         min='0'
                                         max='100'
                                         step='1'
+                                        aria-label='3D vertical offset'
                                         value={verticalOffset}
                                         onChange={(e) => {
                                             CurtainTool.set3DVerticalOptions(
