@@ -5,12 +5,7 @@
  * obtaining authenticated browser contexts with pre-set session cookies.
  */
 
-/** Default admin credentials (mirrors `tests/fixtures/user-credentials.js`). */
-const DEFAULT_ADMIN = {
-  username: 'test_admin',
-  password: 'testadmin123',
-  email: 'admin@test.com',
-};
+import { TEST_ADMIN } from '../fixtures/user-credentials.js';
 
 /**
  * Create a test user account via the signup API.
@@ -87,7 +82,7 @@ export async function getAuthenticatedContext(browser, { username, password }) {
  */
 export async function loginAsAdmin(request) {
   return loginAsUser(request, {
-    username: DEFAULT_ADMIN.username,
-    password: DEFAULT_ADMIN.password,
+    username: TEST_ADMIN.username,
+    password: TEST_ADMIN.password,
   });
 }

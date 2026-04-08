@@ -16,21 +16,10 @@ test.describe('MMGIS Server Startup', () => {
 
   test('healthcheck response contains success indicator', async ({ request }) => {
     const response = await request.get('/api/utils/healthcheck');
-    const body = await response.json().catch(() => response.text());
+    const body = await response.text();
 
-    // The healthcheck should return a body indicating success.
-    // Accept either a JSON object with a success/status field or a plain "OK".
-    if (typeof body === 'object' && body !== null) {
-      const hasSuccess =
-        body.status === 'ok' ||
-        body.status === 'success' ||
-        body.success === true ||
-        body.message === 'ok';
-      expect(hasSuccess).toBeTruthy();
-    } else {
-      // Plain text — expect something truthy like "OK"
-      expect(String(body).toLowerCase()).toContain('ok');
-    }
+    // The healthcheck endpoint returns the plain-text string "Alive and Well!".
+    expect(body).toContain('Alive');
   });
 
   test('no critical errors in server startup', async ({ request }) => {
