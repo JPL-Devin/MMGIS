@@ -18,8 +18,12 @@ test.describe('MMGIS Server Startup', () => {
     const response = await request.get('/api/utils/healthcheck');
     const body = await response.text();
 
-    // The healthcheck endpoint returns the plain-text string "Alive and Well!".
-    expect(body).toContain('Alive');
+    // When AUTH=off the endpoint returns "Alive and Well!".
+    // When AUTH=local the server redirects unauthenticated requests to the
+    // login page, so receiving the login HTML still proves the server is up.
+    const isAlive = body.includes('Alive');
+    const isLoginPage = body.includes('MMGIS') && body.includes('Login');
+    expect(isAlive || isLoginPage).toBeTruthy();
   });
 
   test('no critical errors in server startup', async ({ request }) => {
