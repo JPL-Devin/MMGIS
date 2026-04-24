@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MMGIS Component Library / Design System Preview</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: 'Inter', sans-serif; background: #0f172a; color: #e2e8f0; min-height: 100vh; padding: 32px; overflow-y: auto; }
+
+h1 { font-size: 28px; font-weight: 700; margin-bottom: 4px; color: #f8fafc; }
+.subtitle { font-size: 14px; color: #64748b; margin-bottom: 32px; }
+
+.grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+.section {
+  background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 14px; padding: 20px; overflow: hidden;
+}
+.section.full { grid-column: 1 / -1; }
+.section h2 { font-size: 14px; font-weight: 700; color: #94a3b8; text-transform: uppercase; letter-spacing: 1.2px; margin-bottom: 16px; }
+
+/* Color palette */
+.color-grid { display: grid; grid-template-columns: repeat(6, 1fr); gap: 8px; }
+.color-swatch { border-radius: 10px; overflow: hidden; }
+.swatch-block { height: 48px; display: flex; align-items: flex-end; padding: 4px 6px; }
+.swatch-label { font-size: 9px; padding: 6px; color: #94a3b8; }
+.swatch-label .hex { font-family: monospace; font-size: 10px; color: #64748b; }
+
+/* Primary colors */
+.c-primary { background: #38bdf8; }
+.c-secondary { background: #818cf8; }
+.c-success { background: #34d399; }
+.c-warning { background: #fbbf24; }
+.c-danger { background: #f87171; }
+.c-info { background: #22d3ee; }
+
+/* Dark shades */
+.c-bg-1 { background: #0f172a; border: 1px solid rgba(255,255,255,0.1); }
+.c-bg-2 { background: #1e293b; }
+.c-bg-3 { background: #334155; }
+.c-bg-4 { background: #475569; }
+.c-bg-5 { background: #64748b; }
+.c-bg-6 { background: #94a3b8; }
+
+/* Typography */
+.type-row { display: flex; align-items: baseline; gap: 16px; padding: 8px 0; border-bottom: 1px solid rgba(255,255,255,0.04); }
+.type-label { width: 100px; font-size: 11px; color: #64748b; flex-shrink: 0; }
+.type-spec { font-size: 10px; color: #475569; width: 120px; flex-shrink: 0; font-family: monospace; }
+.type-sample.h1 { font-size: 32px; font-weight: 700; color: #f8fafc; }
+.type-sample.h2 { font-size: 24px; font-weight: 700; color: #f8fafc; }
+.type-sample.h3 { font-size: 18px; font-weight: 600; color: #e2e8f0; }
+.type-sample.h4 { font-size: 14px; font-weight: 600; color: #e2e8f0; }
+.type-sample.body { font-size: 14px; color: #cbd5e1; }
+.type-sample.small { font-size: 12px; color: #94a3b8; }
+.type-sample.caption { font-size: 10px; color: #64748b; text-transform: uppercase; letter-spacing: 1px; }
+.type-sample.mono { font-size: 13px; color: #38bdf8; font-family: monospace; }
+
+/* Buttons */
+.btn-row { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 12px; }
+.btn {
+  padding: 8px 18px; border-radius: 8px; font-size: 13px; font-weight: 500;
+  cursor: pointer; display: inline-flex; align-items: center; gap: 6px; transition: 0.15s;
+  border: none; font-family: 'Inter', sans-serif;
+}
+.btn-primary { background: #38bdf8; color: #0c1222; }
+.btn-secondary { background: rgba(56,189,248,0.12); color: #38bdf8; border: 1px solid rgba(56,189,248,0.2); }
+.btn-ghost { background: transparent; color: #94a3b8; border: 1px solid rgba(255,255,255,0.1); }
+.btn-danger { background: #f87171; color: #fff; }
+.btn-success { background: #34d399; color: #0c1222; }
+.btn-sm { padding: 5px 12px; font-size: 11px; border-radius: 6px; }
+.btn-lg { padding: 12px 24px; font-size: 15px; border-radius: 10px; }
+.btn-icon { width: 36px; height: 36px; padding: 0; display: flex; align-items: center; justify-content: center; border-radius: 8px; }
+.btn-disabled { opacity: 0.4; cursor: not-allowed; }
+
+/* Form elements */
+.form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.form-group { display: flex; flex-direction: column; gap: 4px; }
+.form-label { font-size: 11px; font-weight: 500; color: #94a3b8; }
+.form-input {
+  height: 36px; border-radius: 8px; background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.1); padding: 0 12px;
+  font-size: 13px; color: #e2e8f0; outline: none; font-family: 'Inter', sans-serif;
+}
+.form-input::placeholder { color: #475569; }
+.form-input:focus { border-color: rgba(56,189,248,0.4); background: rgba(56,189,248,0.04); }
+.form-select {
+  height: 36px; border-radius: 8px; background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.1); padding: 0 12px;
+  font-size: 13px; color: #e2e8f0; outline: none; appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg width='10' height='6' viewBox='0 0 10 6' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1L5 5L9 1' stroke='%2364748b' stroke-width='1.5'/%3E%3C/svg%3E");
+  background-repeat: no-repeat; background-position: right 12px center;
+  font-family: 'Inter', sans-serif;
+}
+
+/* Toggle switches */
+.toggle-row { display: flex; align-items: center; gap: 12px; padding: 6px 0; }
+.toggle {
+  width: 40px; height: 22px; border-radius: 11px; position: relative; cursor: pointer; transition: 0.2s;
+}
+.toggle.off { background: #334155; }
+.toggle.on { background: rgba(56,189,248,0.4); }
+.toggle::after {
+  content: ''; width: 18px; height: 18px; border-radius: 50%; position: absolute; top: 2px; transition: 0.2s;
+}
+.toggle.off::after { left: 2px; background: #64748b; }
+.toggle.on::after { left: 20px; background: #38bdf8; }
+.toggle-label { font-size: 12px; color: #94a3b8; }
+
+/* Checkbox and Radio */
+.check-row { display: flex; align-items: center; gap: 8px; padding: 4px 0; }
+.checkbox {
+  width: 18px; height: 18px; border-radius: 4px; border: 2px solid #475569;
+  display: flex; align-items: center; justify-content: center; font-size: 12px; color: transparent;
+  flex-shrink: 0;
+}
+.checkbox.checked { background: #38bdf8; border-color: #38bdf8; color: #0c1222; }
+.radio {
+  width: 18px; height: 18px; border-radius: 50%; border: 2px solid #475569;
+  display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+}
+.radio.checked { border-color: #38bdf8; }
+.radio.checked::after { content: ''; width: 8px; height: 8px; border-radius: 50%; background: #38bdf8; }
+.check-label { font-size: 12px; color: #94a3b8; }
+
+/* Icons */
+.icon-grid { display: grid; grid-template-columns: repeat(8, 1fr); gap: 8px; }
+.icon-item {
+  aspect-ratio: 1; border-radius: 8px; background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.05);
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px;
+}
+.icon-item .icon { font-size: 18px; color: #94a3b8; }
+.icon-item .icon-name { font-size: 8px; color: #475569; }
+
+/* Badges/Tags */
+.badge-row { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 10px; }
+.badge {
+  padding: 3px 10px; border-radius: 12px; font-size: 11px; font-weight: 500;
+}
+.badge-blue { background: rgba(56,189,248,0.12); color: #38bdf8; }
+.badge-green { background: rgba(52,211,153,0.12); color: #34d399; }
+.badge-yellow { background: rgba(251,191,36,0.12); color: #fbbf24; }
+.badge-red { background: rgba(248,113,113,0.12); color: #f87171; }
+.badge-purple { background: rgba(129,140,248,0.12); color: #818cf8; }
+.badge-outline { background: transparent; border: 1px solid rgba(255,255,255,0.1); color: #94a3b8; }
+
+/* Slider */
+.slider-demo { padding: 8px 0; }
+.slider-track { width: 100%; height: 4px; background: #334155; border-radius: 2px; position: relative; margin: 8px 0; }
+.slider-fill { width: 60%; height: 100%; background: linear-gradient(90deg, #38bdf8, #818cf8); border-radius: 2px; }
+.slider-thumb { width: 14px; height: 14px; border-radius: 50%; background: #38bdf8; position: absolute; top: -5px; left: 60%; box-shadow: 0 0 8px rgba(56,189,248,0.4); }
+.slider-labels { display: flex; justify-content: space-between; font-size: 10px; color: #475569; }
+
+/* Tooltips preview */
+.tooltip-demo { display: flex; gap: 16px; align-items: center; margin-top: 8px; }
+.tooltip-item { position: relative; }
+.tooltip-bubble {
+  position: absolute; bottom: 100%; left: 50%; transform: translateX(-50%); margin-bottom: 6px;
+  background: #1e293b; border: 1px solid rgba(255,255,255,0.1); border-radius: 6px;
+  padding: 4px 10px; font-size: 11px; color: #e2e8f0; white-space: nowrap;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+}
+.tooltip-bubble::after {
+  content: ''; position: absolute; top: 100%; left: 50%; transform: translateX(-50%);
+  border: 5px solid transparent; border-top-color: #1e293b;
+}
+</style>
+</head>
+<body>
+
+<h1>MMGIS Design System</h1>
+<p class="subtitle">Component Library &amp; Visual Guidelines for UI Modernization</p>
+
+<div class="grid">
+
+  <!-- Color Palette -->
+  <div class="section full">
+    <h2>Color Palette</h2>
+    <p style="font-size:12px;color:#64748b;margin-bottom:12px;">Primary accent colors for interactive elements</p>
+    <div class="color-grid">
+      <div class="color-swatch"><div class="swatch-block c-primary" style="color:#0c1222;font-size:10px;font-weight:600;">Primary</div><div class="swatch-label">Sky Blue<br><span class="hex">#38bdf8</span></div></div>
+      <div class="color-swatch"><div class="swatch-block c-secondary" style="color:#fff;font-size:10px;font-weight:600;">Secondary</div><div class="swatch-label">Indigo<br><span class="hex">#818cf8</span></div></div>
+      <div class="color-swatch"><div class="swatch-block c-success" style="color:#0c1222;font-size:10px;font-weight:600;">Success</div><div class="swatch-label">Emerald<br><span class="hex">#34d399</span></div></div>
+      <div class="color-swatch"><div class="swatch-block c-warning" style="color:#0c1222;font-size:10px;font-weight:600;">Warning</div><div class="swatch-label">Amber<br><span class="hex">#fbbf24</span></div></div>
+      <div class="color-swatch"><div class="swatch-block c-danger" style="color:#fff;font-size:10px;font-weight:600;">Danger</div><div class="swatch-label">Red<br><span class="hex">#f87171</span></div></div>
+      <div class="color-swatch"><div class="swatch-block c-info" style="color:#0c1222;font-size:10px;font-weight:600;">Info</div><div class="swatch-label">Cyan<br><span class="hex">#22d3ee</span></div></div>
+    </div>
+    <p style="font-size:12px;color:#64748b;margin:16px 0 12px;">Background &amp; surface shades</p>
+    <div class="color-grid">
+      <div class="color-swatch"><div class="swatch-block c-bg-1" style="color:#94a3b8;font-size:10px;">Base</div><div class="swatch-label">Darkest<br><span class="hex">#0f172a</span></div></div>
+      <div class="color-swatch"><div class="swatch-block c-bg-2" style="color:#94a3b8;font-size:10px;">Surface</div><div class="swatch-label">Card BG<br><span class="hex">#1e293b</span></div></div>
+      <div class="color-swatch"><div class="swatch-block c-bg-3" style="color:#e2e8f0;font-size:10px;">Elevated</div><div class="swatch-label">Hover<br><span class="hex">#334155</span></div></div>
+      <div class="color-swatch"><div class="swatch-block c-bg-4" style="color:#e2e8f0;font-size:10px;">Border</div><div class="swatch-label">Subtle<br><span class="hex">#475569</span></div></div>
+      <div class="color-swatch"><div class="swatch-block c-bg-5" style="color:#0f172a;font-size:10px;">Muted</div><div class="swatch-label">Secondary<br><span class="hex">#64748b</span></div></div>
+      <div class="color-swatch"><div class="swatch-block c-bg-6" style="color:#0f172a;font-size:10px;">Text</div><div class="swatch-label">Primary<br><span class="hex">#94a3b8</span></div></div>
+    </div>
+  </div>
+
+  <!-- Typography -->
+  <div class="section">
+    <h2>Typography</h2>
+    <div class="type-row"><span class="type-label">Heading 1</span><span class="type-spec">32px / 700</span><span class="type-sample h1">MMGIS</span></div>
+    <div class="type-row"><span class="type-label">Heading 2</span><span class="type-spec">24px / 700</span><span class="type-sample h2">Layers</span></div>
+    <div class="type-row"><span class="type-label">Heading 3</span><span class="type-spec">18px / 600</span><span class="type-sample h3">Vector Data</span></div>
+    <div class="type-row"><span class="type-label">Heading 4</span><span class="type-spec">14px / 600</span><span class="type-sample h4">Points Basic</span></div>
+    <div class="type-row"><span class="type-label">Body</span><span class="type-spec">14px / 400</span><span class="type-sample body">Layer description text</span></div>
+    <div class="type-row"><span class="type-label">Small</span><span class="type-spec">12px / 400</span><span class="type-sample small">24 features visible</span></div>
+    <div class="type-row"><span class="type-label">Caption</span><span class="type-spec">10px / 600</span><span class="type-sample caption">Vector Layers</span></div>
+    <div class="type-row"><span class="type-label">Monospace</span><span class="type-spec">13px / mono</span><span class="type-sample mono">-122.419&deg;</span></div>
+  </div>
+
+  <!-- Buttons -->
+  <div class="section">
+    <h2>Buttons</h2>
+    <div class="btn-row">
+      <button class="btn btn-primary">Primary</button>
+      <button class="btn btn-secondary">Secondary</button>
+      <button class="btn btn-ghost">Ghost</button>
+      <button class="btn btn-danger">Danger</button>
+      <button class="btn btn-success">Success</button>
+    </div>
+    <div class="btn-row">
+      <button class="btn btn-primary btn-sm">Small</button>
+      <button class="btn btn-primary">Default</button>
+      <button class="btn btn-primary btn-lg">Large</button>
+    </div>
+    <div class="btn-row">
+      <button class="btn btn-icon btn-secondary">+</button>
+      <button class="btn btn-icon btn-secondary">&minus;</button>
+      <button class="btn btn-icon btn-secondary">&#8962;</button>
+      <button class="btn btn-icon btn-ghost">&#9881;</button>
+      <button class="btn btn-primary btn-disabled">Disabled</button>
+    </div>
+    <h2 style="margin-top:16px;">Badges &amp; Tags</h2>
+    <div class="badge-row">
+      <span class="badge badge-blue">Vector</span>
+      <span class="badge badge-green">Active</span>
+      <span class="badge badge-yellow">Warning</span>
+      <span class="badge badge-red">Error</span>
+      <span class="badge badge-purple">Model</span>
+      <span class="badge badge-outline">Default</span>
+    </div>
+  </div>
+
+  <!-- Form Elements -->
+  <div class="section">
+    <h2>Form Elements</h2>
+    <div class="form-grid">
+      <div class="form-group">
+        <label class="form-label">Layer Name</label>
+        <input class="form-input" placeholder="Enter layer name..." />
+      </div>
+      <div class="form-group">
+        <label class="form-label">Layer Type</label>
+        <select class="form-select">
+          <option>Vector</option>
+          <option>Tile</option>
+          <option>Raster</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Opacity</label>
+        <input class="form-input" type="number" value="100" />
+      </div>
+      <div class="form-group">
+        <label class="form-label">URL</label>
+        <input class="form-input" placeholder="https://..." />
+      </div>
+    </div>
+
+    <div style="margin-top:16px;">
+      <div class="toggle-row"><div class="toggle on"></div><span class="toggle-label">Visible on map</span></div>
+      <div class="toggle-row"><div class="toggle off"></div><span class="toggle-label">Time-enabled</span></div>
+      <div class="toggle-row"><div class="toggle on"></div><span class="toggle-label">Clickable features</span></div>
+    </div>
+
+    <div style="margin-top:12px;">
+      <div class="check-row"><div class="checkbox checked">&#10003;</div><span class="check-label">Auto-refresh data</span></div>
+      <div class="check-row"><div class="checkbox"></div><span class="check-label">Show in legend</span></div>
+      <div class="check-row"><div class="radio checked"></div><span class="check-label">WGS 84</span></div>
+      <div class="check-row"><div class="radio"></div><span class="check-label">Custom projection</span></div>
+    </div>
+  </div>
+
+  <!-- Sliders & Misc -->
+  <div class="section">
+    <h2>Sliders &amp; Controls</h2>
+    <div class="slider-demo">
+      <div class="form-label" style="margin-bottom:4px;">Layer Opacity</div>
+      <div class="slider-track"><div class="slider-fill"></div><div class="slider-thumb"></div></div>
+      <div class="slider-labels"><span>0%</span><span>60%</span><span>100%</span></div>
+    </div>
+    <div class="slider-demo">
+      <div class="form-label" style="margin-bottom:4px;">Time Range</div>
+      <div class="slider-track"><div class="slider-fill" style="width:45%;margin-left:20%;"></div><div class="slider-thumb" style="left:65%;"></div></div>
+      <div class="slider-labels"><span>Jan 1</span><span>Jan 20</span></div>
+    </div>
+
+    <h2 style="margin-top:16px;">Tooltips</h2>
+    <div class="tooltip-demo">
+      <div class="tooltip-item">
+        <div class="tooltip-bubble">Layer info</div>
+        <button class="btn btn-ghost btn-sm">Hover me</button>
+      </div>
+      <div class="tooltip-item">
+        <div class="tooltip-bubble">Zoom to layer extent</div>
+        <button class="btn btn-secondary btn-sm">Action</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Icons -->
+  <div class="section full">
+    <h2>Icon Set Preview</h2>
+    <p style="font-size:12px;color:#64748b;margin-bottom:12px;">Tool and UI icons (replace with SVG icon library like Lucide, Phosphor, or Heroicons)</p>
+    <div class="icon-grid">
+      <div class="icon-item"><span class="icon">&#9776;</span><span class="icon-name">Layers</span></div>
+      <div class="icon-item"><span class="icon">&#8505;</span><span class="icon-name">Info</span></div>
+      <div class="icon-item"><span class="icon">&#9873;</span><span class="icon-name">Sites</span></div>
+      <div class="icon-item"><span class="icon">&#9998;</span><span class="icon-name">Draw</span></div>
+      <div class="icon-item"><span class="icon">&#8676;</span><span class="icon-name">Measure</span></div>
+      <div class="icon-item"><span class="icon">&#8981;</span><span class="icon-name">Search</span></div>
+      <div class="icon-item"><span class="icon">&#9201;</span><span class="icon-name">Time</span></div>
+      <div class="icon-item"><span class="icon">&#9737;</span><span class="icon-name">View</span></div>
+      <div class="icon-item"><span class="icon">&#9878;</span><span class="icon-name">Chem</span></div>
+      <div class="icon-item"><span class="icon">&#9649;</span><span class="icon-name">Legend</span></div>
+      <div class="icon-item"><span class="icon">&#9635;</span><span class="icon-name">Identify</span></div>
+      <div class="icon-item"><span class="icon">&#9881;</span><span class="icon-name">Settings</span></div>
+      <div class="icon-item"><span class="icon">&#128247;</span><span class="icon-name">Screenshot</span></div>
+      <div class="icon-item"><span class="icon">&#8689;</span><span class="icon-name">Fullscreen</span></div>
+      <div class="icon-item"><span class="icon">&#128276;</span><span class="icon-name">Alerts</span></div>
+      <div class="icon-item"><span class="icon">?</span><span class="icon-name">Help</span></div>
+    </div>
+  </div>
+
+</div>
+
+</body>
+</html>

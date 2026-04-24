@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MMGIS Modernized Top Navigation Bar</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: 'Inter', sans-serif; background: #1b1f2b; color: #e0e0e0; height: 100vh; overflow: hidden; }
+
+/* Primary top navigation */
+.navbar {
+  height: 56px; background: #252a3a;
+  display: flex; align-items: center; padding: 0 20px;
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+  box-shadow: 0 2px 12px rgba(0,0,0,0.3);
+  z-index: 30; position: relative;
+}
+.navbar .logo-area { display: flex; align-items: center; gap: 10px; }
+.navbar .logo { font-weight: 700; font-size: 20px; color: #6c9eff; letter-spacing: 2px; }
+.navbar .version { font-size: 10px; color: #555b6e; background: rgba(108,158,255,0.1); padding: 2px 6px; border-radius: 4px; }
+
+/* Breadcrumb */
+.breadcrumb { display: flex; align-items: center; gap: 6px; margin-left: 24px; }
+.breadcrumb span { font-size: 12px; color: #555b6e; }
+.breadcrumb a { font-size: 12px; color: #8892b0; text-decoration: none; }
+.breadcrumb a:hover { color: #6c9eff; }
+.breadcrumb .current { color: #e0e0e0; font-weight: 500; }
+
+.navbar .spacer { flex: 1; }
+
+/* Search bar */
+.search-wrapper { position: relative; }
+.search-bar {
+  width: 320px; height: 36px; border-radius: 8px;
+  background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.08);
+  padding: 0 36px 0 12px; font-size: 13px; color: #e0e0e0; outline: none;
+  transition: border-color 0.2s;
+}
+.search-bar::placeholder { color: #555b6e; }
+.search-bar:focus { border-color: rgba(108,158,255,0.4); background: rgba(255,255,255,0.08); }
+.search-icon { position: absolute; right: 10px; top: 50%; transform: translateY(-50%); color: #555b6e; font-size: 14px; }
+.search-shortcut { position: absolute; right: 34px; top: 50%; transform: translateY(-50%); font-size: 10px; color: #444a5e; background: rgba(255,255,255,0.05); padding: 2px 5px; border-radius: 3px; border: 1px solid rgba(255,255,255,0.06); }
+
+/* Nav icons */
+.nav-icons { display: flex; align-items: center; gap: 4px; margin-left: 16px; }
+.nav-icon {
+  width: 36px; height: 36px; border-radius: 8px; display: flex; align-items: center; justify-content: center;
+  color: #555b6e; font-size: 16px; cursor: pointer; position: relative; transition: 0.15s;
+}
+.nav-icon:hover { background: rgba(255,255,255,0.05); color: #8892b0; }
+.nav-icon .badge-dot { position: absolute; top: 6px; right: 6px; width: 8px; height: 8px; border-radius: 50%; background: #f85149; border: 2px solid #252a3a; }
+
+/* Mission selector */
+.mission-selector {
+  display: flex; align-items: center; gap: 8px; padding: 6px 12px; border-radius: 8px;
+  background: rgba(108,158,255,0.08); border: 1px solid rgba(108,158,255,0.15);
+  cursor: pointer; margin-left: 12px; transition: 0.15s;
+}
+.mission-selector:hover { background: rgba(108,158,255,0.15); }
+.mission-selector .mission-name { font-size: 13px; color: #6c9eff; font-weight: 500; }
+.mission-selector .arrow { font-size: 10px; color: #555b6e; }
+
+/* User avatar */
+.user-area { display: flex; align-items: center; gap: 8px; margin-left: 12px; cursor: pointer; }
+.user-avatar { width: 32px; height: 32px; border-radius: 50%; background: linear-gradient(135deg, #6c9eff, #a78bfa); display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 600; color: #fff; }
+.user-name { font-size: 12px; color: #8892b0; }
+.user-role { font-size: 10px; color: #555b6e; }
+
+/* Secondary toolbar */
+.secondary-bar {
+  height: 40px; background: #1e2233;
+  display: flex; align-items: center; padding: 0 20px; gap: 2px;
+  border-bottom: 1px solid rgba(255,255,255,0.04);
+  z-index: 25; position: relative;
+}
+.tab {
+  padding: 8px 14px; font-size: 12px; color: #555b6e; cursor: pointer;
+  border-radius: 6px 6px 0 0; transition: 0.15s; font-weight: 500;
+}
+.tab:hover { color: #8892b0; background: rgba(255,255,255,0.02); }
+.tab.active { color: #6c9eff; background: rgba(108,158,255,0.08); border-bottom: 2px solid #6c9eff; }
+.secondary-bar .spacer { flex: 1; }
+.view-toggle { display: flex; gap: 2px; background: rgba(255,255,255,0.04); border-radius: 6px; padding: 2px; }
+.view-btn { padding: 4px 10px; font-size: 11px; color: #555b6e; border-radius: 4px; cursor: pointer; }
+.view-btn.active { background: rgba(108,158,255,0.15); color: #6c9eff; }
+
+/* Left sidebar - simplified */
+.sidebar {
+  position: absolute; left: 0; top: 96px; bottom: 36px; width: 52px;
+  background: #1e2233; border-right: 1px solid rgba(255,255,255,0.04);
+  display: flex; flex-direction: column; align-items: center; padding: 8px 0; gap: 2px; z-index: 10;
+}
+.sidebar .tool {
+  width: 38px; height: 38px; border-radius: 8px; display: flex; align-items: center; justify-content: center;
+  color: #444a5e; font-size: 16px; cursor: pointer; transition: 0.15s;
+}
+.sidebar .tool:hover { background: rgba(108,158,255,0.08); color: #6c9eff; }
+.sidebar .tool.active { background: rgba(108,158,255,0.1); color: #6c9eff; }
+
+/* Tool panel */
+.tool-panel {
+  position: absolute; left: 52px; top: 96px; bottom: 36px; width: 300px;
+  background: #1e2233; border-right: 1px solid rgba(255,255,255,0.04);
+  overflow-y: auto; z-index: 9;
+}
+.tool-panel h3 { padding: 14px 16px 8px; font-size: 13px; font-weight: 600; color: #e0e0e0; }
+.layer-group { padding: 0 8px; }
+.layer-group-head {
+  display: flex; align-items: center; padding: 8px 8px; border-radius: 6px; cursor: pointer;
+  font-size: 11px; font-weight: 600; color: #555b6e; text-transform: uppercase; letter-spacing: 0.8px;
+}
+.layer-group-head:hover { background: rgba(255,255,255,0.02); }
+.layer-group-head .cnt { margin-left: auto; font-size: 10px; color: #6c9eff; background: rgba(108,158,255,0.1); padding: 1px 6px; border-radius: 8px; }
+.layer-row {
+  display: flex; align-items: center; padding: 5px 8px 5px 20px; border-radius: 4px;
+  font-size: 12px; color: #8892b0;
+}
+.layer-row:hover { background: rgba(255,255,255,0.02); }
+.sw { width: 28px; height: 15px; border-radius: 8px; background: #2a2f42; margin-right: 8px; position: relative; flex-shrink: 0; }
+.sw.on { background: rgba(108,158,255,0.3); }
+.sw::after { content:''; width: 11px; height: 11px; border-radius: 50%; background: #444a5e; position: absolute; top: 2px; left: 2px; transition: 0.2s; }
+.sw.on::after { left: 15px; background: #6c9eff; }
+
+/* Map */
+.map-area {
+  position: absolute; left: 352px; top: 96px; right: 0; bottom: 36px;
+  background: linear-gradient(135deg, #1b1f2b 0%, #151825 50%, #1b1f2b 100%);
+}
+.map-area::before {
+  content: ''; position: absolute; inset: 0;
+  background-image: linear-gradient(rgba(108,158,255,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(108,158,255,0.03) 1px, transparent 1px);
+  background-size: 90px 90px;
+}
+.map-label { position: absolute; bottom: 50%; right: 50%; transform: translate(50%,50%); font-size: 14px; color: rgba(108,158,255,0.12); letter-spacing: 4px; text-transform: uppercase; }
+
+/* Bottom status bar */
+.statusbar {
+  position: absolute; bottom: 0; left: 0; right: 0; height: 36px;
+  background: #252a3a; border-top: 1px solid rgba(255,255,255,0.06);
+  display: flex; align-items: center; padding: 0 16px; gap: 16px;
+  font-size: 11px; color: #444a5e; z-index: 20;
+}
+.statusbar .coord { color: #6c9eff; font-family: monospace; font-size: 11px; }
+.statusbar .sep { width: 1px; height: 16px; background: rgba(255,255,255,0.06); }
+.statusbar .spacer { flex: 1; }
+.status-dot { width: 6px; height: 6px; border-radius: 50%; background: #3fb950; }
+.status-label { font-size: 10px; color: #555b6e; }
+</style>
+</head>
+<body>
+
+<!-- Primary Navigation -->
+<div class="navbar">
+  <div class="logo-area">
+    <div class="logo">MMGIS</div>
+    <div class="version">v3.8</div>
+  </div>
+  <div class="breadcrumb">
+    <span>/</span>
+    <a href="#">Missions</a>
+    <span>/</span>
+    <span class="current">Reference Mission</span>
+  </div>
+  <div class="spacer"></div>
+  <div class="search-wrapper">
+    <input class="search-bar" placeholder="Search layers, tools, locations..." />
+    <span class="search-shortcut">&#8984;K</span>
+    <span class="search-icon">&#8981;</span>
+  </div>
+  <div class="nav-icons">
+    <div class="nav-icon" title="Notifications">&#128276;<div class="badge-dot"></div></div>
+    <div class="nav-icon" title="Settings">&#9881;</div>
+    <div class="nav-icon" title="Help">?</div>
+  </div>
+  <div class="mission-selector">
+    <span class="mission-name">Reference Mission</span>
+    <span class="arrow">&#9660;</span>
+  </div>
+  <div class="user-area">
+    <div class="user-avatar">A</div>
+    <div>
+      <div class="user-name">admin</div>
+      <div class="user-role">Administrator</div>
+    </div>
+  </div>
+</div>
+
+<!-- Secondary toolbar -->
+<div class="secondary-bar">
+  <div class="tab active">Map</div>
+  <div class="tab">Globe</div>
+  <div class="tab">Data</div>
+  <div class="tab">Timeline</div>
+  <div class="tab">Compare</div>
+  <div class="spacer"></div>
+  <div class="view-toggle">
+    <div class="view-btn active">2D</div>
+    <div class="view-btn">3D</div>
+    <div class="view-btn">Split</div>
+  </div>
+</div>
+
+<!-- Sidebar -->
+<div class="sidebar">
+  <div class="tool active">&#9776;</div>
+  <div class="tool">&#8505;</div>
+  <div class="tool">&#9873;</div>
+  <div class="tool">&#9998;</div>
+  <div class="tool">&#8676;</div>
+  <div class="tool">&#8981;</div>
+  <div class="tool">&#9201;</div>
+  <div class="tool">&#9737;</div>
+</div>
+
+<!-- Tool Panel -->
+<div class="tool-panel">
+  <h3>Layers</h3>
+  <div class="layer-group">
+    <div class="layer-group-head">&#9660; Vector Layers <span class="cnt">5</span></div>
+    <div class="layer-row"><div class="sw on"></div> Points Basic</div>
+    <div class="layer-row"><div class="sw on"></div> Lines Basic</div>
+    <div class="layer-row"><div class="sw"></div> Polygons Basic</div>
+    <div class="layer-row"><div class="sw on"></div> Arrows</div>
+    <div class="layer-row"><div class="sw"></div> Annotations</div>
+  </div>
+  <div class="layer-group">
+    <div class="layer-group-head">&#9660; Feature Styling <span class="cnt">4</span></div>
+    <div class="layer-row"><div class="sw on"></div> Points Styled</div>
+    <div class="layer-row"><div class="sw"></div> Lines Styled</div>
+    <div class="layer-row"><div class="sw on"></div> Polygons Styled</div>
+    <div class="layer-row"><div class="sw"></div> Style From Property</div>
+  </div>
+  <div class="layer-group">
+    <div class="layer-group-head">&#9654; Feature Behavior <span class="cnt">6</span></div>
+  </div>
+  <div class="layer-group">
+    <div class="layer-group-head">&#9654; Geodatasets <span class="cnt">5</span></div>
+  </div>
+  <div class="layer-group">
+    <div class="layer-group-head">&#9654; Data Layers <span class="cnt">9</span></div>
+  </div>
+</div>
+
+<!-- Map -->
+<div class="map-area">
+  <div class="map-label">San Francisco Bay Area</div>
+</div>
+
+<!-- Status Bar -->
+<div class="statusbar">
+  <div class="status-dot"></div>
+  <span class="status-label">Connected</span>
+  <div class="sep"></div>
+  <span>Lon, Lat</span>
+  <span class="coord">-122.41942&deg;, 37.77493&deg;</span>
+  <div class="sep"></div>
+  <span>Zoom: 12</span>
+  <div class="sep"></div>
+  <span>EPSG:4326</span>
+  <div class="spacer"></div>
+  <span>33 layers &bull; 14 tools</span>
+</div>
+
+</body>
+</html>

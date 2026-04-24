@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MMGIS Redesigned Sidebar / Tool Panel</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: 'Inter', sans-serif; background: #0d1117; color: #e0e0e0; height: 100vh; overflow: hidden; }
+
+.topbar {
+  height: 44px; background: rgba(13,17,23,0.85); backdrop-filter: blur(20px);
+  display: flex; align-items: center; padding: 0 16px;
+  border-bottom: 1px solid rgba(255,255,255,0.06); z-index: 30; position: relative;
+}
+.topbar .logo { font-weight: 700; font-size: 16px; color: #58a6ff; letter-spacing: 1.5px; }
+.topbar .mission { color: #8b949e; font-size: 13px; margin-left: 12px; }
+.topbar .spacer { flex: 1; }
+.topbar .user { width: 28px; height: 28px; border-radius: 50%; background: #58a6ff; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 600; color: #0d1117; }
+
+/* Icon rail */
+.icon-rail {
+  position: absolute; left: 0; top: 44px; bottom: 0; width: 48px;
+  background: rgba(13,17,23,0.9); backdrop-filter: blur(16px);
+  border-right: 1px solid rgba(255,255,255,0.06);
+  display: flex; flex-direction: column; align-items: center; padding: 8px 0; gap: 2px; z-index: 20;
+}
+.icon-rail .tool {
+  width: 36px; height: 36px; border-radius: 8px; display: flex; align-items: center; justify-content: center;
+  color: #484f58; font-size: 16px; cursor: pointer; transition: all 0.15s; position: relative;
+}
+.icon-rail .tool:hover { background: rgba(88,166,255,0.08); color: #8b949e; }
+.icon-rail .tool.active { color: #58a6ff; }
+.icon-rail .tool.active::before {
+  content: ''; position: absolute; left: 0; top: 6px; bottom: 6px; width: 3px;
+  background: #58a6ff; border-radius: 0 2px 2px 0;
+}
+.icon-rail .divider { width: 24px; height: 1px; background: rgba(255,255,255,0.06); margin: 4px 0; }
+
+/* Floating Panel - Glass morphism */
+.floating-panel {
+  position: absolute; left: 60px; top: 56px; bottom: 52px; width: 310px;
+  background: rgba(22,27,34,0.75); backdrop-filter: blur(24px) saturate(180%);
+  border: 1px solid rgba(255,255,255,0.08); border-radius: 16px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.4), 0 0 0 1px rgba(255,255,255,0.02);
+  overflow: hidden; z-index: 15; display: flex; flex-direction: column;
+}
+.panel-titlebar {
+  display: flex; align-items: center; padding: 14px 16px 10px;
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+}
+.panel-titlebar h3 { font-size: 14px; font-weight: 600; color: #e6edf3; flex: 1; }
+.panel-titlebar .btn-group { display: flex; gap: 6px; }
+.panel-titlebar .btn-dot { width: 12px; height: 12px; border-radius: 50%; cursor: pointer; }
+.btn-dot.minimize { background: #f0c541; }
+.btn-dot.maximize { background: #3fb950; }
+.btn-dot.close { background: #f85149; }
+
+.panel-search {
+  margin: 10px 12px; height: 32px; border-radius: 8px;
+  background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08);
+  padding: 0 10px; font-size: 12px; color: #e6edf3; outline: none; width: calc(100% - 24px);
+}
+.panel-search::placeholder { color: #484f58; }
+
+.panel-content { flex: 1; overflow-y: auto; padding: 4px 0; }
+
+/* Accordion sections */
+.accordion { border-bottom: 1px solid rgba(255,255,255,0.04); }
+.accordion-header {
+  display: flex; align-items: center; padding: 10px 16px; cursor: pointer;
+  font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; color: #8b949e;
+}
+.accordion-header:hover { background: rgba(255,255,255,0.02); }
+.accordion-header .chevron { margin-right: 8px; font-size: 10px; color: #484f58; transition: 0.2s; }
+.accordion-header .badge { margin-left: auto; background: rgba(88,166,255,0.1); color: #58a6ff; padding: 2px 7px; border-radius: 8px; font-size: 10px; font-weight: 500; }
+.accordion-body { padding: 0 8px 6px; }
+
+.layer-item {
+  display: flex; align-items: center; padding: 6px 8px; border-radius: 8px; margin: 1px 0;
+  font-size: 12px; color: #c9d1d9; cursor: pointer; transition: 0.1s;
+}
+.layer-item:hover { background: rgba(255,255,255,0.03); }
+.layer-item .color-dot { width: 8px; height: 8px; border-radius: 50%; margin-right: 10px; flex-shrink: 0; }
+.toggle-pill {
+  width: 30px; height: 16px; border-radius: 8px; background: rgba(255,255,255,0.1); margin-right: 10px;
+  position: relative; flex-shrink: 0; transition: 0.2s;
+}
+.toggle-pill.on { background: rgba(88,166,255,0.35); }
+.toggle-pill::after {
+  content: ''; width: 12px; height: 12px; border-radius: 50%; background: #484f58;
+  position: absolute; top: 2px; left: 2px; transition: 0.2s;
+}
+.toggle-pill.on::after { left: 16px; background: #58a6ff; }
+
+.layer-opacity { margin-left: auto; display: flex; align-items: center; gap: 4px; }
+.opacity-bar { width: 40px; height: 3px; background: rgba(255,255,255,0.1); border-radius: 2px; overflow: hidden; }
+.opacity-fill { height: 100%; background: #58a6ff; border-radius: 2px; }
+.opacity-val { font-size: 9px; color: #484f58; width: 24px; text-align: right; }
+
+/* Map */
+.map-area {
+  position: absolute; left: 0; top: 44px; right: 0; bottom: 0;
+  background: linear-gradient(135deg, #161b22 0%, #0d1117 50%, #161b22 100%);
+  z-index: 1;
+}
+.map-area::before {
+  content: ''; position: absolute; inset: 0;
+  background-image:
+    linear-gradient(rgba(88,166,255,0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(88,166,255,0.03) 1px, transparent 1px);
+  background-size: 100px 100px;
+}
+.map-label { position: absolute; bottom: 50%; right: 50%; transform: translate(50%,50%); font-size: 14px; color: rgba(88,166,255,0.15); letter-spacing: 4px; text-transform: uppercase; z-index: 2; }
+
+/* Zoom */
+.zoom-controls { position: absolute; right: 16px; top: 12px; display: flex; flex-direction: column; gap: 2px; z-index: 5; }
+.zoom-btn {
+  width: 34px; height: 34px; border-radius: 8px; background: rgba(22,27,34,0.8); backdrop-filter: blur(12px);
+  border: 1px solid rgba(255,255,255,0.08); display: flex; align-items: center; justify-content: center;
+  color: #8b949e; font-size: 16px; cursor: pointer;
+}
+
+/* Collapsed sidebar preview (right side) */
+.collapsed-preview {
+  position: absolute; right: 16px; top: 60px; width: 44px;
+  background: rgba(22,27,34,0.75); backdrop-filter: blur(16px);
+  border: 1px solid rgba(255,255,255,0.08); border-radius: 12px;
+  display: flex; flex-direction: column; align-items: center; padding: 8px 0; gap: 4px; z-index: 5;
+}
+.collapsed-preview .mini-tool {
+  width: 32px; height: 32px; border-radius: 8px; display: flex; align-items: center; justify-content: center;
+  color: #484f58; font-size: 14px; cursor: pointer;
+}
+.collapsed-preview .mini-tool:hover { background: rgba(255,255,255,0.05); color: #8b949e; }
+.collapsed-preview .mini-label { font-size: 7px; color: #484f58; text-align: center; margin-top: -2px; }
+
+/* Bottom bar */
+.bottombar {
+  position: absolute; bottom: 0; left: 0; right: 0; height: 36px;
+  background: rgba(13,17,23,0.85); backdrop-filter: blur(16px);
+  border-top: 1px solid rgba(255,255,255,0.06);
+  display: flex; align-items: center; padding: 0 16px; gap: 12px;
+  font-size: 11px; color: #484f58; z-index: 20;
+}
+.bottombar .coord { color: #58a6ff; font-family: monospace; }
+.bottombar .spacer { flex: 1; }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="logo">MMGIS</div>
+  <div class="mission">Reference Mission</div>
+  <div class="spacer"></div>
+  <div class="user">A</div>
+</div>
+
+<div class="icon-rail">
+  <div class="tool active" title="Layers">&#9776;</div>
+  <div class="tool" title="Info">&#8505;</div>
+  <div class="tool" title="Sites">&#9873;</div>
+  <div class="divider"></div>
+  <div class="tool" title="Draw">&#9998;</div>
+  <div class="tool" title="Measure">&#8676;</div>
+  <div class="tool" title="Search">&#8981;</div>
+  <div class="divider"></div>
+  <div class="tool" title="Isochrone">&#9201;</div>
+  <div class="tool" title="Viewshed">&#9737;</div>
+  <div class="tool" title="Chemistry">&#9878;</div>
+  <div class="tool" title="Legend">&#9649;</div>
+</div>
+
+<div class="floating-panel">
+  <div class="panel-titlebar">
+    <h3>Layers</h3>
+    <div class="btn-group">
+      <div class="btn-dot minimize"></div>
+      <div class="btn-dot maximize"></div>
+      <div class="btn-dot close"></div>
+    </div>
+  </div>
+  <input class="panel-search" placeholder="Filter layers..." />
+  <div class="panel-content">
+    <div class="accordion">
+      <div class="accordion-header"><span class="chevron">&#9660;</span> Vector Layers <span class="badge">5</span></div>
+      <div class="accordion-body">
+        <div class="layer-item"><div class="toggle-pill on"></div><span class="color-dot" style="background:#58a6ff;"></span> Points Basic <div class="layer-opacity"><div class="opacity-bar"><div class="opacity-fill" style="width:100%"></div></div><span class="opacity-val">100%</span></div></div>
+        <div class="layer-item"><div class="toggle-pill on"></div><span class="color-dot" style="background:#3fb950;"></span> Lines Basic <div class="layer-opacity"><div class="opacity-bar"><div class="opacity-fill" style="width:80%"></div></div><span class="opacity-val">80%</span></div></div>
+        <div class="layer-item"><div class="toggle-pill"></div><span class="color-dot" style="background:#f0c541;"></span> Polygons Basic <div class="layer-opacity"><div class="opacity-bar"><div class="opacity-fill" style="width:50%"></div></div><span class="opacity-val">50%</span></div></div>
+        <div class="layer-item"><div class="toggle-pill on"></div><span class="color-dot" style="background:#f85149;"></span> Arrows <div class="layer-opacity"><div class="opacity-bar"><div class="opacity-fill" style="width:100%"></div></div><span class="opacity-val">100%</span></div></div>
+        <div class="layer-item"><div class="toggle-pill"></div><span class="color-dot" style="background:#bc8cff;"></span> Annotations <div class="layer-opacity"><div class="opacity-bar"><div class="opacity-fill" style="width:70%"></div></div><span class="opacity-val">70%</span></div></div>
+      </div>
+    </div>
+    <div class="accordion">
+      <div class="accordion-header"><span class="chevron">&#9660;</span> Feature Property Styling <span class="badge">4</span></div>
+      <div class="accordion-body">
+        <div class="layer-item"><div class="toggle-pill on"></div><span class="color-dot" style="background:#79c0ff;"></span> Points Styled <div class="layer-opacity"><div class="opacity-bar"><div class="opacity-fill" style="width:100%"></div></div><span class="opacity-val">100%</span></div></div>
+        <div class="layer-item"><div class="toggle-pill"></div><span class="color-dot" style="background:#56d364;"></span> Lines Styled <div class="layer-opacity"><div class="opacity-bar"><div class="opacity-fill" style="width:60%"></div></div><span class="opacity-val">60%</span></div></div>
+        <div class="layer-item"><div class="toggle-pill on"></div><span class="color-dot" style="background:#d2a8ff;"></span> Polygons Styled <div class="layer-opacity"><div class="opacity-bar"><div class="opacity-fill" style="width:90%"></div></div><span class="opacity-val">90%</span></div></div>
+        <div class="layer-item"><div class="toggle-pill"></div><span class="color-dot" style="background:#ffa657;"></span> Style From Property <div class="layer-opacity"><div class="opacity-bar"><div class="opacity-fill" style="width:100%"></div></div><span class="opacity-val">100%</span></div></div>
+      </div>
+    </div>
+    <div class="accordion">
+      <div class="accordion-header"><span class="chevron">&#9654;</span> Feature Property Behavior <span class="badge">6</span></div>
+    </div>
+    <div class="accordion">
+      <div class="accordion-header"><span class="chevron">&#9654;</span> Geodatasets <span class="badge">5</span></div>
+    </div>
+    <div class="accordion">
+      <div class="accordion-header"><span class="chevron">&#9654;</span> Data Layers <span class="badge">9</span></div>
+    </div>
+    <div class="accordion">
+      <div class="accordion-header"><span class="chevron">&#9654;</span> Basemaps <span class="badge">4</span></div>
+    </div>
+  </div>
+</div>
+
+<div class="map-area">
+  <div class="map-label">San Francisco Bay Area</div>
+  <div class="zoom-controls">
+    <div class="zoom-btn">+</div>
+    <div class="zoom-btn">&minus;</div>
+    <div class="zoom-btn" style="font-size:12px;">&#8962;</div>
+  </div>
+  <div class="collapsed-preview">
+    <div class="mini-tool">&#8505;</div>
+    <div class="mini-label">Info</div>
+    <div class="mini-tool">&#9998;</div>
+    <div class="mini-label">Draw</div>
+    <div class="mini-tool">&#8676;</div>
+    <div class="mini-label">Meas</div>
+    <div class="mini-tool">&#9737;</div>
+    <div class="mini-label">View</div>
+  </div>
+</div>
+
+<div class="bottombar">
+  <span>Lat/Lon</span>
+  <span class="coord">37.77493&deg;, -122.41942&deg;</span>
+  <div class="spacer"></div>
+  <span>Zoom: 12</span>
+  <span>&bull;</span>
+  <span>EPSG:4326</span>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MMGIS Floating Widgets / Detached Panels</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: 'Inter', sans-serif; background: #0c1222; color: #e0e0e0; height: 100vh; overflow: hidden; }
+
+.topbar {
+  height: 44px; background: rgba(12,18,34,0.85); backdrop-filter: blur(16px);
+  display: flex; align-items: center; padding: 0 16px;
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+  z-index: 50; position: relative;
+}
+.topbar .logo { font-weight: 700; font-size: 17px; color: #38bdf8; letter-spacing: 1.5px; }
+.topbar .mission { color: #64748b; font-size: 13px; margin-left: 12px; }
+.topbar .spacer { flex: 1; }
+.topbar .user { width: 28px; height: 28px; border-radius: 50%; background: #38bdf8; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 600; color: #0c1222; }
+
+/* Minimal icon dock */
+.dock {
+  position: absolute; left: 12px; top: 56px; width: 44px;
+  background: rgba(15,23,42,0.8); backdrop-filter: blur(16px);
+  border: 1px solid rgba(255,255,255,0.06); border-radius: 12px;
+  display: flex; flex-direction: column; align-items: center; padding: 6px 0; gap: 2px; z-index: 40;
+}
+.dock .tool {
+  width: 34px; height: 34px; border-radius: 8px; display: flex; align-items: center; justify-content: center;
+  color: #475569; font-size: 15px; cursor: pointer; transition: 0.15s;
+}
+.dock .tool:hover { background: rgba(56,189,248,0.1); color: #38bdf8; }
+.dock .tool.active { color: #38bdf8; background: rgba(56,189,248,0.12); }
+.dock .divider { width: 20px; height: 1px; background: rgba(255,255,255,0.06); margin: 2px 0; }
+
+/* Map background */
+.map-bg {
+  position: absolute; inset: 0; top: 44px;
+  background: linear-gradient(135deg, #0c1222 0%, #0f172a 50%, #0c1222 100%);
+}
+.map-bg::before {
+  content: ''; position: absolute; inset: 0;
+  background-image: linear-gradient(rgba(56,189,248,0.025) 1px, transparent 1px), linear-gradient(90deg, rgba(56,189,248,0.025) 1px, transparent 1px);
+  background-size: 100px 100px;
+}
+.map-label { position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%); font-size: 14px; color: rgba(56,189,248,0.1); letter-spacing: 4px; text-transform: uppercase; }
+
+/* Floating widget base */
+.widget {
+  position: absolute; border-radius: 14px;
+  background: rgba(15,23,42,0.82); backdrop-filter: blur(20px) saturate(180%);
+  border: 1px solid rgba(255,255,255,0.08);
+  box-shadow: 0 8px 32px rgba(0,0,0,0.5), 0 0 0 1px rgba(255,255,255,0.02);
+  overflow: hidden; z-index: 30; display: flex; flex-direction: column;
+}
+.widget-header {
+  display: flex; align-items: center; padding: 10px 14px; cursor: move;
+  border-bottom: 1px solid rgba(255,255,255,0.05); flex-shrink: 0;
+}
+.widget-header h4 { font-size: 12px; font-weight: 600; color: #e2e8f0; flex: 1; }
+.widget-header .controls { display: flex; gap: 6px; }
+.widget-header .ctrl-btn { width: 12px; height: 12px; border-radius: 50%; cursor: pointer; }
+.ctrl-btn.minimize { background: #fbbf24; }
+.ctrl-btn.maximize { background: #34d399; }
+.ctrl-btn.close { background: #f87171; }
+.widget-body { flex: 1; overflow-y: auto; padding: 8px; }
+
+/* Layers widget */
+.w-layers { left: 70px; top: 56px; width: 280px; height: 420px; }
+.layer-item {
+  display: flex; align-items: center; padding: 5px 8px; border-radius: 6px; margin: 1px 0;
+  font-size: 12px; color: #94a3b8; cursor: pointer;
+}
+.layer-item:hover { background: rgba(255,255,255,0.03); }
+.sw { width: 28px; height: 15px; border-radius: 8px; background: #1e293b; margin-right: 8px; position: relative; flex-shrink: 0; }
+.sw.on { background: rgba(56,189,248,0.3); }
+.sw::after { content:''; width: 11px; height: 11px; border-radius: 50%; background: #475569; position: absolute; top: 2px; left: 2px; transition: 0.2s; }
+.sw.on::after { left: 15px; background: #38bdf8; }
+.grp { padding: 6px 8px; font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.8px; color: #475569; }
+
+/* Draw widget */
+.w-draw { left: 370px; top: 70px; width: 260px; height: 300px; }
+.draw-tools { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; padding: 8px; }
+.draw-tool {
+  aspect-ratio: 1; border-radius: 10px; background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.06); display: flex; flex-direction: column;
+  align-items: center; justify-content: center; gap: 4px; cursor: pointer; transition: 0.15s;
+}
+.draw-tool:hover { background: rgba(56,189,248,0.08); border-color: rgba(56,189,248,0.2); }
+.draw-tool.active { background: rgba(56,189,248,0.12); border-color: rgba(56,189,248,0.3); }
+.draw-tool .icon { font-size: 20px; color: #64748b; }
+.draw-tool.active .icon { color: #38bdf8; }
+.draw-tool .label { font-size: 9px; color: #475569; font-weight: 500; }
+.draw-actions { padding: 8px; display: flex; gap: 6px; }
+.draw-btn {
+  flex: 1; padding: 8px; border-radius: 8px; font-size: 11px; font-weight: 500;
+  text-align: center; cursor: pointer;
+}
+.draw-btn.primary { background: rgba(56,189,248,0.15); color: #38bdf8; border: 1px solid rgba(56,189,248,0.2); }
+.draw-btn.secondary { background: rgba(255,255,255,0.03); color: #64748b; border: 1px solid rgba(255,255,255,0.06); }
+
+/* Measure widget */
+.w-measure { right: 80px; top: 80px; width: 240px; height: 200px; }
+.measure-result { padding: 12px; text-align: center; }
+.measure-value { font-size: 28px; font-weight: 700; color: #38bdf8; }
+.measure-unit { font-size: 12px; color: #64748b; margin-top: 2px; }
+.measure-details { padding: 8px 12px; }
+.measure-row { display: flex; justify-content: space-between; padding: 4px 0; font-size: 11px; border-bottom: 1px solid rgba(255,255,255,0.03); }
+.measure-row .label { color: #475569; }
+.measure-row .value { color: #94a3b8; font-family: monospace; }
+
+/* Info widget (minimized) */
+.w-info { right: 80px; bottom: 80px; width: 240px; height: 44px; }
+.w-info .widget-body { display: none; }
+.minimized-bar { padding: 0 12px; display: flex; align-items: center; gap: 8px; height: 100%; }
+.minimized-bar .status { font-size: 11px; color: #475569; }
+
+/* Coordinates widget (compact) */
+.w-coords { left: 70px; bottom: 16px; width: 300px; height: 36px; border-radius: 10px; flex-direction: row; align-items: center; padding: 0 14px; gap: 12px; }
+.w-coords .coord-label { font-size: 10px; color: #475569; }
+.w-coords .coord-value { font-size: 11px; color: #38bdf8; font-family: monospace; }
+.w-coords .sep { width: 1px; height: 16px; background: rgba(255,255,255,0.06); }
+
+/* Time slider widget */
+.w-time { left: 400px; bottom: 16px; right: 80px; height: 36px; border-radius: 10px; flex-direction: row; align-items: center; padding: 0 14px; gap: 8px; }
+.time-label { font-size: 10px; color: #64748b; white-space: nowrap; }
+.time-track { flex: 1; height: 3px; background: #1e293b; border-radius: 2px; position: relative; }
+.time-fill { width: 45%; height: 100%; background: linear-gradient(90deg, #38bdf8, #818cf8); border-radius: 2px; }
+.time-thumb { width: 10px; height: 10px; border-radius: 50%; background: #38bdf8; position: absolute; top: -3.5px; left: 45%; box-shadow: 0 0 8px rgba(56,189,248,0.4); }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="logo">MMGIS</div>
+  <div class="mission">Reference Mission</div>
+  <div class="spacer"></div>
+  <div class="user">A</div>
+</div>
+
+<div class="map-bg">
+  <div class="map-label">San Francisco Bay Area</div>
+</div>
+
+<!-- Icon dock -->
+<div class="dock">
+  <div class="tool active">&#9776;</div>
+  <div class="tool active">&#9998;</div>
+  <div class="tool active">&#8676;</div>
+  <div class="divider"></div>
+  <div class="tool">&#8505;</div>
+  <div class="tool">&#9873;</div>
+  <div class="tool">&#8981;</div>
+  <div class="tool">&#9201;</div>
+  <div class="tool">&#9737;</div>
+</div>
+
+<!-- Layers Widget -->
+<div class="widget w-layers">
+  <div class="widget-header">
+    <h4>Layers</h4>
+    <div class="controls">
+      <div class="ctrl-btn minimize"></div>
+      <div class="ctrl-btn maximize"></div>
+      <div class="ctrl-btn close"></div>
+    </div>
+  </div>
+  <div class="widget-body">
+    <div class="grp">&#9660; Vector Layers (5)</div>
+    <div class="layer-item"><div class="sw on"></div> Points Basic</div>
+    <div class="layer-item"><div class="sw on"></div> Lines Basic</div>
+    <div class="layer-item"><div class="sw"></div> Polygons Basic</div>
+    <div class="layer-item"><div class="sw on"></div> Arrows</div>
+    <div class="layer-item"><div class="sw"></div> Annotations</div>
+    <div class="grp">&#9660; Feature Styling (4)</div>
+    <div class="layer-item"><div class="sw on"></div> Points Styled</div>
+    <div class="layer-item"><div class="sw"></div> Lines Styled</div>
+    <div class="layer-item"><div class="sw on"></div> Polygons Styled</div>
+    <div class="layer-item"><div class="sw"></div> Style From Property</div>
+    <div class="grp">&#9654; Feature Behavior (6)</div>
+    <div class="grp">&#9654; Geodatasets (5)</div>
+    <div class="grp">&#9654; Data Layers (9)</div>
+    <div class="grp">&#9654; Basemaps (4)</div>
+  </div>
+</div>
+
+<!-- Draw Widget -->
+<div class="widget w-draw">
+  <div class="widget-header">
+    <h4>Draw</h4>
+    <div class="controls">
+      <div class="ctrl-btn minimize"></div>
+      <div class="ctrl-btn maximize"></div>
+      <div class="ctrl-btn close"></div>
+    </div>
+  </div>
+  <div class="widget-body">
+    <div class="draw-tools">
+      <div class="draw-tool active"><span class="icon">&#9679;</span><span class="label">Point</span></div>
+      <div class="draw-tool"><span class="icon">&#9588;</span><span class="label">Line</span></div>
+      <div class="draw-tool"><span class="icon">&#9645;</span><span class="label">Polygon</span></div>
+      <div class="draw-tool"><span class="icon">&#9711;</span><span class="label">Circle</span></div>
+      <div class="draw-tool"><span class="icon">&#9633;</span><span class="label">Rectangle</span></div>
+      <div class="draw-tool"><span class="icon">&#10145;</span><span class="label">Arrow</span></div>
+    </div>
+    <div class="draw-actions">
+      <div class="draw-btn primary">Start Drawing</div>
+      <div class="draw-btn secondary">Cancel</div>
+    </div>
+  </div>
+</div>
+
+<!-- Measure Widget -->
+<div class="widget w-measure">
+  <div class="widget-header">
+    <h4>Measure</h4>
+    <div class="controls">
+      <div class="ctrl-btn minimize"></div>
+      <div class="ctrl-btn maximize"></div>
+      <div class="ctrl-btn close"></div>
+    </div>
+  </div>
+  <div class="widget-body">
+    <div class="measure-result">
+      <div class="measure-value">3.42</div>
+      <div class="measure-unit">kilometers</div>
+    </div>
+    <div class="measure-details">
+      <div class="measure-row"><span class="label">Segments</span><span class="value">4</span></div>
+      <div class="measure-row"><span class="label">Bearing</span><span class="value">127.3&deg;</span></div>
+      <div class="measure-row"><span class="label">Elevation &Delta;</span><span class="value">+42m</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- Info Widget (minimized) -->
+<div class="widget w-info">
+  <div class="widget-header">
+    <h4>Info</h4>
+    <div class="controls">
+      <div class="ctrl-btn minimize"></div>
+      <div class="ctrl-btn maximize"></div>
+      <div class="ctrl-btn close"></div>
+    </div>
+  </div>
+  <div class="widget-body"></div>
+</div>
+
+<!-- Coordinates bar -->
+<div class="widget w-coords">
+  <span class="coord-label">Lon</span>
+  <span class="coord-value">-122.41942&deg;</span>
+  <span class="sep"></span>
+  <span class="coord-label">Lat</span>
+  <span class="coord-value">37.77493&deg;</span>
+  <span class="sep"></span>
+  <span class="coord-label">Zoom</span>
+  <span class="coord-value">12</span>
+</div>
+
+<!-- Time slider bar -->
+<div class="widget w-time">
+  <span class="time-label">01/01/2024</span>
+  <div class="time-track"><div class="time-fill"></div><div class="time-thumb"></div></div>
+  <span class="time-label">01/20/2024</span>
+</div>
+
+</body>
+</html>
