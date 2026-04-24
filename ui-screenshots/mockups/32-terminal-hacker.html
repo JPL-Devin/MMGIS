@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>MMGIS Mockup 32: Terminal / Hacker Theme</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Courier New',monospace;background:#0a0a0a;color:#00ff41;height:100vh;overflow:hidden;display:flex;flex-direction:column}
+.top{height:36px;background:#111;display:flex;align-items:center;padding:0 14px;border-bottom:1px solid #1a3a1a;flex-shrink:0;font-size:11px}
+.logo{color:#00ff41;font-weight:700}
+.sep{margin:0 8px;color:#1a3a1a}
+.mission{color:#006622;font-size:10px}
+.right{margin-left:auto;color:#006622;font-size:9px}
+.ws{flex:1;display:flex;overflow:hidden}
+.sb{width:36px;background:#0a0a0a;border-right:1px solid #1a3a1a;display:flex;flex-direction:column;align-items:center;padding:6px 0;gap:1px;flex-shrink:0}
+.t{width:28px;height:28px;display:flex;align-items:center;justify-content:center;font-size:12px;color:#006622;cursor:pointer}
+.t:hover{color:#00ff41;background:#0d1a0d}
+.t.a{color:#00ff41;background:#0d1a0d}
+.pnl{width:240px;background:#0a0a0a;border-right:1px solid #1a3a1a;display:flex;flex-direction:column;flex-shrink:0;font-size:10px}
+.ph{padding:6px 10px;color:#00ff41;border-bottom:1px solid #1a3a1a;font-size:11px;font-weight:700}
+.prompt{padding:4px 10px;color:#006622;font-size:9px}
+.prompt span{color:#00ff41}
+.ll{flex:1;overflow-y:auto;padding:2px 4px}
+.li{padding:2px 6px;color:#00cc33;font-size:9px;display:flex;gap:4px;align-items:center}
+.li:hover{background:#0d1a0d}
+.li .s{color:#00ff41}
+.li .off{color:#333}
+.li .type{color:#006622;font-size:8px}
+.map{flex:1;background:#050505;position:relative;display:flex;align-items:center;justify-content:center;border:1px solid #1a3a1a}
+.ml{color:#0d1a0d;font-size:10px;letter-spacing:4px;text-transform:uppercase}
+.grid{position:absolute;inset:0;background-image:linear-gradient(#0a1a0a 1px,transparent 1px),linear-gradient(90deg,#0a1a0a 1px,transparent 1px);background-size:40px 40px}
+.scanline{position:absolute;inset:0;background:repeating-linear-gradient(transparent,transparent 2px,rgba(0,255,65,.02) 2px,rgba(0,255,65,.02) 4px);pointer-events:none}
+.mc{position:absolute;right:8px;top:8px;display:flex;flex-direction:column;gap:2px}
+.mb{width:24px;height:24px;border:1px solid #1a3a1a;display:flex;align-items:center;justify-content:center;color:#00ff41;cursor:pointer;font-size:10px;background:#0a0a0a}
+.bb{height:28px;background:#0a0a0a;display:flex;align-items:center;padding:0 10px;gap:10px;border-top:1px solid #1a3a1a;font-size:9px;color:#006622;flex-shrink:0}
+.bb .hl{color:#00ff41}
+.ts{flex:1;display:flex;align-items:center;gap:4px}
+.tt{flex:1;height:2px;background:#1a3a1a;position:relative}
+.tf{width:55%;height:100%;background:#00ff41}
+</style>
+</head>
+<body>
+<div class="top"><span class="logo">MMGIS://</span><span class="sep">|</span><span class="mission">ref-mission@sf-bay</span><div class="right">SYS OK | MEM 42% | CONN &#9679;</div></div>
+<div class="ws">
+<div class="sb"><div class="t a">&#9776;</div><div class="t">i</div><div class="t">&#9873;</div><div class="t">&#9998;</div><div class="t">&#8676;</div><div class="t">&#8981;</div><div class="t">T</div><div class="t">&#9737;</div></div>
+<div class="pnl"><div class="ph">[LAYERS]</div>
+<div class="prompt">&gt; filter: <span>_</span></div>
+<div class="ll">
+<div class="li"><span class="s">[&#10003;]</span><span class="type">VEC</span> points_basic</div>
+<div class="li"><span class="s">[&#10003;]</span><span class="type">VEC</span> lines_basic</div>
+<div class="li"><span class="off">[&nbsp;]</span><span class="type">VEC</span> polygons_basic</div>
+<div class="li"><span class="s">[&#10003;]</span><span class="type">VEC</span> arrows</div>
+<div class="li"><span class="off">[&nbsp;]</span><span class="type">VEC</span> annotations</div>
+<div class="li"><span class="s">[&#10003;]</span><span class="type">STY</span> points_styled</div>
+<div class="li"><span class="off">[&nbsp;]</span><span class="type">STY</span> lines_styled</div>
+<div class="li"><span class="s">[&#10003;]</span><span class="type">STY</span> polygons_styled</div>
+<div class="li"><span class="off">[&nbsp;]</span><span class="type">STY</span> style_from_prop</div>
+<div class="li"><span class="off">[&nbsp;]</span><span class="type">BEH</span> popup_basic</div>
+<div class="li"><span class="off">[&nbsp;]</span><span class="type">BEH</span> marker_click</div>
+<div class="li"><span class="s">[&#10003;]</span><span class="type">GEO</span> raster_dem</div>
+<div class="li"><span class="off">[&nbsp;]</span><span class="type">GEO</span> raster_rgb</div>
+<div class="li"><span class="off">[&nbsp;]</span><span class="type">DAT</span> tile_xyz</div>
+<div class="li"><span class="s">[&#10003;]</span><span class="type">DAT</span> tile_wms</div>
+</div></div>
+<div class="map"><div class="grid"></div><div class="scanline"></div><div class="ml">&gt; rendering sf_bay_area...</div><div class="mc"><div class="mb">+</div><div class="mb">-</div><div class="mb">H</div></div></div>
+</div>
+<div class="bb"><span class="hl">LAT:</span>37.775 <span class="hl">LON:</span>-122.419 <span class="hl">Z:</span>12 <span class="hl">LAYERS:</span>7/29<div class="ts"><span>T0</span><div class="tt"><div class="tf"></div></div><span>T1</span></div></div>
+</body>
+</html>

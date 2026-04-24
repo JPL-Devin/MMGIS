@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>MMGIS Mockup 40: Draw Tool UX Redesign</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Inter',system-ui,sans-serif;background:#f8fafc;color:#0f172a;height:100vh;overflow:hidden;padding:20px;display:flex;gap:16px}
+.panel{background:#fff;border:1px solid #e2e8f0;border-radius:14px;padding:16px;box-shadow:0 2px 8px rgba(0,0,0,.04);display:flex;flex-direction:column;flex:1}
+.panel-title{font-size:13px;font-weight:700;color:#0f172a;margin-bottom:12px;display:flex;align-items:center;gap:6px}
+.panel-title span{color:#2563eb}
+/* Drawing tools panel */
+.tool-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:4px;margin-bottom:12px}
+.draw-btn{display:flex;flex-direction:column;align-items:center;gap:3px;padding:8px 4px;border-radius:8px;background:#f8fafc;border:1px solid #e2e8f0;cursor:pointer;font-size:8px;color:#64748b}
+.draw-btn:hover{background:#eff6ff;border-color:#bfdbfe;color:#2563eb}
+.draw-btn.a{background:#eff6ff;border-color:#2563eb;color:#2563eb}
+.draw-icon{font-size:16px}
+.section{margin-bottom:10px}
+.section-title{font-size:9px;text-transform:uppercase;letter-spacing:.5px;color:#94a3b8;font-weight:600;margin-bottom:6px}
+/* Style controls */
+.style-row{display:flex;align-items:center;gap:8px;margin-bottom:6px;font-size:10px}
+.style-label{width:60px;color:#64748b;font-size:9px}
+.color-swatch{width:24px;height:24px;border-radius:6px;border:2px solid #e2e8f0;cursor:pointer}
+.slider-container{flex:1;display:flex;align-items:center;gap:4px}
+.slider{flex:1;height:4px;background:#e2e8f0;border-radius:2px;position:relative}
+.slider-fill{height:100%;background:#2563eb;border-radius:2px}
+.slider-val{font-size:9px;color:#0f172a;font-weight:500;width:30px;text-align:right}
+.select-row{display:flex;gap:4px}
+.select-opt{flex:1;padding:4px;text-align:center;font-size:8px;border-radius:4px;background:#f1f5f9;color:#64748b;cursor:pointer;border:1px solid #e2e8f0}
+.select-opt.a{background:#eff6ff;color:#2563eb;border-color:#2563eb}
+/* Feature list */
+.feature-list{flex:1;overflow-y:auto;border:1px solid #f1f5f9;border-radius:8px}
+.feature{padding:6px 8px;display:flex;align-items:center;gap:6px;font-size:10px;border-bottom:1px solid #f8fafc}
+.feature:hover{background:#fafafa}
+.feature.selected{background:#eff6ff;border-left:3px solid #2563eb}
+.f-icon{font-size:12px;color:#64748b}
+.f-name{flex:1;color:#334155}
+.f-type{font-size:7px;padding:1px 5px;border-radius:3px;background:#f1f5f9;color:#64748b}
+.f-actions{display:flex;gap:2px}
+.f-btn{width:18px;height:18px;border-radius:4px;display:flex;align-items:center;justify-content:center;font-size:8px;color:#94a3b8;cursor:pointer}
+.f-btn:hover{background:#f1f5f9;color:#2563eb}
+/* File management */
+.file-row{display:flex;gap:4px;margin-bottom:6px}
+.file-sel{flex:1;background:#f8fafc;border:1px solid #e2e8f0;border-radius:6px;padding:5px 8px;font-size:10px;color:#334155;display:flex;align-items:center;gap:4px}
+.file-sel .icon{color:#2563eb;font-size:12px}
+.file-btn{padding:5px 10px;font-size:9px;border-radius:6px;cursor:pointer;border:1px solid #e2e8f0;color:#64748b;background:#fff}
+.file-btn:hover{background:#f1f5f9}
+.file-btn.primary{background:#2563eb;color:#fff;border-color:#2563eb}
+/* Clipping operations */
+.clip-section{margin-bottom:8px}
+.clip-ops{display:flex;gap:4px}
+.clip-op{flex:1;padding:6px;text-align:center;border-radius:6px;background:#f8fafc;border:1px solid #e2e8f0;cursor:pointer;font-size:8px;color:#64748b}
+.clip-op:hover{border-color:#2563eb;color:#2563eb}
+.clip-op.a{background:#eff6ff;border-color:#2563eb;color:#2563eb}
+.clip-op .icon{font-size:14px;display:block;margin-bottom:2px}
+/* Properties panel */
+.props{flex:1;overflow-y:auto}
+.prop-row{display:flex;padding:3px 0;font-size:10px;gap:4px}
+.prop-key{width:80px;color:#64748b;flex-shrink:0;font-size:9px}
+.prop-val{flex:1;background:#f8fafc;border:1px solid #e2e8f0;border-radius:4px;padding:2px 6px;font-size:9px;color:#0f172a;font-family:monospace}
+.actions-bar{display:flex;gap:4px;margin-top:auto;padding-top:8px;border-top:1px solid #f1f5f9}
+.action-btn{flex:1;padding:6px;text-align:center;font-size:9px;border-radius:6px;cursor:pointer;border:1px solid #e2e8f0;color:#64748b;background:#fff}
+.action-btn:hover{background:#f1f5f9}
+.action-btn.primary{background:#2563eb;color:#fff;border-color:#2563eb}
+.action-btn.danger{color:#dc2626;border-color:#fecaca}
+</style>
+</head>
+<body>
+<div class="panel" style="max-width:240px">
+<div class="panel-title"><span>&#9998;</span> Draw Tools</div>
+<div class="tool-grid">
+<div class="draw-btn a"><div class="draw-icon">&#11044;</div>Point</div>
+<div class="draw-btn"><div class="draw-icon">&#9135;</div>Line</div>
+<div class="draw-btn"><div class="draw-icon">&#11036;</div>Polygon</div>
+<div class="draw-btn"><div class="draw-icon">&#11200;</div>Circle</div>
+<div class="draw-btn"><div class="draw-icon">&#10140;</div>Arrow</div>
+<div class="draw-btn"><div class="draw-icon">A</div>Text</div>
+<div class="draw-btn"><div class="draw-icon">&#8631;</div>Freehand</div>
+<div class="draw-btn"><div class="draw-icon">&#9633;</div>Rectangle</div>
+</div>
+<div class="section"><div class="section-title">Stroke</div>
+<div class="style-row"><span class="style-label">Color</span><div class="color-swatch" style="background:#2563eb"></div><div class="slider-container"><div class="slider"><div class="slider-fill" style="width:80%"></div></div><div class="slider-val">80%</div></div></div>
+<div class="style-row"><span class="style-label">Width</span><div class="slider-container"><div class="slider"><div class="slider-fill" style="width:30%"></div></div><div class="slider-val">3px</div></div></div>
+<div class="style-row"><span class="style-label">Style</span><div class="select-row"><div class="select-opt a">Solid</div><div class="select-opt">Dash</div><div class="select-opt">Dot</div></div></div>
+</div>
+<div class="section"><div class="section-title">Fill</div>
+<div class="style-row"><span class="style-label">Color</span><div class="color-swatch" style="background:#2563eb44"></div><div class="slider-container"><div class="slider"><div class="slider-fill" style="width:30%"></div></div><div class="slider-val">30%</div></div></div>
+</div>
+<div class="clip-section"><div class="section-title">Clipping Operation</div>
+<div class="clip-ops">
+<div class="clip-op a"><div class="icon">&#8991;</div>Over</div>
+<div class="clip-op"><div class="icon">&#8993;</div>Under</div>
+<div class="clip-op"><div class="icon">&#8982;</div>Through</div>
+</div></div>
+<div class="file-row"><div class="file-sel"><span class="icon">&#128193;</span>my_drawings.geojson</div><div class="file-btn">&#9660;</div></div>
+<div class="actions-bar"><div class="action-btn danger">Clear</div><div class="action-btn">Export</div><div class="action-btn primary">Save</div></div>
+</div>
+
+<div class="panel" style="max-width:260px">
+<div class="panel-title"><span>&#128203;</span> Features (12)</div>
+<div class="feature-list">
+<div class="feature selected"><span class="f-icon">&#11044;</span><span class="f-name">Waypoint Alpha</span><span class="f-type">Point</span><div class="f-actions"><span class="f-btn">&#9998;</span><span class="f-btn">&#128065;</span><span class="f-btn">&#128465;</span></div></div>
+<div class="feature"><span class="f-icon">&#11044;</span><span class="f-name">Waypoint Beta</span><span class="f-type">Point</span><div class="f-actions"><span class="f-btn">&#9998;</span><span class="f-btn">&#128065;</span><span class="f-btn">&#128465;</span></div></div>
+<div class="feature"><span class="f-icon">&#9135;</span><span class="f-name">Traverse Path 1</span><span class="f-type">Line</span><div class="f-actions"><span class="f-btn">&#9998;</span><span class="f-btn">&#128065;</span><span class="f-btn">&#128465;</span></div></div>
+<div class="feature"><span class="f-icon">&#11036;</span><span class="f-name">Study Area A</span><span class="f-type">Polygon</span><div class="f-actions"><span class="f-btn">&#9998;</span><span class="f-btn">&#128065;</span><span class="f-btn">&#128465;</span></div></div>
+<div class="feature"><span class="f-icon">&#10140;</span><span class="f-name">Direction Arrow</span><span class="f-type">Arrow</span><div class="f-actions"><span class="f-btn">&#9998;</span><span class="f-btn">&#128065;</span><span class="f-btn">&#128465;</span></div></div>
+<div class="feature"><span class="f-icon">A</span><span class="f-name">Label: Base Camp</span><span class="f-type">Text</span><div class="f-actions"><span class="f-btn">&#9998;</span><span class="f-btn">&#128065;</span><span class="f-btn">&#128465;</span></div></div>
+</div>
+
+<div class="panel-title" style="margin-top:12px"><span>&#128295;</span> Properties</div>
+<div class="props">
+<div class="prop-row"><span class="prop-key">Name</span><div class="prop-val">Waypoint Alpha</div></div>
+<div class="prop-row"><span class="prop-key">Description</span><div class="prop-val">Landing site candidate</div></div>
+<div class="prop-row"><span class="prop-key">Latitude</span><div class="prop-val">37.7749</div></div>
+<div class="prop-row"><span class="prop-key">Longitude</span><div class="prop-val">-122.4194</div></div>
+<div class="prop-row"><span class="prop-key">Elevation</span><div class="prop-val">12.5m</div></div>
+<div class="prop-row"><span class="prop-key">Created</span><div class="prop-val">2024-01-12 14:30</div></div>
+<div class="prop-row"><span class="prop-key">Author</span><div class="prop-val">admin</div></div>
+</div>
+<div class="actions-bar"><div class="action-btn">Zoom To</div><div class="action-btn">Copy GeoJSON</div><div class="action-btn primary">Update</div></div>
+</div>
+</body>
+</html>

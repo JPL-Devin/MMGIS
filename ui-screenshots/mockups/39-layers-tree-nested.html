@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>MMGIS Mockup 39: Nested Tree Layer Manager</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Inter',system-ui,sans-serif;background:#fafafa;color:#262626;height:100vh;overflow:hidden;display:flex;flex-direction:column}
+.top{height:42px;background:#fff;display:flex;align-items:center;padding:0 16px;border-bottom:1px solid #e5e5e5;flex-shrink:0}
+.logo{font-size:16px;font-weight:800;color:#7c3aed}
+.mission{color:#a3a3a3;font-size:11px;margin-left:12px}
+.right{margin-left:auto;display:flex;gap:8px;align-items:center}
+.av{width:28px;height:28px;border-radius:50%;background:#7c3aed;color:#fff;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700}
+.ws{flex:1;display:flex;overflow:hidden}
+.sb{width:42px;background:#fff;border-right:1px solid #e5e5e5;display:flex;flex-direction:column;align-items:center;padding:8px 0;gap:2px;flex-shrink:0}
+.t{width:30px;height:30px;display:flex;align-items:center;justify-content:center;border-radius:8px;font-size:12px;color:#d4d4d4;cursor:pointer}
+.t:hover{background:#f5f3ff;color:#7c3aed}
+.t.a{background:#f5f3ff;color:#7c3aed}
+/* Tree-style layer panel */
+.pnl{width:300px;background:#fff;border-right:1px solid #e5e5e5;display:flex;flex-direction:column;flex-shrink:0}
+.ph{padding:10px 14px;font-size:13px;font-weight:600;color:#262626;border-bottom:1px solid #f5f5f5;display:flex;align-items:center;gap:8px}
+.ph-search{flex:1;background:#fafafa;border:1px solid #e5e5e5;border-radius:8px;padding:5px 10px;font-size:10px;color:#737373;font-family:inherit}
+.ph-actions{display:flex;gap:4px}
+.ph-btn{width:24px;height:24px;border-radius:6px;background:#fafafa;border:1px solid #e5e5e5;display:flex;align-items:center;justify-content:center;font-size:10px;color:#737373;cursor:pointer}
+.tree{flex:1;overflow-y:auto;padding:4px 0}
+.node{display:flex;flex-direction:column}
+.node-row{display:flex;align-items:center;padding:3px 8px;cursor:pointer;gap:4px;font-size:11px}
+.node-row:hover{background:#faf5ff}
+.indent{display:inline-block;flex-shrink:0}
+.arrow{width:14px;height:14px;display:flex;align-items:center;justify-content:center;font-size:8px;color:#a3a3a3;flex-shrink:0}
+.icon{width:16px;height:16px;border-radius:3px;display:flex;align-items:center;justify-content:center;font-size:8px;flex-shrink:0}
+.icon-folder{background:#f5f3ff;color:#7c3aed}
+.icon-vec{background:#eff6ff;color:#2563eb}
+.icon-tile{background:#ecfdf5;color:#059669}
+.icon-data{background:#fef3c7;color:#d97706}
+.icon-geo{background:#fce7f3;color:#be185d}
+.name{flex:1;color:#404040;font-size:10px}
+.badge{font-size:7px;padding:1px 5px;border-radius:3px;font-weight:600;flex-shrink:0}
+.b-vec{background:#eff6ff;color:#2563eb}
+.b-tile{background:#ecfdf5;color:#059669}
+.b-data{background:#fef3c7;color:#d97706}
+.b-geo{background:#fce7f3;color:#be185d}
+.b-model{background:#f3e8ff;color:#7c3aed}
+.tog{width:26px;height:13px;border-radius:7px;background:#e5e5e5;position:relative;cursor:pointer;flex-shrink:0}
+.tog.on{background:#8b5cf6}
+.tog::after{content:'';position:absolute;width:9px;height:9px;border-radius:50%;background:#fff;top:2px;left:2px;box-shadow:0 1px 2px rgba(0,0,0,.08)}
+.tog.on::after{left:15px}
+.count{font-size:8px;color:#a3a3a3;flex-shrink:0}
+/* Map */
+.map{flex:1;background:#f5f5f5;position:relative;display:flex;align-items:center;justify-content:center}
+.ml{font-size:11px;color:#d4d4d4;letter-spacing:3px;text-transform:uppercase}
+.mc{position:absolute;right:10px;top:10px;display:flex;flex-direction:column;gap:2px}
+.mb{width:30px;height:30px;background:#fff;border:1px solid #e5e5e5;border-radius:8px;display:flex;align-items:center;justify-content:center;color:#7c3aed;cursor:pointer;font-size:13px;box-shadow:0 1px 3px rgba(0,0,0,.05)}
+.bb{height:34px;background:#fff;display:flex;align-items:center;padding:0 14px;gap:12px;border-top:1px solid #e5e5e5;font-size:10px;color:#a3a3a3;flex-shrink:0}
+.cd{font-family:monospace;color:#7c3aed;font-size:10px}
+.ts{flex:1;display:flex;align-items:center;gap:4px}
+.tl{font-size:9px;color:#d4d4d4}
+.tt{flex:1;height:3px;background:#f5f5f5;border-radius:2px;position:relative}
+.tf{width:55%;height:100%;background:#8b5cf6;border-radius:2px}
+</style>
+</head>
+<body>
+<div class="top"><div class="logo">MMGIS</div><div class="mission">Reference Mission</div><div class="right"><div class="av">A</div></div></div>
+<div class="ws">
+<div class="sb"><div class="t a">&#9776;</div><div class="t">&#8505;</div><div class="t">&#9873;</div><div class="t">&#9998;</div><div class="t">&#8676;</div><div class="t">&#8981;</div></div>
+<div class="pnl">
+<div class="ph"><input class="ph-search" placeholder="Search layers..." readonly/><div class="ph-actions"><div class="ph-btn">&#9881;</div><div class="ph-btn">+</div></div></div>
+<div class="tree">
+<div class="node"><div class="node-row"><span class="arrow">&#9660;</span><span class="icon icon-folder">&#128193;</span><span class="name" style="font-weight:600">Vector Layers</span><span class="count">5</span></div>
+<div class="node"><div class="node-row"><span class="indent" style="width:16px"></span><span class="arrow">&#9660;</span><span class="icon icon-vec">V</span><span class="name">Points Basic</span><span class="badge b-vec">VEC</span><span class="tog on"></span></div>
+<div class="node-row" style="padding-left:44px;font-size:9px;color:#a3a3a3">5 features &bull; GeoJSON &bull; Updated Jan 12</div></div>
+<div class="node"><div class="node-row"><span class="indent" style="width:16px"></span><span class="arrow">&bull;</span><span class="icon icon-vec">V</span><span class="name">Lines Basic</span><span class="badge b-vec">VEC</span><span class="tog on"></span></div></div>
+<div class="node"><div class="node-row"><span class="indent" style="width:16px"></span><span class="arrow">&bull;</span><span class="icon icon-vec">V</span><span class="name">Polygons Basic</span><span class="badge b-vec">VEC</span><span class="tog"></span></div></div>
+<div class="node"><div class="node-row"><span class="indent" style="width:16px"></span><span class="arrow">&bull;</span><span class="icon icon-vec">V</span><span class="name">Arrows</span><span class="badge b-vec">VEC</span><span class="tog on"></span></div></div>
+<div class="node"><div class="node-row"><span class="indent" style="width:16px"></span><span class="arrow">&bull;</span><span class="icon icon-vec">V</span><span class="name">Annotations</span><span class="badge b-vec">VEC</span><span class="tog"></span></div></div>
+</div>
+<div class="node"><div class="node-row"><span class="arrow">&#9660;</span><span class="icon icon-folder">&#128193;</span><span class="name" style="font-weight:600">Feature Styling</span><span class="count">4</span></div>
+<div class="node"><div class="node-row"><span class="indent" style="width:16px"></span><span class="arrow">&bull;</span><span class="icon icon-vec">S</span><span class="name">Points Styled</span><span class="badge b-vec">VEC</span><span class="tog on"></span></div></div>
+<div class="node"><div class="node-row"><span class="indent" style="width:16px"></span><span class="arrow">&bull;</span><span class="icon icon-vec">S</span><span class="name">Lines Styled</span><span class="badge b-vec">VEC</span><span class="tog"></span></div></div>
+<div class="node"><div class="node-row"><span class="indent" style="width:16px"></span><span class="arrow">&bull;</span><span class="icon icon-vec">S</span><span class="name">Polygons Styled</span><span class="badge b-vec">VEC</span><span class="tog on"></span></div></div>
+<div class="node"><div class="node-row"><span class="indent" style="width:16px"></span><span class="arrow">&bull;</span><span class="icon icon-vec">S</span><span class="name">Style From Prop</span><span class="badge b-vec">VEC</span><span class="tog"></span></div></div>
+</div>
+<div class="node"><div class="node-row"><span class="arrow">&#9654;</span><span class="icon icon-folder">&#128193;</span><span class="name" style="font-weight:600">Feature Behavior</span><span class="count">6</span></div></div>
+<div class="node"><div class="node-row"><span class="arrow">&#9660;</span><span class="icon icon-folder">&#128193;</span><span class="name" style="font-weight:600">Geodatasets</span><span class="count">5</span></div>
+<div class="node"><div class="node-row"><span class="indent" style="width:16px"></span><span class="arrow">&bull;</span><span class="icon icon-geo">G</span><span class="name">Raster DEM</span><span class="badge b-geo">GEO</span><span class="tog on"></span></div></div>
+<div class="node"><div class="node-row"><span class="indent" style="width:16px"></span><span class="arrow">&bull;</span><span class="icon icon-geo">G</span><span class="name">Raster RGB</span><span class="badge b-geo">GEO</span><span class="tog"></span></div></div>
+</div>
+<div class="node"><div class="node-row"><span class="arrow">&#9654;</span><span class="icon icon-folder">&#128193;</span><span class="name" style="font-weight:600">Data Layers</span><span class="count">9</span></div></div>
+</div>
+</div>
+<div class="map"><div class="ml">San Francisco Bay Area</div><div class="mc"><div class="mb">+</div><div class="mb">&minus;</div><div class="mb">&#8962;</div></div></div>
+</div>
+<div class="bb"><span class="cd">-122.419&deg;, 37.775&deg;</span><span>Z12</span><div class="ts"><span class="tl">Jan 01</span><div class="tt"><div class="tf"></div></div><span class="tl">Jan 20</span></div></div>
+</body>
+</html>

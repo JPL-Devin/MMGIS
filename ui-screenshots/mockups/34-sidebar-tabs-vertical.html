@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>MMGIS Mockup 34: Vertical Tabs Sidebar</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Inter',system-ui,sans-serif;background:#18181b;color:#e4e4e7;height:100vh;overflow:hidden;display:flex}
+/* Vertical tabs on far left */
+.vtabs{width:40px;background:#09090b;display:flex;flex-direction:column;align-items:center;padding:8px 0;gap:2px;flex-shrink:0;border-right:1px solid #27272a}
+.vt{width:32px;height:32px;display:flex;align-items:center;justify-content:center;border-radius:6px;font-size:12px;color:#52525b;cursor:pointer;position:relative}
+.vt:hover{color:#a1a1aa;background:#18181b}
+.vt.a{color:#a78bfa;background:#18181b}
+.vt.a::after{content:'';position:absolute;left:0;top:6px;bottom:6px;width:2px;background:#a78bfa;border-radius:1px}
+.vt-logo{font-size:14px;color:#a78bfa;font-weight:700;margin-bottom:8px}
+.vt-bottom{margin-top:auto;display:flex;flex-direction:column;gap:2px;align-items:center}
+/* Active tab panel */
+.panel{width:280px;background:#18181b;border-right:1px solid #27272a;display:flex;flex-direction:column;flex-shrink:0}
+.p-head{padding:10px 12px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #27272a}
+.p-title{font-size:12px;font-weight:600;color:#e4e4e7}
+.p-close{font-size:10px;color:#52525b;cursor:pointer}
+.p-search{margin:6px 8px;background:#27272a;border:1px solid #3f3f46;border-radius:6px;padding:5px 8px;font-size:10px;color:#a1a1aa;font-family:inherit}
+.p-content{flex:1;overflow-y:auto;padding:4px 6px}
+.sec{margin-bottom:4px}
+.sec-h{padding:4px 8px;font-size:10px;font-weight:600;color:#a78bfa;cursor:pointer;display:flex;align-items:center;gap:4px;border-radius:4px}
+.sec-h:hover{background:#27272a}
+.sec-c{font-size:9px;color:#52525b;margin-left:auto}
+.li{padding:3px 8px 3px 14px;display:flex;align-items:center;gap:6px;font-size:10px;color:#d4d4d8;border-radius:4px}
+.li:hover{background:#27272a}
+.ld{width:3px;height:12px;border-radius:1px}
+.tog{width:24px;height:12px;border-radius:6px;background:#3f3f46;position:relative;cursor:pointer;margin-left:auto;flex-shrink:0}
+.tog.on{background:#8b5cf6}
+.tog::after{content:'';position:absolute;width:8px;height:8px;border-radius:50%;background:#71717a;top:2px;left:2px}
+.tog.on::after{left:14px;background:#fff}
+/* Main content */
+.main{flex:1;display:flex;flex-direction:column}
+.top-bar{height:36px;background:#18181b;border-bottom:1px solid #27272a;display:flex;align-items:center;padding:0 12px;gap:8px}
+.breadcrumb{font-size:10px;color:#71717a;display:flex;gap:4px;align-items:center}
+.breadcrumb span{color:#a78bfa}
+.top-right{margin-left:auto;display:flex;gap:6px;align-items:center}
+.chip{padding:3px 8px;font-size:9px;border-radius:4px;background:#27272a;color:#a1a1aa;cursor:pointer;border:1px solid #3f3f46}
+.chip:hover{border-color:#a78bfa}
+.av{width:22px;height:22px;border-radius:50%;background:#a78bfa;color:#18181b;display:flex;align-items:center;justify-content:center;font-size:8px;font-weight:700}
+.map-area{flex:1;background:#09090b;position:relative;display:flex;align-items:center;justify-content:center}
+.ml{font-size:10px;color:#27272a;letter-spacing:4px;text-transform:uppercase}
+.mc{position:absolute;right:8px;top:8px;display:flex;flex-direction:column;gap:2px}
+.mb{width:26px;height:26px;background:#18181bcc;border:1px solid #27272a;border-radius:6px;display:flex;align-items:center;justify-content:center;color:#a78bfa;cursor:pointer;font-size:11px}
+.status{height:28px;background:#18181b;border-top:1px solid #27272a;display:flex;align-items:center;padding:0 10px;gap:10px;font-size:9px;color:#52525b}
+.status .hl{color:#a78bfa}
+.ts{flex:1;display:flex;align-items:center;gap:4px}
+.tt{flex:1;height:2px;background:#27272a;border-radius:1px}
+.tf{width:55%;height:100%;background:#8b5cf6;border-radius:1px}
+</style>
+</head>
+<body>
+<div class="vtabs">
+<div class="vt-logo">M</div>
+<div class="vt a">&#9776;</div>
+<div class="vt">&#8505;</div>
+<div class="vt">&#9873;</div>
+<div class="vt">&#9998;</div>
+<div class="vt">&#8676;</div>
+<div class="vt">&#8981;</div>
+<div class="vt">T</div>
+<div class="vt">&#9737;</div>
+<div class="vt-bottom"><div class="vt">&#9878;</div><div class="vt">&#9881;</div></div>
+</div>
+<div class="panel">
+<div class="p-head"><span class="p-title">Layers</span><span class="p-close">&times;</span></div>
+<input class="p-search" placeholder="Search layers..." readonly/>
+<div class="p-content">
+<div class="sec"><div class="sec-h">&#9660; Vector<span class="sec-c">5</span></div>
+<div class="li"><div class="ld" style="background:#8b5cf6"></div>Points Basic<div class="tog on"></div></div>
+<div class="li"><div class="ld" style="background:#10b981"></div>Lines Basic<div class="tog on"></div></div>
+<div class="li"><div class="ld" style="background:#f59e0b"></div>Polygons<div class="tog"></div></div>
+<div class="li"><div class="ld" style="background:#ef4444"></div>Arrows<div class="tog on"></div></div>
+<div class="li"><div class="ld" style="background:#6366f1"></div>Annotations<div class="tog"></div></div></div>
+<div class="sec"><div class="sec-h">&#9660; Styling<span class="sec-c">4</span></div>
+<div class="li"><div class="ld" style="background:#ec4899"></div>Points Styled<div class="tog on"></div></div>
+<div class="li"><div class="ld" style="background:#14b8a6"></div>Lines Styled<div class="tog"></div></div>
+<div class="li"><div class="ld" style="background:#f97316"></div>Polygons Styled<div class="tog on"></div></div>
+<div class="li"><div class="ld" style="background:#3b82f6"></div>Style From Prop<div class="tog"></div></div></div>
+<div class="sec"><div class="sec-h">&#9654; Behavior<span class="sec-c">6</span></div></div>
+<div class="sec"><div class="sec-h">&#9654; Geodatasets<span class="sec-c">5</span></div></div>
+<div class="sec"><div class="sec-h">&#9654; Data<span class="sec-c">9</span></div></div>
+</div></div>
+<div class="main">
+<div class="top-bar"><div class="breadcrumb"><span>MMGIS</span> / Reference Mission / <span>Map</span></div><div class="top-right"><div class="chip">Map</div><div class="chip">Globe</div><div class="chip">Split</div><div class="av">A</div></div></div>
+<div class="map-area"><div class="ml">San Francisco Bay</div><div class="mc"><div class="mb">+</div><div class="mb">&minus;</div><div class="mb">&#8962;</div></div></div>
+<div class="status"><span class="hl">-122.419&deg;</span>,<span class="hl">37.775&deg;</span> Z12 | 8/29 layers<div class="ts"><span>Jan 01</span><div class="tt"><div class="tf"></div></div><span>Jan 20</span></div></div>
+</div>
+</body>
+</html>

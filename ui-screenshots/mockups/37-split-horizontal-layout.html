@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>MMGIS Mockup 37: Horizontal Split Map+Globe</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Inter',system-ui,sans-serif;background:#111;color:#e5e5e5;height:100vh;overflow:hidden;display:flex;flex-direction:column}
+.top{height:38px;background:#1a1a1a;display:flex;align-items:center;padding:0 14px;border-bottom:1px solid #333;flex-shrink:0}
+.logo{font-size:14px;font-weight:700;color:#f97316}
+.mission{color:#666;font-size:10px;margin-left:10px}
+.right{margin-left:auto;display:flex;gap:6px;align-items:center;font-size:10px;color:#888}
+.av{width:24px;height:24px;border-radius:50%;background:#f97316;color:#111;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:700}
+.main{flex:1;display:flex;overflow:hidden}
+.tools{width:36px;background:#1a1a1a;border-right:1px solid #333;display:flex;flex-direction:column;align-items:center;padding:6px 0;gap:1px;flex-shrink:0}
+.t{width:28px;height:28px;display:flex;align-items:center;justify-content:center;border-radius:6px;font-size:11px;color:#555;cursor:pointer}
+.t:hover{background:#333;color:#e5e5e5}
+.t.a{color:#f97316;background:#2a1a0a}
+.pnl{width:220px;background:#1a1a1a;border-right:1px solid #333;flex-shrink:0;display:flex;flex-direction:column}
+.ph{padding:8px 10px;font-size:11px;font-weight:600;border-bottom:1px solid #333}
+.ll{flex:1;overflow-y:auto;padding:2px 4px;font-size:9px}
+.li{padding:3px 6px;display:flex;align-items:center;gap:4px;border-radius:3px;color:#ccc}
+.li:hover{background:#222}
+.ld{width:3px;height:10px;border-radius:1px}
+.tog{width:20px;height:10px;border-radius:5px;background:#333;position:relative;margin-left:auto;flex-shrink:0;cursor:pointer}
+.tog.on{background:#f97316}
+.tog::after{content:'';position:absolute;width:6px;height:6px;border-radius:50%;background:#666;top:2px;left:2px}
+.tog.on::after{left:12px;background:#fff}
+.content{flex:1;display:flex;flex-direction:column}
+/* Horizontal split: map top, globe bottom */
+.split{flex:1;display:flex;flex-direction:column}
+.panel{flex:1;position:relative;display:flex;align-items:center;justify-content:center}
+.panel-map{background:#0d1117;border-bottom:2px solid #f97316}
+.panel-globe{background:#0a0e14}
+.panel-label{position:absolute;top:6px;left:8px;font-size:9px;color:#555;background:#1a1a1aaa;padding:2px 8px;border-radius:4px;backdrop-filter:blur(4px)}
+.panel-ml{font-size:9px;color:#222;letter-spacing:3px;text-transform:uppercase}
+.splitter{height:4px;background:#333;cursor:row-resize;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.splitter-handle{width:30px;height:2px;background:#555;border-radius:1px}
+.mc{position:absolute;right:6px;top:6px;display:flex;flex-direction:column;gap:1px}
+.mb{width:22px;height:22px;background:#1a1a1acc;border:1px solid #333;border-radius:4px;display:flex;align-items:center;justify-content:center;color:#f97316;cursor:pointer;font-size:10px}
+.bb{height:26px;background:#1a1a1a;display:flex;align-items:center;padding:0 10px;gap:10px;border-top:1px solid #333;font-size:9px;color:#555;flex-shrink:0}
+.bb .hl{color:#f97316}
+.ts{flex:1;display:flex;align-items:center;gap:4px}
+.tt{flex:1;height:2px;background:#333;border-radius:1px}
+.tf{width:55%;height:100%;background:#f97316;border-radius:1px}
+</style>
+</head>
+<body>
+<div class="top"><div class="logo">MMGIS</div><div class="mission">Reference Mission</div><div class="right">Synced &#9679;<div class="av">A</div></div></div>
+<div class="main">
+<div class="tools"><div class="t a">&#9776;</div><div class="t">&#8505;</div><div class="t">&#9873;</div><div class="t">&#9998;</div><div class="t">&#8676;</div><div class="t">&#8981;</div><div class="t">T</div><div class="t">&#9737;</div></div>
+<div class="pnl"><div class="ph">Layers</div><div class="ll">
+<div class="li"><div class="ld" style="background:#f97316"></div>Points Basic<div class="tog on"></div></div>
+<div class="li"><div class="ld" style="background:#10b981"></div>Lines Basic<div class="tog on"></div></div>
+<div class="li"><div class="ld" style="background:#eab308"></div>Polygons<div class="tog"></div></div>
+<div class="li"><div class="ld" style="background:#ef4444"></div>Arrows<div class="tog on"></div></div>
+<div class="li"><div class="ld" style="background:#8b5cf6"></div>Annotations<div class="tog"></div></div>
+<div class="li"><div class="ld" style="background:#ec4899"></div>Points Styled<div class="tog on"></div></div>
+<div class="li"><div class="ld" style="background:#14b8a6"></div>Lines Styled<div class="tog"></div></div>
+<div class="li"><div class="ld" style="background:#f97316"></div>Polygons Styled<div class="tog on"></div></div>
+<div class="li"><div class="ld" style="background:#3b82f6"></div>Style From Prop<div class="tog"></div></div>
+<div class="li"><div class="ld" style="background:#6366f1"></div>Raster DEM<div class="tog on"></div></div>
+<div class="li"><div class="ld" style="background:#a855f7"></div>Raster RGB<div class="tog"></div></div>
+</div></div>
+<div class="content">
+<div class="split">
+<div class="panel panel-map"><div class="panel-label">&#9680; 2D Map</div><div class="panel-ml">San Francisco Bay</div><div class="mc"><div class="mb">+</div><div class="mb">-</div></div></div>
+<div class="splitter"><div class="splitter-handle"></div></div>
+<div class="panel panel-globe"><div class="panel-label">&#127760; 3D Globe</div><div class="panel-ml">Globe View</div><div class="mc"><div class="mb">+</div><div class="mb">-</div></div></div>
+</div>
+<div class="bb"><span class="hl">-122.419&deg;</span>, <span class="hl">37.775&deg;</span> Z12 | Sync: On<div class="ts"><span>Jan 01</span><div class="tt"><div class="tf"></div></div><span>Jan 20</span></div></div>
+</div>
+</div>
+</body>
+</html>

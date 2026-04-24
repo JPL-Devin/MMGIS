@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>MMGIS Mockup 41: Measure Tool UX Redesign</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Inter',system-ui,sans-serif;background:#f1f5f9;color:#0f172a;height:100vh;overflow:hidden;padding:20px;display:flex;gap:16px}
+.panel{background:#fff;border:1px solid #e2e8f0;border-radius:14px;padding:16px;box-shadow:0 2px 8px rgba(0,0,0,.04);display:flex;flex-direction:column}
+.panel-title{font-size:13px;font-weight:700;color:#0f172a;margin-bottom:10px;display:flex;align-items:center;gap:6px}
+.panel-title span{color:#059669}
+.section{margin-bottom:10px}
+.section-title{font-size:9px;text-transform:uppercase;letter-spacing:.5px;color:#94a3b8;font-weight:600;margin-bottom:6px}
+/* Measure modes */
+.modes{display:flex;gap:4px;margin-bottom:12px}
+.mode{flex:1;padding:8px;text-align:center;border-radius:8px;background:#f8fafc;border:1px solid #e2e8f0;cursor:pointer;font-size:9px;color:#64748b}
+.mode:hover{border-color:#059669;color:#059669}
+.mode.a{background:#ecfdf5;border-color:#059669;color:#059669}
+.mode .icon{font-size:16px;display:block;margin-bottom:2px}
+/* Results */
+.result-card{background:#f8fafc;border:1px solid #e2e8f0;border-radius:10px;padding:10px;margin-bottom:8px}
+.result-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:6px}
+.result-title{font-size:10px;font-weight:600;color:#0f172a}
+.result-badge{font-size:7px;padding:2px 6px;border-radius:4px;background:#ecfdf5;color:#059669;font-weight:600}
+.result-grid{display:grid;grid-template-columns:1fr 1fr;gap:4px}
+.result-item{display:flex;flex-direction:column;gap:1px}
+.result-label{font-size:8px;color:#94a3b8}
+.result-value{font-size:12px;font-weight:600;color:#0f172a;font-family:monospace}
+.result-unit{font-size:8px;color:#64748b;font-weight:normal}
+/* Elevation profile */
+.profile{flex:1;min-height:0}
+.profile-chart{height:100px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;position:relative;overflow:hidden;margin-bottom:4px}
+.profile-bars{display:flex;align-items:flex-end;height:100%;padding:4px;gap:1px}
+.pb{flex:1;background:#10b981;border-radius:1px 1px 0 0;min-height:2px}
+.profile-labels{display:flex;justify-content:space-between;font-size:7px;color:#94a3b8}
+/* Waypoints list */
+.waypoints{flex:1;overflow-y:auto;border:1px solid #f1f5f9;border-radius:8px}
+.wp{padding:5px 8px;display:flex;align-items:center;gap:6px;font-size:10px;border-bottom:1px solid #f8fafc}
+.wp:hover{background:#f8fafc}
+.wp-num{width:18px;height:18px;border-radius:50%;background:#ecfdf5;color:#059669;display:flex;align-items:center;justify-content:center;font-size:8px;font-weight:700;flex-shrink:0}
+.wp-coords{flex:1;font-family:monospace;font-size:9px;color:#475569}
+.wp-dist{font-size:9px;color:#059669;font-weight:500}
+.wp-elev{font-size:9px;color:#64748b}
+/* Settings */
+.setting-row{display:flex;align-items:center;justify-content:space-between;padding:3px 0;font-size:10px}
+.setting-label{color:#64748b}
+.setting-val{font-size:10px;color:#0f172a;background:#f8fafc;border:1px solid #e2e8f0;border-radius:4px;padding:2px 8px}
+.actions{display:flex;gap:4px;margin-top:auto;padding-top:8px;border-top:1px solid #f1f5f9}
+.action-btn{flex:1;padding:6px;text-align:center;font-size:9px;border-radius:6px;cursor:pointer;border:1px solid #e2e8f0;color:#64748b;background:#fff}
+.action-btn.primary{background:#059669;color:#fff;border-color:#059669}
+</style>
+</head>
+<body>
+<div class="panel" style="width:240px;flex:none">
+<div class="panel-title"><span>&#128207;</span> Measure</div>
+<div class="modes">
+<div class="mode a"><div class="icon">&#128207;</div>Distance</div>
+<div class="mode"><div class="icon">&#11036;</div>Area</div>
+<div class="mode"><div class="icon">&#9650;</div>Elevation</div>
+<div class="mode"><div class="icon">&#128208;</div>Profile</div>
+</div>
+<div class="result-card">
+<div class="result-header"><span class="result-title">Measurement #1</span><span class="result-badge">Active</span></div>
+<div class="result-grid">
+<div class="result-item"><div class="result-label">Total Distance</div><div class="result-value">2.847 <span class="result-unit">km</span></div></div>
+<div class="result-item"><div class="result-label">Straight Line</div><div class="result-value">2.103 <span class="result-unit">km</span></div></div>
+<div class="result-item"><div class="result-label">Elevation Gain</div><div class="result-value">+156 <span class="result-unit">m</span></div></div>
+<div class="result-item"><div class="result-label">Elevation Loss</div><div class="result-value">-42 <span class="result-unit">m</span></div></div>
+<div class="result-item"><div class="result-label">Max Slope</div><div class="result-value">18.3 <span class="result-unit">&deg;</span></div></div>
+<div class="result-item"><div class="result-label">Avg Slope</div><div class="result-value">6.7 <span class="result-unit">&deg;</span></div></div>
+</div></div>
+<div class="section"><div class="section-title">Settings</div>
+<div class="setting-row"><span class="setting-label">Units</span><div class="setting-val">Metric</div></div>
+<div class="setting-row"><span class="setting-label">DEM Source</span><div class="setting-val">Raster DEM</div></div>
+<div class="setting-row"><span class="setting-label">Snap to Layer</span><div class="setting-val">Off</div></div>
+</div>
+<div class="actions"><div class="action-btn">Clear</div><div class="action-btn">Export CSV</div><div class="action-btn primary">New</div></div>
+</div>
+
+<div class="panel" style="flex:1">
+<div class="panel-title"><span>&#128200;</span> Elevation Profile</div>
+<div class="profile-chart">
+<div class="profile-bars">
+<div class="pb" style="height:20%"></div><div class="pb" style="height:25%"></div><div class="pb" style="height:30%"></div><div class="pb" style="height:35%"></div><div class="pb" style="height:40%"></div><div class="pb" style="height:50%"></div><div class="pb" style="height:55%"></div><div class="pb" style="height:65%"></div><div class="pb" style="height:70%"></div><div class="pb" style="height:75%"></div><div class="pb" style="height:80%"></div><div class="pb" style="height:85%"></div><div class="pb" style="height:90%"></div><div class="pb" style="height:88%"></div><div class="pb" style="height:82%"></div><div class="pb" style="height:78%"></div><div class="pb" style="height:72%"></div><div class="pb" style="height:68%"></div><div class="pb" style="height:60%"></div><div class="pb" style="height:55%"></div><div class="pb" style="height:50%"></div><div class="pb" style="height:48%"></div><div class="pb" style="height:45%"></div><div class="pb" style="height:42%"></div>
+</div></div>
+<div class="profile-labels"><span>0 km</span><span>0.7 km</span><span>1.4 km</span><span>2.1 km</span><span>2.8 km</span></div>
+
+<div class="panel-title" style="margin-top:12px"><span>&#128205;</span> Waypoints (5)</div>
+<div class="waypoints">
+<div class="wp"><span class="wp-num">1</span><span class="wp-coords">37.7749, -122.4194</span><span class="wp-dist">0 km</span><span class="wp-elev">12m</span></div>
+<div class="wp"><span class="wp-num">2</span><span class="wp-coords">37.7762, -122.4178</span><span class="wp-dist">0.6 km</span><span class="wp-elev">45m</span></div>
+<div class="wp"><span class="wp-num">3</span><span class="wp-coords">37.7781, -122.4155</span><span class="wp-dist">1.3 km</span><span class="wp-elev">89m</span></div>
+<div class="wp"><span class="wp-num">4</span><span class="wp-coords">37.7798, -122.4131</span><span class="wp-dist">2.1 km</span><span class="wp-elev">126m</span></div>
+<div class="wp"><span class="wp-num">5</span><span class="wp-coords">37.7812, -122.4108</span><span class="wp-dist">2.8 km</span><span class="wp-elev">114m</span></div>
+</div>
+</div>
+</body>
+</html>

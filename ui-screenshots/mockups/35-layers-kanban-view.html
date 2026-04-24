@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>MMGIS Mockup 35: Layers Kanban View</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Inter',system-ui,sans-serif;background:#1e1e2e;color:#cdd6f4;height:100vh;overflow:hidden;display:flex;flex-direction:column}
+.top{height:40px;background:#181825;display:flex;align-items:center;padding:0 14px;border-bottom:1px solid #313244;flex-shrink:0}
+.logo{font-size:15px;font-weight:700;color:#89b4fa}
+.mission{color:#6c7086;font-size:11px;margin-left:12px}
+.right{margin-left:auto;display:flex;gap:6px;align-items:center}
+.av{width:24px;height:24px;border-radius:50%;background:#89b4fa;color:#1e1e2e;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:700}
+.main{flex:1;display:flex;overflow:hidden}
+.sb{width:40px;background:#181825;border-right:1px solid #313244;display:flex;flex-direction:column;align-items:center;padding:6px 0;gap:2px;flex-shrink:0}
+.t{width:30px;height:30px;display:flex;align-items:center;justify-content:center;border-radius:6px;font-size:12px;color:#6c7086;cursor:pointer}
+.t:hover{background:#313244;color:#cdd6f4}
+.t.a{background:#313244;color:#89b4fa}
+/* Kanban-style layer panel */
+.kanban{width:100%;display:flex;flex-direction:column;flex:1;overflow:hidden}
+.k-header{padding:8px 12px;background:#181825;border-bottom:1px solid #313244;display:flex;align-items:center;gap:8px}
+.k-title{font-size:12px;font-weight:600;color:#cdd6f4}
+.k-views{display:flex;gap:4px;margin-left:auto}
+.k-view{padding:3px 8px;font-size:9px;border-radius:4px;background:#313244;color:#6c7086;cursor:pointer}
+.k-view.a{background:#89b4fa;color:#1e1e2e}
+.k-body{flex:1;display:flex;overflow-x:auto;padding:8px;gap:8px}
+.k-col{width:200px;min-width:200px;background:#181825;border:1px solid #313244;border-radius:10px;display:flex;flex-direction:column;flex-shrink:0}
+.k-col-h{padding:8px 10px;font-size:10px;font-weight:600;display:flex;align-items:center;gap:4px;border-bottom:1px solid #313244}
+.k-col-h .dot{width:8px;height:8px;border-radius:50%}
+.k-col-h .cnt{font-size:8px;color:#6c7086;margin-left:auto;background:#313244;padding:0 5px;border-radius:8px}
+.k-cards{flex:1;overflow-y:auto;padding:4px}
+.k-card{background:#1e1e2e;border:1px solid #313244;border-radius:8px;padding:8px;margin-bottom:4px;cursor:pointer}
+.k-card:hover{border-color:#89b4fa44}
+.k-card-name{font-size:10px;font-weight:500;color:#cdd6f4;margin-bottom:4px}
+.k-card-meta{display:flex;gap:4px;align-items:center}
+.k-badge{font-size:7px;padding:1px 5px;border-radius:3px;font-weight:600}
+.b1{background:#89b4fa33;color:#89b4fa}
+.b2{background:#a6e3a133;color:#a6e3a1}
+.b3{background:#f9e2af33;color:#f9e2af}
+.b4{background:#f38ba833;color:#f38ba8}
+.k-card-toggle{margin-left:auto;width:20px;height:10px;border-radius:5px;background:#313244}
+.k-card-toggle.on{background:#89b4fa}
+/* Map at bottom */
+.map-strip{height:200px;background:#11111b;border-top:1px solid #313244;position:relative;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.ml{font-size:10px;color:#313244;letter-spacing:3px;text-transform:uppercase}
+.bb{height:30px;background:#181825;display:flex;align-items:center;padding:0 12px;gap:10px;border-top:1px solid #313244;font-size:9px;color:#6c7086;flex-shrink:0}
+.bb .hl{color:#89b4fa}
+</style>
+</head>
+<body>
+<div class="top"><div class="logo">MMGIS</div><div class="mission">Reference Mission</div><div class="right"><div class="av">A</div></div></div>
+<div class="main">
+<div class="sb"><div class="t a">&#9776;</div><div class="t">&#8505;</div><div class="t">&#9873;</div><div class="t">&#9998;</div><div class="t">&#8676;</div><div class="t">&#8981;</div></div>
+<div class="kanban">
+<div class="k-header"><span class="k-title">Layer Manager</span><div class="k-views"><div class="k-view">List</div><div class="k-view a">Board</div><div class="k-view">Tree</div></div></div>
+<div class="k-body">
+<div class="k-col"><div class="k-col-h"><div class="dot" style="background:#89b4fa"></div>Vector<span class="cnt">5</span></div><div class="k-cards">
+<div class="k-card"><div class="k-card-name">Points Basic</div><div class="k-card-meta"><span class="k-badge b1">VEC</span><div class="k-card-toggle on"></div></div></div>
+<div class="k-card"><div class="k-card-name">Lines Basic</div><div class="k-card-meta"><span class="k-badge b1">VEC</span><div class="k-card-toggle on"></div></div></div>
+<div class="k-card"><div class="k-card-name">Polygons Basic</div><div class="k-card-meta"><span class="k-badge b1">VEC</span><div class="k-card-toggle"></div></div></div>
+<div class="k-card"><div class="k-card-name">Arrows</div><div class="k-card-meta"><span class="k-badge b1">VEC</span><div class="k-card-toggle on"></div></div></div>
+<div class="k-card"><div class="k-card-name">Annotations</div><div class="k-card-meta"><span class="k-badge b1">VEC</span><div class="k-card-toggle"></div></div></div>
+</div></div>
+<div class="k-col"><div class="k-col-h"><div class="dot" style="background:#a6e3a1"></div>Feature Styling<span class="cnt">4</span></div><div class="k-cards">
+<div class="k-card"><div class="k-card-name">Points Styled</div><div class="k-card-meta"><span class="k-badge b2">STY</span><div class="k-card-toggle on"></div></div></div>
+<div class="k-card"><div class="k-card-name">Lines Styled</div><div class="k-card-meta"><span class="k-badge b2">STY</span><div class="k-card-toggle"></div></div></div>
+<div class="k-card"><div class="k-card-name">Polygons Styled</div><div class="k-card-meta"><span class="k-badge b2">STY</span><div class="k-card-toggle on"></div></div></div>
+<div class="k-card"><div class="k-card-name">Style From Prop</div><div class="k-card-meta"><span class="k-badge b2">STY</span><div class="k-card-toggle"></div></div></div>
+</div></div>
+<div class="k-col"><div class="k-col-h"><div class="dot" style="background:#f9e2af"></div>Behavior<span class="cnt">6</span></div><div class="k-cards">
+<div class="k-card"><div class="k-card-name">Popup Basic</div><div class="k-card-meta"><span class="k-badge b3">BEH</span><div class="k-card-toggle on"></div></div></div>
+<div class="k-card"><div class="k-card-name">Marker Click</div><div class="k-card-meta"><span class="k-badge b3">BEH</span><div class="k-card-toggle"></div></div></div>
+<div class="k-card"><div class="k-card-name">Time Enabled</div><div class="k-card-meta"><span class="k-badge b3">BEH</span><div class="k-card-toggle on"></div></div></div>
+</div></div>
+<div class="k-col"><div class="k-col-h"><div class="dot" style="background:#f38ba8"></div>Geodatasets<span class="cnt">5</span></div><div class="k-cards">
+<div class="k-card"><div class="k-card-name">Raster DEM</div><div class="k-card-meta"><span class="k-badge b4">GEO</span><div class="k-card-toggle on"></div></div></div>
+<div class="k-card"><div class="k-card-name">Raster RGB</div><div class="k-card-meta"><span class="k-badge b4">GEO</span><div class="k-card-toggle"></div></div></div>
+</div></div>
+</div>
+<div class="map-strip"><div class="ml">San Francisco Bay Area</div></div>
+<div class="bb"><span class="hl">-122.419&deg;</span>, <span class="hl">37.775&deg;</span> | Z12 | 8/29 layers active</div>
+</div>
+</div>
+</body>
+</html>

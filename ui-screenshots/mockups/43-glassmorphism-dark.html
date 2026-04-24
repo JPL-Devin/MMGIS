@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>MMGIS Mockup 43: Glassmorphism Dark</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Inter',system-ui,sans-serif;color:#fff;height:100vh;overflow:hidden;position:relative}
+.bg{position:absolute;inset:0;background:linear-gradient(135deg,#0c1445,#1a0a2e,#0a1628);z-index:0}
+.blob1{position:absolute;width:300px;height:300px;border-radius:50%;background:radial-gradient(circle,#3b82f644,transparent);top:-50px;right:100px;filter:blur(60px)}
+.blob2{position:absolute;width:400px;height:400px;border-radius:50%;background:radial-gradient(circle,#8b5cf644,transparent);bottom:-100px;left:200px;filter:blur(80px)}
+.blob3{position:absolute;width:200px;height:200px;border-radius:50%;background:radial-gradient(circle,#06b6d444,transparent);top:200px;left:50px;filter:blur(40px)}
+.glass{background:rgba(255,255,255,.06);backdrop-filter:blur(20px);border:1px solid rgba(255,255,255,.1);border-radius:14px}
+.content{position:relative;z-index:1;height:100vh;display:flex;flex-direction:column;padding:10px;gap:10px}
+.top{height:40px;display:flex;align-items:center;padding:0 14px;flex-shrink:0}
+.top.glass{border-radius:12px}
+.logo{font-size:15px;font-weight:700;color:#fff}
+.mission{color:rgba(255,255,255,.5);font-size:10px;margin-left:12px}
+.right{margin-left:auto;display:flex;gap:6px;align-items:center}
+.av{width:26px;height:26px;border-radius:50%;background:rgba(255,255,255,.15);color:#fff;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:600;backdrop-filter:blur(10px)}
+.main{flex:1;display:flex;gap:10px;overflow:hidden}
+.sidebar{width:260px;display:flex;flex-direction:column;gap:10px;flex-shrink:0}
+.tools-strip{display:flex;gap:4px;padding:4px}
+.tools-strip.glass{border-radius:10px}
+.t{width:32px;height:32px;display:flex;align-items:center;justify-content:center;border-radius:8px;font-size:13px;color:rgba(255,255,255,.4);cursor:pointer}
+.t:hover{background:rgba(255,255,255,.08);color:#fff}
+.t.a{background:rgba(255,255,255,.1);color:#fff}
+.layer-panel{flex:1;display:flex;flex-direction:column;overflow:hidden}
+.layer-panel.glass{border-radius:14px}
+.lp-h{padding:10px 14px;font-size:12px;font-weight:600;border-bottom:1px solid rgba(255,255,255,.06)}
+.lp-list{flex:1;overflow-y:auto;padding:4px 6px}
+.grp{margin-bottom:4px}
+.gh{padding:5px 8px;font-size:10px;font-weight:500;color:rgba(255,255,255,.7);cursor:pointer;display:flex;align-items:center;gap:4px;border-radius:6px}
+.gh:hover{background:rgba(255,255,255,.04)}
+.gc{font-size:8px;color:rgba(255,255,255,.3);margin-left:auto}
+.li{padding:4px 8px 4px 14px;display:flex;align-items:center;gap:6px;font-size:10px;color:rgba(255,255,255,.6);border-radius:4px}
+.li:hover{background:rgba(255,255,255,.04)}
+.ld{width:3px;height:14px;border-radius:1px}
+.tog{width:24px;height:12px;border-radius:6px;background:rgba(255,255,255,.1);position:relative;cursor:pointer;margin-left:auto;flex-shrink:0}
+.tog.on{background:rgba(59,130,246,.6)}
+.tog::after{content:'';position:absolute;width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,.4);top:2px;left:2px}
+.tog.on::after{left:14px;background:#fff}
+.map-area{flex:1;display:flex;align-items:center;justify-content:center;position:relative}
+.map-area.glass{border-radius:14px}
+.ml{font-size:10px;color:rgba(255,255,255,.1);letter-spacing:4px;text-transform:uppercase}
+.mc{position:absolute;right:10px;top:10px;display:flex;flex-direction:column;gap:4px}
+.mb{width:30px;height:30px;display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,.6);cursor:pointer;font-size:12px}
+.mb.glass{border-radius:8px}
+.bb{height:36px;display:flex;align-items:center;padding:0 14px;gap:12px;font-size:10px;flex-shrink:0}
+.bb.glass{border-radius:10px}
+.cd{font-family:monospace;color:#60a5fa;font-size:10px}
+.inf{color:rgba(255,255,255,.4)}
+.ts{flex:1;display:flex;align-items:center;gap:4px}
+.tl{font-size:9px;color:rgba(255,255,255,.3)}
+.tt{flex:1;height:3px;background:rgba(255,255,255,.08);border-radius:2px;position:relative}
+.tf{width:55%;height:100%;background:linear-gradient(90deg,#3b82f6,#8b5cf6);border-radius:2px}
+</style>
+</head>
+<body>
+<div class="bg"><div class="blob1"></div><div class="blob2"></div><div class="blob3"></div></div>
+<div class="content">
+<div class="top glass"><div class="logo">MMGIS</div><div class="mission">Reference Mission</div><div class="right"><div class="av">A</div></div></div>
+<div class="main">
+<div class="sidebar">
+<div class="tools-strip glass"><div class="t a">&#9776;</div><div class="t">&#8505;</div><div class="t">&#9873;</div><div class="t">&#9998;</div><div class="t">&#8676;</div><div class="t">&#8981;</div><div class="t">&#9201;</div><div class="t">&#9737;</div></div>
+<div class="layer-panel glass"><div class="lp-h">Layers</div>
+<div class="lp-list">
+<div class="grp"><div class="gh">&#9660; Vector<span class="gc">5</span></div>
+<div class="li"><div class="ld" style="background:#3b82f6"></div>Points Basic<div class="tog on"></div></div>
+<div class="li"><div class="ld" style="background:#10b981"></div>Lines Basic<div class="tog on"></div></div>
+<div class="li"><div class="ld" style="background:#f59e0b"></div>Polygons<div class="tog"></div></div>
+<div class="li"><div class="ld" style="background:#ef4444"></div>Arrows<div class="tog on"></div></div>
+<div class="li"><div class="ld" style="background:#8b5cf6"></div>Annotations<div class="tog"></div></div></div>
+<div class="grp"><div class="gh">&#9654; Styling<span class="gc">4</span></div></div>
+<div class="grp"><div class="gh">&#9654; Behavior<span class="gc">6</span></div></div>
+<div class="grp"><div class="gh">&#9654; Geodatasets<span class="gc">5</span></div></div>
+</div></div></div>
+<div class="map-area glass"><div class="ml">San Francisco Bay</div><div class="mc"><div class="mb glass">+</div><div class="mb glass">&minus;</div><div class="mb glass">&#8962;</div></div></div>
+</div>
+<div class="bb glass"><span class="cd">-122.419&deg;, 37.775&deg;</span><span class="inf">Z12</span><div class="ts"><span class="tl">Jan 01</span><div class="tt"><div class="tf"></div></div><span class="tl">Jan 20</span></div></div>
+</div>
+</body>
+</html>

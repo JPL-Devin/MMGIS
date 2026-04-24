@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>MMGIS Mockup 38: Time UI - Compact & Expanded States</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Inter',system-ui,sans-serif;background:#f8fafc;color:#0f172a;height:100vh;overflow:hidden;padding:20px;display:flex;flex-direction:column;gap:20px}
+h2{font-size:14px;font-weight:600;color:#0f172a;margin-bottom:8px}
+.label{font-size:10px;color:#64748b;margin-bottom:6px}
+/* Compact time bar */
+.compact{background:#fff;border:1px solid #e2e8f0;border-radius:12px;padding:10px 16px;display:flex;align-items:center;gap:12px;box-shadow:0 1px 3px rgba(0,0,0,.05)}
+.c-icon{width:28px;height:28px;border-radius:8px;background:#eff6ff;display:flex;align-items:center;justify-content:center;color:#2563eb;font-size:12px;cursor:pointer}
+.c-dates{display:flex;flex-direction:column;gap:1px}
+.c-date{font-size:10px;color:#64748b}
+.c-date span{color:#0f172a;font-weight:500;font-family:monospace}
+.c-timeline{flex:1;display:flex;flex-direction:column;gap:2px}
+.c-bar{height:6px;background:#e2e8f0;border-radius:3px;position:relative;overflow:hidden}
+.c-fill{height:100%;background:linear-gradient(90deg,#2563eb,#3b82f6);border-radius:3px;width:55%}
+.c-ticks{display:flex;justify-content:space-between;font-size:7px;color:#94a3b8}
+.c-controls{display:flex;gap:4px;align-items:center}
+.c-btn{width:24px;height:24px;border-radius:6px;background:#f1f5f9;display:flex;align-items:center;justify-content:center;font-size:10px;color:#475569;cursor:pointer;border:1px solid #e2e8f0}
+.c-btn:hover{background:#e2e8f0}
+.c-btn.play{background:#2563eb;color:#fff;border-color:#2563eb}
+.c-speed{font-size:8px;color:#94a3b8;padding:2px 6px;background:#f1f5f9;border-radius:4px}
+.c-expand{font-size:10px;color:#2563eb;cursor:pointer}
+/* Expanded time panel */
+.expanded{background:#fff;border:1px solid #e2e8f0;border-radius:14px;padding:14px;box-shadow:0 2px 8px rgba(0,0,0,.06);flex:1;display:flex;flex-direction:column}
+.e-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
+.e-title{font-size:12px;font-weight:600;display:flex;align-items:center;gap:6px}
+.e-title span{color:#2563eb}
+.e-close{font-size:10px;color:#94a3b8;cursor:pointer}
+.e-range{display:flex;gap:12px;margin-bottom:10px}
+.e-date-input{flex:1;display:flex;flex-direction:column;gap:2px}
+.e-date-label{font-size:8px;color:#94a3b8;text-transform:uppercase;letter-spacing:.5px}
+.e-date-val{background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;padding:6px 10px;font-size:11px;color:#0f172a;font-family:monospace;display:flex;align-items:center;gap:6px}
+.e-date-val .icon{color:#2563eb}
+/* Histogram timeline */
+.e-histogram{height:60px;display:flex;align-items:flex-end;gap:1px;margin-bottom:4px;padding:0 2px}
+.e-hbar{flex:1;background:#dbeafe;border-radius:2px 2px 0 0;min-height:3px}
+.e-hbar.active{background:#2563eb}
+.e-slider{height:6px;background:#e2e8f0;border-radius:3px;margin-bottom:2px;position:relative}
+.e-slider-range{position:absolute;height:100%;background:#2563eb;border-radius:3px;left:15%;width:40%}
+.e-slider-handle{position:absolute;width:12px;height:12px;border-radius:50%;background:#fff;border:2px solid #2563eb;top:-3px;box-shadow:0 1px 3px rgba(0,0,0,.15)}
+.e-slider-handle.l{left:calc(15% - 6px)}
+.e-slider-handle.r{left:calc(55% - 6px)}
+.e-ticks{display:flex;justify-content:space-between;font-size:7px;color:#94a3b8;margin-bottom:8px}
+/* Quick presets */
+.e-presets{display:flex;gap:4px;margin-bottom:8px;flex-wrap:wrap}
+.e-preset{padding:3px 10px;font-size:9px;border-radius:6px;background:#f1f5f9;color:#475569;cursor:pointer;border:1px solid #e2e8f0}
+.e-preset:hover{border-color:#2563eb;color:#2563eb}
+.e-preset.a{background:#eff6ff;color:#2563eb;border-color:#2563eb}
+/* Grid selector */
+.e-grid{display:flex;gap:12px;flex:1;overflow:hidden}
+.e-grid-col{flex:1;display:flex;flex-direction:column}
+.e-grid-title{font-size:8px;color:#94a3b8;text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px;font-weight:600}
+.e-grid-items{display:flex;flex-wrap:wrap;gap:2px}
+.e-gi{width:32px;height:22px;display:flex;align-items:center;justify-content:center;font-size:8px;border-radius:4px;background:#f8fafc;color:#64748b;cursor:pointer;border:1px solid transparent}
+.e-gi:hover{background:#eff6ff;color:#2563eb}
+.e-gi.a{background:#2563eb;color:#fff}
+.e-gi.range{background:#dbeafe;color:#1d4ed8}
+/* Playback controls */
+.e-controls{display:flex;align-items:center;gap:6px;margin-top:auto;padding-top:8px;border-top:1px solid #f1f5f9}
+.e-ctrl{width:28px;height:28px;border-radius:8px;background:#f1f5f9;display:flex;align-items:center;justify-content:center;font-size:11px;color:#475569;cursor:pointer;border:1px solid #e2e8f0}
+.e-ctrl:hover{background:#e2e8f0}
+.e-ctrl.play{background:#2563eb;color:#fff;border-color:#2563eb;width:36px;height:36px;border-radius:50%;font-size:14px}
+.e-speed-sel{margin-left:auto;display:flex;gap:2px}
+.e-spd{padding:3px 8px;font-size:8px;border-radius:4px;background:#f1f5f9;color:#64748b;cursor:pointer}
+.e-spd.a{background:#2563eb;color:#fff}
+</style>
+</head>
+<body>
+<div><h2>Time UI Redesign — Compact Bar</h2>
+<div class="label">Always visible at bottom of screen</div>
+<div class="compact">
+<div class="c-icon">&#9201;</div>
+<div class="c-dates"><div class="c-date">From: <span>2024-01-01 00:00</span></div><div class="c-date">To: &nbsp;&nbsp;<span>2024-01-20 18:30</span></div></div>
+<div class="c-timeline"><div class="c-bar"><div class="c-fill"></div></div><div class="c-ticks"><span>Jan 01</span><span>Jan 05</span><span>Jan 10</span><span>Jan 15</span><span>Jan 20</span></div></div>
+<div class="c-controls"><div class="c-btn">&#9198;</div><div class="c-btn">&#9194;</div><div class="c-btn play">&#9654;</div><div class="c-btn">&#9193;</div><div class="c-btn">&#9197;</div><div class="c-speed">1x</div></div>
+<div class="c-expand">&#9650;</div>
+</div></div>
+
+<div style="flex:1;display:flex;flex-direction:column"><h2>Time UI Redesign — Expanded Panel</h2>
+<div class="label">Click expand arrow to open full time controls</div>
+<div class="expanded">
+<div class="e-header"><div class="e-title"><span>&#9201;</span> Time Controls</div><div class="e-close">&#9660; Collapse</div></div>
+<div class="e-range">
+<div class="e-date-input"><div class="e-date-label">Start Time</div><div class="e-date-val"><span class="icon">&#128197;</span>2024-01-01 00:00:00</div></div>
+<div class="e-date-input"><div class="e-date-label">End Time</div><div class="e-date-val"><span class="icon">&#128197;</span>2024-01-20 18:30:00</div></div>
+</div>
+<div class="e-histogram">
+<div class="e-hbar" style="height:15%"></div><div class="e-hbar" style="height:25%"></div><div class="e-hbar" style="height:40%"></div><div class="e-hbar active" style="height:60%"></div><div class="e-hbar active" style="height:80%"></div><div class="e-hbar active" style="height:95%"></div><div class="e-hbar active" style="height:70%"></div><div class="e-hbar active" style="height:55%"></div><div class="e-hbar active" style="height:45%"></div><div class="e-hbar active" style="height:35%"></div><div class="e-hbar" style="height:20%"></div><div class="e-hbar" style="height:30%"></div><div class="e-hbar" style="height:50%"></div><div class="e-hbar" style="height:65%"></div><div class="e-hbar" style="height:75%"></div><div class="e-hbar" style="height:45%"></div><div class="e-hbar" style="height:25%"></div><div class="e-hbar" style="height:15%"></div><div class="e-hbar" style="height:35%"></div><div class="e-hbar" style="height:55%"></div>
+</div>
+<div class="e-slider"><div class="e-slider-range"></div><div class="e-slider-handle l"></div><div class="e-slider-handle r"></div></div>
+<div class="e-ticks"><span>Jan 01</span><span>Jan 05</span><span>Jan 10</span><span>Jan 15</span><span>Jan 20</span></div>
+<div class="e-presets"><div class="e-preset">Last Hour</div><div class="e-preset">Last 24h</div><div class="e-preset a">Last 7 Days</div><div class="e-preset">Last 30 Days</div><div class="e-preset">This Year</div><div class="e-preset">All Time</div></div>
+<div class="e-grid">
+<div class="e-grid-col"><div class="e-grid-title">Year</div><div class="e-grid-items"><div class="e-gi">2021</div><div class="e-gi">2022</div><div class="e-gi">2023</div><div class="e-gi a">2024</div></div></div>
+<div class="e-grid-col"><div class="e-grid-title">Month</div><div class="e-grid-items"><div class="e-gi a">Jan</div><div class="e-gi">Feb</div><div class="e-gi">Mar</div><div class="e-gi">Apr</div><div class="e-gi">May</div><div class="e-gi">Jun</div><div class="e-gi">Jul</div><div class="e-gi">Aug</div><div class="e-gi">Sep</div><div class="e-gi">Oct</div><div class="e-gi">Nov</div><div class="e-gi">Dec</div></div></div>
+<div class="e-grid-col"><div class="e-grid-title">Day</div><div class="e-grid-items"><div class="e-gi range">01</div><div class="e-gi range">02</div><div class="e-gi range">03</div><div class="e-gi range">04</div><div class="e-gi range">05</div><div class="e-gi range">06</div><div class="e-gi range">07</div><div class="e-gi range">08</div><div class="e-gi range">09</div><div class="e-gi range">10</div><div class="e-gi range">11</div><div class="e-gi range">12</div><div class="e-gi a">13</div><div class="e-gi">14</div><div class="e-gi">15</div></div></div>
+<div class="e-grid-col"><div class="e-grid-title">Hour</div><div class="e-grid-items"><div class="e-gi">00</div><div class="e-gi">03</div><div class="e-gi">06</div><div class="e-gi">09</div><div class="e-gi a">12</div><div class="e-gi">15</div><div class="e-gi">18</div><div class="e-gi">21</div></div></div>
+</div>
+<div class="e-controls"><div class="e-ctrl">&#9198;</div><div class="e-ctrl">&#9194;</div><div class="e-ctrl play">&#9654;</div><div class="e-ctrl">&#9193;</div><div class="e-ctrl">&#9197;</div><div class="e-speed-sel"><div class="e-spd">0.5x</div><div class="e-spd a">1x</div><div class="e-spd">2x</div><div class="e-spd">5x</div></div></div>
+</div></div>
+</body>
+</html>

@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>MMGIS Mockup 36: Bottom Panel Layout</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Inter',system-ui,sans-serif;background:#0f172a;color:#e2e8f0;height:100vh;overflow:hidden;display:flex;flex-direction:column}
+.top{height:38px;background:#1e293b;display:flex;align-items:center;padding:0 14px;border-bottom:1px solid #334155;flex-shrink:0}
+.logo{font-size:14px;font-weight:700;color:#38bdf8}
+.mission{color:#64748b;font-size:10px;margin-left:10px}
+.tabs{display:flex;gap:2px;margin-left:20px}
+.tab{padding:4px 10px;font-size:9px;color:#94a3b8;border-radius:5px;cursor:pointer}
+.tab:hover{background:#334155}
+.tab.a{background:#334155;color:#38bdf8}
+.right{margin-left:auto;display:flex;gap:6px;align-items:center}
+.av{width:24px;height:24px;border-radius:50%;background:#38bdf8;color:#0f172a;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:700}
+/* Map takes most of screen */
+.map-area{flex:1;display:flex;position:relative}
+.toolbar{width:36px;background:#1e293b;border-right:1px solid #334155;display:flex;flex-direction:column;align-items:center;padding:6px 0;gap:1px;flex-shrink:0}
+.t{width:28px;height:28px;display:flex;align-items:center;justify-content:center;border-radius:6px;font-size:11px;color:#475569;cursor:pointer}
+.t:hover{background:#334155;color:#e2e8f0}
+.t.a{color:#38bdf8;background:#334155}
+.map{flex:1;background:#0a1628;display:flex;align-items:center;justify-content:center;position:relative}
+.ml{font-size:10px;color:#1e293b;letter-spacing:4px;text-transform:uppercase}
+.mc{position:absolute;right:8px;top:8px;display:flex;flex-direction:column;gap:2px}
+.mb{width:26px;height:26px;background:#1e293bee;border:1px solid #334155;border-radius:6px;display:flex;align-items:center;justify-content:center;color:#38bdf8;cursor:pointer;font-size:11px}
+/* Bottom panel with tabs */
+.bottom-panel{height:220px;background:#1e293b;border-top:2px solid #334155;display:flex;flex-direction:column;flex-shrink:0}
+.bp-tabs{display:flex;border-bottom:1px solid #334155;padding:0 8px}
+.bp-tab{padding:6px 12px;font-size:10px;color:#64748b;cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-1px}
+.bp-tab:hover{color:#e2e8f0}
+.bp-tab.a{color:#38bdf8;border-bottom-color:#38bdf8}
+.bp-content{flex:1;display:flex;overflow:hidden}
+/* Layers in bottom panel as horizontal scrolling cards */
+.bp-layers{flex:1;display:flex;overflow-x:auto;padding:8px;gap:6px}
+.layer-card{min-width:160px;background:#0f172a;border:1px solid #334155;border-radius:8px;padding:8px;flex-shrink:0;display:flex;flex-direction:column;gap:4px}
+.layer-card:hover{border-color:#38bdf8}
+.lc-name{font-size:10px;font-weight:500;color:#e2e8f0}
+.lc-type{font-size:8px;color:#38bdf8;background:#38bdf811;padding:1px 6px;border-radius:3px;display:inline-block;width:fit-content}
+.lc-meta{font-size:8px;color:#64748b;display:flex;justify-content:space-between;align-items:center}
+.lc-toggle{width:24px;height:12px;border-radius:6px;background:#334155;position:relative;cursor:pointer}
+.lc-toggle.on{background:#38bdf8}
+.lc-toggle::after{content:'';position:absolute;width:8px;height:8px;border-radius:50%;background:#64748b;top:2px;left:2px}
+.lc-toggle.on::after{left:14px;background:#fff}
+.lc-opacity{display:flex;align-items:center;gap:4px;font-size:8px;color:#64748b}
+.lc-slider{width:60px;height:2px;background:#334155;border-radius:1px}
+.lc-slider-fill{height:100%;background:#38bdf8;border-radius:1px;width:80%}
+/* Status bar */
+.status{height:26px;background:#0f172a;display:flex;align-items:center;padding:0 10px;gap:10px;border-top:1px solid #334155;font-size:9px;color:#475569;flex-shrink:0}
+.status .hl{color:#38bdf8}
+</style>
+</head>
+<body>
+<div class="top"><div class="logo">MMGIS</div><div class="mission">Reference Mission</div><div class="tabs"><div class="tab a">Map</div><div class="tab">Globe</div><div class="tab">Data</div></div><div class="right"><div class="av">A</div></div></div>
+<div class="map-area">
+<div class="toolbar"><div class="t a">&#9776;</div><div class="t">&#8505;</div><div class="t">&#9873;</div><div class="t">&#9998;</div><div class="t">&#8676;</div><div class="t">&#8981;</div><div class="t">T</div></div>
+<div class="map"><div class="ml">San Francisco Bay</div><div class="mc"><div class="mb">+</div><div class="mb">&minus;</div><div class="mb">&#8962;</div></div></div>
+</div>
+<div class="bottom-panel">
+<div class="bp-tabs"><div class="bp-tab a">Layers (29)</div><div class="bp-tab">Properties</div><div class="bp-tab">Timeline</div><div class="bp-tab">Console</div></div>
+<div class="bp-content">
+<div class="bp-layers">
+<div class="layer-card"><div class="lc-name">Points Basic</div><div class="lc-type">Vector</div><div class="lc-meta"><span>5 features</span><div class="lc-toggle on"></div></div><div class="lc-opacity">Opacity <div class="lc-slider"><div class="lc-slider-fill"></div></div>80%</div></div>
+<div class="layer-card"><div class="lc-name">Lines Basic</div><div class="lc-type">Vector</div><div class="lc-meta"><span>12 features</span><div class="lc-toggle on"></div></div><div class="lc-opacity">Opacity <div class="lc-slider"><div class="lc-slider-fill" style="width:100%"></div></div>100%</div></div>
+<div class="layer-card"><div class="lc-name">Polygons Basic</div><div class="lc-type">Vector</div><div class="lc-meta"><span>8 features</span><div class="lc-toggle"></div></div><div class="lc-opacity">Opacity <div class="lc-slider"><div class="lc-slider-fill" style="width:60%"></div></div>60%</div></div>
+<div class="layer-card"><div class="lc-name">Arrows</div><div class="lc-type">Vector</div><div class="lc-meta"><span>3 features</span><div class="lc-toggle on"></div></div><div class="lc-opacity">Opacity <div class="lc-slider"><div class="lc-slider-fill"></div></div>80%</div></div>
+<div class="layer-card"><div class="lc-name">Points Styled</div><div class="lc-type">Styled</div><div class="lc-meta"><span>15 features</span><div class="lc-toggle on"></div></div><div class="lc-opacity">Opacity <div class="lc-slider"><div class="lc-slider-fill" style="width:90%"></div></div>90%</div></div>
+<div class="layer-card"><div class="lc-name">Raster DEM</div><div class="lc-type">Geodataset</div><div class="lc-meta"><span>COG</span><div class="lc-toggle on"></div></div><div class="lc-opacity">Opacity <div class="lc-slider"><div class="lc-slider-fill" style="width:70%"></div></div>70%</div></div>
+<div class="layer-card"><div class="lc-name">XYZ Base</div><div class="lc-type">Tile</div><div class="lc-meta"><span>z0-18</span><div class="lc-toggle on"></div></div><div class="lc-opacity">Opacity <div class="lc-slider"><div class="lc-slider-fill" style="width:100%"></div></div>100%</div></div>
+<div class="layer-card"><div class="lc-name">WMS Overlay</div><div class="lc-type">Tile</div><div class="lc-meta"><span>WMS 1.3</span><div class="lc-toggle"></div></div><div class="lc-opacity">Opacity <div class="lc-slider"><div class="lc-slider-fill" style="width:50%"></div></div>50%</div></div>
+</div></div></div>
+<div class="status"><span class="hl">-122.419&deg;</span>, <span class="hl">37.775&deg;</span> | Z12 | 8/29 layers | EPSG:4326</div>
+</body>
+</html>
