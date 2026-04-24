@@ -157,3 +157,75 @@ HTML/CSS source for each mockup is in `ui-screenshots/mockups/`. Open any `.html
 **Layout change:** Minimal chrome — no persistent sidebar. All tools/layers accessed via ⌘K command palette overlay.
 
 ![Command Palette](ui-screenshots/mockups/16-command-palette-driven.png)
+
+---
+
+## Mockup 17: Ribbon Toolbar (Office-Style)
+
+**Layout change:** Microsoft Office-style ribbon with grouped tool buttons. Tabbed ribbon (Home/View/Analysis/Draw/Data/Help). Side panel for layers.
+
+![Ribbon Toolbar](ui-screenshots/mockups/17-ribbon-toolbar.png)
+
+---
+
+## Mockup 18: Dashboard Grid Layout
+
+**Layout change:** 2x2 grid with Map, Layers, Stats, and Globe as resizable tiles. Navigation tabs replace sidebar.
+
+![Dashboard Grid](ui-screenshots/mockups/18-dashboard-grid.png)
+
+---
+
+## Mockup 19: Light Professional
+
+Light theme with blue accents, rounded corners, prominent search, filter chips for layer types.
+
+![Light Professional](ui-screenshots/mockups/19-light-professional.png)
+
+---
+
+## Mockup 20: Layers Tool UX Redesign
+
+**Component focus:** Detailed layer cards with drag handles, opacity sliders, type badges, feature counts, download/info/settings actions. List/Cards/Tree view modes.
+
+![Layers UX Redesign](ui-screenshots/mockups/20-layers-ux-redesign.png)
+
+---
+
+## Mockup 21: Time UI Redesign
+
+**Component focus:** Three states — compact bar, expanded panel with year/month/day/hour selectors and histogram, and quick-select presets. Based on actual TimeUI.js architecture.
+
+![Time UI Redesign](ui-screenshots/mockups/21-time-ui-redesign.png)
+
+---
+
+## Mockup 22: Three Panel System Redesign
+
+**Component focus:** Viewer/Map/Globe panels with closeable tabs, draggable splitters, layout presets (side-by-side, map-focused, stacked, single). Sync indicator bar.
+
+![Three Panel Redesign](ui-screenshots/mockups/22-three-panel-redesign.png)
+
+---
+
+## Mockup 23: Pastel Soft Light
+
+Light purple/lavender palette, rounded corners, gradient accents, soft shadows.
+
+![Pastel Soft](ui-screenshots/mockups/23-pastel-soft-light.png)
+
+---
+
+## Mockup 24: Solarized Light
+
+Solarized color scheme (cream #fdf6e3 base, blue/cyan/green accents), serif-adjacent typography.
+
+![Solarized Light](ui-screenshots/mockups/24-solarized-light.png)
+
+---
+
+## Mockup 25: Top Drawer Layout
+
+**Layout change:** All tools/layers/info in a top drawer that slides down. Map takes full remaining space. Floating coordinate/time bar at bottom center.
+
+![Top Drawer](ui-screenshots/mockups/25-top-drawer-layout.png)
