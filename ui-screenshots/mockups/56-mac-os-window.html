@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>MMGIS Mockup 56: macOS Window Style</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:-apple-system,BlinkMacSystemFont,'SF Pro Text',sans-serif;background:#f5f5f7;color:#1d1d1f;height:100vh;overflow:hidden;display:flex;align-items:center;justify-content:center;padding:20px}
+.window{width:100%;height:100%;background:#fff;border-radius:10px;box-shadow:0 22px 70px rgba(0,0,0,.15),0 0 0 1px rgba(0,0,0,.05);display:flex;flex-direction:column;overflow:hidden}
+.titlebar{height:38px;background:linear-gradient(180deg,#f6f6f6,#e8e8e8);border-bottom:1px solid #d1d1d1;display:flex;align-items:center;padding:0 12px;flex-shrink:0}
+.dots{display:flex;gap:6px;margin-right:12px}
+.dot{width:12px;height:12px;border-radius:50%}
+.dot-r{background:#ff5f57;border:1px solid #e0443e}
+.dot-y{background:#febc2e;border:1px solid #dea123}
+.dot-g{background:#28c840;border:1px solid #1aab29}
+.title{font-size:12px;color:#4d4d4d;font-weight:500;margin:0 auto}
+.toolbar{height:36px;background:#fafafa;border-bottom:1px solid #e5e5e5;display:flex;align-items:center;padding:0 12px;gap:8px;flex-shrink:0}
+.tb-group{display:flex;gap:1px;background:#e5e5e5;border-radius:6px;padding:1px}
+.tb-btn{padding:4px 10px;font-size:10px;color:#4d4d4d;border-radius:5px;cursor:pointer;background:#fafafa}
+.tb-btn:hover{background:#e5e5e5}
+.tb-btn.a{background:#007aff;color:#fff}
+.tb-search{margin-left:auto;padding:4px 10px;background:#fff;border:1px solid #d1d1d1;border-radius:6px;font-size:10px;color:#8e8e93;width:180px;font-family:inherit}
+.ws{flex:1;display:flex;overflow:hidden}
+.sidebar{width:220px;background:#f5f5f7;border-right:1px solid #e5e5e5;display:flex;flex-direction:column;flex-shrink:0}
+.sb-header{padding:8px 12px;font-size:10px;font-weight:600;color:#86868b;text-transform:uppercase;letter-spacing:.5px}
+.sb-item{padding:5px 12px;font-size:12px;color:#1d1d1f;display:flex;align-items:center;gap:8px;cursor:pointer;border-radius:6px;margin:0 4px}
+.sb-item:hover{background:#e5e5ea}
+.sb-item.a{background:#007aff;color:#fff}
+.sb-icon{font-size:14px}
+.sb-count{margin-left:auto;font-size:9px;color:#86868b;background:#e5e5ea;padding:1px 6px;border-radius:10px}
+.sb-item.a .sb-count{background:#ffffff44;color:#fff}
+.sb-divider{height:1px;background:#e5e5e5;margin:4px 12px}
+.content{flex:1;display:flex;flex-direction:column}
+.map-area{flex:1;background:#e8ecf0;position:relative;display:flex;align-items:center;justify-content:center}
+.ml{font-size:12px;color:#c7c7cc;letter-spacing:2px}
+/* Floating controls */
+.mc{position:absolute;right:12px;bottom:12px;display:flex;flex-direction:column;gap:4px}
+.map-btn{width:30px;height:30px;background:#fff;border-radius:6px;box-shadow:0 1px 4px rgba(0,0,0,.1);display:flex;align-items:center;justify-content:center;font-size:14px;color:#4d4d4d;cursor:pointer}
+.map-btn:hover{background:#f5f5f7}
+.info-popup{position:absolute;top:12px;right:12px;background:#fff;border-radius:10px;box-shadow:0 4px 16px rgba(0,0,0,.1);padding:12px;width:240px}
+.ip-title{font-size:13px;font-weight:600;color:#1d1d1f;margin-bottom:4px}
+.ip-desc{font-size:11px;color:#86868b;line-height:1.4;margin-bottom:6px}
+.ip-meta{display:flex;gap:8px;font-size:9px;color:#86868b}
+.ip-btn{margin-top:6px;padding:4px 10px;background:#007aff;color:#fff;border-radius:6px;font-size:10px;text-align:center;cursor:pointer}
+/* Layers sheet */
+.layer-sheet{position:absolute;bottom:0;left:0;right:0;background:#fff;border-radius:10px 10px 0 0;box-shadow:0 -4px 16px rgba(0,0,0,.08);max-height:180px;display:flex;flex-direction:column}
+.ls-handle{width:36px;height:4px;background:#d1d1d6;border-radius:2px;margin:6px auto}
+.ls-header{padding:0 12px 6px;display:flex;align-items:center;font-size:11px;font-weight:600;color:#1d1d1f}
+.ls-count{margin-left:auto;font-size:10px;color:#86868b}
+.ls-list{display:flex;gap:8px;padding:0 12px 12px;overflow-x:auto}
+.ls-card{min-width:100px;background:#f5f5f7;border-radius:8px;padding:8px;display:flex;flex-direction:column;gap:4px}
+.ls-card-color{width:100%;height:4px;border-radius:2px}
+.ls-card-name{font-size:9px;font-weight:500;color:#1d1d1f}
+.ls-card-type{font-size:8px;color:#86868b}
+.ls-card-toggle{width:26px;height:14px;border-radius:7px;background:#e5e5ea;position:relative}
+.ls-card-toggle.on{background:#34c759}
+.ls-card-toggle::after{content:'';position:absolute;width:10px;height:10px;border-radius:50%;background:#fff;top:2px;left:2px;box-shadow:0 1px 2px rgba(0,0,0,.1)}
+.ls-card-toggle.on::after{left:14px}
+.bb{height:24px;background:#fafafa;border-top:1px solid #e5e5e5;display:flex;align-items:center;justify-content:center;font-size:9px;color:#86868b;gap:12px;flex-shrink:0}
+.bb .hl{color:#007aff}
+</style>
+</head>
+<body>
+<div class="window">
+<div class="titlebar"><div class="dots"><div class="dot dot-r"></div><div class="dot dot-y"></div><div class="dot dot-g"></div></div><span class="title">MMGIS &mdash; Reference Mission</span></div>
+<div class="toolbar"><div class="tb-group"><div class="tb-btn a">&#127758; Map</div><div class="tb-btn">&#127760; Globe</div><div class="tb-btn">&#128202; Data</div></div><div class="tb-group"><div class="tb-btn">&#9998; Draw</div><div class="tb-btn">&#128207; Measure</div><div class="tb-btn">&#8505; Info</div></div><input class="tb-search" placeholder="&#128269; Search layers, features..." readonly/></div>
+<div class="ws">
+<div class="sidebar">
+<div class="sb-header">Layers</div>
+<div class="sb-item a"><span class="sb-icon">&#128205;</span>Points Basic<span class="sb-count">156</span></div>
+<div class="sb-item"><span class="sb-icon">&#128200;</span>Lines Basic<span class="sb-count">42</span></div>
+<div class="sb-item"><span class="sb-icon">&#11036;</span>Polygons Basic<span class="sb-count">18</span></div>
+<div class="sb-item"><span class="sb-icon">&#10140;</span>Arrows<span class="sb-count">8</span></div>
+<div class="sb-item"><span class="sb-icon">&#128172;</span>Annotations<span class="sb-count">12</span></div>
+<div class="sb-divider"></div>
+<div class="sb-header">Styled</div>
+<div class="sb-item"><span class="sb-icon">&#128205;</span>Points Styled<span class="sb-count">89</span></div>
+<div class="sb-item"><span class="sb-icon">&#128200;</span>Lines Styled<span class="sb-count">24</span></div>
+<div class="sb-item"><span class="sb-icon">&#11036;</span>Polygons Styled<span class="sb-count">31</span></div>
+<div class="sb-divider"></div>
+<div class="sb-header">Raster</div>
+<div class="sb-item"><span class="sb-icon">&#127748;</span>Raster DEM</div>
+<div class="sb-item"><span class="sb-icon">&#127748;</span>Raster RGB</div>
+</div>
+<div class="content">
+<div class="map-area"><div class="ml">San Francisco Bay Area</div>
+<div class="info-popup"><div class="ip-title">Waypoint Alpha</div><div class="ip-desc">Primary observation point overlooking the Golden Gate strait.</div><div class="ip-meta"><span>37.7749&deg;N</span><span>122.4194&deg;W</span><span>12m</span></div><div class="ip-btn">Show Details</div></div>
+<div class="mc"><div class="map-btn">+</div><div class="map-btn">&minus;</div><div class="map-btn">&#8962;</div></div>
+<div class="layer-sheet"><div class="ls-handle"></div><div class="ls-header">Active Layers<span class="ls-count">8 of 29</span></div>
+<div class="ls-list">
+<div class="ls-card"><div class="ls-card-color" style="background:#007aff"></div><div class="ls-card-name">Points Basic</div><div class="ls-card-type">Vector</div><div class="ls-card-toggle on"></div></div>
+<div class="ls-card"><div class="ls-card-color" style="background:#34c759"></div><div class="ls-card-name">Lines Basic</div><div class="ls-card-type">Vector</div><div class="ls-card-toggle on"></div></div>
+<div class="ls-card"><div class="ls-card-color" style="background:#ff3b30"></div><div class="ls-card-name">Arrows</div><div class="ls-card-type">Vector</div><div class="ls-card-toggle on"></div></div>
+<div class="ls-card"><div class="ls-card-color" style="background:#af52de"></div><div class="ls-card-name">Points Styled</div><div class="ls-card-type">Styled</div><div class="ls-card-toggle on"></div></div>
+<div class="ls-card"><div class="ls-card-color" style="background:#ff9500"></div><div class="ls-card-name">Polygons Styled</div><div class="ls-card-type">Styled</div><div class="ls-card-toggle on"></div></div>
+<div class="ls-card"><div class="ls-card-color" style="background:#5ac8fa"></div><div class="ls-card-name">Raster DEM</div><div class="ls-card-type">Raster</div><div class="ls-card-toggle on"></div></div>
+</div></div>
+</div></div>
+</div>
+<div class="bb"><span class="hl">37.775&deg;N, 122.419&deg;W</span> &bull; Zoom 12 &bull; EPSG:4326 &bull; 8/29 layers</div>
+</div>
+</body>
+</html>

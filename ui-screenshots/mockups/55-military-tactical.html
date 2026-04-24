@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>MMGIS Mockup 55: Military Tactical</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Courier New',monospace;background:#1a2010;color:#8ba83e;height:100vh;overflow:hidden;display:flex;flex-direction:column;text-transform:uppercase;letter-spacing:.5px}
+.top{height:32px;background:#222d14;display:flex;align-items:center;padding:0 12px;border-bottom:1px solid #3a4a20;flex-shrink:0;font-size:9px}
+.logo{font-weight:700;color:#b8d458}
+.sep{color:#3a4a20;margin:0 8px}
+.mission{color:#6a7a3e}
+.right{margin-left:auto;display:flex;gap:12px;color:#6a7a3e}
+.right .hl{color:#b8d458}
+.ws{flex:1;display:flex;overflow:hidden}
+.sb{width:36px;background:#222d14;border-right:1px solid #3a4a20;display:flex;flex-direction:column;align-items:center;padding:4px 0;gap:2px;flex-shrink:0}
+.t{width:28px;height:28px;display:flex;align-items:center;justify-content:center;font-size:10px;color:#6a7a3e;cursor:pointer;border:1px solid transparent}
+.t:hover{border-color:#3a4a20;color:#b8d458}
+.t.a{border-color:#8ba83e;color:#b8d458;background:#2a3818}
+.pnl{width:220px;background:#1e2812;border-right:1px solid #3a4a20;display:flex;flex-direction:column;flex-shrink:0;font-size:8px}
+.ph{padding:6px 8px;background:#222d14;border-bottom:1px solid #3a4a20;color:#b8d458;font-weight:700;display:flex;justify-content:space-between}
+.pnl-content{flex:1;overflow-y:auto;padding:4px}
+.layer-group{margin-bottom:6px}
+.lg-title{padding:2px 4px;color:#6a7a3e;border-bottom:1px dashed #3a4a20;margin-bottom:2px;font-size:7px}
+.li{padding:2px 4px;display:flex;align-items:center;gap:4px;color:#8ba83e}
+.li:hover{background:#2a3818}
+.li-status{width:6px;height:6px;border:1px solid #6a7a3e}
+.li-status.on{background:#b8d458;border-color:#b8d458}
+.li-name{flex:1;font-size:8px}
+.li-type{color:#6a7a3e;font-size:7px}
+.map{flex:1;background:#1a2010;position:relative;display:flex;align-items:center;justify-content:center}
+/* Grid overlay */
+.grid-overlay{position:absolute;inset:0;background:repeating-linear-gradient(0deg,transparent,transparent 49px,#3a4a2033 49px,#3a4a2033 50px),repeating-linear-gradient(90deg,transparent,transparent 49px,#3a4a2033 49px,#3a4a2033 50px)}
+.crosshair{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%)}
+.crosshair::before,.crosshair::after{content:'';position:absolute;background:#b8d45866}
+.crosshair::before{width:30px;height:1px;left:-15px;top:0}
+.crosshair::after{width:1px;height:30px;top:-15px;left:0}
+.ml{font-size:9px;color:#3a4a20;letter-spacing:4px;z-index:1}
+/* Compass rose */
+.compass{position:absolute;top:12px;right:12px;width:50px;height:50px;border:1px solid #3a4a20;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-direction:column;font-size:8px;color:#6a7a3e}
+.compass .n{color:#b8d458;font-weight:700}
+.mc{position:absolute;right:12px;top:70px;display:flex;flex-direction:column;gap:2px}
+.mb{width:24px;height:24px;border:1px solid #3a4a20;display:flex;align-items:center;justify-content:center;font-size:10px;color:#6a7a3e;cursor:pointer;background:#222d14}
+.mb:hover{color:#b8d458;border-color:#8ba83e}
+/* Coordinates display */
+.coord-display{position:absolute;bottom:8px;left:8px;background:#222d14;border:1px solid #3a4a20;padding:4px 8px;font-size:8px}
+.cd-row{display:flex;gap:12px}
+.cd-label{color:#6a7a3e}
+.cd-value{color:#b8d458}
+/* Scale bar */
+.scale{position:absolute;bottom:8px;right:8px;display:flex;align-items:center;gap:4px;font-size:7px;color:#6a7a3e}
+.scale-bar{width:60px;height:4px;border:1px solid #6a7a3e;background:repeating-linear-gradient(90deg,#6a7a3e,#6a7a3e 10px,transparent 10px,transparent 20px)}
+/* Status bar */
+.bb{height:24px;background:#222d14;display:flex;align-items:center;padding:0 8px;gap:8px;border-top:1px solid #3a4a20;font-size:7px;color:#6a7a3e;flex-shrink:0}
+.bb .hl{color:#b8d458}
+.bb .warn{color:#d4a830}
+.bb .ok{color:#8ba83e}
+</style>
+</head>
+<body>
+<div class="top"><span class="logo">[MMGIS]</span><span class="sep">|</span><span class="mission">REF-MISSION // OPS-CENTER</span><span class="right"><span>DATUM: <span class="hl">WGS84</span></span><span class="sep">|</span><span>MODE: <span class="hl">TACTICAL</span></span><span class="sep">|</span><span>SYS: <span class="hl">NOMINAL</span></span></span></div>
+<div class="ws">
+<div class="sb"><div class="t a">&#9776;</div><div class="t">&#8505;</div><div class="t">&#9873;</div><div class="t">&#9998;</div><div class="t">M</div><div class="t">T</div></div>
+<div class="pnl"><div class="ph"><span>// LAYER CONTROL</span><span>8/29</span></div>
+<div class="pnl-content">
+<div class="layer-group"><div class="lg-title">[VECTOR // BASIC]</div>
+<div class="li"><div class="li-status on"></div><div class="li-name">PTS_BASIC</div><div class="li-type">VEC</div></div>
+<div class="li"><div class="li-status on"></div><div class="li-name">LNS_BASIC</div><div class="li-type">VEC</div></div>
+<div class="li"><div class="li-status"></div><div class="li-name">PLY_BASIC</div><div class="li-type">VEC</div></div>
+<div class="li"><div class="li-status on"></div><div class="li-name">ARROWS</div><div class="li-type">VEC</div></div>
+<div class="li"><div class="li-status"></div><div class="li-name">ANNOTATIONS</div><div class="li-type">VEC</div></div>
+</div>
+<div class="layer-group"><div class="lg-title">[VECTOR // STYLED]</div>
+<div class="li"><div class="li-status on"></div><div class="li-name">PTS_STYLED</div><div class="li-type">STY</div></div>
+<div class="li"><div class="li-status"></div><div class="li-name">LNS_STYLED</div><div class="li-type">STY</div></div>
+<div class="li"><div class="li-status on"></div><div class="li-name">PLY_STYLED</div><div class="li-type">STY</div></div>
+</div>
+<div class="layer-group"><div class="lg-title">[RASTER // ELEVATION]</div>
+<div class="li"><div class="li-status on"></div><div class="li-name">DEM_RASTER</div><div class="li-type">RST</div></div>
+<div class="li"><div class="li-status"></div><div class="li-name">RGB_RASTER</div><div class="li-type">RST</div></div>
+</div>
+<div class="layer-group"><div class="lg-title">[TILE // BASE]</div>
+<div class="li"><div class="li-status on"></div><div class="li-name">XYZ_BASE</div><div class="li-type">TIL</div></div>
+<div class="li"><div class="li-status"></div><div class="li-name">WMS_OVERLAY</div><div class="li-type">WMS</div></div>
+</div>
+</div></div>
+<div class="map">
+<div class="grid-overlay"></div>
+<div class="crosshair"></div>
+<div class="ml">// AREA OF OPERATIONS</div>
+<div class="compass"><span class="n">N</span><span>&#9651;</span></div>
+<div class="mc"><div class="mb">+</div><div class="mb">-</div><div class="mb">&#8962;</div></div>
+<div class="coord-display">
+<div class="cd-row"><span class="cd-label">LAT:</span><span class="cd-value">37.7749&deg;N</span><span class="cd-label">LON:</span><span class="cd-value">122.4194&deg;W</span></div>
+<div class="cd-row"><span class="cd-label">ELEV:</span><span class="cd-value">12M</span><span class="cd-label">ZOOM:</span><span class="cd-value">12</span></div>
+</div>
+<div class="scale"><div class="scale-bar"></div>500M</div>
+</div>
+</div>
+<div class="bb"><span class="ok">[OK]</span> SYS ONLINE<span class="sep">|</span>LAYERS: <span class="hl">8/29</span><span class="sep">|</span>TIME: <span class="hl">2024-01-13T12:00:00Z</span><span class="sep">|</span>NET: <span class="ok">CONNECTED</span><span class="sep">|</span>STOR: <span class="warn">72% USED</span></div>
+</body>
+</html>

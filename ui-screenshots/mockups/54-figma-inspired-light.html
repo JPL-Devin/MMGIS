@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>MMGIS Mockup 54: Figma-Inspired Light</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Inter',system-ui,sans-serif;background:#e5e5e5;color:#333;height:100vh;overflow:hidden;display:flex;flex-direction:column}
+.top{height:40px;background:#2c2c2c;display:flex;align-items:center;padding:0 8px;flex-shrink:0}
+.logo{font-size:13px;font-weight:700;color:#fff;background:#a259ff;width:24px;height:24px;border-radius:6px;display:flex;align-items:center;justify-content:center;margin-right:8px}
+.menu-items{display:flex;gap:2px}
+.mi{padding:4px 10px;font-size:11px;color:#ffffffbb;border-radius:4px;cursor:pointer}
+.mi:hover{background:#ffffff11;color:#fff}
+.center{margin:0 auto;display:flex;align-items:center;gap:6px}
+.tool-btn{width:28px;height:28px;border-radius:4px;display:flex;align-items:center;justify-content:center;font-size:12px;color:#ffffffbb;cursor:pointer}
+.tool-btn:hover{background:#ffffff11}
+.tool-btn.a{background:#a259ff;color:#fff}
+.right{display:flex;gap:6px;align-items:center}
+.share-btn{padding:4px 14px;background:#a259ff;border-radius:6px;font-size:11px;color:#fff;font-weight:600;cursor:pointer}
+.av{width:24px;height:24px;border-radius:50%;background:#ff7262;color:#fff;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:700}
+.ws{flex:1;display:flex;overflow:hidden}
+/* Left panel - layers */
+.left-panel{width:240px;background:#fff;display:flex;flex-direction:column;flex-shrink:0;border-right:1px solid #e0e0e0}
+.lp-tabs{display:flex;border-bottom:1px solid #e0e0e0}
+.lp-tab{flex:1;text-align:center;padding:8px;font-size:10px;color:#999;cursor:pointer;font-weight:500}
+.lp-tab.a{color:#333;border-bottom:2px solid #a259ff}
+.lp-search{margin:8px;padding:6px 8px;background:#f5f5f5;border:none;border-radius:4px;font-size:10px;color:#333;font-family:inherit}
+.lp-list{flex:1;overflow-y:auto;padding:0 4px}
+.lp-group{margin-bottom:4px}
+.lg-header{padding:4px 8px;font-size:9px;color:#999;display:flex;align-items:center;gap:4px;cursor:pointer}
+.lg-arrow{font-size:8px}
+.lp-item{padding:3px 8px 3px 20px;font-size:10px;color:#333;display:flex;align-items:center;gap:6px;border-radius:4px;cursor:pointer}
+.lp-item:hover{background:#f5f5f5}
+.lp-item.selected{background:#e8daff}
+.lp-icon{width:12px;height:12px;border-radius:2px;border:1px solid #ddd}
+.lp-eye{margin-left:auto;font-size:10px;color:#ccc;cursor:pointer}
+.lp-eye.on{color:#a259ff}
+/* Canvas area */
+.canvas{flex:1;background:#f0f0f0;position:relative;display:flex;align-items:center;justify-content:center;overflow:hidden}
+.canvas-label{font-size:10px;color:#ccc;letter-spacing:4px;text-transform:uppercase}
+.rulers-h{position:absolute;top:0;left:0;right:0;height:16px;background:#fff;border-bottom:1px solid #e0e0e0;display:flex;align-items:center;padding:0 16px;font-size:7px;color:#999}
+.rulers-v{position:absolute;top:16px;left:0;bottom:0;width:16px;background:#fff;border-right:1px solid #e0e0e0}
+/* Frame on canvas representing the map */
+.frame{position:absolute;top:40px;left:40px;right:320px;bottom:40px;background:#fff;border-radius:4px;box-shadow:0 2px 12px rgba(0,0,0,.1);display:flex;flex-direction:column;overflow:hidden}
+.frame-label{position:absolute;top:-16px;left:0;font-size:9px;color:#a259ff;font-weight:500}
+.frame-map{flex:1;background:#e8f4f8;display:flex;align-items:center;justify-content:center}
+.frame-map-label{font-size:10px;color:#b0d0e0;letter-spacing:2px}
+.frame-toolbar{height:36px;background:#fff;border-top:1px solid #e0e0e0;display:flex;align-items:center;padding:0 8px;gap:4px}
+.ft-btn{padding:3px 8px;font-size:9px;border-radius:4px;color:#666;cursor:pointer}
+.ft-btn.a{background:#a259ff;color:#fff}
+/* Right panel - properties */
+.right-panel{width:280px;background:#fff;display:flex;flex-direction:column;flex-shrink:0;border-left:1px solid #e0e0e0}
+.rp-section{padding:10px 12px;border-bottom:1px solid #e0e0e0}
+.rp-title{font-size:9px;font-weight:600;color:#333;margin-bottom:6px;text-transform:uppercase;letter-spacing:.3px}
+.rp-row{display:flex;align-items:center;gap:8px;margin-bottom:4px}
+.rp-label{font-size:9px;color:#999;width:40px}
+.rp-value{font-size:10px;color:#333;flex:1}
+.rp-input{padding:3px 6px;background:#f5f5f5;border:1px solid #e0e0e0;border-radius:3px;font-size:9px;color:#333;width:60px;text-align:center}
+.rp-color{width:20px;height:20px;border-radius:4px;border:1px solid #e0e0e0;cursor:pointer}
+.rp-slider{flex:1;height:3px;background:#e0e0e0;border-radius:2px;position:relative}
+.rp-slider-fill{height:100%;background:#a259ff;border-radius:2px}
+.bb{height:24px;background:#fff;display:flex;align-items:center;padding:0 12px;gap:12px;border-top:1px solid #e0e0e0;font-size:9px;color:#999;flex-shrink:0}
+.bb .hl{color:#a259ff}
+</style>
+</head>
+<body>
+<div class="top">
+<div class="logo">M</div>
+<div class="menu-items"><div class="mi">File</div><div class="mi">Edit</div><div class="mi">View</div><div class="mi">Tools</div></div>
+<div class="center"><div class="tool-btn">&#9654;</div><div class="tool-btn a">&#9998;</div><div class="tool-btn">&#9634;</div><div class="tool-btn">&#9711;</div><div class="tool-btn">T</div><div class="tool-btn">&#128207;</div></div>
+<div class="right"><div class="share-btn">Share</div><div class="av">A</div></div>
+</div>
+<div class="ws">
+<div class="left-panel">
+<div class="lp-tabs"><div class="lp-tab a">Layers</div><div class="lp-tab">Assets</div><div class="lp-tab">Pages</div></div>
+<input class="lp-search" placeholder="Search..." readonly/>
+<div class="lp-list">
+<div class="lp-group"><div class="lg-header"><span class="lg-arrow">&#9660;</span> Vector Layers</div>
+<div class="lp-item selected"><div class="lp-icon" style="background:#4a90d9"></div>Points Basic<div class="lp-eye on">&#128065;</div></div>
+<div class="lp-item"><div class="lp-icon" style="background:#50a060"></div>Lines Basic<div class="lp-eye on">&#128065;</div></div>
+<div class="lp-item"><div class="lp-icon" style="background:#d4a843"></div>Polygons Basic<div class="lp-eye">&#128065;</div></div>
+<div class="lp-item"><div class="lp-icon" style="background:#c44040"></div>Arrows<div class="lp-eye on">&#128065;</div></div>
+<div class="lp-item"><div class="lp-icon" style="background:#8060a0"></div>Annotations<div class="lp-eye">&#128065;</div></div>
+</div>
+<div class="lp-group"><div class="lg-header"><span class="lg-arrow">&#9660;</span> Styled Layers</div>
+<div class="lp-item"><div class="lp-icon" style="background:#d080a0"></div>Points Styled<div class="lp-eye on">&#128065;</div></div>
+<div class="lp-item"><div class="lp-icon" style="background:#40a0a0"></div>Lines Styled<div class="lp-eye">&#128065;</div></div>
+<div class="lp-item"><div class="lp-icon" style="background:#e07040"></div>Polygons Styled<div class="lp-eye on">&#128065;</div></div>
+</div>
+<div class="lp-group"><div class="lg-header"><span class="lg-arrow">&#9660;</span> Raster &amp; Tiles</div>
+<div class="lp-item"><div class="lp-icon" style="background:#6080c0"></div>Raster DEM<div class="lp-eye on">&#128065;</div></div>
+<div class="lp-item"><div class="lp-icon" style="background:#80a0c0"></div>Raster RGB<div class="lp-eye">&#128065;</div></div>
+</div>
+</div>
+</div>
+<div class="canvas">
+<div class="rulers-h">0&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;100&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;200&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;300&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;400&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;500</div>
+<div class="rulers-v"></div>
+<div class="frame">
+<div class="frame-label">Map View &mdash; 1920 &times; 1080</div>
+<div class="frame-map"><div class="frame-map-label">San Francisco Bay Area</div></div>
+<div class="frame-toolbar"><div class="ft-btn a">&#9776; Layers</div><div class="ft-btn">&#9998; Draw</div><div class="ft-btn">&#128207; Measure</div><div class="ft-btn">&#8505; Info</div><div class="ft-btn">&#127760; Globe</div></div>
+</div>
+</div>
+<div class="right-panel">
+<div class="rp-section"><div class="rp-title">Layer Properties</div>
+<div class="rp-row"><span class="rp-label">Name</span><span class="rp-value">Points Basic</span></div>
+<div class="rp-row"><span class="rp-label">Type</span><span class="rp-value">Vector (Point)</span></div>
+<div class="rp-row"><span class="rp-label">Count</span><span class="rp-value">156 features</span></div>
+</div>
+<div class="rp-section"><div class="rp-title">Style</div>
+<div class="rp-row"><span class="rp-label">Fill</span><div class="rp-color" style="background:#4a90d9"></div><span class="rp-value">#4A90D9</span></div>
+<div class="rp-row"><span class="rp-label">Stroke</span><div class="rp-color" style="background:#2d5f8a"></div><span class="rp-value">#2D5F8A</span></div>
+<div class="rp-row"><span class="rp-label">Radius</span><input class="rp-input" value="6" readonly/></div>
+<div class="rp-row"><span class="rp-label">Opacity</span><div class="rp-slider"><div class="rp-slider-fill" style="width:80%"></div></div><input class="rp-input" value="80%" readonly/></div>
+</div>
+<div class="rp-section"><div class="rp-title">Position</div>
+<div class="rp-row"><span class="rp-label">Lat</span><input class="rp-input" value="37.775" readonly/><span class="rp-label">Lon</span><input class="rp-input" value="-122.42" readonly/></div>
+<div class="rp-row"><span class="rp-label">Zoom</span><input class="rp-input" value="12" readonly/><span class="rp-label">Proj</span><input class="rp-input" value="4326" readonly/></div>
+</div>
+<div class="rp-section"><div class="rp-title">Export</div>
+<div class="rp-row"><span class="rp-value" style="font-size:9px;color:#a259ff;cursor:pointer">&#x2913; Export as GeoJSON</span></div>
+<div class="rp-row"><span class="rp-value" style="font-size:9px;color:#a259ff;cursor:pointer">&#x2913; Export as Shapefile</span></div>
+</div>
+</div>
+</div>
+<div class="bb"><span class="hl">100%</span> | <span class="hl">37.775&deg;N, 122.419&deg;W</span> | Z12 | 8/29 layers | Reference Mission</div>
+</body>
+</html>

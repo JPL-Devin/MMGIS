@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>MMGIS Mockup 53: Search-Focused Layout</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Inter',system-ui,sans-serif;background:#0f172a;color:#e2e8f0;height:100vh;overflow:hidden;display:flex;flex-direction:column}
+/* Giant search bar at top */
+.search-bar{height:56px;background:#1e293b;display:flex;align-items:center;padding:0 20px;gap:12px;border-bottom:1px solid #334155;flex-shrink:0}
+.logo{font-size:16px;font-weight:700;color:#a78bfa}
+.search-input{flex:1;max-width:600px;height:36px;background:#0f172a;border:1px solid #334155;border-radius:18px;padding:0 16px;color:#e2e8f0;font-size:13px;font-family:inherit;display:flex;align-items:center}
+.search-input .placeholder{color:#64748b}
+.search-input .kbd{margin-left:auto;padding:2px 6px;background:#334155;border-radius:4px;font-size:9px;color:#94a3b8;font-family:monospace}
+.filters{display:flex;gap:4px}
+.filter{padding:4px 10px;border-radius:12px;font-size:10px;color:#94a3b8;border:1px solid #334155;cursor:pointer}
+.filter.a{background:#a78bfa22;color:#a78bfa;border-color:#a78bfa44}
+.right{margin-left:auto;display:flex;gap:8px;align-items:center}
+.av{width:28px;height:28px;border-radius:50%;background:#a78bfa;color:#0f172a;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700}
+/* Search results overlay */
+.ws{flex:1;display:flex;overflow:hidden;position:relative}
+.results-panel{width:360px;background:#1e293b;border-right:1px solid #334155;display:flex;flex-direction:column;flex-shrink:0}
+.rp-header{padding:8px 12px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #334155}
+.rp-title{font-size:11px;color:#94a3b8}
+.rp-count{font-size:10px;color:#a78bfa}
+.rp-tabs{display:flex;gap:2px;padding:4px 8px;border-bottom:1px solid #334155}
+.rp-tab{padding:4px 8px;font-size:9px;border-radius:4px;color:#64748b;cursor:pointer}
+.rp-tab.a{background:#334155;color:#e2e8f0}
+.rp-list{flex:1;overflow-y:auto;padding:4px}
+.result{padding:8px 10px;border-radius:6px;margin-bottom:2px;cursor:pointer}
+.result:hover{background:#33415544}
+.result.a{background:#334155;border-left:3px solid #a78bfa}
+.r-type{font-size:7px;text-transform:uppercase;letter-spacing:.5px;color:#64748b;margin-bottom:2px;display:flex;align-items:center;gap:4px}
+.r-badge{padding:1px 4px;border-radius:2px;font-size:7px}
+.r-badge.layer{background:#a78bfa22;color:#a78bfa}
+.r-badge.feature{background:#10b98122;color:#10b981}
+.r-badge.tool{background:#f59e0b22;color:#f59e0b}
+.r-badge.coord{background:#38bdf822;color:#38bdf8}
+.r-name{font-size:11px;color:#e2e8f0;margin-bottom:2px}
+.r-desc{font-size:9px;color:#64748b;line-height:1.4}
+.r-meta{font-size:8px;color:#475569;margin-top:2px;display:flex;gap:8px}
+.map{flex:1;background:#0f172a;position:relative;display:flex;align-items:center;justify-content:center}
+.ml{font-size:10px;color:#1e293b;letter-spacing:4px;text-transform:uppercase}
+.mc{position:absolute;right:12px;top:12px;display:flex;flex-direction:column;gap:4px}
+.mb{width:28px;height:28px;background:#1e293b;border:1px solid #334155;border-radius:6px;display:flex;align-items:center;justify-content:center;color:#94a3b8;font-size:12px;cursor:pointer}
+/* Highlighted features on map */
+.pin{position:absolute;width:20px;height:20px;background:#a78bfa;border-radius:50% 50% 50% 0;transform:rotate(-45deg);display:flex;align-items:center;justify-content:center;box-shadow:0 0 12px #a78bfa88}
+.pin::after{content:'';width:8px;height:8px;background:#fff;border-radius:50%}
+.pin-1{top:35%;left:40%}
+.pin-2{top:45%;left:55%}
+.pin-3{top:55%;left:45%}
+.bb{height:28px;background:#1e293b;display:flex;align-items:center;padding:0 12px;gap:12px;border-top:1px solid #334155;font-size:9px;color:#475569;flex-shrink:0}
+.bb .hl{color:#a78bfa}
+</style>
+</head>
+<body>
+<div class="search-bar">
+<span class="logo">MMGIS</span>
+<div class="search-input"><span class="placeholder">Search layers, features, coordinates, tools...</span><span class="kbd">&#8984;K</span></div>
+<div class="filters"><div class="filter a">All</div><div class="filter">Layers</div><div class="filter">Features</div><div class="filter">Coords</div><div class="filter">Tools</div></div>
+<div class="right"><div class="av">A</div></div>
+</div>
+<div class="ws">
+<div class="results-panel">
+<div class="rp-header"><span class="rp-title">Search Results</span><span class="rp-count">24 results</span></div>
+<div class="rp-tabs"><div class="rp-tab a">All (24)</div><div class="rp-tab">Layers (8)</div><div class="rp-tab">Features (12)</div><div class="rp-tab">Tools (4)</div></div>
+<div class="rp-list">
+<div class="result a"><div class="r-type"><span class="r-badge layer">LAYER</span></div><div class="r-name">Points Basic</div><div class="r-desc">Vector point layer with basic styling. 156 features.</div><div class="r-meta"><span>Vector</span><span>Active</span></div></div>
+<div class="result"><div class="r-type"><span class="r-badge feature">FEATURE</span></div><div class="r-name">Waypoint Alpha</div><div class="r-desc">Primary observation point, Points Basic layer</div><div class="r-meta"><span>37.7749, -122.4194</span><span>12m elev</span></div></div>
+<div class="result"><div class="r-type"><span class="r-badge feature">FEATURE</span></div><div class="r-name">Waypoint Beta</div><div class="r-desc">Secondary waypoint, Points Basic layer</div><div class="r-meta"><span>37.7812, -122.4108</span><span>45m elev</span></div></div>
+<div class="result"><div class="r-type"><span class="r-badge layer">LAYER</span></div><div class="r-name">Lines Basic</div><div class="r-desc">Vector line layer with basic styling. 42 features.</div><div class="r-meta"><span>Vector</span><span>Active</span></div></div>
+<div class="result"><div class="r-type"><span class="r-badge tool">TOOL</span></div><div class="r-name">Draw Tool</div><div class="r-desc">Create and edit geometric features on the map</div><div class="r-meta"><span>Shortcut: D</span></div></div>
+<div class="result"><div class="r-type"><span class="r-badge coord">COORD</span></div><div class="r-name">37.7749&deg;N, 122.4194&deg;W</div><div class="r-desc">San Francisco, CA &mdash; Golden Gate area</div><div class="r-meta"><span>WGS84</span></div></div>
+<div class="result"><div class="r-type"><span class="r-badge layer">LAYER</span></div><div class="r-name">Polygons Styled</div><div class="r-desc">Styled polygon layer with custom colors. 28 features.</div><div class="r-meta"><span>Vector</span><span>Active</span></div></div>
+<div class="result"><div class="r-type"><span class="r-badge tool">TOOL</span></div><div class="r-name">Measure Tool</div><div class="r-desc">Measure distances, areas, and elevation profiles</div><div class="r-meta"><span>Shortcut: M</span></div></div>
+</div>
+</div>
+<div class="map"><div class="ml">San Francisco Bay</div>
+<div class="pin pin-1"></div><div class="pin pin-2"></div><div class="pin pin-3"></div>
+<div class="mc"><div class="mb">+</div><div class="mb">&minus;</div><div class="mb">&#8962;</div></div>
+</div>
+</div>
+<div class="bb"><span class="hl">-122.419&deg;</span>, <span class="hl">37.775&deg;</span> | Z12 | 8/29 layers | Reference Mission</div>
+</body>
+</html>

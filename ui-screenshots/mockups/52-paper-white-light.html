@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>MMGIS Mockup 52: Paper White Light</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:Georgia,'Times New Roman',serif;background:#faf8f5;color:#3d3529;height:100vh;overflow:hidden;display:flex;flex-direction:column}
+.top{height:44px;background:#fff;display:flex;align-items:center;padding:0 20px;border-bottom:2px solid #e8e0d4;flex-shrink:0}
+.logo{font-size:16px;font-weight:700;color:#8b6914;letter-spacing:1px}
+.logo span{font-weight:300}
+.sep{width:1px;height:20px;background:#e8e0d4;margin:0 16px}
+.mission{color:#8a7e6b;font-size:12px;font-style:italic}
+.right{margin-left:auto;display:flex;gap:12px;align-items:center;font-size:11px;color:#8a7e6b}
+.btn-paper{padding:4px 12px;border:1px solid #c4b89a;border-radius:4px;font-size:10px;color:#6b5e47;background:#faf8f5;cursor:pointer;font-family:inherit}
+.ws{flex:1;display:flex;overflow:hidden}
+.sidebar{width:260px;background:#fff;border-right:2px solid #e8e0d4;display:flex;flex-direction:column;flex-shrink:0}
+.sh{padding:12px 16px 8px;font-size:9px;text-transform:uppercase;letter-spacing:2px;color:#b5a88e;font-weight:600}
+.search{margin:0 12px 8px;padding:6px 10px;border:1px solid #e8e0d4;border-radius:4px;font-size:11px;background:#faf8f5;color:#3d3529;font-family:inherit}
+.layers{flex:1;overflow-y:auto;padding:0 12px}
+.group{margin-bottom:8px}
+.group-title{font-size:10px;font-weight:600;color:#8a7e6b;padding:4px 0;border-bottom:1px solid #e8e0d4;margin-bottom:4px;display:flex;align-items:center;gap:6px}
+.gt-count{font-weight:400;color:#b5a88e;font-style:italic}
+.li{padding:4px 0 4px 8px;display:flex;align-items:center;gap:8px;font-size:11px;color:#5a4f3d;cursor:pointer;border-left:2px solid transparent}
+.li:hover{background:#faf8f5;border-left-color:#c4b89a}
+.li.a{border-left-color:#8b6914}
+.li-swatch{width:10px;height:10px;border-radius:2px;border:1px solid #e8e0d488}
+.li-name{flex:1}
+.li-toggle{width:28px;height:14px;border-radius:7px;background:#e8e0d4;position:relative;cursor:pointer}
+.li-toggle.on{background:#8b6914}
+.li-toggle::after{content:'';position:absolute;width:10px;height:10px;border-radius:50%;background:#fff;top:2px;left:2px;transition:left .15s}
+.li-toggle.on::after{left:16px}
+.map{flex:1;background:#f0ebe3;position:relative;display:flex;align-items:center;justify-content:center}
+.ml{font-size:14px;color:#e8e0d4;font-style:italic}
+.mc{position:absolute;right:16px;top:16px;display:flex;flex-direction:column;gap:4px}
+.mb{width:32px;height:32px;background:#fff;border:1px solid #e8e0d4;border-radius:4px;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:14px;color:#8a7e6b}
+.mb:hover{border-color:#8b6914;color:#8b6914}
+.info-card{position:absolute;bottom:16px;left:16px;background:#fff;border:1px solid #e8e0d4;border-radius:6px;padding:12px 16px;max-width:280px;box-shadow:0 2px 8px rgba(0,0,0,.05)}
+.ic-title{font-size:12px;font-weight:600;color:#3d3529;margin-bottom:4px}
+.ic-desc{font-size:10px;color:#8a7e6b;line-height:1.5;font-style:italic}
+.ic-meta{margin-top:6px;display:flex;gap:12px;font-size:9px;color:#b5a88e}
+.scale{position:absolute;bottom:16px;right:16px;display:flex;align-items:center;gap:6px;font-size:9px;color:#b5a88e}
+.scale-bar{width:60px;height:2px;background:#c4b89a}
+.bb{height:28px;background:#fff;display:flex;align-items:center;padding:0 16px;gap:16px;border-top:2px solid #e8e0d4;font-size:10px;color:#8a7e6b;flex-shrink:0;font-style:italic}
+.bb .hl{color:#8b6914;font-style:normal;font-weight:600}
+</style>
+</head>
+<body>
+<div class="top"><div class="logo">MMGIS <span>Cartographer</span></div><div class="sep"></div><div class="mission">Reference Mission &mdash; San Francisco Bay Area</div><div class="right"><div class="btn-paper">&#9998; Draw</div><div class="btn-paper">&#128207; Measure</div><div class="btn-paper">&#128269; Search</div></div></div>
+<div class="ws">
+<div class="sidebar">
+<div class="sh">Map Layers</div>
+<input class="search" placeholder="Search layers..." readonly />
+<div class="layers">
+<div class="group"><div class="group-title">Vector Layers <span class="gt-count">(5 layers)</span></div>
+<div class="li a"><div class="li-swatch" style="background:#4a90d9"></div><div class="li-name">Points Basic</div><div class="li-toggle on"></div></div>
+<div class="li"><div class="li-swatch" style="background:#50a060"></div><div class="li-name">Lines Basic</div><div class="li-toggle on"></div></div>
+<div class="li"><div class="li-swatch" style="background:#d4a843"></div><div class="li-name">Polygons Basic</div><div class="li-toggle"></div></div>
+<div class="li"><div class="li-swatch" style="background:#c44040"></div><div class="li-name">Arrows</div><div class="li-toggle on"></div></div>
+<div class="li"><div class="li-swatch" style="background:#8060a0"></div><div class="li-name">Annotations</div><div class="li-toggle"></div></div>
+</div>
+<div class="group"><div class="group-title">Styled Layers <span class="gt-count">(3 layers)</span></div>
+<div class="li"><div class="li-swatch" style="background:#d080a0"></div><div class="li-name">Points Styled</div><div class="li-toggle on"></div></div>
+<div class="li"><div class="li-swatch" style="background:#40a0a0"></div><div class="li-name">Lines Styled</div><div class="li-toggle"></div></div>
+<div class="li"><div class="li-swatch" style="background:#e07040"></div><div class="li-name">Polygons Styled</div><div class="li-toggle on"></div></div>
+</div>
+<div class="group"><div class="group-title">Raster &amp; Tile <span class="gt-count">(4 layers)</span></div>
+<div class="li"><div class="li-swatch" style="background:#6080c0"></div><div class="li-name">Raster DEM</div><div class="li-toggle on"></div></div>
+<div class="li"><div class="li-swatch" style="background:#80a0c0"></div><div class="li-name">Raster RGB</div><div class="li-toggle"></div></div>
+<div class="li"><div class="li-swatch" style="background:#70b070"></div><div class="li-name">XYZ Base Tile</div><div class="li-toggle on"></div></div>
+<div class="li"><div class="li-swatch" style="background:#508050"></div><div class="li-name">WMS Overlay</div><div class="li-toggle"></div></div>
+</div></div></div>
+<div class="map"><div class="ml">San Francisco Bay Area</div>
+<div class="mc"><div class="mb">+</div><div class="mb">&minus;</div><div class="mb">&#8962;</div><div class="mb">&#127760;</div></div>
+<div class="info-card"><div class="ic-title">Waypoint Alpha</div><div class="ic-desc">Primary observation point overlooking the Golden Gate strait. Coordinates indicate western approach.</div><div class="ic-meta"><span>37.7749&deg;N</span><span>122.4194&deg;W</span><span>Elev: 12m</span></div></div>
+<div class="scale"><div class="scale-bar"></div>500m</div>
+</div>
+</div>
+<div class="bb"><span class="hl">37.775&deg;N</span>, <span class="hl">122.419&deg;W</span> &bull; Zoom 12 &bull; 8 of 29 layers visible &bull; EPSG:4326</div>
+</body>
+</html>

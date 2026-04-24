@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>MMGIS Mockup 45: Retro Sci-Fi</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Courier New',monospace;background:#0a0a12;color:#e0d68a;height:100vh;overflow:hidden;display:flex;flex-direction:column}
+.top{height:40px;background:#0f0f1a;display:flex;align-items:center;padding:0 14px;border-bottom:2px solid #e0d68a33;flex-shrink:0}
+.logo{font-size:14px;font-weight:700;color:#e0d68a;letter-spacing:4px;text-transform:uppercase}
+.mission{color:#e0d68a55;font-size:10px;margin-left:12px;letter-spacing:2px}
+.right{margin-left:auto;color:#e0d68a55;font-size:9px;letter-spacing:1px}
+.ws{flex:1;display:flex;overflow:hidden}
+.sb{width:50px;background:#0f0f1a;border-right:2px solid #e0d68a22;display:flex;flex-direction:column;align-items:center;padding:8px 0;gap:4px;flex-shrink:0}
+.t{width:36px;height:36px;display:flex;align-items:center;justify-content:center;font-size:14px;color:#e0d68a44;cursor:pointer;border:1px solid transparent}
+.t:hover{border-color:#e0d68a44;color:#e0d68a}
+.t.a{border-color:#e0d68a;color:#e0d68a;background:#e0d68a11}
+.pnl{width:260px;background:#0f0f1a;border-right:2px solid #e0d68a22;display:flex;flex-direction:column;flex-shrink:0}
+.ph{padding:8px 12px;font-size:11px;font-weight:700;color:#e0d68a;border-bottom:1px solid #e0d68a22;letter-spacing:2px;text-transform:uppercase}
+.ll{flex:1;overflow-y:auto;padding:4px}
+.li{padding:4px 8px;font-size:9px;color:#e0d68a88;display:flex;align-items:center;gap:6px;border-bottom:1px solid #e0d68a11}
+.li:hover{background:#e0d68a08;color:#e0d68a}
+.li .s{color:#e0d68a;font-size:10px}
+.li .off{color:#e0d68a33;font-size:10px}
+.li .tag{font-size:7px;color:#e0d68a55;border:1px solid #e0d68a33;padding:0 4px;letter-spacing:1px}
+.map{flex:1;background:#08080e;position:relative;display:flex;align-items:center;justify-content:center}
+.ml{font-size:10px;color:#e0d68a11;letter-spacing:6px;text-transform:uppercase}
+.grid-overlay{position:absolute;inset:0;background-image:linear-gradient(#e0d68a06 1px,transparent 1px),linear-gradient(90deg,#e0d68a06 1px,transparent 1px);background-size:50px 50px}
+.crosshair{position:absolute;top:50%;left:50%;width:20px;height:20px;transform:translate(-50%,-50%)}
+.crosshair::before,.crosshair::after{content:'';position:absolute;background:#e0d68a33}
+.crosshair::before{width:1px;height:20px;left:10px}
+.crosshair::after{width:20px;height:1px;top:10px}
+.mc{position:absolute;right:8px;top:8px;display:flex;flex-direction:column;gap:2px}
+.mb{width:28px;height:28px;border:1px solid #e0d68a44;display:flex;align-items:center;justify-content:center;color:#e0d68a;cursor:pointer;font-size:11px;background:#0f0f1a}
+.mb:hover{background:#e0d68a11}
+.bb{height:30px;background:#0f0f1a;display:flex;align-items:center;padding:0 12px;gap:12px;border-top:2px solid #e0d68a33;font-size:9px;color:#e0d68a66;flex-shrink:0;letter-spacing:1px}
+.bb .hl{color:#e0d68a}
+.ts{flex:1;display:flex;align-items:center;gap:4px}
+.tt{flex:1;height:2px;background:#e0d68a22;position:relative}
+.tf{width:55%;height:100%;background:#e0d68a}
+</style>
+</head>
+<body>
+<div class="top"><span class="logo">MMGIS</span><span class="mission">// REF-MISSION</span><div class="right">SYSTEM NOMINAL &bull; UTC 2024-01-13T12:00:00Z</div></div>
+<div class="ws">
+<div class="sb"><div class="t a">&#9776;</div><div class="t">i</div><div class="t">&#9873;</div><div class="t">&#9998;</div><div class="t">&#8676;</div><div class="t">&#8981;</div><div class="t">T</div><div class="t">&#9737;</div><div class="t">&#9878;</div></div>
+<div class="pnl"><div class="ph">// Layers</div>
+<div class="ll">
+<div class="li"><span class="s">&#9632;</span><span class="tag">VEC</span> POINTS_BASIC</div>
+<div class="li"><span class="s">&#9632;</span><span class="tag">VEC</span> LINES_BASIC</div>
+<div class="li"><span class="off">&#9633;</span><span class="tag">VEC</span> POLYGONS_BASIC</div>
+<div class="li"><span class="s">&#9632;</span><span class="tag">VEC</span> ARROWS</div>
+<div class="li"><span class="off">&#9633;</span><span class="tag">VEC</span> ANNOTATIONS</div>
+<div class="li"><span class="s">&#9632;</span><span class="tag">STY</span> POINTS_STYLED</div>
+<div class="li"><span class="off">&#9633;</span><span class="tag">STY</span> LINES_STYLED</div>
+<div class="li"><span class="s">&#9632;</span><span class="tag">STY</span> POLYGONS_STYLED</div>
+<div class="li"><span class="off">&#9633;</span><span class="tag">STY</span> STYLE_FROM_PROP</div>
+<div class="li"><span class="off">&#9633;</span><span class="tag">BEH</span> POPUP_BASIC</div>
+<div class="li"><span class="s">&#9632;</span><span class="tag">GEO</span> RASTER_DEM</div>
+<div class="li"><span class="off">&#9633;</span><span class="tag">GEO</span> RASTER_RGB</div>
+<div class="li"><span class="s">&#9632;</span><span class="tag">TIL</span> XYZ_BASE</div>
+<div class="li"><span class="off">&#9633;</span><span class="tag">TIL</span> WMS_OVERLAY</div>
+</div></div>
+<div class="map"><div class="grid-overlay"></div><div class="crosshair"></div><div class="ml">San Francisco Bay</div><div class="mc"><div class="mb">+</div><div class="mb">-</div><div class="mb">H</div></div></div>
+</div>
+<div class="bb"><span class="hl">LAT:</span>37.775 <span class="hl">LON:</span>-122.419 <span class="hl">ALT:</span>12M <span class="hl">Z:</span>12<div class="ts"><span>T0:JAN01</span><div class="tt"><div class="tf"></div></div><span>T1:JAN20</span></div></div>
+</body>
+</html>

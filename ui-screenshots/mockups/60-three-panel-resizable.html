@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>MMGIS Mockup 60: Three Panel Resizable</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Inter',system-ui,sans-serif;background:#18181b;color:#d4d4d8;height:100vh;overflow:hidden;display:flex;flex-direction:column}
+.top{height:34px;background:#27272a;display:flex;align-items:center;padding:0 12px;border-bottom:1px solid #3f3f46;flex-shrink:0}
+.logo{font-size:13px;font-weight:700;color:#a855f7}
+.tabs{display:flex;gap:1px;margin-left:12px}
+.tab{padding:4px 12px;font-size:10px;color:#71717a;border-radius:4px 4px 0 0;cursor:pointer}
+.tab.a{background:#18181b;color:#e4e4e7;border:1px solid #3f3f46;border-bottom-color:#18181b}
+.right{margin-left:auto;display:flex;gap:6px;align-items:center;font-size:9px;color:#71717a}
+.av{width:20px;height:20px;border-radius:50%;background:#a855f7;color:#18181b;display:flex;align-items:center;justify-content:center;font-size:8px;font-weight:700}
+/* Three resizable panels */
+.panels{flex:1;display:flex;overflow:hidden}
+/* Panel 1: Map */
+.panel{display:flex;flex-direction:column;overflow:hidden}
+.p1{flex:2;background:#18181b;min-width:0}
+.p-header{height:26px;background:#27272a;border-bottom:1px solid #3f3f46;display:flex;align-items:center;padding:0 8px;gap:6px;flex-shrink:0}
+.p-label{font-size:9px;font-weight:600;color:#a1a1aa}
+.p-label .icon{color:#a855f7;margin-right:4px}
+.p-actions{margin-left:auto;display:flex;gap:3px}
+.p-act{width:16px;height:16px;display:flex;align-items:center;justify-content:center;font-size:8px;color:#71717a;cursor:pointer;border-radius:2px}
+.p-act:hover{background:#3f3f46;color:#e4e4e7}
+.p-body{flex:1;position:relative;display:flex;align-items:center;justify-content:center}
+.ml{font-size:9px;color:#27272a;letter-spacing:3px;text-transform:uppercase}
+/* Resize handle */
+.resize-h{width:4px;background:#27272a;cursor:col-resize;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.resize-h:hover{background:#a855f744}
+.resize-dots{display:flex;flex-direction:column;gap:2px}
+.resize-dots span{width:2px;height:2px;border-radius:50%;background:#71717a}
+/* Panel 2: Globe */
+.p2{flex:1;background:#18181b;min-width:0;border-left:1px solid #3f3f46}
+.globe-content{background:#1a1625}
+/* Panel 3: Layers + Properties (stacked) */
+.p3{width:260px;display:flex;flex-direction:column;flex-shrink:0;border-left:1px solid #3f3f46}
+.p3-top{flex:1;display:flex;flex-direction:column;overflow:hidden}
+.p3-bottom{flex:1;display:flex;flex-direction:column;border-top:1px solid #3f3f46;overflow:hidden}
+.resize-v{height:4px;background:#27272a;cursor:row-resize;flex-shrink:0;display:flex;align-items:center;justify-content:center}
+.resize-v:hover{background:#a855f744}
+.rv-dots{display:flex;gap:2px}
+.rv-dots span{width:2px;height:2px;border-radius:50%;background:#71717a}
+/* Layer list */
+.ll{flex:1;overflow-y:auto;padding:2px 4px}
+.li{padding:3px 6px;display:flex;align-items:center;gap:4px;font-size:9px;color:#a1a1aa;border-radius:3px;cursor:pointer}
+.li:hover{background:#27272a}
+.li.a{background:#3f3f46;color:#e4e4e7}
+.li-dot{width:6px;height:6px;border-radius:2px}
+.li-name{flex:1}
+.li-vis{font-size:8px;color:#71717a}
+.li-vis.on{color:#a855f7}
+/* Properties panel */
+.props{flex:1;overflow-y:auto;padding:4px 8px}
+.prop-group{margin-bottom:6px}
+.pg-title{font-size:8px;color:#71717a;text-transform:uppercase;letter-spacing:.5px;margin-bottom:2px;font-weight:600}
+.prop{display:flex;align-items:center;gap:6px;padding:2px 0;font-size:9px}
+.prop-label{color:#71717a;width:50px;flex-shrink:0}
+.prop-value{color:#d4d4d8;flex:1}
+.prop-input{background:#27272a;border:1px solid #3f3f46;border-radius:3px;padding:2px 4px;font-size:8px;color:#d4d4d8;width:50px;text-align:center}
+.prop-slider{flex:1;height:3px;background:#3f3f46;border-radius:2px;position:relative}
+.prop-slider-fill{height:100%;background:#a855f7;border-radius:2px}
+.prop-color{width:14px;height:14px;border-radius:3px;border:1px solid #3f3f46;cursor:pointer}
+/* Map controls */
+.mc{position:absolute;right:8px;bottom:8px;display:flex;gap:2px}
+.mb{width:22px;height:22px;background:#27272a;border:1px solid #3f3f46;border-radius:4px;display:flex;align-items:center;justify-content:center;color:#a1a1aa;font-size:10px;cursor:pointer}
+.coords{position:absolute;left:8px;bottom:8px;font-size:8px;color:#71717a;background:#27272a99;padding:2px 6px;border-radius:3px}
+.bb{height:20px;background:#27272a;display:flex;align-items:center;padding:0 8px;gap:8px;border-top:1px solid #3f3f46;font-size:7px;color:#71717a;flex-shrink:0}
+.bb .hl{color:#a855f7}
+</style>
+</head>
+<body>
+<div class="top"><span class="logo">MMGIS</span><div class="tabs"><div class="tab a">Workspace</div><div class="tab">Analysis</div><div class="tab">Export</div></div><div class="right"><span>Reference Mission</span><div class="av">A</div></div></div>
+<div class="panels">
+<div class="panel p1">
+<div class="p-header"><span class="p-label"><span class="icon">&#9680;</span>2D Map</span><div class="p-actions"><div class="p-act">&#8599;</div><div class="p-act">&#8942;</div></div></div>
+<div class="p-body"><div class="ml">San Francisco Bay</div><div class="mc"><div class="mb">+</div><div class="mb">-</div><div class="mb">&#8962;</div></div><div class="coords">37.775&deg;N, 122.419&deg;W | Z12</div></div>
+</div>
+<div class="resize-h"><div class="resize-dots"><span></span><span></span><span></span></div></div>
+<div class="panel p2">
+<div class="p-header"><span class="p-label"><span class="icon">&#127760;</span>3D Globe</span><div class="p-actions"><div class="p-act">&#8599;</div><div class="p-act">&#8942;</div></div></div>
+<div class="p-body globe-content"><div class="ml">Globe View</div></div>
+</div>
+<div class="p3">
+<div class="p3-top">
+<div class="p-header"><span class="p-label"><span class="icon">&#9776;</span>Layers (29)</span><div class="p-actions"><div class="p-act">+</div><div class="p-act">&#8942;</div></div></div>
+<div class="ll">
+<div class="li a"><div class="li-dot" style="background:#a855f7"></div><div class="li-name">Points Basic</div><span class="li-vis on">&#128065;</span></div>
+<div class="li"><div class="li-dot" style="background:#10b981"></div><div class="li-name">Lines Basic</div><span class="li-vis on">&#128065;</span></div>
+<div class="li"><div class="li-dot" style="background:#f59e0b"></div><div class="li-name">Polygons Basic</div><span class="li-vis">&#128065;</span></div>
+<div class="li"><div class="li-dot" style="background:#ef4444"></div><div class="li-name">Arrows</div><span class="li-vis on">&#128065;</span></div>
+<div class="li"><div class="li-dot" style="background:#8b5cf6"></div><div class="li-name">Annotations</div><span class="li-vis">&#128065;</span></div>
+<div class="li"><div class="li-dot" style="background:#ec4899"></div><div class="li-name">Points Styled</div><span class="li-vis on">&#128065;</span></div>
+<div class="li"><div class="li-dot" style="background:#14b8a6"></div><div class="li-name">Lines Styled</div><span class="li-vis">&#128065;</span></div>
+<div class="li"><div class="li-dot" style="background:#f97316"></div><div class="li-name">Polygons Styled</div><span class="li-vis on">&#128065;</span></div>
+<div class="li"><div class="li-dot" style="background:#6366f1"></div><div class="li-name">Raster DEM</div><span class="li-vis on">&#128065;</span></div>
+<div class="li"><div class="li-dot" style="background:#06b6d4"></div><div class="li-name">XYZ Base Tile</div><span class="li-vis on">&#128065;</span></div>
+</div></div>
+<div class="resize-v"><div class="rv-dots"><span></span><span></span><span></span></div></div>
+<div class="p3-bottom">
+<div class="p-header"><span class="p-label"><span class="icon">&#8505;</span>Properties</span><div class="p-actions"><div class="p-act">&#128204;</div><div class="p-act">&#8942;</div></div></div>
+<div class="props">
+<div class="prop-group"><div class="pg-title">Layer Info</div>
+<div class="prop"><span class="prop-label">Name</span><span class="prop-value">Points Basic</span></div>
+<div class="prop"><span class="prop-label">Type</span><span class="prop-value">Vector (Point)</span></div>
+<div class="prop"><span class="prop-label">Features</span><span class="prop-value">156</span></div>
+</div>
+<div class="prop-group"><div class="pg-title">Style</div>
+<div class="prop"><span class="prop-label">Color</span><div class="prop-color" style="background:#a855f7"></div><span class="prop-value">#A855F7</span></div>
+<div class="prop"><span class="prop-label">Opacity</span><div class="prop-slider"><div class="prop-slider-fill" style="width:80%"></div></div><input class="prop-input" value="80%" readonly/></div>
+<div class="prop"><span class="prop-label">Radius</span><input class="prop-input" value="6px" readonly/></div>
+</div>
+<div class="prop-group"><div class="pg-title">Bounds</div>
+<div class="prop"><span class="prop-label">Min Lat</span><input class="prop-input" value="37.72" readonly/><span class="prop-label">Max Lat</span><input class="prop-input" value="37.83" readonly/></div>
+<div class="prop"><span class="prop-label">Min Lon</span><input class="prop-input" value="-122.5" readonly/><span class="prop-label">Max Lon</span><input class="prop-input" value="-122.3" readonly/></div>
+</div>
+</div></div>
+</div>
+</div>
+<div class="bb"><span class="hl">37.775&deg;N, 122.419&deg;W</span> | Z12 | 8/29 layers | EPSG:4326 | Panels: 3 | <span class="hl">Drag borders to resize</span></div>
+</body>
+</html>

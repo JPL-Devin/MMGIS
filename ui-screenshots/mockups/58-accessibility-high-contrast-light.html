@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>MMGIS Mockup 58: Accessibility High Contrast Light</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Atkinson Hyperlegible',system-ui,sans-serif;background:#fff;color:#000;height:100vh;overflow:hidden;display:flex;flex-direction:column}
+.skip-link{position:absolute;top:-40px;left:0;background:#000;color:#fff;padding:8px 16px;z-index:100;font-size:14px}
+.top{height:48px;background:#000;display:flex;align-items:center;padding:0 16px;flex-shrink:0}
+.logo{font-size:18px;font-weight:700;color:#fff}
+.sep{width:2px;height:20px;background:#fff;margin:0 12px}
+.mission{color:#fff;font-size:13px}
+.right{margin-left:auto;display:flex;gap:12px;align-items:center}
+.rb{padding:6px 14px;background:#fff;color:#000;font-size:12px;font-weight:700;border:2px solid #fff;cursor:pointer}
+.rb:hover{background:#ff0;color:#000}
+.av{width:30px;height:30px;background:#fff;color:#000;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:12px}
+.ws{flex:1;display:flex;overflow:hidden}
+.sb{width:260px;background:#fff;border-right:3px solid #000;display:flex;flex-direction:column;flex-shrink:0}
+.sh{padding:10px 14px;font-size:14px;font-weight:700;color:#000;border-bottom:3px solid #000;display:flex;justify-content:space-between;align-items:center}
+.sh .count{background:#000;color:#fff;padding:2px 8px;font-size:11px}
+.search{margin:8px;padding:8px 12px;border:3px solid #000;font-size:13px;color:#000;font-family:inherit}
+.search:focus{outline:4px solid #ff0;outline-offset:2px}
+.layers{flex:1;overflow-y:auto;padding:4px 8px}
+.li{padding:8px;border:2px solid #000;margin-bottom:4px;display:flex;align-items:center;gap:8px;cursor:pointer}
+.li:hover{background:#ff0}
+.li:focus{outline:4px solid #00f;outline-offset:2px}
+.li.a{background:#000;color:#fff}
+.li-color{width:16px;height:16px;border:2px solid currentColor}
+.li-name{flex:1;font-size:13px;font-weight:600}
+.li-check{width:22px;height:22px;border:3px solid currentColor;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700}
+.li-check.on{background:#000;color:#fff}
+.li.a .li-check.on{background:#fff;color:#000}
+.map{flex:1;background:#f0f0f0;position:relative;display:flex;align-items:center;justify-content:center}
+.ml{font-size:14px;color:#ccc;letter-spacing:2px;font-weight:700}
+.mc{position:absolute;right:12px;top:12px;display:flex;flex-direction:column;gap:4px}
+.mb{width:40px;height:40px;background:#000;color:#fff;display:flex;align-items:center;justify-content:center;font-size:20px;font-weight:700;cursor:pointer;border:2px solid #000}
+.mb:hover{background:#ff0;color:#000}
+.mb:focus{outline:4px solid #00f;outline-offset:2px}
+/* Tool buttons */
+.tool-bar{position:absolute;bottom:12px;left:50%;transform:translateX(-50%);display:flex;gap:4px;background:#fff;border:3px solid #000;padding:4px}
+.tb{padding:8px 16px;font-size:12px;font-weight:700;color:#000;border:2px solid #000;cursor:pointer;background:#fff}
+.tb:hover{background:#ff0}
+.tb.a{background:#000;color:#fff}
+.tb:focus{outline:4px solid #00f;outline-offset:2px}
+.coords{position:absolute;bottom:12px;right:12px;background:#000;color:#fff;padding:6px 12px;font-size:12px;font-weight:600}
+.bb{height:36px;background:#000;display:flex;align-items:center;padding:0 16px;gap:16px;font-size:12px;color:#fff;font-weight:600;flex-shrink:0}
+</style>
+</head>
+<body>
+<a class="skip-link" href="#map">Skip to Map</a>
+<div class="top"><span class="logo">MMGIS</span><div class="sep"></div><span class="mission">Reference Mission</span><div class="right"><div class="rb">&#9881; Settings</div><div class="rb">&#10067; Help</div><div class="av">A</div></div></div>
+<div class="ws">
+<div class="sb"><div class="sh">Layers <span class="count">8/29 ON</span></div>
+<input class="search" placeholder="Search layers..." readonly aria-label="Search layers"/>
+<div class="layers" role="list">
+<div class="li a" role="listitem" tabindex="0"><div class="li-color" style="background:#0055cc"></div><div class="li-name">Points Basic</div><div class="li-check on">&#10003;</div></div>
+<div class="li" role="listitem" tabindex="0"><div class="li-color" style="background:#008844"></div><div class="li-name">Lines Basic</div><div class="li-check on">&#10003;</div></div>
+<div class="li" role="listitem" tabindex="0"><div class="li-color" style="background:#cc8800"></div><div class="li-name">Polygons Basic</div><div class="li-check"></div></div>
+<div class="li" role="listitem" tabindex="0"><div class="li-color" style="background:#cc0000"></div><div class="li-name">Arrows</div><div class="li-check on">&#10003;</div></div>
+<div class="li" role="listitem" tabindex="0"><div class="li-color" style="background:#6600aa"></div><div class="li-name">Annotations</div><div class="li-check"></div></div>
+<div class="li" role="listitem" tabindex="0"><div class="li-color" style="background:#cc0066"></div><div class="li-name">Points Styled</div><div class="li-check on">&#10003;</div></div>
+<div class="li" role="listitem" tabindex="0"><div class="li-color" style="background:#008888"></div><div class="li-name">Lines Styled</div><div class="li-check"></div></div>
+<div class="li" role="listitem" tabindex="0"><div class="li-color" style="background:#cc6600"></div><div class="li-name">Polygons Styled</div><div class="li-check on">&#10003;</div></div>
+<div class="li" role="listitem" tabindex="0"><div class="li-color" style="background:#3366cc"></div><div class="li-name">Raster DEM</div><div class="li-check on">&#10003;</div></div>
+<div class="li" role="listitem" tabindex="0"><div class="li-color" style="background:#006633"></div><div class="li-name">XYZ Base Tile</div><div class="li-check on">&#10003;</div></div>
+</div></div>
+<div class="map" id="map"><div class="ml">SAN FRANCISCO BAY</div>
+<div class="mc"><div class="mb" tabindex="0" aria-label="Zoom in">+</div><div class="mb" tabindex="0" aria-label="Zoom out">&minus;</div><div class="mb" tabindex="0" aria-label="Reset view">&#8962;</div></div>
+<div class="tool-bar"><div class="tb a" tabindex="0">&#9776; Layers</div><div class="tb" tabindex="0">&#9998; Draw</div><div class="tb" tabindex="0">&#128207; Measure</div><div class="tb" tabindex="0">&#8505; Info</div><div class="tb" tabindex="0">&#127760; Globe</div></div>
+<div class="coords" aria-live="polite">37.775&deg;N, 122.419&deg;W | Z12</div>
+</div>
+</div>
+<div class="bb">EPSG:4326 | 8 of 29 layers visible | Reference Mission | WCAG 2.1 AAA</div>
+</body>
+</html>

@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>MMGIS Mockup 59: Timeline-Focused Layout</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Inter',system-ui,sans-serif;background:#0c0a09;color:#e7e5e4;height:100vh;overflow:hidden;display:flex;flex-direction:column}
+.top{height:36px;background:#1c1917;display:flex;align-items:center;padding:0 12px;border-bottom:1px solid #292524;flex-shrink:0}
+.logo{font-size:14px;font-weight:700;color:#f97316}
+.mission{color:#78716c;font-size:10px;margin-left:10px}
+.right{margin-left:auto;display:flex;gap:8px;align-items:center;font-size:9px;color:#78716c}
+.av{width:22px;height:22px;border-radius:50%;background:#f97316;color:#0c0a09;display:flex;align-items:center;justify-content:center;font-size:8px;font-weight:700}
+.middle{flex:1;display:flex;overflow:hidden}
+.sb{width:36px;background:#1c1917;border-right:1px solid #292524;display:flex;flex-direction:column;align-items:center;padding:4px 0;gap:2px;flex-shrink:0}
+.t{width:26px;height:26px;display:flex;align-items:center;justify-content:center;border-radius:4px;font-size:10px;color:#78716c;cursor:pointer}
+.t:hover{background:#292524;color:#e7e5e4}
+.t.a{color:#f97316;background:#292524}
+.map-area{flex:1;background:#0c0a09;position:relative;display:flex;align-items:center;justify-content:center}
+.ml{font-size:10px;color:#1c1917;letter-spacing:4px;text-transform:uppercase}
+.mc{position:absolute;right:10px;top:10px;display:flex;flex-direction:column;gap:3px}
+.mb{width:24px;height:24px;background:#1c1917;border:1px solid #292524;border-radius:4px;display:flex;align-items:center;justify-content:center;color:#78716c;font-size:10px;cursor:pointer}
+/* Active layer indicators on left */
+.layer-strip{position:absolute;left:0;top:0;bottom:0;width:6px;display:flex;flex-direction:column}
+.ls-seg{flex:1;opacity:.6}
+/* Large timeline at bottom */
+.timeline{height:220px;background:#1c1917;border-top:1px solid #292524;display:flex;flex-direction:column;flex-shrink:0}
+.tl-header{height:32px;display:flex;align-items:center;padding:0 12px;gap:8px;border-bottom:1px solid #292524}
+.tl-title{font-size:11px;font-weight:600;color:#e7e5e4}
+.tl-range{font-size:9px;color:#78716c;margin-left:auto}
+.tl-zoom{display:flex;gap:2px}
+.tl-zoom-btn{padding:2px 6px;font-size:8px;border-radius:3px;background:#292524;color:#78716c;cursor:pointer}
+.tl-zoom-btn.a{background:#f97316;color:#0c0a09}
+.tl-controls{height:32px;display:flex;align-items:center;justify-content:center;gap:6px;border-bottom:1px solid #292524}
+.tc{width:24px;height:24px;border-radius:4px;background:#292524;display:flex;align-items:center;justify-content:center;font-size:10px;color:#a8a29e;cursor:pointer}
+.tc:hover{color:#e7e5e4}
+.tc.play{background:#f97316;color:#0c0a09}
+.speed{font-size:8px;color:#78716c;padding:0 8px}
+/* Multi-track timeline */
+.tl-tracks{flex:1;display:flex;flex-direction:column;overflow-y:auto;padding:4px 0}
+.track{display:flex;align-items:center;height:22px;padding:0 8px;gap:4px}
+.track:hover{background:#29252444}
+.track-label{width:80px;font-size:8px;color:#78716c;text-overflow:ellipsis;overflow:hidden;white-space:nowrap;flex-shrink:0}
+.track-bar{flex:1;height:8px;background:#292524;border-radius:2px;position:relative;overflow:hidden}
+.track-data{position:absolute;height:100%;border-radius:2px}
+.track-active{position:absolute;height:100%;background:#ffffff11;border-left:2px solid #f97316;border-right:2px solid #f97316}
+/* Playhead */
+.tl-playhead{position:absolute;width:100%;padding:0 92px}
+.playhead-line{position:absolute;left:55%;top:0;bottom:0;width:2px;background:#f97316;z-index:5}
+.playhead-head{position:absolute;top:-6px;left:-4px;width:10px;height:10px;background:#f97316;border-radius:50%;z-index:6}
+/* Date labels */
+.tl-dates{height:16px;display:flex;align-items:center;padding:0 92px;justify-content:space-between;font-size:7px;color:#57534e;border-top:1px solid #292524}
+.bb{height:22px;background:#1c1917;display:flex;align-items:center;padding:0 10px;gap:10px;border-top:1px solid #292524;font-size:8px;color:#78716c;flex-shrink:0}
+.bb .hl{color:#f97316}
+</style>
+</head>
+<body>
+<div class="top"><span class="logo">MMGIS</span><span class="mission">Reference Mission</span><div class="right"><span>Temporal Mode</span><div class="av">A</div></div></div>
+<div class="middle">
+<div class="sb"><div class="t a">&#9776;</div><div class="t">i</div><div class="t">&#9998;</div><div class="t">M</div><div class="t">T</div><div class="t">&#127760;</div></div>
+<div class="map-area">
+<div class="layer-strip"><div class="ls-seg" style="background:#3b82f6"></div><div class="ls-seg" style="background:#10b981"></div><div class="ls-seg" style="background:#ef4444"></div><div class="ls-seg" style="background:#8b5cf6"></div><div class="ls-seg" style="background:#f97316"></div></div>
+<div class="ml">San Francisco Bay</div>
+<div class="mc"><div class="mb">+</div><div class="mb">-</div><div class="mb">&#8962;</div></div>
+</div>
+</div>
+<div class="timeline" style="position:relative">
+<div class="tl-header"><span class="tl-title">Timeline</span><div class="tl-zoom"><div class="tl-zoom-btn">1h</div><div class="tl-zoom-btn">24h</div><div class="tl-zoom-btn a">7d</div><div class="tl-zoom-btn">30d</div><div class="tl-zoom-btn">All</div></div><span class="tl-range">Jan 01 &mdash; Jan 20, 2024</span></div>
+<div class="tl-controls"><div class="tc">&#9198;</div><div class="tc">&#9194;</div><div class="tc play">&#9654;</div><div class="tc">&#9193;</div><div class="tc">&#9197;</div><span class="speed">1x</span><span class="speed" style="color:#f97316">&#9654; Jan 13, 12:00</span></div>
+<div class="tl-tracks">
+<div class="track"><span class="track-label">Points Basic</span><div class="track-bar"><div class="track-data" style="background:#3b82f688;left:5%;width:85%"></div><div class="track-active" style="left:40%;width:20%"></div></div></div>
+<div class="track"><span class="track-label">Lines Basic</span><div class="track-bar"><div class="track-data" style="background:#10b98188;left:10%;width:70%"></div><div class="track-active" style="left:40%;width:20%"></div></div></div>
+<div class="track"><span class="track-label">Arrows</span><div class="track-bar"><div class="track-data" style="background:#ef444488;left:20%;width:60%"></div><div class="track-active" style="left:40%;width:20%"></div></div></div>
+<div class="track"><span class="track-label">Points Styled</span><div class="track-bar"><div class="track-data" style="background:#8b5cf688;left:0%;width:100%"></div><div class="track-active" style="left:40%;width:20%"></div></div></div>
+<div class="track"><span class="track-label">Polygons Styled</span><div class="track-bar"><div class="track-data" style="background:#f9731688;left:15%;width:50%"></div><div class="track-active" style="left:40%;width:20%"></div></div></div>
+<div class="track"><span class="track-label">Raster DEM</span><div class="track-bar"><div class="track-data" style="background:#6366f188;left:0%;width:100%"></div><div class="track-active" style="left:40%;width:20%"></div></div></div>
+<div class="track"><span class="track-label">Events</span><div class="track-bar"><div class="track-data" style="background:#ec489988;left:30%;width:40%"></div><div class="track-active" style="left:40%;width:20%"></div></div></div>
+</div>
+<div class="tl-dates"><span>Jan 01</span><span>Jan 04</span><span>Jan 07</span><span>Jan 10</span><span>Jan 13</span><span>Jan 16</span><span>Jan 20</span></div>
+</div>
+<div class="bb"><span class="hl">-122.419&deg;</span>, <span class="hl">37.775&deg;</span> | Z12 | 8/29 layers | <span class="hl">Jan 13, 2024 12:00:00 UTC</span> | Playing at 1x</div>
+</body>
+</html>

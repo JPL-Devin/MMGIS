@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>MMGIS Mockup 46: Zen Minimal Light</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Helvetica Neue',sans-serif;background:#fff;color:#333;height:100vh;overflow:hidden;display:flex;flex-direction:column}
+/* Ultra minimal top bar */
+.top{height:48px;display:flex;align-items:center;padding:0 24px;flex-shrink:0}
+.logo{font-size:18px;font-weight:300;color:#333;letter-spacing:3px}
+.right{margin-left:auto;display:flex;gap:16px;align-items:center;font-size:11px;color:#999}
+.ws{flex:1;display:flex;overflow:hidden}
+/* Hidden sidebar - only shows on hover */
+.sidebar-trigger{width:4px;background:#eee;flex-shrink:0;cursor:pointer;transition:all .2s}
+.sidebar-trigger:hover{width:240px;background:#fafafa;padding:16px}
+.sidebar-trigger .content{display:none}
+.sidebar-trigger:hover .content{display:block}
+.sh{font-size:10px;color:#999;text-transform:uppercase;letter-spacing:2px;margin-bottom:12px}
+.li{padding:6px 0;font-size:12px;color:#666;display:flex;align-items:center;gap:8px;cursor:pointer}
+.li:hover{color:#333}
+.li .dot{width:6px;height:6px;border-radius:50%}
+.li .name{flex:1}
+.li .check{color:#999;font-size:10px}
+.li .check.on{color:#333}
+.map{flex:1;background:#fafafa;position:relative;display:flex;align-items:center;justify-content:center}
+.ml{font-size:12px;color:#eee;letter-spacing:8px;text-transform:uppercase;font-weight:300}
+/* Minimal floating controls */
+.float-controls{position:absolute;bottom:24px;left:50%;transform:translateX(-50%);display:flex;gap:8px;align-items:center}
+.fc-group{display:flex;gap:2px;background:#fff;border-radius:8px;box-shadow:0 2px 12px rgba(0,0,0,.06);padding:4px}
+.fc-btn{width:32px;height:32px;display:flex;align-items:center;justify-content:center;border-radius:6px;font-size:12px;color:#999;cursor:pointer}
+.fc-btn:hover{background:#f5f5f5;color:#333}
+.fc-btn.a{color:#333}
+.fc-sep{width:1px;height:20px;background:#eee}
+.coords{position:absolute;bottom:24px;right:24px;font-size:10px;color:#bbb;font-family:monospace}
+.time-bar{position:absolute;bottom:24px;left:24px;display:flex;align-items:center;gap:8px;background:#fff;border-radius:8px;box-shadow:0 2px 12px rgba(0,0,0,.06);padding:6px 12px}
+.time-label{font-size:9px;color:#999}
+.time-track{width:120px;height:2px;background:#eee;border-radius:1px;position:relative}
+.time-fill{width:55%;height:100%;background:#333;border-radius:1px}
+.zoom-controls{position:absolute;right:24px;top:24px;display:flex;flex-direction:column;gap:2px;background:#fff;border-radius:8px;box-shadow:0 2px 12px rgba(0,0,0,.06);padding:4px}
+.zb{width:32px;height:32px;display:flex;align-items:center;justify-content:center;font-size:14px;color:#999;cursor:pointer;border-radius:6px}
+.zb:hover{background:#f5f5f5;color:#333}
+</style>
+</head>
+<body>
+<div class="top"><div class="logo">MMGIS</div><div class="right"><span>Reference Mission</span><span>&bull;</span><span>8 layers</span></div></div>
+<div class="ws">
+<div class="sidebar-trigger"><div class="content">
+<div class="sh">Layers</div>
+<div class="li"><div class="dot" style="background:#333"></div><span class="name">Points Basic</span><span class="check on">&#10003;</span></div>
+<div class="li"><div class="dot" style="background:#059669"></div><span class="name">Lines Basic</span><span class="check on">&#10003;</span></div>
+<div class="li"><div class="dot" style="background:#d97706"></div><span class="name">Polygons Basic</span><span class="check">&#10003;</span></div>
+<div class="li"><div class="dot" style="background:#dc2626"></div><span class="name">Arrows</span><span class="check on">&#10003;</span></div>
+<div class="li"><div class="dot" style="background:#7c3aed"></div><span class="name">Annotations</span><span class="check">&#10003;</span></div>
+<div class="li"><div class="dot" style="background:#db2777"></div><span class="name">Points Styled</span><span class="check on">&#10003;</span></div>
+<div class="li"><div class="dot" style="background:#0d9488"></div><span class="name">Lines Styled</span><span class="check">&#10003;</span></div>
+<div class="li"><div class="dot" style="background:#ea580c"></div><span class="name">Polygons Styled</span><span class="check on">&#10003;</span></div>
+</div></div>
+<div class="map">
+<div class="ml">San Francisco Bay</div>
+<div class="zoom-controls"><div class="zb">+</div><div class="zb">&minus;</div></div>
+<div class="float-controls">
+<div class="fc-group"><div class="fc-btn a">&#9776;</div><div class="fc-sep"></div><div class="fc-btn">&#8505;</div><div class="fc-btn">&#9873;</div><div class="fc-btn">&#9998;</div><div class="fc-btn">&#8676;</div><div class="fc-btn">&#8981;</div><div class="fc-sep"></div><div class="fc-btn">&#127760;</div></div>
+</div>
+<div class="time-bar"><span class="time-label">Jan 01</span><div class="time-track"><div class="time-fill"></div></div><span class="time-label">Jan 20</span></div>
+<div class="coords">37.775&deg;N, 122.419&deg;W &bull; Z12</div>
+</div>
+</div>
+</body>
+</html>

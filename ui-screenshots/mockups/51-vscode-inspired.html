@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>MMGIS Mockup 51: VS Code Inspired</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Segoe UI',system-ui,sans-serif;background:#1e1e1e;color:#d4d4d4;height:100vh;overflow:hidden;display:flex;flex-direction:column}
+.titlebar{height:28px;background:#323233;display:flex;align-items:center;padding:0 8px;font-size:10px;color:#999;flex-shrink:0}
+.titlebar .name{margin:0 auto}
+.activity-bar{width:44px;background:#333;display:flex;flex-direction:column;align-items:center;padding:4px 0;gap:2px;flex-shrink:0}
+.ab-icon{width:36px;height:36px;display:flex;align-items:center;justify-content:center;font-size:18px;color:#858585;cursor:pointer;border-left:2px solid transparent}
+.ab-icon:hover{color:#fff}
+.ab-icon.a{color:#fff;border-left-color:#fff}
+.ab-bottom{margin-top:auto;display:flex;flex-direction:column;gap:2px}
+.ws{flex:1;display:flex;overflow:hidden}
+.sidebar{width:240px;background:#252526;display:flex;flex-direction:column;flex-shrink:0}
+.sb-title{height:32px;display:flex;align-items:center;padding:0 12px;font-size:10px;text-transform:uppercase;letter-spacing:.5px;color:#bbb;font-weight:600}
+.sb-section{border-top:1px solid #1e1e1e}
+.sb-header{padding:4px 12px;font-size:10px;color:#bbb;cursor:pointer;display:flex;align-items:center;gap:4px}
+.sb-header:hover{background:#2a2a2a}
+.sb-items{padding:0 0 4px}
+.sb-item{padding:2px 12px 2px 24px;font-size:11px;color:#ccc;cursor:pointer;display:flex;align-items:center;gap:6px}
+.sb-item:hover{background:#04395e}
+.sb-item.a{background:#094771;color:#fff}
+.sb-dot{width:8px;height:8px;border-radius:2px}
+.sb-badge{margin-left:auto;padding:0 4px;font-size:8px;background:#4d4d4d;border-radius:3px;color:#ccc}
+.editor{flex:1;display:flex;flex-direction:column}
+.tab-bar{height:32px;background:#252526;display:flex;align-items:flex-end;padding:0;flex-shrink:0}
+.tab{height:32px;padding:0 14px;display:flex;align-items:center;gap:6px;font-size:11px;color:#999;cursor:pointer;background:#2d2d2d;border-right:1px solid #252526}
+.tab.a{background:#1e1e1e;color:#fff;border-top:1px solid #007acc}
+.tab .close{font-size:10px;color:#666;margin-left:4px}
+.breadcrumb{height:22px;background:#1e1e1e;display:flex;align-items:center;padding:0 12px;font-size:10px;color:#999;gap:4px;border-bottom:1px solid #333}
+.breadcrumb span{color:#007acc}
+.map-area{flex:1;background:#1e1e1e;position:relative;display:flex;align-items:center;justify-content:center}
+.ml{font-size:10px;color:#333;letter-spacing:4px;text-transform:uppercase}
+.minimap{position:absolute;right:0;top:0;width:60px;height:100%;background:#252526;opacity:.5}
+.minimap-viewport{position:absolute;top:10%;width:100%;height:30%;background:#264f7833;border:1px solid #264f78}
+/* Terminal panel at bottom */
+.panel{height:160px;background:#1e1e1e;border-top:1px solid #333;display:flex;flex-direction:column;flex-shrink:0}
+.panel-tabs{display:flex;align-items:center;height:28px;background:#252526;padding:0 8px;gap:8px;border-bottom:1px solid #333}
+.panel-tab{font-size:10px;color:#999;cursor:pointer;padding:4px 0;border-bottom:2px solid transparent}
+.panel-tab.a{color:#fff;border-bottom-color:#007acc}
+.panel-actions{margin-left:auto;display:flex;gap:4px}
+.pa{font-size:10px;color:#666;cursor:pointer}
+.panel-content{flex:1;padding:6px 12px;font-family:'Cascadia Code',monospace;font-size:10px;color:#ccc;overflow-y:auto}
+.pc-line{display:flex;gap:4px;line-height:1.6}
+.pc-prompt{color:#6a9955}
+.pc-cmd{color:#dcdcaa}
+.pc-output{color:#999}
+.pc-error{color:#f44747}
+.pc-info{color:#4ec9b0}
+.statusbar{height:22px;background:#007acc;display:flex;align-items:center;padding:0 8px;font-size:10px;color:#fff;gap:12px;flex-shrink:0}
+.sb-right{margin-left:auto;display:flex;gap:10px}
+</style>
+</head>
+<body>
+<div class="titlebar"><span>MMGIS &mdash; Reference Mission</span><span class="name">Map View &mdash; San Francisco Bay Area</span></div>
+<div class="ws">
+<div class="activity-bar">
+<div class="ab-icon a">&#9776;</div>
+<div class="ab-icon">&#128269;</div>
+<div class="ab-icon">&#9998;</div>
+<div class="ab-icon">&#128207;</div>
+<div class="ab-icon">&#127760;</div>
+<div class="ab-icon">&#128202;</div>
+<div class="ab-bottom"><div class="ab-icon">&#9881;</div><div class="ab-icon">&#128100;</div></div>
+</div>
+<div class="sidebar">
+<div class="sb-title">Layers</div>
+<div class="sb-section"><div class="sb-header">&#9660; VECTOR LAYERS</div>
+<div class="sb-items">
+<div class="sb-item a"><div class="sb-dot" style="background:#007acc"></div>Points Basic<div class="sb-badge">ON</div></div>
+<div class="sb-item"><div class="sb-dot" style="background:#4ec9b0"></div>Lines Basic<div class="sb-badge">ON</div></div>
+<div class="sb-item"><div class="sb-dot" style="background:#dcdcaa"></div>Polygons Basic</div>
+<div class="sb-item"><div class="sb-dot" style="background:#f44747"></div>Arrows<div class="sb-badge">ON</div></div>
+<div class="sb-item"><div class="sb-dot" style="background:#c586c0"></div>Annotations</div>
+</div></div>
+<div class="sb-section"><div class="sb-header">&#9660; STYLED LAYERS</div>
+<div class="sb-items">
+<div class="sb-item"><div class="sb-dot" style="background:#ce9178"></div>Points Styled<div class="sb-badge">ON</div></div>
+<div class="sb-item"><div class="sb-dot" style="background:#6a9955"></div>Lines Styled</div>
+<div class="sb-item"><div class="sb-dot" style="background:#d7ba7d"></div>Polygons Styled<div class="sb-badge">ON</div></div>
+</div></div>
+<div class="sb-section"><div class="sb-header">&#9660; RASTER LAYERS</div>
+<div class="sb-items">
+<div class="sb-item"><div class="sb-dot" style="background:#569cd6"></div>Raster DEM<div class="sb-badge">ON</div></div>
+<div class="sb-item"><div class="sb-dot" style="background:#9cdcfe"></div>Raster RGB</div>
+</div></div>
+<div class="sb-section"><div class="sb-header">&#9660; TILE LAYERS</div>
+<div class="sb-items">
+<div class="sb-item"><div class="sb-dot" style="background:#b5cea8"></div>XYZ Base Tile<div class="sb-badge">ON</div></div>
+<div class="sb-item"><div class="sb-dot" style="background:#608b4e"></div>WMS Overlay</div>
+</div></div>
+</div>
+<div class="editor">
+<div class="tab-bar"><div class="tab a">&#127758; 2D Map<span class="close">&times;</span></div><div class="tab">&#127760; 3D Globe<span class="close">&times;</span></div><div class="tab">&#128202; Data Table<span class="close">&times;</span></div></div>
+<div class="breadcrumb">Reference Mission <span>&rsaquo;</span> Map View <span>&rsaquo;</span> SF Bay Area <span>&rsaquo;</span> Z12</div>
+<div class="map-area"><div class="ml">San Francisco Bay</div><div class="minimap"><div class="minimap-viewport"></div></div></div>
+<div class="panel">
+<div class="panel-tabs"><div class="panel-tab a">CONSOLE</div><div class="panel-tab">FEATURES</div><div class="panel-tab">COORDINATES</div><div class="panel-tab">TIMELINE</div><div class="panel-actions"><div class="pa">&#9660;</div><div class="pa">&times;</div></div></div>
+<div class="panel-content">
+<div class="pc-line"><span class="pc-prompt">mmgis $</span><span class="pc-cmd">layers --list --active</span></div>
+<div class="pc-line"><span class="pc-info">8 active layers (of 29 total)</span></div>
+<div class="pc-line"><span class="pc-output">&nbsp; Points Basic, Lines Basic, Arrows, Points Styled,</span></div>
+<div class="pc-line"><span class="pc-output">&nbsp; Polygons Styled, Raster DEM, XYZ Base Tile</span></div>
+<div class="pc-line"><span class="pc-prompt">mmgis $</span><span class="pc-cmd">time --range "2024-01-01" "2024-01-20"</span></div>
+<div class="pc-line"><span class="pc-info">Time range set: Jan 01 &mdash; Jan 20, 2024</span></div>
+<div class="pc-line"><span class="pc-prompt">mmgis $</span><span class="pc-cmd">measure --distance 37.775,-122.419 37.783,-122.408</span></div>
+<div class="pc-line"><span class="pc-info">Distance: 1,248.3m | Bearing: 42.1&deg;</span></div>
+</div>
+</div>
+</div>
+</div>
+<div class="statusbar"><span>&#9873; Reference Mission</span><span>&#127758; 2D Map</span><span>8/29 layers</span><div class="sb-right"><span>37.775&deg;N, 122.419&deg;W</span><span>Z12</span><span>EPSG:4326</span></div></div>
+</body>
+</html>
