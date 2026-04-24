@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>MMGIS Mockup 16: Command Palette Driven</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'SF Mono','Fira Code',monospace;background:#0e0e10;color:#efeff1;height:100vh;overflow:hidden}
+.overlay{position:absolute;inset:0;z-index:100;display:flex;align-items:flex-start;justify-content:center;padding-top:80px;background:rgba(0,0,0,0.5);backdrop-filter:blur(4px)}
+.palette{width:560px;background:#18181b;border:1px solid #27272a;border-radius:12px;box-shadow:0 24px 64px rgba(0,0,0,0.6);overflow:hidden}
+.palette-input{width:100%;padding:14px 18px;background:transparent;border:none;border-bottom:1px solid #27272a;color:#efeff1;font-size:15px;font-family:inherit;outline:none}
+.palette-hint{padding:8px 18px;font-size:10px;color:#52525b;display:flex;gap:12px}
+.palette-hint kbd{background:#27272a;padding:1px 6px;border-radius:3px;font-size:10px;color:#a1a1aa}
+.palette-section{padding:6px 0}
+.palette-section-title{padding:4px 18px;font-size:10px;color:#52525b;text-transform:uppercase;letter-spacing:1px}
+.palette-item{padding:8px 18px;display:flex;align-items:center;gap:12px;cursor:pointer;font-size:13px;color:#a1a1aa}
+.palette-item:hover,.palette-item.selected{background:#27272a;color:#efeff1}
+.palette-item .icon{width:24px;text-align:center;font-size:14px;color:#71717a}
+.palette-item.selected .icon{color:#a78bfa}
+.palette-item .shortcut{margin-left:auto;font-size:10px;color:#52525b}
+.palette-item .shortcut kbd{background:#27272a;padding:1px 5px;border-radius:3px}
+.palette-footer{padding:8px 18px;border-top:1px solid #27272a;font-size:10px;color:#52525b;display:flex;justify-content:space-between}
+.main-under{height:100vh;display:flex;flex-direction:column;filter:blur(2px)}
+.top{height:36px;background:#18181b;display:flex;align-items:center;padding:0 12px;border-bottom:1px solid #27272a;flex-shrink:0}
+.logo{font-size:14px;font-weight:700;color:#a78bfa}
+.mission{color:#52525b;font-size:11px;margin-left:10px}
+.cmd-trigger{margin-left:auto;background:#27272a;border:1px solid #3f3f46;border-radius:6px;padding:3px 10px;font-size:10px;color:#71717a;cursor:pointer;font-family:inherit}
+.map-area{flex:1;background:#09090b;position:relative;display:flex;align-items:center;justify-content:center}
+.ml{font-size:11px;letter-spacing:5px;text-transform:uppercase;color:#18181b}
+.status{position:absolute;bottom:8px;left:50%;transform:translateX(-50%);background:#18181bcc;padding:4px 16px;border-radius:6px;font-size:10px;color:#52525b;display:flex;gap:16px;border:1px solid #27272a}
+.status .val{color:#a78bfa}
+.mc{position:absolute;right:10px;top:10px;display:flex;flex-direction:column;gap:3px}
+.mb{width:28px;height:28px;background:#18181bcc;border:1px solid #27272a;border-radius:6px;display:flex;align-items:center;justify-content:center;color:#71717a;cursor:pointer;font-size:12px}
+</style>
+</head>
+<body>
+<div class="main-under">
+<div class="top">
+<div class="logo">MMGIS</div>
+<div class="mission">Reference Mission</div>
+<div class="cmd-trigger">&#8984;K Search...</div>
+</div>
+<div class="map-area">
+<div class="ml">San Francisco Bay Area</div>
+<div class="mc"><div class="mb">+</div><div class="mb">&minus;</div><div class="mb">&#8962;</div></div>
+<div class="status">
+<span>LON <span class="val">-122.419</span></span>
+<span>LAT <span class="val">37.775</span></span>
+<span>ZOOM <span class="val">12</span></span>
+<span>LAYERS <span class="val">8/29</span></span>
+</div>
+</div>
+</div>
+<div class="overlay">
+<div class="palette">
+<input class="palette-input" value=">" placeholder="Type a command..." autofocus/>
+<div class="palette-hint"><span>Navigate with <kbd>&#8593;</kbd><kbd>&#8595;</kbd></span><span>Select with <kbd>Enter</kbd></span><span>Close with <kbd>Esc</kbd></span></div>
+<div class="palette-section">
+<div class="palette-section-title">Tools</div>
+<div class="palette-item selected"><span class="icon">&#9776;</span>Toggle Layers Panel<span class="shortcut"><kbd>&#8984;</kbd><kbd>L</kbd></span></div>
+<div class="palette-item"><span class="icon">&#9998;</span>Open Draw Tool<span class="shortcut"><kbd>&#8984;</kbd><kbd>D</kbd></span></div>
+<div class="palette-item"><span class="icon">&#8676;</span>Open Measure Tool<span class="shortcut"><kbd>&#8984;</kbd><kbd>M</kbd></span></div>
+<div class="palette-item"><span class="icon">&#8981;</span>Search Location<span class="shortcut"><kbd>/</kbd></span></div>
+<div class="palette-item"><span class="icon">&#9201;</span>Isochrone Analysis</div>
+<div class="palette-item"><span class="icon">&#9737;</span>Viewshed Analysis</div>
+<div class="palette-item"><span class="icon">&#9878;</span>Chemistry Tool</div>
+</div>
+<div class="palette-section">
+<div class="palette-section-title">Layers</div>
+<div class="palette-item"><span class="icon">&#9673;</span>Toggle: Points Basic</div>
+<div class="palette-item"><span class="icon">&#9672;</span>Toggle: Lines Basic</div>
+<div class="palette-item"><span class="icon">&#9645;</span>Toggle: Polygons Basic</div>
+</div>
+<div class="palette-section">
+<div class="palette-section-title">View</div>
+<div class="palette-item"><span class="icon">&#127760;</span>Switch to Globe View<span class="shortcut"><kbd>&#8984;</kbd><kbd>G</kbd></span></div>
+<div class="palette-item"><span class="icon">&#9881;</span>Open Settings<span class="shortcut"><kbd>&#8984;</kbd><kbd>,</kbd></span></div>
+<div class="palette-item"><span class="icon">&#8689;</span>Export Screenshot<span class="shortcut"><kbd>&#8984;</kbd><kbd>S</kbd></span></div>
+</div>
+<div class="palette-footer">
+<span>15 results</span>
+<span>Tip: Type &gt; for commands, # for layers, @ for locations</span>
+</div>
+</div>
+</div>
+</body>
+</html>

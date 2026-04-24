@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>MMGIS Mockup 15: Split Panel Dual View</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Inter',system-ui,sans-serif;background:#0d1117;color:#c9d1d9;height:100vh;overflow:hidden;display:flex;flex-direction:column}
+.top{height:40px;background:#161b22;display:flex;align-items:center;padding:0 12px;border-bottom:1px solid #30363d;flex-shrink:0}
+.logo{font-size:15px;font-weight:700;color:#58a6ff}
+.mission{color:#8b949e;font-size:11px;margin-left:12px}
+.view-toggle{margin-left:20px;display:flex;background:#21262d;border-radius:6px;overflow:hidden;border:1px solid #30363d}
+.view-toggle div{padding:4px 12px;font-size:10px;color:#8b949e;cursor:pointer}
+.view-toggle div.a{background:#58a6ff;color:#0d1117;font-weight:600}
+.right{margin-left:auto;display:flex;gap:8px;align-items:center}
+.user{width:24px;height:24px;border-radius:50%;background:#58a6ff;color:#0d1117;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700}
+.workspace{flex:1;display:flex;overflow:hidden}
+.left-tools{width:40px;background:#0d1117;display:flex;flex-direction:column;align-items:center;padding:6px 0;gap:2px;border-right:1px solid #21262d;flex-shrink:0}
+.left-tools .t{width:30px;height:30px;display:flex;align-items:center;justify-content:center;font-size:13px;color:#484f58;border-radius:6px;cursor:pointer}
+.left-tools .t:hover{background:#21262d;color:#c9d1d9}
+.left-tools .t.a{color:#58a6ff;background:#21262d}
+.content{flex:1;display:flex;flex-direction:column}
+.split-views{flex:1;display:flex}
+.view-pane{flex:1;position:relative;display:flex;align-items:center;justify-content:center}
+.view-pane:first-child{border-right:2px solid #30363d}
+.pane-label{position:absolute;top:8px;left:8px;background:#21262dcc;backdrop-filter:blur(4px);padding:3px 10px;border-radius:4px;font-size:10px;font-weight:600;color:#c9d1d9;display:flex;align-items:center;gap:6px}
+.pane-label .dot{width:6px;height:6px;border-radius:50%}
+.pane-label .dot.map{background:#3fb950}
+.pane-label .dot.globe{background:#58a6ff}
+.map-pane{background:#0d1117}
+.globe-pane{background:#0a0e14}
+.grid{position:absolute;inset:0;background-image:linear-gradient(#21262d0a 1px,transparent 1px),linear-gradient(90deg,#21262d0a 1px,transparent 1px);background-size:40px 40px}
+.ml{font-size:11px;letter-spacing:5px;text-transform:uppercase;color:#21262d}
+.mc{position:absolute;right:8px;top:8px;display:flex;flex-direction:column;gap:3px}
+.mb{width:26px;height:26px;background:#21262dcc;border:1px solid #30363d;border-radius:4px;display:flex;align-items:center;justify-content:center;color:#58a6ff;cursor:pointer;font-size:12px}
+.globe-placeholder{font-size:60px;color:#21262d}
+.layer-panel{width:240px;background:#161b22;border-left:1px solid #30363d;overflow-y:auto;flex-shrink:0}
+.ph{padding:10px 12px;font-size:12px;font-weight:600;color:#c9d1d9;border-bottom:1px solid #21262d;display:flex;justify-content:space-between}
+.ph span{font-size:9px;color:#484f58}
+.grp{border-bottom:1px solid #21262d11}
+.gh{padding:6px 12px;font-size:10px;color:#58a6ff;cursor:pointer;display:flex;justify-content:space-between}
+.gc{background:#58a6ff22;color:#58a6ff;padding:0 5px;border-radius:6px;font-size:9px}
+.li{padding:4px 12px 4px 18px;display:flex;align-items:center;gap:6px;font-size:10px}
+.li:hover{background:#21262d44}
+.tog{width:22px;height:12px;border-radius:6px;background:#30363d;position:relative;flex-shrink:0}
+.tog.on{background:#3fb95044}
+.tog::after{content:'';position:absolute;left:1px;top:1px;width:10px;height:10px;border-radius:50%;background:#484f58}
+.tog.on::after{left:10px;background:#3fb950}
+.ln{color:#c9d1d9}
+.sync-badge{font-size:8px;padding:1px 4px;border-radius:3px;margin-left:auto;flex-shrink:0}
+.sync-badge.both{background:#58a6ff22;color:#58a6ff}
+.sync-badge.map-only{background:#3fb95022;color:#3fb950}
+.bb{height:32px;background:#161b22;display:flex;align-items:center;padding:0 12px;gap:12px;border-top:1px solid #30363d;font-size:10px;flex-shrink:0}
+.cd{color:#58a6ff;font-family:monospace;font-size:10px}
+.sync-indicator{display:flex;align-items:center;gap:4px;color:#484f58}
+.sync-indicator .icon{color:#3fb950;font-size:12px}
+.ts{flex:1;display:flex;align-items:center;gap:6px}
+.tl{color:#484f58;font-size:9px}
+.tt{flex:1;height:2px;background:#30363d;border-radius:1px;position:relative}
+.tf{width:55%;height:100%;background:#58a6ff;border-radius:1px}
+.th{position:absolute;width:8px;height:8px;border-radius:50%;background:#58a6ff;top:-3px;left:55%}
+.splitter{width:2px;background:#30363d;cursor:col-resize;position:relative}
+.splitter:hover{background:#58a6ff}
+.splitter::after{content:'';position:absolute;top:50%;left:-4px;width:10px;height:30px;transform:translateY(-50%)}
+</style>
+</head>
+<body>
+<div class="top">
+<div class="logo">MMGIS</div>
+<div class="mission">Reference Mission</div>
+<div class="view-toggle">
+<div>Map Only</div>
+<div class="a">Map + Globe</div>
+<div>Globe Only</div>
+<div>Triple</div>
+</div>
+<div class="right"><div class="user">A</div></div>
+</div>
+<div class="workspace">
+<div class="left-tools">
+<div class="t a">&#9776;</div><div class="t">&#8505;</div><div class="t">&#9873;</div><div class="t">&#9998;</div><div class="t">&#8676;</div><div class="t">&#8981;</div><div class="t">&#9201;</div><div class="t">&#9737;</div><div class="t">&#9878;</div><div class="t">&#9649;</div><div class="t">&#9635;</div><div class="t">&#9683;</div><div class="t">&#9638;</div><div class="t">&#9681;</div>
+</div>
+<div class="content">
+<div class="split-views">
+<div class="view-pane map-pane">
+<div class="grid"></div>
+<div class="pane-label"><div class="dot map"></div>2D Map</div>
+<div class="ml">San Francisco Bay</div>
+<div class="mc"><div class="mb">+</div><div class="mb">&minus;</div></div>
+</div>
+<div class="view-pane globe-pane">
+<div class="pane-label"><div class="dot globe"></div>3D Globe</div>
+<div class="globe-placeholder">&#127760;</div>
+<div class="mc"><div class="mb">&#8635;</div><div class="mb">&#8634;</div></div>
+</div>
+</div>
+<div class="bb">
+<div class="sync-indicator"><span class="icon">&#8644;</span>Views synced</div>
+<div class="cd">-122.419&deg;, 37.775&deg;</div>
+<div class="ts"><span class="tl">2024-01-01</span><div class="tt"><div class="tf"></div><div class="th"></div></div><span class="tl">2024-01-20</span></div>
+</div>
+</div>
+<div class="layer-panel">
+<div class="ph">Layers <span>29</span></div>
+<div class="grp"><div class="gh"><span>&#9660; Vector Layers</span><span class="gc">5</span></div>
+<div class="li"><div class="tog on"></div><span class="ln">Points Basic</span><span class="sync-badge both">2D+3D</span></div>
+<div class="li"><div class="tog on"></div><span class="ln">Lines Basic</span><span class="sync-badge both">2D+3D</span></div>
+<div class="li"><div class="tog"></div><span class="ln">Polygons Basic</span><span class="sync-badge both">2D+3D</span></div>
+<div class="li"><div class="tog on"></div><span class="ln">Arrows</span><span class="sync-badge map-only">2D</span></div>
+<div class="li"><div class="tog"></div><span class="ln">Annotations</span><span class="sync-badge map-only">2D</span></div></div>
+<div class="grp"><div class="gh"><span>&#9660; Feature Styling</span><span class="gc">4</span></div>
+<div class="li"><div class="tog on"></div><span class="ln">Points Styled</span><span class="sync-badge both">2D+3D</span></div>
+<div class="li"><div class="tog"></div><span class="ln">Lines Styled</span><span class="sync-badge both">2D+3D</span></div>
+<div class="li"><div class="tog on"></div><span class="ln">Polygons Styled</span><span class="sync-badge both">2D+3D</span></div>
+<div class="li"><div class="tog"></div><span class="ln">Style From Prop</span><span class="sync-badge map-only">2D</span></div></div>
+<div class="grp"><div class="gh"><span>&#9654; Feature Behavior</span><span class="gc">6</span></div></div>
+<div class="grp"><div class="gh"><span>&#9654; Geodatasets</span><span class="gc">5</span></div></div>
+<div class="grp"><div class="gh"><span>&#9654; Data Layers</span><span class="gc">9</span></div></div>
+</div>
+</div>
+</body>
+</html>
