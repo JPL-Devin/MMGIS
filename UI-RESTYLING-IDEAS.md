@@ -8,18 +8,35 @@ A collection of design concepts and mockups for modernizing the MMGIS user inter
 
 The existing MMGIS interface uses **Materialize CSS**, **jQuery UI**, and **React** components. The UI features a dark toolbar sidebar on the left, a full-width map area, and a bottom bar with time controls and coordinates.
 
-| View | Screenshot |
-|------|-----------|
-| Landing Page | ![Landing Page](ui-screenshots/current/01-landing-page.png) |
-| Main Map View | ![Main Map](ui-screenshots/current/02-main-map-view.png) |
-| Toolbar — Sites | ![Sites Tool](ui-screenshots/current/03-toolbar-sites.png) |
-| Toolbar — Measure | ![Measure Tool](ui-screenshots/current/03b-toolbar-measure.png) |
-| Toolbar — Draw | ![Draw Tool](ui-screenshots/current/03c-toolbar-draw.png) |
-| Toolbar — Isochrone | ![Isochrone Tool](ui-screenshots/current/03d-toolbar-isochrone.png) |
-| Toolbar — Animation | ![Animation Tool](ui-screenshots/current/03e-toolbar-animation.png) |
-| Layers Panel | ![Layers Panel](ui-screenshots/current/04-layers-panel.png) |
-| Bottom Bar & Time Slider | ![Bottom Bar](ui-screenshots/current/05-bottom-bar-timeslider.png) |
-| Login Page | ![Login](ui-screenshots/current/09-login-page.png) |
+### Landing Page
+![Landing Page](ui-screenshots/current/01-landing-page.png)
+
+### Main Map View
+![Main Map](ui-screenshots/current/02-main-map-view.png)
+
+### Toolbar — Sites
+![Sites Tool](ui-screenshots/current/03-toolbar-sites.png)
+
+### Toolbar — Measure
+![Measure Tool](ui-screenshots/current/03b-toolbar-measure.png)
+
+### Toolbar — Draw
+![Draw Tool](ui-screenshots/current/03c-toolbar-draw.png)
+
+### Toolbar — Isochrone
+![Isochrone Tool](ui-screenshots/current/03d-toolbar-isochrone.png)
+
+### Toolbar — Animation
+![Animation Tool](ui-screenshots/current/03e-toolbar-animation.png)
+
+### Layers Panel
+![Layers Panel](ui-screenshots/current/04-layers-panel.png)
+
+### Bottom Bar & Time Slider
+![Bottom Bar](ui-screenshots/current/05-bottom-bar-timeslider.png)
+
+### Login Page
+![Login](ui-screenshots/current/09-login-page.png)
 
 ### Current UI Observations
 - **Color scheme**: Dark charcoal/gray backgrounds (`#1a1a1a`–`#2a2a2a`), cyan/teal accents
