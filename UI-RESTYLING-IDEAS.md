@@ -141,3 +141,19 @@ Purple/pink/green/cyan code-editor palette, monospace font, developer-oriented a
 ## Source Files
 
 HTML/CSS source for each mockup is in `ui-screenshots/mockups/`. Open any `.html` file in a browser to see the full mockup.
+
+---
+
+## Mockup 15: Split Panel Dual View
+
+**Layout change:** Side-by-side 2D Map + 3D Globe with synced views. Layer panel on right. View toggle in top bar.
+
+![Split Panel](ui-screenshots/mockups/15-split-panel-dual-view.png)
+
+---
+
+## Mockup 16: Command Palette Driven
+
+**Layout change:** Minimal chrome — no persistent sidebar. All tools/layers accessed via ⌘K command palette overlay.
+
+![Command Palette](ui-screenshots/mockups/16-command-palette-driven.png)
