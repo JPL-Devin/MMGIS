@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>MMGIS Mockup 14: Right Sidebar Layout</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Inter',system-ui,sans-serif;background:#111827;color:#e5e7eb;height:100vh;overflow:hidden;display:flex;flex-direction:column}
+.top{height:44px;background:#1f2937;display:flex;align-items:center;padding:0 16px;border-bottom:1px solid #374151;flex-shrink:0}
+.logo{font-size:16px;font-weight:700;color:#60a5fa}
+.breadcrumb{margin-left:16px;display:flex;gap:4px;font-size:11px;color:#6b7280}
+.breadcrumb .sep{color:#4b5563}
+.breadcrumb .current{color:#d1d5db;font-weight:500}
+.search{margin-left:auto;margin-right:16px;padding:5px 12px 5px 28px;background:#111827;border:1px solid #374151;border-radius:6px;color:#e5e7eb;font-size:11px;width:200px;position:relative}
+.user{width:28px;height:28px;border-radius:50%;background:#3b82f6;color:#fff;display:flex;align-items:center;justify-content:center;font-size:11px}
+.main{flex:1;display:flex;overflow:hidden}
+.map{flex:1;background:#0f172a;position:relative;display:flex;align-items:center;justify-content:center}
+.grid{position:absolute;inset:0;background-image:linear-gradient(#1e293b12 1px,transparent 1px),linear-gradient(90deg,#1e293b12 1px,transparent 1px);background-size:50px 50px}
+.ml{font-size:13px;letter-spacing:6px;text-transform:uppercase;color:#1e293b;z-index:1}
+.mc{position:absolute;left:14px;top:14px;display:flex;flex-direction:column;gap:4px}
+.mb{width:32px;height:32px;background:#1f2937cc;backdrop-filter:blur(8px);border:1px solid #374151;border-radius:8px;display:flex;align-items:center;justify-content:center;color:#60a5fa;cursor:pointer;font-size:14px}
+.minimap{position:absolute;left:14px;bottom:52px;width:140px;height:100px;background:#1e293b;border:1px solid #374151;border-radius:8px;overflow:hidden}
+.minimap-label{position:absolute;bottom:2px;right:4px;font-size:8px;color:#4b5563}
+.minimap-rect{position:absolute;top:30%;left:30%;width:40%;height:40%;border:1px solid #60a5fa;background:#60a5fa11}
+.coord-float{position:absolute;bottom:8px;left:50%;transform:translateX(-50%);background:#1f2937cc;backdrop-filter:blur(8px);padding:4px 14px;border-radius:8px;font-size:10px;color:#9ca3af;font-family:monospace;border:1px solid #37415144}
+.right-side{width:320px;background:#1f2937;border-left:1px solid #374151;display:flex;flex-direction:column;flex-shrink:0}
+.right-tabs{display:flex;border-bottom:1px solid #374151;flex-shrink:0}
+.right-tabs div{flex:1;padding:8px 0;text-align:center;font-size:11px;color:#6b7280;cursor:pointer;border-bottom:2px solid transparent}
+.right-tabs div:hover{color:#d1d5db}
+.right-tabs div.a{color:#60a5fa;border-bottom-color:#60a5fa;font-weight:600}
+.right-content{flex:1;overflow-y:auto;padding:0}
+.tool-bar{display:flex;flex-wrap:wrap;padding:8px;gap:4px;border-bottom:1px solid #374151}
+.tool-btn{width:36px;height:36px;display:flex;align-items:center;justify-content:center;font-size:14px;color:#6b7280;border-radius:6px;cursor:pointer}
+.tool-btn:hover{background:#374151;color:#d1d5db}
+.tool-btn.a{background:#3b82f622;color:#60a5fa}
+.section{border-bottom:1px solid #37415133}
+.sh{padding:8px 14px;font-size:11px;color:#60a5fa;cursor:pointer;display:flex;justify-content:space-between}
+.sc{background:#3b82f622;color:#60a5fa;padding:1px 6px;border-radius:8px;font-size:9px}
+.li{padding:5px 14px;display:flex;align-items:center;gap:8px}
+.li:hover{background:#37415122}
+.tog{width:26px;height:14px;border-radius:7px;background:#374151;position:relative;flex-shrink:0}
+.tog.on{background:#3b82f644}
+.tog::after{content:'';position:absolute;left:2px;top:2px;width:10px;height:10px;border-radius:50%;background:#6b7280}
+.tog.on::after{left:13px;background:#60a5fa}
+.ln{font-size:11px;color:#d1d5db}
+.time-panel{border-top:1px solid #374151;padding:10px 14px;flex-shrink:0}
+.time-label{font-size:10px;color:#6b7280;margin-bottom:6px;display:flex;justify-content:space-between}
+.time-track{height:3px;background:#374151;border-radius:2px;position:relative}
+.time-fill{width:55%;height:100%;background:#3b82f6;border-radius:2px}
+.time-thumb{position:absolute;width:10px;height:10px;border-radius:50%;background:#60a5fa;top:-4px;left:55%}
+.time-dates{display:flex;justify-content:space-between;font-size:9px;color:#4b5563;margin-top:4px}
+</style>
+</head>
+<body>
+<div class="top">
+<div class="logo">MMGIS</div>
+<div class="breadcrumb">
+<span>Missions</span><span class="sep">/</span><span class="current">Reference Mission</span>
+</div>
+<input class="search" placeholder="Search..."/>
+<div class="user">A</div>
+</div>
+<div class="main">
+<div class="map">
+<div class="grid"></div>
+<div class="ml">San Francisco Bay Area</div>
+<div class="mc"><div class="mb">+</div><div class="mb">&minus;</div><div class="mb">&#8962;</div><div class="mb">&#127760;</div></div>
+<div class="minimap"><div class="minimap-rect"></div><div class="minimap-label">Overview</div></div>
+<div class="coord-float">-122.419&deg;, 37.775&deg; &bull; z12</div>
+</div>
+<div class="right-side">
+<div class="right-tabs">
+<div class="a">Layers</div>
+<div>Tools</div>
+<div>Info</div>
+<div>Data</div>
+</div>
+<div class="tool-bar">
+<div class="tool-btn a" title="Layers">&#9776;</div>
+<div class="tool-btn" title="Draw">&#9998;</div>
+<div class="tool-btn" title="Measure">&#8676;</div>
+<div class="tool-btn" title="Search">&#8981;</div>
+<div class="tool-btn" title="Isochrone">&#9201;</div>
+<div class="tool-btn" title="Viewshed">&#9737;</div>
+<div class="tool-btn" title="Chemistry">&#9878;</div>
+<div class="tool-btn" title="Legend">&#9649;</div>
+<div class="tool-btn" title="Identifier">&#9635;</div>
+<div class="tool-btn" title="Analysis">&#9683;</div>
+<div class="tool-btn" title="Curtain">&#9638;</div>
+<div class="tool-btn" title="Shade">&#9681;</div>
+<div class="tool-btn" title="Animation">&#9654;</div>
+<div class="tool-btn" title="Segment">&#9644;</div>
+</div>
+<div class="right-content">
+<div class="section"><div class="sh"><span>&#9660; Vector Layers</span><span class="sc">5</span></div>
+<div class="li"><div class="tog on"></div><span class="ln">Points Basic</span></div>
+<div class="li"><div class="tog on"></div><span class="ln">Lines Basic</span></div>
+<div class="li"><div class="tog"></div><span class="ln">Polygons Basic</span></div>
+<div class="li"><div class="tog on"></div><span class="ln">Arrows</span></div>
+<div class="li"><div class="tog"></div><span class="ln">Annotations</span></div></div>
+<div class="section"><div class="sh"><span>&#9660; Feature Styling</span><span class="sc">4</span></div>
+<div class="li"><div class="tog on"></div><span class="ln">Points Styled</span></div>
+<div class="li"><div class="tog"></div><span class="ln">Lines Styled</span></div>
+<div class="li"><div class="tog on"></div><span class="ln">Polygons Styled</span></div>
+<div class="li"><div class="tog"></div><span class="ln">Style From Property</span></div></div>
+<div class="section"><div class="sh"><span>&#9654; Feature Behavior</span><span class="sc">6</span></div></div>
+<div class="section"><div class="sh"><span>&#9654; Geodatasets</span><span class="sc">5</span></div></div>
+<div class="section"><div class="sh"><span>&#9654; Data Layers</span><span class="sc">9</span></div></div>
+</div>
+<div class="time-panel">
+<div class="time-label"><span>Time Range</span><span style="color:#60a5fa">01/11/2024</span></div>
+<div class="time-track"><div class="time-fill"></div><div class="time-thumb"></div></div>
+<div class="time-dates"><span>Jan 1</span><span>Jan 20</span></div>
+</div>
+</div>
+</div>
+</body>
+</html>
