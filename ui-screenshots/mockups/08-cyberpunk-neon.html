@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>MMGIS Mockup 08: Cyberpunk Neon</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Courier New',monospace;background:#0a0a0a;color:#e0e0e0;height:100vh;overflow:hidden}
+.top-bar{height:44px;background:linear-gradient(90deg,#0a0a0a,#1a0a2e);display:flex;align-items:center;padding:0 16px;border-bottom:1px solid #ff00ff33;position:relative}
+.top-bar::after{content:'';position:absolute;bottom:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,#ff00ff,#00ffff,#ff00ff,transparent)}
+.logo{font-size:20px;font-weight:900;background:linear-gradient(90deg,#ff00ff,#00ffff);-webkit-background-clip:text;-webkit-text-fill-color:transparent;letter-spacing:3px;text-transform:uppercase}
+.mission-name{color:#00ffff;font-size:12px;margin-left:16px;padding:4px 12px;border:1px solid #00ffff44;background:#00ffff11;text-transform:uppercase;letter-spacing:2px}
+.user-area{margin-left:auto;display:flex;align-items:center;gap:12px}
+.user-avatar{width:30px;height:30px;border-radius:50%;border:2px solid #ff00ff;display:flex;align-items:center;justify-content:center;font-size:12px;color:#ff00ff}
+.main{display:flex;height:calc(100vh - 44px)}
+.sidebar{width:52px;background:#0d0d1a;display:flex;flex-direction:column;align-items:center;padding:12px 0;gap:4px;border-right:1px solid #ff00ff22}
+.sidebar .tool{width:38px;height:38px;display:flex;align-items:center;justify-content:center;font-size:16px;color:#666;cursor:pointer;border-radius:4px;transition:all .2s;position:relative}
+.sidebar .tool:hover{color:#ff00ff;background:#ff00ff11}
+.sidebar .tool.active{color:#00ffff;background:#00ffff11;box-shadow:0 0 12px #00ffff33}
+.sidebar .tool.active::before{content:'';position:absolute;left:0;top:8px;bottom:8px;width:2px;background:#00ffff;box-shadow:0 0 8px #00ffff}
+.panel{width:280px;background:#0d0d1a;border-right:1px solid #ff00ff22;overflow-y:auto}
+.panel-header{padding:12px 16px;font-size:11px;text-transform:uppercase;letter-spacing:3px;color:#ff00ff;border-bottom:1px solid #ff00ff22;display:flex;align-items:center;justify-content:space-between}
+.panel-header .glow{text-shadow:0 0 10px #ff00ff}
+.search-box{margin:8px 12px;padding:6px 10px;background:#0a0a1a;border:1px solid #333;color:#00ffff;font-family:'Courier New',monospace;font-size:11px;width:calc(100% - 24px);outline:none}
+.search-box:focus{border-color:#00ffff;box-shadow:0 0 8px #00ffff22}
+.search-box::placeholder{color:#444}
+.layer-group{border-bottom:1px solid #ffffff08}
+.group-header{padding:8px 16px;font-size:10px;text-transform:uppercase;letter-spacing:2px;color:#888;cursor:pointer;display:flex;justify-content:space-between;align-items:center}
+.group-header:hover{color:#ff00ff}
+.group-count{background:#ff00ff22;color:#ff00ff;padding:1px 6px;border-radius:2px;font-size:9px}
+.layer-item{padding:6px 16px 6px 24px;display:flex;align-items:center;gap:8px;cursor:pointer;transition:background .15s}
+.layer-item:hover{background:#ff00ff08}
+.layer-toggle{width:28px;height:14px;border-radius:7px;background:#222;position:relative;cursor:pointer;border:1px solid #333}
+.layer-toggle.on{background:#00ffff33;border-color:#00ffff}
+.layer-toggle.on::after{content:'';position:absolute;right:1px;top:1px;width:10px;height:10px;border-radius:50%;background:#00ffff;box-shadow:0 0 6px #00ffff}
+.layer-toggle::after{content:'';position:absolute;left:1px;top:1px;width:10px;height:10px;border-radius:50%;background:#555}
+.layer-name{font-size:11px;color:#aaa}
+.layer-item:hover .layer-name{color:#e0e0e0}
+.map-area{flex:1;background:#0a0a12;position:relative;display:flex;align-items:center;justify-content:center}
+.map-area .grid{position:absolute;inset:0;background-image:linear-gradient(#ff00ff08 1px,transparent 1px),linear-gradient(90deg,#ff00ff08 1px,transparent 1px);background-size:60px 60px}
+.map-label{font-size:14px;letter-spacing:8px;text-transform:uppercase;color:#333;z-index:1}
+.map-controls{position:absolute;right:16px;top:16px;display:flex;flex-direction:column;gap:4px}
+.map-btn{width:32px;height:32px;background:#0d0d1a;border:1px solid #ff00ff33;display:flex;align-items:center;justify-content:center;color:#ff00ff;cursor:pointer;font-size:14px}
+.map-btn:hover{background:#ff00ff22;box-shadow:0 0 12px #ff00ff33}
+.bottom-bar{position:absolute;bottom:0;left:0;right:0;height:36px;background:linear-gradient(90deg,#0d0d1a,#1a0a2e);display:flex;align-items:center;padding:0 16px;gap:16px;border-top:1px solid #ff00ff22;font-size:10px}
+.bottom-bar::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,#00ffff,#ff00ff,#00ffff,transparent)}
+.coord{color:#00ffff;font-family:'Courier New',monospace;letter-spacing:1px}
+.time-slider{flex:1;display:flex;align-items:center;gap:8px}
+.time-label{color:#666;font-size:9px;text-transform:uppercase;letter-spacing:1px}
+.time-track{flex:1;height:2px;background:#222;position:relative;border-radius:1px}
+.time-fill{width:55%;height:100%;background:linear-gradient(90deg,#ff00ff,#00ffff);border-radius:1px;box-shadow:0 0 8px #ff00ff44}
+.time-thumb{position:absolute;width:10px;height:10px;border-radius:50%;background:#00ffff;top:-4px;left:55%;box-shadow:0 0 12px #00ffff}
+.status-dot{width:6px;height:6px;border-radius:50%;background:#00ff00;box-shadow:0 0 6px #00ff00}
+.scanline{position:absolute;top:0;left:0;right:0;bottom:0;background:repeating-linear-gradient(transparent,transparent 2px,rgba(0,0,0,0.03) 2px,rgba(0,0,0,0.03) 4px);pointer-events:none;z-index:999}
+</style>
+</head>
+<body>
+<div class="scanline"></div>
+<div class="top-bar">
+<div class="logo">MMGIS</div>
+<div class="mission-name">Reference Mission</div>
+<div class="user-area">
+<div style="color:#666;font-size:10px;letter-spacing:1px">SYS:ONLINE</div>
+<div class="user-avatar">A</div>
+</div>
+</div>
+<div class="main">
+<div class="sidebar">
+<div class="tool active" title="Layers">&#9776;</div>
+<div class="tool" title="Info">&#8505;</div>
+<div class="tool" title="Sites">&#9873;</div>
+<div class="tool" title="Draw">&#9998;</div>
+<div class="tool" title="Measure">&#8676;</div>
+<div class="tool" title="Search">&#8981;</div>
+<div class="tool" title="Isochrone">&#9201;</div>
+<div class="tool" title="Viewshed">&#9737;</div>
+<div class="tool" title="Chemistry">&#9878;</div>
+<div class="tool" title="Legend">&#9649;</div>
+<div class="tool" title="Identifier">&#9635;</div>
+<div class="tool" title="Analysis">&#9683;</div>
+<div class="tool" title="Curtain">&#9638;</div>
+<div class="tool" title="Shade">&#9681;</div>
+</div>
+<div class="panel">
+<div class="panel-header"><span class="glow">Layers</span><span style="color:#00ffff;font-size:9px">29 TOTAL</span></div>
+<input class="search-box" placeholder="> search layers_"/>
+<div class="layer-group">
+<div class="group-header"><span>&#9660; Vector Layers</span><span class="group-count">5</span></div>
+<div class="layer-item"><div class="layer-toggle on"></div><span class="layer-name">Points Basic</span></div>
+<div class="layer-item"><div class="layer-toggle on"></div><span class="layer-name">Lines Basic</span></div>
+<div class="layer-item"><div class="layer-toggle"></div><span class="layer-name">Polygons Basic</span></div>
+<div class="layer-item"><div class="layer-toggle on"></div><span class="layer-name">Arrows</span></div>
+<div class="layer-item"><div class="layer-toggle"></div><span class="layer-name">Annotations</span></div>
+</div>
+<div class="layer-group">
+<div class="group-header"><span>&#9660; Feature Styling</span><span class="group-count">4</span></div>
+<div class="layer-item"><div class="layer-toggle on"></div><span class="layer-name">Points Styled</span></div>
+<div class="layer-item"><div class="layer-toggle"></div><span class="layer-name">Lines Styled</span></div>
+<div class="layer-item"><div class="layer-toggle on"></div><span class="layer-name">Polygons Styled</span></div>
+<div class="layer-item"><div class="layer-toggle"></div><span class="layer-name">Style From Property</span></div>
+</div>
+<div class="layer-group">
+<div class="group-header"><span>&#9654; Feature Behavior</span><span class="group-count">6</span></div>
+</div>
+<div class="layer-group">
+<div class="group-header"><span>&#9654; Geodatasets</span><span class="group-count">5</span></div>
+</div>
+<div class="layer-group">
+<div class="group-header"><span>&#9654; Data Layers</span><span class="group-count">9</span></div>
+</div>
+</div>
+<div class="map-area">
+<div class="grid"></div>
+<div class="map-label">San Francisco Bay Area</div>
+<div class="map-controls">
+<div class="map-btn">+</div>
+<div class="map-btn">&minus;</div>
+<div class="map-btn">&#8962;</div>
+</div>
+<div class="bottom-bar">
+<div class="status-dot"></div>
+<div class="coord">LON -122.41942&deg; LAT 37.77493&deg;</div>
+<div class="time-slider">
+<span class="time-label">01/01/2024</span>
+<div class="time-track"><div class="time-fill"></div><div class="time-thumb"></div></div>
+<span class="time-label">01/20/2024</span>
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>

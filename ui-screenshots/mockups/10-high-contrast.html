@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>MMGIS Mockup 10: High Contrast Accessibility</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:Arial,Helvetica,sans-serif;background:#000;color:#fff;height:100vh;overflow:hidden}
+a.skip{position:absolute;top:-100px;left:0;background:#ffff00;color:#000;padding:8px 16px;font-weight:900;z-index:9999;font-size:14px}
+a.skip:focus{top:0}
+.top{height:50px;background:#000;display:flex;align-items:center;padding:0 16px;border-bottom:3px solid #ffff00}
+.logo{font-size:22px;font-weight:900;color:#ffff00;letter-spacing:1px}
+.mission{color:#fff;font-size:14px;margin-left:16px;font-weight:700;padding:4px 12px;border:2px solid #fff}
+.user{margin-left:auto;width:34px;height:34px;border-radius:50%;background:#ffff00;color:#000;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:14px}
+.main{display:flex;height:calc(100vh - 50px)}
+.side{width:60px;background:#000;display:flex;flex-direction:column;align-items:center;padding:8px 0;gap:2px;border-right:3px solid #ffff00}
+.side .t{width:44px;height:44px;display:flex;align-items:center;justify-content:center;font-size:18px;color:#fff;cursor:pointer;border:2px solid transparent}
+.side .t:hover,.side .t:focus{border-color:#ffff00;background:#333;outline:3px solid #ffff00}
+.side .t.a{background:#ffff00;color:#000;font-weight:900}
+.panel{width:300px;background:#111;border-right:3px solid #ffff00;overflow-y:auto}
+.ph{padding:14px 16px;font-size:18px;font-weight:900;color:#ffff00;border-bottom:3px solid #ffff00}
+.search{margin:8px 12px;padding:8px 10px;background:#000;border:3px solid #fff;color:#fff;font-size:14px;width:calc(100% - 24px);font-weight:700}
+.search:focus{border-color:#ffff00;outline:3px solid #ffff00}
+.grp{border-bottom:2px solid #333}
+.gh{padding:10px 16px;font-size:14px;font-weight:700;color:#fff;cursor:pointer;display:flex;justify-content:space-between;background:#222}
+.gh:hover{background:#333;outline:2px solid #ffff00}
+.gc{background:#ffff00;color:#000;padding:2px 8px;font-weight:900;font-size:12px}
+.li{padding:8px 16px 8px 24px;display:flex;align-items:center;gap:10px;border-bottom:1px solid #333}
+.li:hover{background:#222}
+.cb{width:22px;height:22px;border:3px solid #fff;display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:900;background:#000;flex-shrink:0}
+.cb.on{background:#ffff00;border-color:#ffff00;color:#000}
+.ln{font-size:14px;font-weight:700;color:#fff}
+.map{flex:1;background:#111;position:relative;display:flex;align-items:center;justify-content:center}
+.ml{font-size:16px;letter-spacing:4px;text-transform:uppercase;color:#555;font-weight:900}
+.mc{position:absolute;right:12px;top:12px;display:flex;flex-direction:column;gap:4px}
+.mb{width:40px;height:40px;background:#000;border:3px solid #ffff00;display:flex;align-items:center;justify-content:center;color:#ffff00;cursor:pointer;font-size:18px;font-weight:900}
+.mb:hover,.mb:focus{background:#ffff00;color:#000;outline:3px solid #fff}
+.bb{position:absolute;bottom:0;left:0;right:0;height:42px;background:#000;display:flex;align-items:center;padding:0 16px;gap:16px;border-top:3px solid #ffff00;font-size:14px;font-weight:700}
+.cd{color:#ffff00;font-family:monospace;font-size:14px}
+.ts{flex:1;display:flex;align-items:center;gap:8px}
+.tl{color:#fff;font-size:12px;font-weight:700}
+.tt{flex:1;height:6px;background:#333;position:relative}
+.tf{width:55%;height:100%;background:#ffff00}
+.th{position:absolute;width:16px;height:16px;background:#ffff00;top:-5px;left:55%;border:3px solid #000}
+.focus-info{position:absolute;bottom:50px;right:16px;background:#000;border:2px solid #ffff00;color:#ffff00;padding:6px 10px;font-size:11px;font-weight:700}
+</style>
+</head>
+<body>
+<a href="#main-content" class="skip" tabindex="1">Skip to map content</a>
+<div class="top">
+<div class="logo">MMGIS</div>
+<div class="mission" role="heading" aria-level="1">REFERENCE MISSION</div>
+<div class="user" role="button" aria-label="User menu">A</div>
+</div>
+<div class="main" id="main-content">
+<div class="side" role="toolbar" aria-label="Tools">
+<div class="t a" title="Layers" tabindex="2" role="button" aria-pressed="true">&#9776;</div>
+<div class="t" title="Info" tabindex="3" role="button">&#8505;</div>
+<div class="t" title="Sites" tabindex="4" role="button">&#9873;</div>
+<div class="t" title="Draw" tabindex="5" role="button">&#9998;</div>
+<div class="t" title="Measure" tabindex="6" role="button">&#8676;</div>
+<div class="t" title="Search" tabindex="7" role="button">&#8981;</div>
+<div class="t" title="Isochrone" tabindex="8" role="button">&#9201;</div>
+<div class="t" title="Viewshed" tabindex="9" role="button">&#9737;</div>
+<div class="t" title="Chemistry" tabindex="10" role="button">&#9878;</div>
+<div class="t" title="Legend" tabindex="11" role="button">&#9649;</div>
+</div>
+<div class="panel" role="region" aria-label="Layer panel">
+<div class="ph">LAYERS</div>
+<input class="search" placeholder="Search layers..." aria-label="Search layers"/>
+<div class="grp">
+<div class="gh" role="button" aria-expanded="true"><span>&#9660; VECTOR LAYERS</span><span class="gc">5</span></div>
+<div class="li"><div class="cb on" role="checkbox" aria-checked="true">&#10003;</div><span class="ln">Points Basic</span></div>
+<div class="li"><div class="cb on" role="checkbox" aria-checked="true">&#10003;</div><span class="ln">Lines Basic</span></div>
+<div class="li"><div class="cb" role="checkbox" aria-checked="false"></div><span class="ln">Polygons Basic</span></div>
+<div class="li"><div class="cb on" role="checkbox" aria-checked="true">&#10003;</div><span class="ln">Arrows</span></div>
+<div class="li"><div class="cb" role="checkbox" aria-checked="false"></div><span class="ln">Annotations</span></div>
+</div>
+<div class="grp">
+<div class="gh" role="button" aria-expanded="true"><span>&#9660; FEATURE STYLING</span><span class="gc">4</span></div>
+<div class="li"><div class="cb on">&#10003;</div><span class="ln">Points Styled</span></div>
+<div class="li"><div class="cb"></div><span class="ln">Lines Styled</span></div>
+<div class="li"><div class="cb on">&#10003;</div><span class="ln">Polygons Styled</span></div>
+<div class="li"><div class="cb"></div><span class="ln">Style From Property</span></div>
+</div>
+<div class="grp"><div class="gh"><span>&#9654; FEATURE BEHAVIOR</span><span class="gc">6</span></div></div>
+<div class="grp"><div class="gh"><span>&#9654; GEODATASETS</span><span class="gc">5</span></div></div>
+<div class="grp"><div class="gh"><span>&#9654; DATA LAYERS</span><span class="gc">9</span></div></div>
+</div>
+<div class="map" role="application" aria-label="Map view">
+<div class="ml">San Francisco Bay Area</div>
+<div class="mc">
+<div class="mb" role="button" aria-label="Zoom in">+</div>
+<div class="mb" role="button" aria-label="Zoom out">&minus;</div>
+<div class="mb" role="button" aria-label="Home">&#8962;</div>
+</div>
+<div class="focus-info">TAB to navigate &bull; ENTER to activate</div>
+<div class="bb">
+<div class="cd">-122.419&deg;, 37.775&deg;</div>
+<div class="ts">
+<span class="tl">01/01/2024</span>
+<div class="tt"><div class="tf"></div><div class="th"></div></div>
+<span class="tl">01/20/2024</span>
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>
