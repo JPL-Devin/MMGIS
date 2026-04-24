@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>MMGIS Mockup 95: Natural Earth Topographic Theme</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Georgia','Times New Roman',serif;background:#f5f0e8;color:#3e3529;height:100vh;overflow:hidden;display:flex;flex-direction:column}
+.top{height:42px;background:#ede6d6;display:flex;align-items:center;padding:0 16px;border-bottom:2px solid #c9b99a;flex-shrink:0}
+.logo{font-size:16px;font-weight:700;color:#6b5b3e;letter-spacing:1px}
+.logo span{font-weight:400;font-size:11px;color:#9c8b6e;margin-left:6px}
+.right{margin-left:auto;display:flex;gap:8px;align-items:center;font-size:9px;color:#9c8b6e}
+.ws{flex:1;display:flex;overflow:hidden}
+.sb{width:200px;background:#ede6d6;border-right:2px solid #c9b99a;display:flex;flex-direction:column;flex-shrink:0;overflow-y:auto}
+.sb-title{padding:10px 14px;font-size:11px;font-weight:700;color:#6b5b3e;text-transform:uppercase;letter-spacing:1px;border-bottom:1px solid #d4c9b0}
+.layer-group{border-bottom:1px solid #d4c9b0}
+.lg-header{padding:8px 14px;font-size:10px;font-weight:700;color:#6b5b3e;display:flex;align-items:center;gap:6px;cursor:pointer}
+.lg-icon{font-size:13px}
+.lg-count{margin-left:auto;font-size:8px;color:#9c8b6e;font-weight:400}
+.layer-item{padding:5px 14px 5px 28px;font-size:9px;color:#6b5b3e;display:flex;align-items:center;gap:6px;cursor:pointer}
+.layer-item:hover{background:#e5dccb}
+.li-swatch{width:10px;height:10px;border-radius:2px;border:1px solid #c9b99a;flex-shrink:0}
+.li-check{width:12px;height:12px;border:1.5px solid #9c8b6e;border-radius:2px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:8px;color:#6b5b3e}
+.li-check.on{background:#6b5b3e;border-color:#6b5b3e;color:#f5f0e8}
+.map{flex:1;background:linear-gradient(180deg,#d4e8c2 0%,#e8dfc4 40%,#c9b99a 100%);position:relative;display:flex;align-items:center;justify-content:center}
+.map-label{font-size:10px;color:#9c8b6e88;letter-spacing:4px;font-style:italic}
+/* Compass rose */
+.compass{position:absolute;top:12px;right:12px;width:50px;height:50px;border-radius:50%;background:#ede6d6cc;border:1.5px solid #c9b99a;display:flex;align-items:center;justify-content:center;flex-direction:column;font-size:10px;color:#6b5b3e;font-weight:700}
+.compass span{font-size:6px;color:#9c8b6e}
+/* Scale bar */
+.scale{position:absolute;bottom:32px;right:12px;display:flex;flex-direction:column;align-items:flex-end;gap:1px}
+.scale-bar{width:80px;height:4px;display:flex}
+.scale-seg{flex:1;height:100%}
+.scale-label{font-size:7px;color:#6b5b3e;display:flex;justify-content:space-between;width:80px}
+/* Contour legend */
+.contour-legend{position:absolute;bottom:12px;left:12px;background:#ede6d6cc;border:1px solid #c9b99a;border-radius:4px;padding:6px 10px}
+.cl-title{font-size:8px;font-weight:700;color:#6b5b3e;margin-bottom:3px}
+.cl-row{display:flex;align-items:center;gap:4px;padding:1px 0;font-size:7px;color:#6b5b3e}
+.cl-line{width:16px;height:2px}
+/* Right info panel */
+.info{width:180px;background:#ede6d6;border-left:2px solid #c9b99a;flex-shrink:0;padding:10px;display:flex;flex-direction:column;gap:8px}
+.info-title{font-size:10px;font-weight:700;color:#6b5b3e;text-transform:uppercase;letter-spacing:.5px}
+.info-card{background:#f5f0e8;border:1px solid #d4c9b0;border-radius:4px;padding:6px 8px}
+.ic-label{font-size:7px;color:#9c8b6e;text-transform:uppercase;letter-spacing:.5px}
+.ic-value{font-size:11px;font-weight:700;color:#6b5b3e;margin-top:1px}
+.ic-sub{font-size:7px;color:#9c8b6e}
+.bb{height:24px;background:#ede6d6;display:flex;align-items:center;padding:0 14px;gap:12px;border-top:2px solid #c9b99a;font-size:8px;color:#9c8b6e;flex-shrink:0}
+.bb .hl{color:#6b5b3e;font-weight:600}
+</style>
+</head>
+<body>
+<div class="top"><span class="logo">MMGIS <span>Cartographic Edition</span></span><div class="right">Reference Mission &bull; SF Bay Area</div></div>
+<div class="ws">
+<div class="sb"><div class="sb-title">Map Layers</div>
+<div class="layer-group"><div class="lg-header"><span class="lg-icon">&#9650;</span>Topography<span class="lg-count">4</span></div>
+<div class="layer-item"><div class="li-check on">&#10003;</div><div class="li-swatch" style="background:#a3c47a"></div>Elevation Contours</div>
+<div class="layer-item"><div class="li-check on">&#10003;</div><div class="li-swatch" style="background:#d4c9b0"></div>Hillshade Relief</div>
+<div class="layer-item"><div class="li-check"></div><div class="li-swatch" style="background:#7ab3d4"></div>Bathymetry</div>
+<div class="layer-item"><div class="li-check"></div><div class="li-swatch" style="background:#c9b99a"></div>Slope Analysis</div></div>
+<div class="layer-group"><div class="lg-header"><span class="lg-icon">&#9650;</span>Features<span class="lg-count">3</span></div>
+<div class="layer-item"><div class="li-check on">&#10003;</div><div class="li-swatch" style="background:#d45050"></div>Survey Points</div>
+<div class="layer-item"><div class="li-check on">&#10003;</div><div class="li-swatch" style="background:#4a7fb5"></div>Traverse Lines</div>
+<div class="layer-item"><div class="li-check"></div><div class="li-swatch" style="background:#8b6b4a"></div>Boundaries</div></div>
+<div class="layer-group"><div class="lg-header"><span class="lg-icon">&#9650;</span>Base Maps<span class="lg-count">3</span></div>
+<div class="layer-item"><div class="li-check on">&#10003;</div><div class="li-swatch" style="background:#e8dfc4"></div>Natural Earth</div>
+<div class="layer-item"><div class="li-check"></div><div class="li-swatch" style="background:#333"></div>Satellite</div>
+<div class="layer-item"><div class="li-check"></div><div class="li-swatch" style="background:#fff"></div>Blank Canvas</div></div></div>
+<div class="map"><div class="map-label">San Francisco Bay Area</div>
+<div class="compass">N<span>&#9650;</span></div>
+<div class="scale"><div class="scale-bar"><div class="scale-seg" style="background:#6b5b3e"></div><div class="scale-seg" style="background:#f5f0e8"></div><div class="scale-seg" style="background:#6b5b3e"></div><div class="scale-seg" style="background:#f5f0e8"></div></div><div class="scale-label"><span>0</span><span>5 km</span></div></div>
+<div class="contour-legend"><div class="cl-title">Elevation</div>
+<div class="cl-row"><div class="cl-line" style="background:#a3c47a"></div>0–100 m</div>
+<div class="cl-row"><div class="cl-line" style="background:#c9b99a"></div>100–300 m</div>
+<div class="cl-row"><div class="cl-line" style="background:#8b6b4a"></div>300–600 m</div>
+<div class="cl-row"><div class="cl-line" style="background:#6b5b3e"></div>600+ m</div></div></div>
+<div class="info"><div class="info-title">Map Info</div>
+<div class="info-card"><div class="ic-label">Projection</div><div class="ic-value">WGS 84</div><div class="ic-sub">EPSG:4326</div></div>
+<div class="info-card"><div class="ic-label">Center</div><div class="ic-value">37.77°N</div><div class="ic-sub">122.42°W</div></div>
+<div class="info-card"><div class="ic-label">Scale</div><div class="ic-value">1:50,000</div><div class="ic-sub">Zoom level 12</div></div>
+<div class="info-card"><div class="ic-label">Active Layers</div><div class="ic-value">5 / 10</div></div></div></div>
+<div class="bb"><span class="hl">Natural Earth</span> | 37.7749°N, 122.4194°W | Elev: 42m | Scale 1:50,000</div>
+</body>
+</html>

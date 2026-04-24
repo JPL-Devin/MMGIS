@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>MMGIS Mockup 98: Minimap & Overview Window</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Inter',system-ui,sans-serif;background:#ecfdf5;color:#064e3b;height:100vh;overflow:hidden;display:flex;flex-direction:column}
+.top{height:40px;background:#fff;display:flex;align-items:center;padding:0 14px;border-bottom:1px solid #a7f3d0;flex-shrink:0}
+.logo{font-size:15px;font-weight:700;color:#059669}
+.right{margin-left:auto;display:flex;gap:6px;align-items:center;font-size:9px;color:#6ee7b7}
+.ws{flex:1;display:flex;overflow:hidden;position:relative}
+.sb{width:36px;background:#fff;border-right:1px solid #a7f3d0;display:flex;flex-direction:column;align-items:center;padding:4px 0;gap:2px;flex-shrink:0}
+.t{width:26px;height:26px;display:flex;align-items:center;justify-content:center;border-radius:4px;font-size:10px;color:#6ee7b7;cursor:pointer}
+.t.a{color:#059669;background:#d1fae5}
+.map{flex:1;background:#ecfdf5;display:flex;align-items:center;justify-content:center;position:relative}
+.map-label{font-size:10px;color:#a7f3d088;letter-spacing:3px}
+/* Layer panel */
+.layers{width:200px;background:#fff;border-right:1px solid #a7f3d0;flex-shrink:0;display:flex;flex-direction:column;overflow-y:auto}
+.lp-title{padding:8px 10px;font-size:10px;font-weight:600;color:#059669;border-bottom:1px solid #d1fae5}
+.lp-item{display:flex;align-items:center;gap:6px;padding:5px 10px;font-size:9px;color:#064e3b;cursor:pointer}
+.lp-item:hover{background:#ecfdf5}
+.lp-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+.lp-check{width:14px;height:14px;border:1.5px solid #a7f3d0;border-radius:3px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:8px}
+.lp-check.on{background:#059669;border-color:#059669;color:#fff}
+/* Minimap */
+.minimap{position:absolute;bottom:12px;right:12px;width:160px;height:120px;background:#fff;border:2px solid #059669;border-radius:8px;box-shadow:0 4px 12px rgba(0,0,0,.08);overflow:hidden;z-index:5}
+.mm-bg{width:100%;height:100%;background:linear-gradient(135deg,#d1fae5,#a7f3d0,#6ee7b7);position:relative}
+.mm-viewport{position:absolute;top:25%;left:30%;width:35%;height:40%;border:2px solid #059669;background:#05966922;border-radius:2px}
+.mm-header{position:absolute;top:0;left:0;right:0;background:#059669cc;padding:2px 6px;font-size:7px;color:#fff;font-weight:600;display:flex;align-items:center;justify-content:between}
+.mm-header span{margin-left:auto;cursor:pointer;font-size:8px}
+/* Zoom controls */
+.zoom{position:absolute;top:12px;right:12px;display:flex;flex-direction:column;gap:2px;z-index:5}
+.zm{width:28px;height:28px;background:#fff;border:1px solid #a7f3d0;display:flex;align-items:center;justify-content:center;font-size:14px;color:#059669;cursor:pointer;font-weight:700}
+.zm:first-child{border-radius:6px 6px 0 0}
+.zm:last-child{border-radius:0 0 6px 6px}
+/* Scale */
+.scale{position:absolute;bottom:12px;left:12px;background:#ffffffcc;border:1px solid #a7f3d0;border-radius:4px;padding:3px 8px;font-size:7px;color:#064e3b;z-index:5}
+/* Coords overlay */
+.coords{position:absolute;top:12px;left:12px;background:#ffffffcc;border:1px solid #a7f3d0;border-radius:6px;padding:4px 8px;font-size:8px;color:#064e3b;z-index:5;font-family:monospace}
+.bb{height:24px;background:#fff;display:flex;align-items:center;padding:0 12px;gap:10px;border-top:1px solid #a7f3d0;font-size:8px;color:#6ee7b7;flex-shrink:0}
+.bb .hl{color:#059669;font-weight:600}
+</style>
+</head>
+<body>
+<div class="top"><span class="logo">MMGIS</span><div class="right">Reference Mission &bull; z12</div></div>
+<div class="ws">
+<div class="sb"><div class="t a">&#9776;</div><div class="t">i</div><div class="t">&#9998;</div><div class="t">M</div></div>
+<div class="layers"><div class="lp-title">Layers</div>
+<div class="lp-item"><div class="lp-check on">&#10003;</div><div class="lp-dot" style="background:#059669"></div>XYZ Base Tiles</div>
+<div class="lp-item"><div class="lp-check on">&#10003;</div><div class="lp-dot" style="background:#3b82f6"></div>Points Basic</div>
+<div class="lp-item"><div class="lp-check on">&#10003;</div><div class="lp-dot" style="background:#ef4444"></div>Lines Basic</div>
+<div class="lp-item"><div class="lp-check"></div><div class="lp-dot" style="background:#a855f7"></div>Polygons Styled</div>
+<div class="lp-item"><div class="lp-check"></div><div class="lp-dot" style="background:#f59e0b"></div>Raster DEM</div>
+<div class="lp-item"><div class="lp-check on">&#10003;</div><div class="lp-dot" style="background:#ec4899"></div>Traverse Path</div>
+</div>
+<div class="map"><div class="map-label">SAN FRANCISCO BAY</div>
+<div class="coords">37.7749°N, 122.4194°W</div>
+<div class="zoom"><div class="zm">+</div><div class="zm">&minus;</div></div>
+<div class="scale">&#9473;&#9473; 1 km</div>
+<div class="minimap"><div class="mm-bg"><div class="mm-header">Overview <span>&times;</span></div><div class="mm-viewport"></div></div></div>
+</div></div>
+<div class="bb"><span class="hl">Map</span> | 37.7749°N, 122.4194°W | Zoom 12 | 4 layers active</div>
+</body>
+</html>

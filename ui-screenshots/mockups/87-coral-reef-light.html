@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>MMGIS Mockup 87: Coral Reef Light</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Inter',system-ui,sans-serif;background:#fff7ed;color:#7c2d12;height:100vh;overflow:hidden;display:flex;flex-direction:column}
+.top{height:42px;background:#fff;display:flex;align-items:center;padding:0 16px;border-bottom:1px solid #fed7aa;flex-shrink:0}
+.logo{font-size:15px;font-weight:700;color:#ea580c}
+.mission{color:#fb923c;font-size:10px;margin-left:10px;opacity:.5}
+.right{margin-left:auto;display:flex;gap:8px;align-items:center}
+.nav{display:flex;gap:1px;background:#fff7ed;border-radius:8px;padding:2px}
+.nav-item{padding:5px 12px;font-size:9px;border-radius:6px;color:#9a3412;cursor:pointer}
+.nav-item.a{background:#ea580c;color:#fff;font-weight:600}
+.av{width:26px;height:26px;border-radius:50%;background:linear-gradient(135deg,#ea580c,#f97316);color:#fff;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700}
+.ws{flex:1;display:flex;overflow:hidden}
+.sb{width:200px;background:#fff;border-right:1px solid #fed7aa;display:flex;flex-direction:column;flex-shrink:0}
+.sb-h{padding:10px 12px;border-bottom:1px solid #fff7ed;font-size:10px;font-weight:600;color:#9a3412;display:flex;align-items:center;gap:4px}
+.sb-search{margin:6px 8px;padding:5px 10px;background:#fff7ed;border:1px solid #fed7aa;border-radius:8px;font-size:9px;font-family:inherit;color:#9a3412}
+.layer-group{padding:4px 8px}
+.lg-title{font-size:8px;color:#ea580c;text-transform:uppercase;letter-spacing:.5px;font-weight:600;padding:4px}
+.lg-item{display:flex;align-items:center;gap:8px;padding:5px 6px;border-radius:6px;cursor:pointer}
+.lg-item:hover{background:#fff7ed}
+.lg-item.a{background:#ffedd5}
+.lg-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;border:2px solid #fff;box-shadow:0 0 0 1px #fed7aa}
+.lg-name{font-size:10px;color:#7c2d12;flex:1}
+.lg-item.a .lg-name{font-weight:500;color:#9a3412}
+.lg-vis{font-size:8px;color:#fb923c}
+.map{flex:1;background:#fff7ed;position:relative;display:flex;align-items:center;justify-content:center}
+.ml{font-size:10px;color:#fed7aa;letter-spacing:4px;text-transform:uppercase}
+.mc{position:absolute;right:12px;top:12px;display:flex;flex-direction:column;gap:3px}
+.mb{width:30px;height:30px;background:#fff;border:1px solid #fed7aa;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:14px;color:#ea580c;cursor:pointer;box-shadow:0 1px 4px rgba(234,88,12,.06)}
+.bb{height:26px;background:#fff;display:flex;align-items:center;justify-content:center;padding:0 16px;border-top:1px solid #fed7aa;font-size:9px;color:#fb923c;flex-shrink:0;gap:12px}
+.bb .hl{color:#ea580c;font-weight:600}
+</style>
+</head>
+<body>
+<div class="top"><span class="logo">MMGIS</span><span class="mission">Reference Mission</span><div class="right"><div class="nav"><div class="nav-item a">Map</div><div class="nav-item">Globe</div><div class="nav-item">Data</div><div class="nav-item">Time</div></div><div class="av">A</div></div></div>
+<div class="ws">
+<div class="sb"><div class="sb-h">&#9776; Layers</div>
+<input class="sb-search" placeholder="Filter layers..." readonly/>
+<div class="layer-group"><div class="lg-title">Base Maps</div>
+<div class="lg-item a"><div class="lg-dot" style="background:#ea580c"></div><span class="lg-name">XYZ Base Tiles</span><span class="lg-vis">&#10003;</span></div>
+<div class="lg-item"><div class="lg-dot" style="background:#78716c"></div><span class="lg-name">Terrain DEM</span></div></div>
+<div class="layer-group"><div class="lg-title">Vector Overlays</div>
+<div class="lg-item a"><div class="lg-dot" style="background:#2563eb"></div><span class="lg-name">Points Basic</span><span class="lg-vis">&#10003;</span></div>
+<div class="lg-item a"><div class="lg-dot" style="background:#16a34a"></div><span class="lg-name">Lines Basic</span><span class="lg-vis">&#10003;</span></div>
+<div class="lg-item"><div class="lg-dot" style="background:#dc2626"></div><span class="lg-name">Polygons Styled</span></div>
+<div class="lg-item"><div class="lg-dot" style="background:#7c3aed"></div><span class="lg-name">Traverse Path</span></div></div>
+<div class="layer-group"><div class="lg-title">Raster</div>
+<div class="lg-item a"><div class="lg-dot" style="background:#f97316"></div><span class="lg-name">Raster DEM</span><span class="lg-vis">&#10003;</span></div>
+<div class="lg-item"><div class="lg-dot" style="background:#06b6d4"></div><span class="lg-name">Hillshade</span></div></div>
+</div>
+<div class="map"><div class="ml">San Francisco Bay</div><div class="mc"><div class="mb">+</div><div class="mb">&minus;</div><div class="mb">&#8962;</div><div class="mb">&#127760;</div></div></div>
+</div>
+<div class="bb"><span class="hl">Coral Reef</span> | 37.775&deg;N, 122.419&deg;W | Z12 | 4 layers</div>
+</body>
+</html>

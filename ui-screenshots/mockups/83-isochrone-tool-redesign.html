@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>MMGIS Mockup 83: Isochrone Tool Redesign</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Inter',system-ui,sans-serif;background:#fef2f2;color:#7f1d1d;height:100vh;overflow:hidden;display:flex;flex-direction:column}
+.top{height:40px;background:#fff;display:flex;align-items:center;padding:0 14px;border-bottom:1px solid #fecaca;flex-shrink:0}
+.logo{font-size:15px;font-weight:700;color:#dc2626}
+.right{margin-left:auto;display:flex;gap:6px;align-items:center}
+.tool-badge{padding:3px 8px;background:#fee2e2;color:#dc2626;border-radius:4px;font-size:9px;font-weight:600}
+.av{width:24px;height:24px;border-radius:50%;background:#dc2626;color:#fff;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:700}
+.ws{flex:1;display:flex;overflow:hidden}
+.sb{width:34px;background:#fff;border-right:1px solid #fecaca;display:flex;flex-direction:column;align-items:center;padding:4px 0;gap:2px;flex-shrink:0}
+.t{width:24px;height:24px;display:flex;align-items:center;justify-content:center;border-radius:4px;font-size:10px;color:#fca5a5;cursor:pointer}
+.t.a{color:#dc2626;background:#fee2e2}
+/* Isochrone config panel */
+.iso-panel{width:260px;background:#fff;border-right:1px solid #fecaca;display:flex;flex-direction:column;flex-shrink:0}
+.ip-header{padding:10px 12px;border-bottom:1px solid #fecaca;font-size:11px;font-weight:600;color:#991b1b}
+.ip-section{padding:8px 12px;border-bottom:1px solid #fef2f2}
+.ips-label{font-size:8px;color:#dc2626;text-transform:uppercase;letter-spacing:.5px;font-weight:600;margin-bottom:4px}
+.ips-input{width:100%;padding:5px 8px;background:#fef2f2;border:1px solid #fecaca;border-radius:6px;font-size:10px;font-family:inherit;color:#7f1d1d;margin-bottom:4px}
+.ips-row{display:flex;gap:4px;margin-bottom:4px}
+.ips-chip{flex:1;padding:4px;text-align:center;font-size:8px;border:1px solid #fecaca;border-radius:4px;cursor:pointer;color:#991b1b}
+.ips-chip.a{background:#dc2626;color:#fff;border-color:#dc2626}
+.ips-slider{width:100%;height:4px;background:#fecaca;border-radius:2px;position:relative;margin:8px 0 4px}
+.ips-fill{height:100%;background:#dc2626;border-radius:2px;width:60%}
+.ips-thumb{width:12px;height:12px;border-radius:50%;background:#dc2626;border:2px solid #fff;position:absolute;top:-4px;left:58%;box-shadow:0 1px 3px rgba(0,0,0,.15)}
+.ips-vals{display:flex;justify-content:space-between;font-size:7px;color:#ef4444}
+/* Color stops for isochrone */
+.color-stops{display:flex;gap:3px;margin-top:4px}
+.cs{flex:1;height:20px;border-radius:3px;display:flex;align-items:center;justify-content:center;font-size:7px;color:#fff;font-weight:600}
+.ip-actions{padding:8px 12px;display:flex;gap:4px}
+.ipa{flex:1;padding:6px;text-align:center;font-size:9px;border-radius:6px;cursor:pointer;font-weight:500}
+.ipa-primary{background:#dc2626;color:#fff}
+.ipa-secondary{background:#fef2f2;color:#dc2626;border:1px solid #fecaca}
+/* Results */
+.ip-results{padding:8px 12px;flex:1;overflow-y:auto}
+.ipr-item{padding:6px;background:#fef2f2;border-radius:6px;margin-bottom:4px;display:flex;align-items:center;gap:6px}
+.ipr-color{width:12px;height:12px;border-radius:3px;flex-shrink:0}
+.ipr-info{flex:1}
+.ipr-time{font-size:10px;font-weight:600;color:#991b1b}
+.ipr-area{font-size:8px;color:#ef4444}
+.map{flex:1;background:#fef2f2;position:relative;display:flex;align-items:center;justify-content:center}
+.ml{font-size:9px;color:#fecaca;letter-spacing:3px}
+/* Isochrone rings on map */
+.iso-ring{position:absolute;border-radius:50%;border:2px solid;display:flex;align-items:center;justify-content:center}
+.ir1{width:280px;height:280px;border-color:#dc262633;background:#dc262608;top:50%;left:50%;transform:translate(-50%,-50%)}
+.ir2{width:200px;height:200px;border-color:#ef444444;background:#ef444410;top:50%;left:50%;transform:translate(-50%,-50%)}
+.ir3{width:120px;height:120px;border-color:#f8717166;background:#f8717118;top:50%;left:50%;transform:translate(-50%,-50%)}
+.ir-center{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:10px;height:10px;background:#dc2626;border-radius:50%;border:2px solid #fff;box-shadow:0 0 8px rgba(220,38,38,.4);z-index:2}
+.bb{height:24px;background:#fff;display:flex;align-items:center;padding:0 12px;gap:10px;border-top:1px solid #fecaca;font-size:8px;color:#ef4444;flex-shrink:0}
+.bb .hl{color:#dc2626;font-weight:600}
+</style>
+</head>
+<body>
+<div class="top"><span class="logo">MMGIS</span><div class="right"><div class="tool-badge">Isochrone Analysis</div><div class="av">A</div></div></div>
+<div class="ws">
+<div class="sb"><div class="t">&#9776;</div><div class="t">i</div><div class="t">&#9998;</div><div class="t">M</div><div class="t a">&#9201;</div></div>
+<div class="iso-panel"><div class="ip-header">Isochrone Settings</div>
+<div class="ip-section"><div class="ips-label">Origin Point</div><input class="ips-input" value="37.775°N, 122.419°W" readonly/></div>
+<div class="ip-section"><div class="ips-label">Travel Mode</div>
+<div class="ips-row"><div class="ips-chip a">&#128694; Walk</div><div class="ips-chip">&#128663; Drive</div><div class="ips-chip">&#128690; Rover</div></div></div>
+<div class="ip-section"><div class="ips-label">Time Range</div>
+<div class="ips-slider"><div class="ips-fill"></div><div class="ips-thumb"></div></div>
+<div class="ips-vals"><span>5 min</span><span>30 min</span><span>60 min</span></div></div>
+<div class="ip-section"><div class="ips-label">Intervals</div>
+<div class="ips-row"><div class="ips-chip a">3</div><div class="ips-chip">5</div><div class="ips-chip">10</div></div>
+<div class="color-stops"><div class="cs" style="background:#22c55e">10m</div><div class="cs" style="background:#eab308">20m</div><div class="cs" style="background:#dc2626">30m</div></div></div>
+<div class="ip-actions"><div class="ipa ipa-primary">Generate</div><div class="ipa ipa-secondary">Clear</div></div>
+<div class="ip-results"><div class="ips-label">Results</div>
+<div class="ipr-item"><div class="ipr-color" style="background:#22c55e"></div><div class="ipr-info"><div class="ipr-time">0-10 min</div><div class="ipr-area">1.2 km² reachable</div></div></div>
+<div class="ipr-item"><div class="ipr-color" style="background:#eab308"></div><div class="ipr-info"><div class="ipr-time">10-20 min</div><div class="ipr-area">3.8 km² reachable</div></div></div>
+<div class="ipr-item"><div class="ipr-color" style="background:#dc2626"></div><div class="ipr-info"><div class="ipr-time">20-30 min</div><div class="ipr-area">7.4 km² reachable</div></div></div>
+</div></div>
+<div class="map"><div class="ml">San Francisco Bay</div>
+<div class="iso-ring ir1"></div><div class="iso-ring ir2"></div><div class="iso-ring ir3"></div><div class="ir-center"></div>
+</div></div>
+<div class="bb"><span class="hl">Isochrone</span> | Origin: 37.775°N, 122.419°W | Walk | 30 min | 3 zones | Area: 12.4 km²</div>
+</body>
+</html>

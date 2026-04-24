@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>MMGIS Mockup 92: Geocoding Search Results</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Inter',system-ui,sans-serif;background:#fefce8;color:#422006;height:100vh;overflow:hidden;display:flex;flex-direction:column}
+.top{height:44px;background:#fff;display:flex;align-items:center;padding:0 16px;border-bottom:1px solid #fde68a;flex-shrink:0;gap:8px}
+.logo{font-size:15px;font-weight:700;color:#ca8a04}
+.search-wrap{flex:1;max-width:400px;position:relative}
+.search{width:100%;padding:7px 12px 7px 30px;background:#fffbeb;border:1px solid #fde68a;border-radius:10px;font-size:11px;color:#422006;font-family:inherit}
+.search-icon{position:absolute;left:10px;top:50%;transform:translateY(-50%);font-size:12px;color:#ca8a04}
+.right{margin-left:auto;display:flex;gap:6px;align-items:center}
+.av{width:26px;height:26px;border-radius:50%;background:#ca8a04;color:#fff;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700}
+.ws{flex:1;display:flex;overflow:hidden;position:relative}
+.sb{width:34px;background:#fff;border-right:1px solid #fde68a;display:flex;flex-direction:column;align-items:center;padding:4px 0;gap:2px;flex-shrink:0}
+.t{width:24px;height:24px;display:flex;align-items:center;justify-content:center;border-radius:4px;font-size:10px;color:#fbbf24;cursor:pointer}
+.t.a{color:#ca8a04;background:#fef3c7}
+.map{flex:1;background:#fefce8;display:flex;align-items:center;justify-content:center;font-size:9px;color:#fde68a;letter-spacing:3px}
+/* Search results dropdown */
+.results{position:absolute;top:0;left:42px;width:400px;background:#fff;border-radius:0 0 12px 12px;box-shadow:0 8px 30px rgba(0,0,0,.1);border:1px solid #fde68a;border-top:none;z-index:20;max-height:80%;overflow-y:auto}
+.res-header{padding:8px 12px;border-bottom:1px solid #fef3c7;display:flex;align-items:center;gap:6px;font-size:9px;color:#92400e}
+.res-count{font-weight:600;color:#ca8a04}
+.res-tabs{display:flex;gap:4px;margin-left:auto}
+.res-tab{padding:2px 8px;border-radius:4px;font-size:8px;color:#92400e;cursor:pointer}
+.res-tab.a{background:#fef3c7;color:#ca8a04;font-weight:600}
+.res-list{padding:4px}
+.res-item{display:flex;gap:10px;padding:8px;border-radius:8px;cursor:pointer;margin-bottom:2px}
+.res-item:hover{background:#fffbeb}
+.res-item.a{background:#fef3c7}
+.ri-icon{width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0}
+.ri-info{flex:1;min-width:0}
+.ri-name{font-size:11px;font-weight:500;color:#422006}
+.ri-name mark{background:#fde68a;color:#422006;border-radius:2px;padding:0 1px}
+.ri-meta{font-size:8px;color:#92400e;margin-top:1px;display:flex;gap:6px}
+.ri-type{padding:1px 5px;border-radius:3px;font-size:7px;font-weight:600;flex-shrink:0}
+.ri-dist{font-size:8px;color:#a16207;flex-shrink:0;align-self:center}
+.res-footer{padding:6px 12px;border-top:1px solid #fef3c7;font-size:8px;color:#92400e;text-align:center}
+.bb{height:24px;background:#fff;display:flex;align-items:center;padding:0 12px;gap:10px;border-top:1px solid #fde68a;font-size:8px;color:#a16207;flex-shrink:0}
+.bb .hl{color:#ca8a04;font-weight:600}
+</style>
+</head>
+<body>
+<div class="top"><span class="logo">MMGIS</span><div class="search-wrap"><span class="search-icon">&#128270;</span><input class="search" value="golden gate" readonly/></div><div class="right"><div class="av">A</div></div></div>
+<div class="ws">
+<div class="sb"><div class="t">&#9776;</div><div class="t a">&#128270;</div><div class="t">&#9998;</div><div class="t">M</div></div>
+<div class="map">SAN FRANCISCO BAY</div>
+<div class="results">
+<div class="res-header"><span class="res-count">8 results</span> for "golden gate"<div class="res-tabs"><div class="res-tab a">All</div><div class="res-tab">Layers</div><div class="res-tab">Features</div><div class="res-tab">Places</div></div></div>
+<div class="res-list">
+<div class="res-item a"><div class="ri-icon" style="background:#fef3c7">&#128205;</div><div class="ri-info"><div class="ri-name"><mark>Golden Gate</mark> Bridge Waypoint</div><div class="ri-meta"><span>Points Basic</span><span>37.819°N, 122.478°W</span></div></div><div class="ri-type" style="background:#dcfce7;color:#16a34a">Feature</div><div class="ri-dist">0.3 km</div></div>
+<div class="res-item"><div class="ri-icon" style="background:#fef3c7">&#128506;</div><div class="ri-info"><div class="ri-name"><mark>Golden Gate</mark> Park Area</div><div class="ri-meta"><span>Polygons Styled</span><span>37.769°N, 122.486°W</span></div></div><div class="ri-type" style="background:#dcfce7;color:#16a34a">Feature</div><div class="ri-dist">1.2 km</div></div>
+<div class="res-item"><div class="ri-icon" style="background:#e0f2fe">&#127758;</div><div class="ri-info"><div class="ri-name"><mark>Golden Gate</mark> Bridge</div><div class="ri-meta"><span>Place &bull; Landmark</span><span>San Francisco, CA</span></div></div><div class="ri-type" style="background:#e0f2fe;color:#0284c7">Place</div><div class="ri-dist">0.1 km</div></div>
+<div class="res-item"><div class="ri-icon" style="background:#fef3c7">&#128200;</div><div class="ri-info"><div class="ri-name"><mark>Golden Gate</mark> Traverse Segment</div><div class="ri-meta"><span>Lines Basic</span><span>2.4 km length</span></div></div><div class="ri-type" style="background:#dcfce7;color:#16a34a">Feature</div><div class="ri-dist">0.5 km</div></div>
+<div class="res-item"><div class="ri-icon" style="background:#fae8ff">&#9776;</div><div class="ri-info"><div class="ri-name"><mark>Golden Gate</mark> Layer Group</div><div class="ri-meta"><span>Layer group &bull; 4 layers</span></div></div><div class="ri-type" style="background:#fae8ff;color:#a855f7">Layer</div></div>
+</div>
+<div class="res-footer">Press Enter to select &bull; &#8593;&#8595; to navigate &bull; Esc to close</div>
+</div></div>
+<div class="bb"><span class="hl">Search</span> | 8 results for "golden gate" | Press Enter to zoom</div>
+</body>
+</html>

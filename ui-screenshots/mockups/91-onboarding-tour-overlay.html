@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>MMGIS Mockup 91: Onboarding Tour Overlay</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Inter',system-ui,sans-serif;background:#f0f9ff;color:#0c4a6e;height:100vh;overflow:hidden;display:flex;flex-direction:column}
+.top{height:40px;background:#fff;display:flex;align-items:center;padding:0 14px;border-bottom:1px solid #bae6fd;flex-shrink:0}
+.logo{font-size:15px;font-weight:700;color:#0284c7}
+.right{margin-left:auto;display:flex;gap:6px;align-items:center}
+.av{width:24px;height:24px;border-radius:50%;background:#0284c7;color:#fff;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:700}
+.ws{flex:1;display:flex;overflow:hidden;position:relative}
+.sb{width:36px;background:#fff;border-right:1px solid #bae6fd;display:flex;flex-direction:column;align-items:center;padding:4px 0;gap:2px;flex-shrink:0;position:relative;z-index:5}
+.t{width:26px;height:26px;display:flex;align-items:center;justify-content:center;border-radius:4px;font-size:10px;color:#7dd3fc;cursor:pointer}
+.t.a{color:#0284c7;background:#e0f2fe}
+.map{flex:1;background:#f0f9ff;display:flex;align-items:center;justify-content:center;font-size:10px;color:#bae6fd;letter-spacing:3px}
+/* Tour overlay */
+.tour-overlay{position:absolute;inset:0;background:#0c4a6e55;z-index:10}
+/* Spotlight hole */
+.spotlight{position:absolute;top:40px;left:0;width:36px;height:120px;box-shadow:0 0 0 2000px #0c4a6e88;border-radius:4px;z-index:15}
+/* Tour tooltip */
+.tour-tip{position:absolute;top:60px;left:50px;background:#fff;border-radius:12px;box-shadow:0 8px 30px rgba(0,0,0,.15);padding:16px;width:280px;z-index:20}
+.tour-tip::before{content:'';position:absolute;left:-8px;top:20px;width:0;height:0;border:8px solid transparent;border-right-color:#fff}
+.tt-step{font-size:9px;color:#0284c7;font-weight:600;margin-bottom:4px}
+.tt-title{font-size:14px;font-weight:600;color:#0c4a6e;margin-bottom:6px}
+.tt-desc{font-size:10px;color:#64748b;line-height:1.5;margin-bottom:10px}
+.tt-features{margin-bottom:10px}
+.ttf-item{display:flex;align-items:center;gap:6px;padding:3px 0;font-size:9px;color:#475569}
+.ttf-icon{font-size:12px}
+.tt-progress{display:flex;gap:4px;margin-bottom:10px}
+.tp-dot{width:6px;height:6px;border-radius:50%;background:#bae6fd}
+.tp-dot.a{background:#0284c7}
+.tp-dot.done{background:#22c55e}
+.tt-actions{display:flex;gap:6px}
+.tta{padding:5px 12px;border-radius:6px;font-size:9px;cursor:pointer;font-weight:500}
+.tta-primary{background:#0284c7;color:#fff}
+.tta-secondary{background:#f0f9ff;color:#0284c7;border:1px solid #bae6fd}
+.tta-skip{color:#94a3b8;font-size:8px;cursor:pointer;margin-left:auto;align-self:center}
+.bb{height:24px;background:#fff;display:flex;align-items:center;padding:0 12px;gap:10px;border-top:1px solid #bae6fd;font-size:8px;color:#7dd3fc;flex-shrink:0;z-index:5}
+.bb .hl{color:#0284c7;font-weight:600}
+</style>
+</head>
+<body>
+<div class="top"><span class="logo">MMGIS</span><div class="right"><div class="av">A</div></div></div>
+<div class="ws">
+<div class="sb"><div class="t a">&#9776;</div><div class="t">i</div><div class="t">&#9998;</div><div class="t">M</div><div class="t">T</div></div>
+<div class="map">SAN FRANCISCO BAY</div>
+<div class="tour-overlay"></div>
+<div class="spotlight"></div>
+<div class="tour-tip">
+<div class="tt-step">Step 2 of 6</div>
+<div class="tt-title">The Toolbar</div>
+<div class="tt-desc">This sidebar gives you quick access to all MMGIS tools. Each icon opens a different tool panel.</div>
+<div class="tt-features">
+<div class="ttf-item"><span class="ttf-icon">&#9776;</span>Layers — manage map layers</div>
+<div class="ttf-item"><span class="ttf-icon">i</span>Identify — click features for info</div>
+<div class="ttf-item"><span class="ttf-icon">&#9998;</span>Draw — create annotations</div>
+<div class="ttf-item"><span class="ttf-icon">M</span>Measure — distances & areas</div>
+<div class="ttf-item"><span class="ttf-icon">T</span>Timeline — time-enabled data</div>
+</div>
+<div class="tt-progress"><div class="tp-dot done"></div><div class="tp-dot a"></div><div class="tp-dot"></div><div class="tp-dot"></div><div class="tp-dot"></div><div class="tp-dot"></div></div>
+<div class="tt-actions"><div class="tta tta-secondary">&#8592; Back</div><div class="tta tta-primary">Next &#8594;</div><span class="tta-skip">Skip Tour</span></div>
+</div></div>
+<div class="bb"><span class="hl">Tour</span> | Step 2 of 6 | Press Esc to skip</div>
+</body>
+</html>

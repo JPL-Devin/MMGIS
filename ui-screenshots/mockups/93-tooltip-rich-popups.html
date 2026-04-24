@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>MMGIS Mockup 93: Rich Tooltips & Popups</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Inter',system-ui,sans-serif;background:#0f172a;color:#e2e8f0;height:100vh;overflow:hidden;display:flex;flex-direction:column}
+.top{height:36px;background:#1e293b;display:flex;align-items:center;padding:0 12px;border-bottom:1px solid #334155;flex-shrink:0}
+.logo{font-size:14px;font-weight:700;color:#f472b6}
+.right{margin-left:auto;font-size:9px;color:#475569}
+.ws{flex:1;display:flex;overflow:hidden}
+.sb{width:34px;background:#1e293b;border-right:1px solid #334155;display:flex;flex-direction:column;align-items:center;padding:4px 0;gap:2px;flex-shrink:0}
+.t{width:24px;height:24px;display:flex;align-items:center;justify-content:center;border-radius:4px;font-size:10px;color:#475569;cursor:pointer}
+.t.a{color:#f472b6;background:#334155}
+.map{flex:1;background:#0f172a;position:relative;display:flex;align-items:center;justify-content:center}
+.ml{font-size:9px;color:#1e293b;letter-spacing:3px}
+/* Feature markers */
+.marker{position:absolute;width:10px;height:10px;border-radius:50%;border:2px solid #fff;cursor:pointer;box-shadow:0 1px 4px rgba(0,0,0,.3)}
+.m1{top:30%;left:35%;background:#f472b6}
+.m2{top:55%;left:60%;background:#38bdf8}
+.m3{top:40%;left:75%;background:#a78bfa}
+.m4{top:65%;left:25%;background:#34d399}
+/* Rich popup */
+.popup{position:absolute;top:16%;left:38%;background:#1e293b;border:1px solid #334155;border-radius:10px;box-shadow:0 8px 30px rgba(0,0,0,.3);width:260px;z-index:10;overflow:hidden}
+.popup::before{content:'';position:absolute;bottom:-8px;left:20px;width:0;height:0;border:8px solid transparent;border-top-color:#1e293b}
+.pop-img{height:80px;background:linear-gradient(135deg,#f472b633,#a78bfa33);display:flex;align-items:center;justify-content:center;font-size:8px;color:#475569;letter-spacing:2px;position:relative}
+.pop-close{position:absolute;top:4px;right:4px;width:18px;height:18px;border-radius:50%;background:#0f172a88;display:flex;align-items:center;justify-content:center;color:#e2e8f0;font-size:10px;cursor:pointer}
+.pop-body{padding:10px}
+.pop-title{font-size:12px;font-weight:600;color:#f472b6;margin-bottom:2px}
+.pop-subtitle{font-size:8px;color:#64748b;margin-bottom:6px}
+.pop-grid{display:grid;grid-template-columns:1fr 1fr;gap:4px;margin-bottom:6px}
+.pg-item{background:#0f172a;border-radius:4px;padding:4px 6px}
+.pg-label{font-size:7px;color:#64748b}
+.pg-value{font-size:9px;font-weight:600;color:#e2e8f0}
+.pop-tags{display:flex;gap:3px;margin-bottom:6px;flex-wrap:wrap}
+.ptag{padding:1px 6px;border-radius:3px;font-size:7px;font-weight:500}
+.pop-actions{display:flex;gap:4px}
+.pa{flex:1;padding:4px;text-align:center;font-size:8px;border-radius:4px;cursor:pointer;font-weight:500}
+.pa-primary{background:#f472b6;color:#0f172a}
+.pa-secondary{background:#334155;color:#e2e8f0}
+/* Hover tooltip */
+.tooltip{position:absolute;top:50%;left:63%;background:#1e293b;border:1px solid #334155;border-radius:6px;padding:6px 10px;box-shadow:0 4px 12px rgba(0,0,0,.2);z-index:5}
+.tooltip::before{content:'';position:absolute;bottom:-6px;left:20px;width:0;height:0;border:6px solid transparent;border-top-color:#1e293b}
+.tt-name{font-size:9px;font-weight:600;color:#38bdf8}
+.tt-coords{font-size:7px;color:#64748b;font-family:monospace}
+.bb{height:22px;background:#1e293b;display:flex;align-items:center;padding:0 10px;gap:8px;border-top:1px solid #334155;font-size:8px;color:#475569;flex-shrink:0}
+.bb .hl{color:#f472b6}
+</style>
+</head>
+<body>
+<div class="top"><span class="logo">MMGIS</span><div class="right">Click features for rich popups</div></div>
+<div class="ws">
+<div class="sb"><div class="t">&#9776;</div><div class="t a">i</div><div class="t">&#9998;</div><div class="t">M</div></div>
+<div class="map"><div class="ml">San Francisco Bay</div>
+<div class="marker m1"></div><div class="marker m2"></div><div class="marker m3"></div><div class="marker m4"></div>
+<div class="popup"><div class="pop-img">THUMBNAIL PREVIEW<div class="pop-close">&times;</div></div>
+<div class="pop-body"><div class="pop-title">Survey Point Alpha</div><div class="pop-subtitle">Points Basic &bull; Feature #42</div>
+<div class="pop-grid"><div class="pg-item"><div class="pg-label">Latitude</div><div class="pg-value">37.812°N</div></div><div class="pg-item"><div class="pg-label">Longitude</div><div class="pg-value">122.477°W</div></div><div class="pg-item"><div class="pg-label">Elevation</div><div class="pg-value">42.3 m</div></div><div class="pg-item"><div class="pg-label">Status</div><div class="pg-value">Active</div></div></div>
+<div class="pop-tags"><span class="ptag" style="background:#f472b633;color:#f472b6">survey</span><span class="ptag" style="background:#38bdf833;color:#38bdf8">priority</span><span class="ptag" style="background:#34d39933;color:#34d399">verified</span></div>
+<div class="pop-actions"><div class="pa pa-primary">View Details</div><div class="pa pa-secondary">Navigate</div><div class="pa pa-secondary">Edit</div></div></div></div>
+<div class="tooltip"><div class="tt-name">Waypoint B-12</div><div class="tt-coords">37.802°N, 122.401°W</div></div>
+</div></div>
+<div class="bb"><span class="hl">Identify</span> | Selected: Survey Point Alpha | 4 features in view</div>
+</body>
+</html>

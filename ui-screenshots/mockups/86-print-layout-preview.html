@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>MMGIS Mockup 86: Print Layout Preview</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Inter',system-ui,sans-serif;background:#e5e7eb;color:#1f2937;height:100vh;overflow:hidden;display:flex;flex-direction:column}
+.top{height:40px;background:#fff;display:flex;align-items:center;padding:0 14px;border-bottom:1px solid #d1d5db;flex-shrink:0}
+.logo{font-size:15px;font-weight:700;color:#4b5563}
+.right{margin-left:auto;display:flex;gap:6px;align-items:center}
+.print-btn{padding:5px 12px;background:#4b5563;color:#fff;border-radius:6px;font-size:10px;cursor:pointer;font-weight:500;display:flex;align-items:center;gap:4px}
+.ws{flex:1;display:flex;overflow:hidden}
+/* Print settings sidebar */
+.settings{width:220px;background:#fff;border-right:1px solid #d1d5db;display:flex;flex-direction:column;flex-shrink:0;overflow-y:auto}
+.sh{padding:10px 12px;border-bottom:1px solid #d1d5db;font-size:11px;font-weight:600}
+.ss{padding:8px 12px;border-bottom:1px solid #f3f4f6}
+.ss-label{font-size:8px;color:#6b7280;text-transform:uppercase;letter-spacing:.5px;font-weight:600;margin-bottom:4px}
+.ss-select{width:100%;padding:4px 6px;background:#f9fafb;border:1px solid #d1d5db;border-radius:4px;font-size:9px;font-family:inherit;color:#1f2937;margin-bottom:4px}
+.ss-row{display:flex;gap:4px;margin-bottom:4px}
+.ss-chip{flex:1;padding:4px;text-align:center;font-size:8px;border:1px solid #d1d5db;border-radius:4px;cursor:pointer;color:#6b7280}
+.ss-chip.a{background:#4b5563;color:#fff;border-color:#4b5563}
+.ss-check{display:flex;align-items:center;gap:4px;font-size:9px;color:#374151;padding:2px 0}
+.ss-box{width:12px;height:12px;border:1.5px solid #9ca3af;border-radius:2px;display:flex;align-items:center;justify-content:center;font-size:7px;flex-shrink:0}
+.ss-box.on{background:#4b5563;border-color:#4b5563;color:#fff}
+/* Print preview */
+.preview{flex:1;background:#9ca3af;display:flex;align-items:center;justify-content:center;padding:20px}
+.paper{background:#fff;box-shadow:0 4px 20px rgba(0,0,0,.15);display:flex;flex-direction:column;width:560px;height:90%}
+.paper-header{padding:12px 16px;border-bottom:1px solid #e5e7eb;display:flex;align-items:center;gap:8px}
+.ph-logo{font-size:12px;font-weight:700;color:#4b5563}
+.ph-title{font-size:14px;font-weight:600;color:#1f2937;flex:1;text-align:center}
+.ph-date{font-size:8px;color:#9ca3af}
+.paper-map{flex:1;background:#f3f4f6;display:flex;align-items:center;justify-content:center;font-size:10px;color:#d1d5db;letter-spacing:3px;margin:8px 16px;border:1px solid #e5e7eb;position:relative}
+/* Scale bar */
+.paper-scale{position:absolute;bottom:8px;right:8px;display:flex;align-items:center;gap:3px;font-size:7px;color:#6b7280}
+.ps-bar{width:40px;height:2px;background:#6b7280}
+/* North arrow */
+.north{position:absolute;top:8px;right:8px;font-size:16px;color:#6b7280}
+.paper-legend{padding:8px 16px;border-top:1px solid #e5e7eb;display:flex;gap:12px;flex-wrap:wrap}
+.pl-item{display:flex;align-items:center;gap:4px;font-size:7px;color:#6b7280}
+.pl-dot{width:6px;height:6px;border-radius:50%;flex-shrink:0}
+.paper-footer{padding:6px 16px;border-top:1px solid #e5e7eb;display:flex;justify-content:space-between;font-size:7px;color:#9ca3af}
+.bb{height:24px;background:#fff;display:flex;align-items:center;padding:0 12px;gap:10px;border-top:1px solid #d1d5db;font-size:8px;color:#6b7280;flex-shrink:0}
+.bb .hl{color:#4b5563;font-weight:600}
+</style>
+</head>
+<body>
+<div class="top"><span class="logo">MMGIS</span><div class="right"><div class="print-btn">&#128424; Print Map</div></div></div>
+<div class="ws">
+<div class="settings"><div class="sh">Print Settings</div>
+<div class="ss"><div class="ss-label">Paper Size</div><div class="ss-row"><div class="ss-chip a">A4</div><div class="ss-chip">Letter</div><div class="ss-chip">A3</div></div></div>
+<div class="ss"><div class="ss-label">Orientation</div><div class="ss-row"><div class="ss-chip a">Portrait</div><div class="ss-chip">Landscape</div></div></div>
+<div class="ss"><div class="ss-label">DPI</div><div class="ss-row"><div class="ss-chip">72</div><div class="ss-chip">150</div><div class="ss-chip a">300</div></div></div>
+<div class="ss"><div class="ss-label">Title</div><input class="ss-select" value="Reference Mission - SF Bay Area" readonly/></div>
+<div class="ss"><div class="ss-label">Elements</div>
+<div class="ss-check"><div class="ss-box on">&#10003;</div>Title bar</div>
+<div class="ss-check"><div class="ss-box on">&#10003;</div>Legend</div>
+<div class="ss-check"><div class="ss-box on">&#10003;</div>Scale bar</div>
+<div class="ss-check"><div class="ss-box on">&#10003;</div>North arrow</div>
+<div class="ss-check"><div class="ss-box">&#10003;</div>Grid lines</div>
+<div class="ss-check"><div class="ss-box on">&#10003;</div>Coordinates</div>
+</div>
+<div class="ss"><div class="ss-label">Format</div><div class="ss-row"><div class="ss-chip a">PDF</div><div class="ss-chip">PNG</div><div class="ss-chip">SVG</div></div></div>
+</div>
+<div class="preview">
+<div class="paper">
+<div class="paper-header"><span class="ph-logo">MMGIS</span><span class="ph-title">Reference Mission — SF Bay Area</span><span class="ph-date">Jan 24, 2026</span></div>
+<div class="paper-map">MAP PREVIEW<div class="north">&#8593;N</div><div class="paper-scale"><div class="ps-bar"></div>2 km</div></div>
+<div class="paper-legend"><div class="pl-item"><div class="pl-dot" style="background:#3b82f6"></div>Points Basic</div><div class="pl-item"><div class="pl-dot" style="background:#16a34a"></div>Lines Basic</div><div class="pl-item"><div class="pl-dot" style="background:#f97316"></div>Raster DEM</div><div class="pl-item"><div class="pl-dot" style="background:#8b5cf6"></div>Traverse</div></div>
+<div class="paper-footer"><span>37.775°N, 122.419°W | EPSG:4326 | Zoom 12</span><span>Generated by MMGIS</span></div>
+</div></div></div>
+<div class="bb"><span class="hl">Print Layout</span> | A4 Portrait | 300 DPI | PDF | 4 layers</div>
+</body>
+</html>

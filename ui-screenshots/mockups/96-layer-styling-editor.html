@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>MMGIS Mockup 96: Layer Styling Editor</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Inter',system-ui,sans-serif;background:#fafaf9;color:#292524;height:100vh;overflow:hidden;display:flex;flex-direction:column}
+.top{height:40px;background:#fff;display:flex;align-items:center;padding:0 14px;border-bottom:1px solid #e7e5e4;flex-shrink:0}
+.logo{font-size:15px;font-weight:700;color:#78716c}
+.breadcrumb{margin-left:12px;font-size:9px;color:#a8a29e}
+.breadcrumb span{color:#78716c;font-weight:500}
+.right{margin-left:auto;display:flex;gap:6px;align-items:center}
+.btn-s{padding:4px 10px;border-radius:6px;font-size:9px;cursor:pointer;font-weight:500}
+.btn-save{background:#ea580c;color:#fff}
+.btn-cancel{background:#f5f5f4;color:#78716c;border:1px solid #d6d3d1}
+.ws{flex:1;display:flex;overflow:hidden}
+/* Style editor panel */
+.editor{width:280px;background:#fff;border-right:1px solid #e7e5e4;display:flex;flex-direction:column;overflow-y:auto;flex-shrink:0}
+.ed-header{padding:10px 12px;border-bottom:1px solid #e7e5e4;font-size:11px;font-weight:600;color:#292524}
+.ed-section{padding:8px 12px;border-bottom:1px solid #f5f5f4}
+.es-title{font-size:8px;font-weight:600;color:#78716c;text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px}
+.es-row{display:flex;align-items:center;gap:6px;margin-bottom:5px}
+.es-label{font-size:9px;color:#57534e;width:70px;flex-shrink:0}
+.es-input{flex:1;padding:3px 6px;border:1px solid #d6d3d1;border-radius:4px;font-size:9px;font-family:inherit;color:#292524;background:#fafaf9}
+.es-color{width:24px;height:24px;border-radius:4px;border:2px solid #d6d3d1;cursor:pointer;flex-shrink:0}
+.es-slider{flex:1;height:4px;background:#e7e5e4;border-radius:2px;position:relative}
+.es-slider-fill{height:100%;border-radius:2px;background:#ea580c}
+.es-slider-thumb{width:12px;height:12px;border-radius:50%;background:#fff;border:2px solid #ea580c;position:absolute;top:-4px;box-shadow:0 1px 3px rgba(0,0,0,.1)}
+.es-select{flex:1;padding:3px 6px;border:1px solid #d6d3d1;border-radius:4px;font-size:9px;font-family:inherit;color:#292524;background:#fafaf9}
+/* Preview swatches */
+.preview-row{display:flex;gap:4px;margin-top:4px}
+.ps{width:20px;height:20px;border-radius:3px;border:1px solid #d6d3d1;cursor:pointer}
+.ps.a{border:2px solid #ea580c}
+/* Map area */
+.map{flex:1;background:#fafaf9;display:flex;align-items:center;justify-content:center;position:relative}
+.map-label{font-size:9px;color:#d6d3d1;letter-spacing:3px}
+/* Sample styled features */
+.sample-point{position:absolute;width:12px;height:12px;border-radius:50%;border:2px solid #fff;box-shadow:0 1px 4px rgba(0,0,0,.15)}
+.sample-line{position:absolute;height:3px;border-radius:1.5px;transform-origin:left center}
+/* Right preview panel */
+.preview{width:200px;background:#fff;border-left:1px solid #e7e5e4;display:flex;flex-direction:column;flex-shrink:0}
+.pv-header{padding:8px 10px;border-bottom:1px solid #e7e5e4;font-size:10px;font-weight:600;color:#292524}
+.pv-item{padding:6px 10px;border-bottom:1px solid #f5f5f4}
+.pvi-label{font-size:7px;color:#78716c;text-transform:uppercase;letter-spacing:.5px;margin-bottom:3px}
+.pvi-demo{height:40px;background:#fafaf9;border:1px solid #e7e5e4;border-radius:4px;display:flex;align-items:center;justify-content:center;gap:4px;padding:0 8px}
+.demo-point{width:8px;height:8px;border-radius:50%}
+.demo-line{height:2px;width:30px;border-radius:1px}
+.demo-poly{width:24px;height:16px;border-radius:2px;opacity:.6}
+.pv-code{padding:6px 10px}
+.pvc-label{font-size:7px;color:#78716c;margin-bottom:3px}
+.pvc-block{background:#292524;color:#a6e3a1;padding:6px 8px;border-radius:4px;font-size:7px;font-family:monospace;line-height:1.5;overflow:hidden}
+.bb{height:24px;background:#fff;display:flex;align-items:center;padding:0 12px;gap:10px;border-top:1px solid #e7e5e4;font-size:8px;color:#a8a29e;flex-shrink:0}
+.bb .hl{color:#ea580c;font-weight:600}
+</style>
+</head>
+<body>
+<div class="top"><span class="logo">MMGIS</span><div class="breadcrumb">Layers / Points Basic / <span>Style Editor</span></div><div class="right"><div class="btn-s btn-cancel">Cancel</div><div class="btn-s btn-save">Save Style</div></div></div>
+<div class="ws">
+<div class="editor"><div class="ed-header">Style: Points Basic</div>
+<div class="ed-section"><div class="es-title">Fill</div>
+<div class="es-row"><span class="es-label">Color</span><div class="es-color" style="background:#ea580c"></div><input class="es-input" value="#ea580c" readonly style="width:60px;flex:none"/></div>
+<div class="es-row"><span class="es-label">Opacity</span><div class="es-slider" style="width:100px"><div class="es-slider-fill" style="width:80%"></div><div class="es-slider-thumb" style="right:16%"></div></div><span style="font-size:8px;color:#78716c;width:24px;text-align:right">80%</span></div>
+</div>
+<div class="ed-section"><div class="es-title">Stroke</div>
+<div class="es-row"><span class="es-label">Color</span><div class="es-color" style="background:#fff"></div><input class="es-input" value="#ffffff" readonly style="width:60px;flex:none"/></div>
+<div class="es-row"><span class="es-label">Width</span><input class="es-input" value="2px" readonly style="width:40px;flex:none"/></div>
+</div>
+<div class="ed-section"><div class="es-title">Shape</div>
+<div class="es-row"><span class="es-label">Type</span><select class="es-select"><option>Circle</option></select></div>
+<div class="es-row"><span class="es-label">Radius</span><input class="es-input" value="6" readonly style="width:40px;flex:none"/><span style="font-size:7px;color:#a8a29e">px</span></div>
+</div>
+<div class="ed-section"><div class="es-title">Data-Driven</div>
+<div class="es-row"><span class="es-label">Color by</span><select class="es-select"><option>status (property)</option></select></div>
+<div class="preview-row"><div class="ps a" style="background:#ea580c"></div><div class="ps" style="background:#16a34a"></div><div class="ps" style="background:#2563eb"></div><div class="ps" style="background:#a855f7"></div><div class="ps" style="background:#dc2626"></div></div>
+</div>
+<div class="ed-section"><div class="es-title">Label</div>
+<div class="es-row"><span class="es-label">Field</span><select class="es-select"><option>name</option></select></div>
+<div class="es-row"><span class="es-label">Font Size</span><input class="es-input" value="11px" readonly style="width:40px;flex:none"/></div>
+<div class="es-row"><span class="es-label">Halo</span><div class="es-color" style="background:#fff"></div><input class="es-input" value="1px" readonly style="width:40px;flex:none"/></div>
+</div></div>
+<div class="map"><div class="map-label">LIVE PREVIEW</div>
+<div class="sample-point" style="background:#ea580c;top:30%;left:35%"></div>
+<div class="sample-point" style="background:#16a34a;top:50%;left:55%"></div>
+<div class="sample-point" style="background:#2563eb;top:40%;left:70%"></div>
+<div class="sample-point" style="background:#a855f7;top:60%;left:30%"></div>
+<div class="sample-point" style="background:#dc2626;top:35%;left:50%"></div>
+</div>
+<div class="preview"><div class="pv-header">Style Preview</div>
+<div class="pv-item"><div class="pvi-label">Point</div><div class="pvi-demo"><div class="demo-point" style="background:#ea580c;border:2px solid #fff"></div><span style="font-size:8px;color:#78716c">active</span><div class="demo-point" style="background:#16a34a;border:2px solid #fff"></div><span style="font-size:8px;color:#78716c">complete</span></div></div>
+<div class="pv-item"><div class="pvi-label">Line</div><div class="pvi-demo"><div class="demo-line" style="background:#ea580c"></div><div class="demo-line" style="background:#ea580c;opacity:.5;border-top:2px dashed #ea580c;height:0"></div></div></div>
+<div class="pv-item"><div class="pvi-label">Polygon</div><div class="pvi-demo"><div class="demo-poly" style="background:#ea580c;border:2px solid #fff"></div></div></div>
+<div class="pv-code"><div class="pvc-label">Generated Style JSON</div><div class="pvc-block">{
+  "color": "#ea580c",
+  "opacity": 0.8,
+  "radius": 6,
+  "stroke": "#fff",
+  "strokeWidth": 2
+}</div></div></div></div>
+<div class="bb"><span class="hl">Style Editor</span> | Points Basic | 48 features | Unsaved changes</div>
+</body>
+</html>

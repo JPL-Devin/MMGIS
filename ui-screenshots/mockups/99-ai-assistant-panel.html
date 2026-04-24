@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>MMGIS Mockup 99: AI Assistant Panel</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Inter',system-ui,sans-serif;background:#0f172a;color:#e2e8f0;height:100vh;overflow:hidden;display:flex;flex-direction:column}
+.top{height:36px;background:#1e293b;display:flex;align-items:center;padding:0 12px;border-bottom:1px solid #334155;flex-shrink:0}
+.logo{font-size:14px;font-weight:700;color:#818cf8}
+.right{margin-left:auto;font-size:9px;color:#475569}
+.ws{flex:1;display:flex;overflow:hidden}
+.sb{width:34px;background:#1e293b;border-right:1px solid #334155;display:flex;flex-direction:column;align-items:center;padding:4px 0;gap:2px;flex-shrink:0}
+.t{width:24px;height:24px;display:flex;align-items:center;justify-content:center;border-radius:4px;font-size:10px;color:#475569;cursor:pointer}
+.t.a{color:#818cf8;background:#334155}
+.map{flex:1;background:#0f172a;display:flex;align-items:center;justify-content:center;font-size:9px;color:#1e293b;letter-spacing:3px}
+/* AI Panel */
+.ai{width:300px;background:#1e293b;border-left:1px solid #334155;display:flex;flex-direction:column;flex-shrink:0}
+.ai-header{padding:8px 12px;border-bottom:1px solid #334155;display:flex;align-items:center;gap:6px}
+.ai-icon{width:20px;height:20px;border-radius:6px;background:linear-gradient(135deg,#818cf8,#c084fc);display:flex;align-items:center;justify-content:center;font-size:10px}
+.ai-title{font-size:11px;font-weight:600;color:#e2e8f0}
+.ai-badge{padding:1px 5px;border-radius:3px;font-size:7px;background:#818cf833;color:#818cf8;font-weight:600}
+.ai-close{margin-left:auto;color:#475569;cursor:pointer;font-size:12px}
+.ai-body{flex:1;overflow-y:auto;padding:8px;display:flex;flex-direction:column;gap:6px}
+/* Messages */
+.msg{max-width:90%;padding:8px 10px;border-radius:8px;font-size:9px;line-height:1.5}
+.msg-ai{background:#334155;color:#e2e8f0;align-self:flex-start;border-bottom-left-radius:2px}
+.msg-user{background:#818cf8;color:#fff;align-self:flex-end;border-bottom-right-radius:2px}
+.msg-ai .sender{font-size:7px;color:#818cf8;font-weight:600;margin-bottom:2px}
+.msg-user .sender{font-size:7px;color:#c7d2fe;font-weight:600;margin-bottom:2px}
+/* Suggested actions */
+.suggestions{display:flex;flex-wrap:wrap;gap:3px;margin-top:2px}
+.sug{padding:3px 8px;border-radius:4px;font-size:7px;background:#0f172a;color:#818cf8;border:1px solid #334155;cursor:pointer}
+.sug:hover{background:#334155}
+/* Code block */
+.code-block{background:#0f172a;border:1px solid #334155;border-radius:4px;padding:6px 8px;font-family:monospace;font-size:8px;color:#a6e3a1;margin-top:4px;line-height:1.4}
+/* Map action */
+.map-action{background:#818cf811;border:1px solid #818cf833;border-radius:6px;padding:6px 8px;margin-top:4px}
+.ma-title{font-size:7px;color:#818cf8;font-weight:600;margin-bottom:3px}
+.ma-preview{height:40px;background:#0f172a;border-radius:3px;display:flex;align-items:center;justify-content:center;font-size:7px;color:#475569;margin-bottom:3px}
+.ma-btn{padding:3px 8px;border-radius:3px;font-size:7px;background:#818cf8;color:#fff;cursor:pointer;display:inline-block}
+/* Input */
+.ai-input{padding:8px 12px;border-top:1px solid #334155;display:flex;gap:6px;align-items:center;flex-shrink:0}
+.ai-text{flex:1;padding:6px 10px;background:#0f172a;border:1px solid #334155;border-radius:6px;color:#e2e8f0;font-size:9px;font-family:inherit}
+.ai-send{width:28px;height:28px;border-radius:6px;background:#818cf8;display:flex;align-items:center;justify-content:center;color:#fff;font-size:12px;cursor:pointer}
+.bb{height:22px;background:#1e293b;display:flex;align-items:center;padding:0 10px;gap:8px;border-top:1px solid #334155;font-size:8px;color:#475569;flex-shrink:0}
+.bb .hl{color:#818cf8}
+</style>
+</head>
+<body>
+<div class="top"><span class="logo">MMGIS</span><div class="right">Reference Mission</div></div>
+<div class="ws">
+<div class="sb"><div class="t">&#9776;</div><div class="t">i</div><div class="t">&#9998;</div><div class="t a">&#9733;</div></div>
+<div class="map">SAN FRANCISCO BAY</div>
+<div class="ai"><div class="ai-header"><div class="ai-icon">&#9733;</div><div class="ai-title">AI Assistant</div><div class="ai-badge">Beta</div><div class="ai-close">&times;</div></div>
+<div class="ai-body">
+<div class="msg msg-ai"><div class="sender">MMGIS AI</div>Welcome! I can help you analyze layers, find features, generate queries, and navigate the map. What would you like to do?
+<div class="suggestions"><div class="sug">Show all survey points</div><div class="sug">Analyze elevation</div><div class="sug">Find nearest feature</div></div></div>
+<div class="msg msg-user"><div class="sender">You</div>Show me all features within 2km of the Golden Gate Bridge</div>
+<div class="msg msg-ai"><div class="sender">MMGIS AI</div>Found <b>12 features</b> within 2km of Golden Gate Bridge across 3 layers:
+<div class="code-block">Points Basic: 8 features
+Lines Basic: 3 features
+Polygons Styled: 1 feature</div>
+<div class="map-action"><div class="ma-title">&#128506; Map Action</div><div class="ma-preview">Zoom to results &amp; highlight 12 features</div><div class="ma-btn">Apply to Map</div></div></div>
+<div class="msg msg-user"><div class="sender">You</div>What's the average elevation of those points?</div>
+<div class="msg msg-ai"><div class="sender">MMGIS AI</div>The average elevation of the 8 survey points is <b>38.7m</b> (range: 12.1m – 89.4m). The highest point is "Survey Alpha" at 89.4m.
+<div class="suggestions"><div class="sug">Show elevation chart</div><div class="sug">Export as CSV</div><div class="sug">Color by elevation</div></div></div>
+</div>
+<div class="ai-input"><input class="ai-text" placeholder="Ask about your map data..." /><div class="ai-send">&#8593;</div></div>
+</div></div>
+<div class="bb"><span class="hl">AI Assistant</span> | 12 features selected | 3 layers queried</div>
+</body>
+</html>

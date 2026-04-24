@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>MMGIS Mockup 89: Layer Dependency Graph</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Inter',system-ui,sans-serif;background:#18181b;color:#e4e4e7;height:100vh;overflow:hidden;display:flex;flex-direction:column}
+.top{height:36px;background:#27272a;display:flex;align-items:center;padding:0 12px;border-bottom:1px solid #3f3f46;flex-shrink:0}
+.logo{font-size:14px;font-weight:700;color:#a78bfa}
+.right{margin-left:auto;font-size:9px;color:#52525b}
+.ws{flex:1;display:flex;overflow:hidden}
+.sb{width:34px;background:#27272a;border-right:1px solid #3f3f46;display:flex;flex-direction:column;align-items:center;padding:4px 0;gap:2px;flex-shrink:0}
+.t{width:24px;height:24px;display:flex;align-items:center;justify-content:center;border-radius:4px;font-size:10px;color:#52525b;cursor:pointer}
+.t.a{color:#a78bfa;background:#3f3f46}
+/* Graph view */
+.graph{flex:1;background:#18181b;position:relative;overflow:hidden;padding:20px}
+/* Nodes */
+.node{position:absolute;background:#27272a;border:2px solid #3f3f46;border-radius:8px;padding:8px 12px;cursor:pointer;min-width:100px;text-align:center}
+.node:hover{border-color:#a78bfa;box-shadow:0 0 12px rgba(167,139,250,.15)}
+.node.active{border-color:#a78bfa;background:#27272a}
+.node-name{font-size:9px;font-weight:600;color:#e4e4e7}
+.node-type{font-size:7px;color:#71717a;margin-top:1px}
+.node-dot{width:6px;height:6px;border-radius:50%;position:absolute;top:-3px;right:-3px}
+/* Connections (CSS lines) */
+.conn{position:absolute;height:2px;background:#3f3f46;transform-origin:left center}
+.conn.active{background:#a78bfa;box-shadow:0 0 4px rgba(167,139,250,.3)}
+/* Legend */
+.legend{position:absolute;bottom:12px;left:12px;background:#27272a;border:1px solid #3f3f46;border-radius:8px;padding:8px 12px}
+.lg-title{font-size:8px;font-weight:600;color:#a78bfa;margin-bottom:4px}
+.lg-item{display:flex;align-items:center;gap:4px;font-size:7px;color:#a1a1aa;padding:1px 0}
+.lg-line{width:16px;height:2px;border-radius:1px}
+.lg-dot{width:6px;height:6px;border-radius:50%}
+/* Info panel */
+.info{width:220px;background:#27272a;border-left:1px solid #3f3f46;display:flex;flex-direction:column;flex-shrink:0}
+.ih{padding:8px 10px;border-bottom:1px solid #3f3f46;font-size:10px;font-weight:600;color:#a78bfa}
+.is{padding:6px 10px;border-bottom:1px solid #3f3f4633}
+.is-label{font-size:7px;color:#71717a;text-transform:uppercase;letter-spacing:.5px;margin-bottom:2px}
+.is-val{font-size:9px;color:#e4e4e7}
+.is-list{padding:2px 0}
+.is-li{font-size:8px;color:#a1a1aa;padding:1px 0;display:flex;align-items:center;gap:4px}
+.is-dot{width:4px;height:4px;border-radius:50%;flex-shrink:0}
+.bb{height:22px;background:#27272a;display:flex;align-items:center;padding:0 10px;gap:8px;border-top:1px solid #3f3f46;font-size:8px;color:#52525b;flex-shrink:0}
+.bb .hl{color:#a78bfa}
+</style>
+</head>
+<body>
+<div class="top"><span class="logo">MMGIS</span><div class="right">Layer Dependency Graph</div></div>
+<div class="ws">
+<div class="sb"><div class="t">&#9776;</div><div class="t a">&#128280;</div><div class="t">i</div></div>
+<div class="graph">
+<!-- Connections -->
+<div class="conn active" style="top:120px;left:180px;width:100px;transform:rotate(25deg)"></div>
+<div class="conn active" style="top:120px;left:180px;width:120px;transform:rotate(-15deg)"></div>
+<div class="conn" style="top:200px;left:320px;width:140px;transform:rotate(10deg)"></div>
+<div class="conn" style="top:80px;left:320px;width:160px;transform:rotate(20deg)"></div>
+<div class="conn" style="top:300px;left:200px;width:200px;transform:rotate(-5deg)"></div>
+<!-- Nodes -->
+<div class="node active" style="top:80px;left:60px"><div class="node-dot" style="background:#22c55e"></div><div class="node-name">XYZ Base Tiles</div><div class="node-type">tile &bull; root</div></div>
+<div class="node" style="top:60px;left:280px"><div class="node-dot" style="background:#22c55e"></div><div class="node-name">Points Basic</div><div class="node-type">vector &bull; 48 feat</div></div>
+<div class="node" style="top:170px;left:260px"><div class="node-dot" style="background:#22c55e"></div><div class="node-name">Lines Basic</div><div class="node-type">vector &bull; 12 feat</div></div>
+<div class="node" style="top:280px;left:120px"><div class="node-dot" style="background:#71717a"></div><div class="node-name">Raster DEM</div><div class="node-type">raster &bull; COG</div></div>
+<div class="node" style="top:120px;left:500px"><div class="node-dot" style="background:#71717a"></div><div class="node-name">Polygons Styled</div><div class="node-type">vector &bull; 6 feat</div></div>
+<div class="node" style="top:250px;left:460px"><div class="node-dot" style="background:#71717a"></div><div class="node-name">3D Tiles Model</div><div class="node-type">model &bull; glTF</div></div>
+<div class="node" style="top:340px;left:340px"><div class="node-dot" style="background:#22c55e"></div><div class="node-name">Traverse Path</div><div class="node-type">vector &bull; 1 feat</div></div>
+<div class="legend"><div class="lg-title">Legend</div>
+<div class="lg-item"><div class="lg-dot" style="background:#22c55e"></div>Active</div>
+<div class="lg-item"><div class="lg-dot" style="background:#71717a"></div>Inactive</div>
+<div class="lg-item"><div class="lg-line" style="background:#a78bfa"></div>Direct dependency</div>
+<div class="lg-item"><div class="lg-line" style="background:#3f3f46"></div>Indirect</div>
+</div></div>
+<div class="info"><div class="ih">Node: XYZ Base Tiles</div>
+<div class="is"><div class="is-label">Type</div><div class="is-val">Tile Layer (XYZ)</div></div>
+<div class="is"><div class="is-label">Status</div><div class="is-val" style="color:#22c55e">Active (visible)</div></div>
+<div class="is"><div class="is-label">Depends On</div><div class="is-list"><div class="is-li">None (root layer)</div></div></div>
+<div class="is"><div class="is-label">Dependents (2)</div><div class="is-list"><div class="is-li"><div class="is-dot" style="background:#3b82f6"></div>Points Basic</div><div class="is-li"><div class="is-dot" style="background:#10b981"></div>Lines Basic</div></div></div>
+<div class="is"><div class="is-label">Properties</div><div class="is-list"><div class="is-li">Opacity: 100%</div><div class="is-li">Z-index: 0</div><div class="is-li">Min zoom: 1</div><div class="is-li">Max zoom: 18</div></div></div>
+</div></div>
+<div class="bb"><span class="hl">Graph View</span> | 7 nodes | 5 connections | Selected: XYZ Base Tiles</div>
+</body>
+</html>

@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>MMGIS Mockup 85: Export & Download Center</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Inter',system-ui,sans-serif;background:#f8fafc;color:#1e293b;height:100vh;overflow:hidden;display:flex;flex-direction:column}
+.top{height:40px;background:#fff;display:flex;align-items:center;padding:0 14px;border-bottom:1px solid #e2e8f0;flex-shrink:0}
+.logo{font-size:15px;font-weight:700;color:#0891b2}
+.right{margin-left:auto;display:flex;gap:6px;align-items:center}
+.av{width:24px;height:24px;border-radius:50%;background:#0891b2;color:#fff;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:700}
+.ws{flex:1;display:flex;overflow:hidden}
+.sb{width:34px;background:#fff;border-right:1px solid #e2e8f0;display:flex;flex-direction:column;align-items:center;padding:4px 0;gap:2px;flex-shrink:0}
+.t{width:24px;height:24px;display:flex;align-items:center;justify-content:center;border-radius:4px;font-size:10px;color:#94a3b8;cursor:pointer}
+.t.a{color:#0891b2;background:#ecfeff}
+.map{flex:1;background:#f8fafc;display:flex;align-items:center;justify-content:center;font-size:9px;color:#e2e8f0;letter-spacing:3px}
+/* Export panel */
+.export{width:320px;background:#fff;border-left:1px solid #e2e8f0;display:flex;flex-direction:column;flex-shrink:0}
+.ex-header{padding:10px 12px;border-bottom:1px solid #e2e8f0;display:flex;align-items:center;gap:6px}
+.ex-title{font-size:12px;font-weight:600}
+.ex-tabs{display:flex;border-bottom:1px solid #f1f5f9;flex-shrink:0}
+.ex-tab{flex:1;padding:6px;text-align:center;font-size:9px;color:#64748b;cursor:pointer;border-bottom:2px solid transparent}
+.ex-tab.a{color:#0891b2;border-bottom-color:#0891b2;font-weight:600}
+.ex-content{flex:1;overflow-y:auto;padding:8px 12px}
+.ex-section{margin-bottom:10px}
+.exs-title{font-size:8px;color:#0891b2;text-transform:uppercase;letter-spacing:.5px;font-weight:600;margin-bottom:4px}
+/* Format cards */
+.fmt-grid{display:grid;grid-template-columns:1fr 1fr;gap:4px}
+.fmt{padding:8px;border:1px solid #e2e8f0;border-radius:6px;cursor:pointer;text-align:center}
+.fmt:hover{border-color:#67e8f9;background:#ecfeff}
+.fmt.a{border-color:#0891b2;background:#ecfeff}
+.fmt-icon{font-size:16px;margin-bottom:2px}
+.fmt-name{font-size:9px;font-weight:600;color:#1e293b}
+.fmt-desc{font-size:7px;color:#94a3b8}
+/* Options */
+.ex-opt{display:flex;align-items:center;gap:6px;padding:4px 0;font-size:9px;color:#475693}
+.ex-check{width:14px;height:14px;border:1.5px solid #cbd5e1;border-radius:3px;display:flex;align-items:center;justify-content:center;font-size:8px;flex-shrink:0}
+.ex-check.on{background:#0891b2;border-color:#0891b2;color:#fff}
+.ex-select{width:100%;padding:4px 8px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:4px;font-size:9px;font-family:inherit;color:#1e293b;margin-bottom:4px}
+/* Progress */
+.ex-progress{padding:8px 12px;border-top:1px solid #e2e8f0;flex-shrink:0}
+.exp-bar{height:4px;background:#e2e8f0;border-radius:2px;margin-bottom:4px}
+.exp-fill{height:100%;background:#0891b2;border-radius:2px;width:0%}
+.exp-info{font-size:8px;color:#94a3b8;display:flex;justify-content:space-between}
+.ex-actions{padding:8px 12px;border-top:1px solid #e2e8f0;display:flex;gap:4px;flex-shrink:0}
+.exa{flex:1;padding:6px;text-align:center;font-size:9px;border-radius:6px;cursor:pointer;font-weight:500}
+.exa-primary{background:#0891b2;color:#fff}
+.exa-secondary{background:#f8fafc;color:#0891b2;border:1px solid #e2e8f0}
+.bb{height:24px;background:#fff;display:flex;align-items:center;padding:0 12px;gap:10px;border-top:1px solid #e2e8f0;font-size:8px;color:#94a3b8;flex-shrink:0}
+.bb .hl{color:#0891b2;font-weight:600}
+</style>
+</head>
+<body>
+<div class="top"><span class="logo">MMGIS</span><div class="right"><div class="av">A</div></div></div>
+<div class="ws">
+<div class="sb"><div class="t">&#9776;</div><div class="t">i</div><div class="t">&#9998;</div><div class="t a">&#x2913;</div></div>
+<div class="map">SAN FRANCISCO BAY</div>
+<div class="export">
+<div class="ex-header"><span class="ex-title">Export Center</span></div>
+<div class="ex-tabs"><div class="ex-tab a">Layers</div><div class="ex-tab">Viewport</div><div class="ex-tab">Report</div></div>
+<div class="ex-content">
+<div class="ex-section"><div class="exs-title">Format</div>
+<div class="fmt-grid"><div class="fmt a"><div class="fmt-icon">&#128196;</div><div class="fmt-name">GeoJSON</div><div class="fmt-desc">Vector data</div></div><div class="fmt"><div class="fmt-icon">&#128202;</div><div class="fmt-name">CSV</div><div class="fmt-desc">Tabular data</div></div><div class="fmt"><div class="fmt-icon">&#127760;</div><div class="fmt-name">KML</div><div class="fmt-desc">Google Earth</div></div><div class="fmt"><div class="fmt-icon">&#128506;</div><div class="fmt-name">Shapefile</div><div class="fmt-desc">GIS standard</div></div><div class="fmt"><div class="fmt-icon">&#128247;</div><div class="fmt-name">PNG</div><div class="fmt-desc">Map image</div></div><div class="fmt"><div class="fmt-icon">&#128196;</div><div class="fmt-name">GeoTIFF</div><div class="fmt-desc">Raster data</div></div></div></div>
+<div class="ex-section"><div class="exs-title">Layers to Export</div>
+<div class="ex-opt"><div class="ex-check on">&#10003;</div>Points Basic (48 features)</div>
+<div class="ex-opt"><div class="ex-check on">&#10003;</div>Lines Basic (12 features)</div>
+<div class="ex-opt"><div class="ex-check">&#10003;</div>Polygons Styled (6 features)</div>
+<div class="ex-opt"><div class="ex-check on">&#10003;</div>Traverse Path (1 feature)</div>
+</div>
+<div class="ex-section"><div class="exs-title">Options</div>
+<select class="ex-select"><option>CRS: EPSG:4326 (WGS84)</option></select>
+<select class="ex-select"><option>Extent: Visible viewport</option></select>
+<div class="ex-opt"><div class="ex-check on">&#10003;</div>Include properties</div>
+<div class="ex-opt"><div class="ex-check">&#10003;</div>Include style info</div>
+</div></div>
+<div class="ex-progress"><div class="exp-bar"><div class="exp-fill"></div></div><div class="exp-info"><span>Ready to export</span><span>61 features selected</span></div></div>
+<div class="ex-actions"><div class="exa exa-primary">&#x2913; Export</div><div class="exa exa-secondary">&#128279; Share Link</div></div>
+</div></div>
+<div class="bb"><span class="hl">Export</span> | GeoJSON | 3 layers | 61 features | EPSG:4326</div>
+</body>
+</html>

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>MMGIS Mockup 81: Lavender Dream Light</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Inter',system-ui,sans-serif;background:#faf5ff;color:#581c87;height:100vh;overflow:hidden;display:flex;flex-direction:column}
+.top{height:42px;background:#fff;display:flex;align-items:center;padding:0 16px;border-bottom:1px solid #e9d5ff;flex-shrink:0}
+.logo{font-size:15px;font-weight:700;color:#9333ea}
+.mission{color:#a855f7;font-size:10px;margin-left:10px;opacity:.5}
+.right{margin-left:auto;display:flex;gap:8px;align-items:center}
+.search{padding:5px 12px;background:#faf5ff;border:1px solid #e9d5ff;border-radius:20px;font-size:10px;color:#7e22ce;width:200px;font-family:inherit}
+.av{width:26px;height:26px;border-radius:50%;background:linear-gradient(135deg,#9333ea,#a855f7);color:#fff;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700}
+.ws{flex:1;display:flex;overflow:hidden}
+.sb{width:180px;background:#fff;border-right:1px solid #e9d5ff;display:flex;flex-direction:column;flex-shrink:0}
+.sb-search{margin:8px;padding:6px 10px;background:#faf5ff;border:1px solid #e9d5ff;border-radius:8px;font-size:9px;color:#7e22ce;font-family:inherit}
+.sb-group{padding:4px 8px}
+.sg-title{font-size:8px;color:#a855f7;text-transform:uppercase;letter-spacing:.5px;font-weight:600;padding:4px 4px 2px}
+.sg-item{display:flex;align-items:center;gap:8px;padding:6px 8px;border-radius:6px;cursor:pointer;margin-bottom:1px}
+.sg-item:hover{background:#faf5ff}
+.sg-item.a{background:#f3e8ff}
+.sg-toggle{width:28px;height:16px;border-radius:8px;background:#e9d5ff;position:relative;flex-shrink:0}
+.sg-toggle::after{content:'';width:12px;height:12px;border-radius:50%;background:#fff;position:absolute;top:2px;left:2px;box-shadow:0 1px 2px rgba(0,0,0,.1)}
+.sg-toggle.on{background:#9333ea}
+.sg-toggle.on::after{left:14px}
+.sg-name{font-size:10px;color:#6b21a8;flex:1}
+.sg-item.a .sg-name{font-weight:500}
+.sg-opacity{font-size:8px;color:#c084fc}
+.map{flex:1;background:#faf5ff;position:relative;display:flex;align-items:center;justify-content:center}
+.ml{font-size:10px;color:#e9d5ff;letter-spacing:4px;text-transform:uppercase}
+.mc{position:absolute;right:12px;top:12px;display:flex;flex-direction:column;gap:3px}
+.mb{width:30px;height:30px;background:#fff;border:1px solid #e9d5ff;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:14px;color:#9333ea;cursor:pointer;box-shadow:0 1px 4px rgba(147,51,234,.06)}
+.bb{height:26px;background:#fff;display:flex;align-items:center;justify-content:center;padding:0 16px;border-top:1px solid #e9d5ff;font-size:9px;color:#c084fc;flex-shrink:0;gap:12px}
+.bb .hl{color:#9333ea}
+</style>
+</head>
+<body>
+<div class="top"><span class="logo">MMGIS</span><span class="mission">Reference Mission</span><div class="right"><input class="search" placeholder="&#128270; Search layers, features..." readonly/><div class="av">A</div></div></div>
+<div class="ws">
+<div class="sb"><input class="sb-search" placeholder="Filter layers..." readonly/>
+<div class="sb-group"><div class="sg-title">Base Maps</div>
+<div class="sg-item a"><div class="sg-toggle on"></div><span class="sg-name">XYZ Base Tiles</span><span class="sg-opacity">100%</span></div>
+<div class="sg-item"><div class="sg-toggle"></div><span class="sg-name">Terrain DEM</span></div>
+</div>
+<div class="sb-group"><div class="sg-title">Vector Data</div>
+<div class="sg-item a"><div class="sg-toggle on"></div><span class="sg-name">Points Basic</span><span class="sg-opacity">100%</span></div>
+<div class="sg-item a"><div class="sg-toggle on"></div><span class="sg-name">Lines Basic</span><span class="sg-opacity">80%</span></div>
+<div class="sg-item"><div class="sg-toggle"></div><span class="sg-name">Polygons Styled</span></div>
+<div class="sg-item"><div class="sg-toggle"></div><span class="sg-name">Traverse Path</span></div>
+</div>
+<div class="sb-group"><div class="sg-title">Raster</div>
+<div class="sg-item a"><div class="sg-toggle on"></div><span class="sg-name">Raster DEM</span><span class="sg-opacity">75%</span></div>
+<div class="sg-item"><div class="sg-toggle"></div><span class="sg-name">Hillshade</span></div>
+</div>
+<div class="sb-group"><div class="sg-title">3D Models</div>
+<div class="sg-item"><div class="sg-toggle"></div><span class="sg-name">3D Tiles Model</span></div>
+</div>
+</div>
+<div class="map"><div class="ml">San Francisco Bay</div><div class="mc"><div class="mb">+</div><div class="mb">&minus;</div><div class="mb">&#8962;</div><div class="mb">&#127760;</div></div></div>
+</div>
+<div class="bb"><span class="hl">Lavender Dream</span> | 37.775&deg;N, 122.419&deg;W | Z12 | 4 layers active</div>
+</body>
+</html>

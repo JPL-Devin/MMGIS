@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>MMGIS Mockup 82: Weather/Atmospheric Overlay</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Inter',system-ui,sans-serif;background:#0f172a;color:#e2e8f0;height:100vh;overflow:hidden;display:flex;flex-direction:column}
+.top{height:36px;background:#1e293b;display:flex;align-items:center;padding:0 12px;border-bottom:1px solid #334155;flex-shrink:0}
+.logo{font-size:14px;font-weight:700;color:#38bdf8}
+.right{margin-left:auto;display:flex;gap:6px;align-items:center;font-size:9px;color:#64748b}
+.weather-badge{padding:3px 8px;background:#0c4a6e;border:1px solid #0369a1;border-radius:4px;font-size:9px;color:#38bdf8;display:flex;align-items:center;gap:4px}
+.ws{flex:1;display:flex;overflow:hidden}
+.sb{width:34px;background:#1e293b;border-right:1px solid #334155;display:flex;flex-direction:column;align-items:center;padding:4px 0;gap:2px;flex-shrink:0}
+.t{width:24px;height:24px;display:flex;align-items:center;justify-content:center;border-radius:4px;font-size:10px;color:#475569;cursor:pointer}
+.t.a{color:#38bdf8;background:#334155}
+.map{flex:1;background:linear-gradient(135deg,#0f172a,#1e293b);position:relative;display:flex;align-items:center;justify-content:center}
+.ml{font-size:9px;color:#1e293b;letter-spacing:3px}
+/* Weather legend */
+.legend{position:absolute;left:10px;bottom:40px;background:#1e293bee;backdrop-filter:blur(4px);border:1px solid #334155;border-radius:8px;padding:8px;width:140px}
+.lg-title{font-size:9px;font-weight:600;margin-bottom:4px}
+.lg-gradient{height:8px;border-radius:2px;background:linear-gradient(90deg,#22d3ee,#3b82f6,#8b5cf6,#ec4899,#ef4444);margin-bottom:4px}
+.lg-labels{display:flex;justify-content:space-between;font-size:7px;color:#64748b}
+.lg-item{display:flex;align-items:center;gap:4px;font-size:8px;color:#94a3b8;padding:2px 0}
+.lg-dot{width:6px;height:6px;border-radius:50%;flex-shrink:0}
+/* Overlay data panel */
+.overlay-panel{width:220px;background:#1e293b;border-left:1px solid #334155;display:flex;flex-direction:column;flex-shrink:0}
+.op-header{padding:8px 10px;border-bottom:1px solid #334155;font-size:10px;font-weight:600;color:#38bdf8}
+.op-section{padding:8px 10px;border-bottom:1px solid #334155}
+.ops-title{font-size:8px;color:#475569;text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px}
+.ops-row{display:flex;justify-content:space-between;padding:2px 0;font-size:9px}
+.ops-key{color:#64748b}
+.ops-val{color:#e2e8f0;font-weight:500}
+.ops-val.hot{color:#ef4444}
+.ops-val.cold{color:#22d3ee}
+.ops-val.ok{color:#22c55e}
+/* Mini wind arrows */
+.wind-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:4px;margin-top:4px}
+.wg-cell{width:100%;aspect-ratio:1;background:#0f172a;border-radius:3px;display:flex;align-items:center;justify-content:center;font-size:10px;color:#38bdf8}
+.bb{height:22px;background:#1e293b;display:flex;align-items:center;padding:0 10px;gap:8px;border-top:1px solid #334155;font-size:8px;color:#475569;flex-shrink:0}
+.bb .hl{color:#38bdf8}
+</style>
+</head>
+<body>
+<div class="top"><span class="logo">MMGIS</span><div class="right"><div class="weather-badge">&#127781; Atmospheric Data</div></div></div>
+<div class="ws">
+<div class="sb"><div class="t">&#9776;</div><div class="t">i</div><div class="t a">&#127781;</div><div class="t">T</div></div>
+<div class="map"><div class="ml">San Francisco Bay</div>
+<div class="legend"><div class="lg-title">Temperature (°C)</div><div class="lg-gradient"></div><div class="lg-labels"><span>-20</span><span>0</span><span>20</span><span>40</span></div>
+<div style="margin-top:6px"><div class="lg-item"><div class="lg-dot" style="background:#22c55e"></div>Wind &lt;10 km/h</div><div class="lg-item"><div class="lg-dot" style="background:#eab308"></div>Wind 10-30 km/h</div><div class="lg-item"><div class="lg-dot" style="background:#ef4444"></div>Wind &gt;30 km/h</div></div>
+</div></div>
+<div class="overlay-panel"><div class="op-header">Atmospheric Data</div>
+<div class="op-section"><div class="ops-title">Current Conditions</div>
+<div class="ops-row"><span class="ops-key">Temperature</span><span class="ops-val">18.4°C</span></div>
+<div class="ops-row"><span class="ops-key">Pressure</span><span class="ops-val">1013 hPa</span></div>
+<div class="ops-row"><span class="ops-key">Humidity</span><span class="ops-val">72%</span></div>
+<div class="ops-row"><span class="ops-key">Wind Speed</span><span class="ops-val ok">12 km/h</span></div>
+<div class="ops-row"><span class="ops-key">Wind Dir</span><span class="ops-val">NW (315°)</span></div>
+<div class="ops-row"><span class="ops-key">Visibility</span><span class="ops-val">8.2 km</span></div>
+</div>
+<div class="op-section"><div class="ops-title">Wind Field</div>
+<div class="wind-grid"><div class="wg-cell">&#8599;</div><div class="wg-cell">&#8593;</div><div class="wg-cell">&#8599;</div><div class="wg-cell">&#8594;</div><div class="wg-cell">&#8599;</div><div class="wg-cell">&#8599;</div><div class="wg-cell">&#8593;</div><div class="wg-cell">&#8599;</div><div class="wg-cell">&#8594;</div><div class="wg-cell">&#8599;</div><div class="wg-cell">&#8599;</div><div class="wg-cell">&#8593;</div><div class="wg-cell">&#8593;</div><div class="wg-cell">&#8599;</div><div class="wg-cell">&#8594;</div><div class="wg-cell">&#8599;</div></div></div>
+<div class="op-section"><div class="ops-title">Forecast</div>
+<div class="ops-row"><span class="ops-key">+3h</span><span class="ops-val">16.2°C &#127780;</span></div>
+<div class="ops-row"><span class="ops-key">+6h</span><span class="ops-val cold">14.8°C &#9729;</span></div>
+<div class="ops-row"><span class="ops-key">+12h</span><span class="ops-val cold">11.3°C &#127783;</span></div>
+<div class="ops-row"><span class="ops-key">+24h</span><span class="ops-val">17.1°C &#9728;</span></div>
+</div></div></div>
+<div class="bb"><span class="hl">Atmospheric</span> | Updated: 5 min ago | Wind: NW 12 km/h | Temp: 18.4°C</div>
+</body>
+</html>

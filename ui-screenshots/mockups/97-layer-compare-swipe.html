@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>MMGIS Mockup 97: Layer Compare Swipe Tool</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Inter',system-ui,sans-serif;background:#0a0a0a;color:#e5e5e5;height:100vh;overflow:hidden;display:flex;flex-direction:column}
+.top{height:36px;background:#171717;display:flex;align-items:center;padding:0 12px;border-bottom:1px solid #262626;flex-shrink:0;gap:8px}
+.logo{font-size:14px;font-weight:700;color:#fbbf24}
+.mode-tabs{display:flex;gap:2px;margin-left:10px}
+.mt{padding:4px 10px;border-radius:4px;font-size:8px;color:#525252;cursor:pointer}
+.mt.a{background:#262626;color:#fbbf24;font-weight:600}
+.right{margin-left:auto;font-size:8px;color:#525252}
+.ws{flex:1;display:flex;overflow:hidden;position:relative}
+.sb{width:32px;background:#171717;border-right:1px solid #262626;display:flex;flex-direction:column;align-items:center;padding:4px 0;gap:2px;flex-shrink:0}
+.t{width:22px;height:22px;display:flex;align-items:center;justify-content:center;border-radius:3px;font-size:9px;color:#525252;cursor:pointer}
+.t.a{color:#fbbf24;background:#262626}
+/* Swipe comparison */
+.compare{flex:1;position:relative;overflow:hidden}
+.layer-left{position:absolute;inset:0;background:linear-gradient(135deg,#1a1a2e,#16213e);clip-path:inset(0 50% 0 0)}
+.layer-right{position:absolute;inset:0;background:linear-gradient(135deg,#2d1b00,#1a0f00)}
+.ll-label{position:absolute;top:10px;left:10px;background:#171717cc;border:1px solid #262626;border-radius:4px;padding:3px 8px;font-size:8px;color:#60a5fa;font-weight:600}
+.lr-label{position:absolute;top:10px;right:10px;background:#171717cc;border:1px solid #262626;border-radius:4px;padding:3px 8px;font-size:8px;color:#fbbf24;font-weight:600}
+/* Swipe handle */
+.swipe-line{position:absolute;top:0;bottom:0;left:50%;width:2px;background:#fbbf24;z-index:10;transform:translateX(-1px)}
+.swipe-handle{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:32px;height:32px;border-radius:50%;background:#fbbf24;display:flex;align-items:center;justify-content:center;z-index:11;cursor:ew-resize;box-shadow:0 2px 8px rgba(0,0,0,.4)}
+.swipe-handle::before{content:'◀▶';font-size:9px;color:#0a0a0a;font-weight:700}
+/* Layer selector panels */
+.sel-left{position:absolute;bottom:40px;left:10px;background:#171717ee;border:1px solid #262626;border-radius:8px;padding:8px;width:180px;z-index:5}
+.sel-right{position:absolute;bottom:40px;right:10px;background:#171717ee;border:1px solid #262626;border-radius:8px;padding:8px;width:180px;z-index:5}
+.sel-title{font-size:7px;color:#525252;text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px}
+.sel-current{font-size:10px;font-weight:600;margin-bottom:4px}
+.sel-opt{padding:3px 6px;font-size:8px;color:#a3a3a3;border-radius:3px;cursor:pointer;margin-bottom:1px}
+.sel-opt:hover{background:#262626}
+.sel-opt.a{background:#262626;color:#fbbf24}
+/* Opacity sliders */
+.op-row{display:flex;align-items:center;gap:4px;margin-top:4px}
+.op-label{font-size:7px;color:#525252;width:40px}
+.op-bar{flex:1;height:3px;background:#262626;border-radius:1.5px;position:relative}
+.op-fill{height:100%;border-radius:1.5px}
+.op-val{font-size:7px;color:#a3a3a3;width:20px;text-align:right}
+.bb{height:24px;background:#171717;display:flex;align-items:center;padding:0 10px;gap:8px;border-top:1px solid #262626;font-size:8px;color:#525252;flex-shrink:0;z-index:15}
+.bb .hl{color:#fbbf24}
+</style>
+</head>
+<body>
+<div class="top"><span class="logo">MMGIS</span><div class="mode-tabs"><div class="mt a">Swipe</div><div class="mt">Side-by-Side</div><div class="mt">Opacity</div><div class="mt">Difference</div></div><div class="right">Compare Mode</div></div>
+<div class="ws">
+<div class="sb"><div class="t">&#9776;</div><div class="t a">&#8646;</div><div class="t">i</div><div class="t">&#9998;</div></div>
+<div class="compare">
+<div class="layer-right"></div>
+<div class="layer-left"></div>
+<div class="ll-label">&#9664; XYZ Base Tiles (2024)</div>
+<div class="lr-label">Satellite Imagery (2023) &#9654;</div>
+<div class="swipe-line"></div>
+<div class="swipe-handle"></div>
+<div class="sel-left"><div class="sel-title">Left Layer</div><div class="sel-current" style="color:#60a5fa">XYZ Base Tiles</div>
+<div class="sel-opt a">XYZ Base Tiles</div><div class="sel-opt">Hillshade DEM</div><div class="sel-opt">Contour Lines</div>
+<div class="op-row"><div class="op-label">Opacity</div><div class="op-bar"><div class="op-fill" style="width:100%;background:#60a5fa"></div></div><div class="op-val">100%</div></div></div>
+<div class="sel-right"><div class="sel-title">Right Layer</div><div class="sel-current" style="color:#fbbf24">Satellite Imagery</div>
+<div class="sel-opt">XYZ Base Tiles</div><div class="sel-opt a">Satellite Imagery</div><div class="sel-opt">Raster DEM</div>
+<div class="op-row"><div class="op-label">Opacity</div><div class="op-bar"><div class="op-fill" style="width:80%;background:#fbbf24"></div></div><div class="op-val">80%</div></div></div>
+</div></div>
+<div class="bb"><span class="hl">Swipe Compare</span> | Left: XYZ Base Tiles | Right: Satellite Imagery | Drag handle to compare</div>
+</body>
+</html>
