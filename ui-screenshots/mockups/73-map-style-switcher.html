@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>MMGIS Mockup 73: Map Style Switcher</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Inter',system-ui,sans-serif;background:#ecfdf5;color:#064e3b;height:100vh;overflow:hidden;display:flex;flex-direction:column}
+.top{height:40px;background:#fff;display:flex;align-items:center;padding:0 14px;border-bottom:1px solid #a7f3d0;flex-shrink:0}
+.logo{font-size:15px;font-weight:700;color:#059669}
+.right{margin-left:auto;display:flex;gap:6px;align-items:center}
+.av{width:24px;height:24px;border-radius:50%;background:#059669;color:#fff;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:700}
+.ws{flex:1;display:flex;overflow:hidden;position:relative}
+.sb{width:34px;background:#fff;border-right:1px solid #a7f3d0;display:flex;flex-direction:column;align-items:center;padding:4px 0;gap:2px;flex-shrink:0}
+.t{width:24px;height:24px;display:flex;align-items:center;justify-content:center;border-radius:4px;font-size:10px;color:#6ee7b7;cursor:pointer}
+.t.a{color:#059669;background:#ecfdf5}
+.map{flex:1;background:#ecfdf5;position:relative;display:flex;align-items:center;justify-content:center}
+.ml{font-size:10px;color:#a7f3d0;letter-spacing:3px;text-transform:uppercase}
+/* Style switcher panel */
+.switcher{position:absolute;bottom:40px;right:12px;background:#fff;border-radius:12px;box-shadow:0 4px 20px rgba(0,0,0,.08);border:1px solid #a7f3d0;padding:10px;width:300px;z-index:10}
+.sw-header{display:flex;align-items:center;margin-bottom:8px}
+.sw-title{font-size:11px;font-weight:600;color:#064e3b}
+.sw-close{margin-left:auto;font-size:10px;color:#6ee7b7;cursor:pointer}
+.sw-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}
+.sw-card{border-radius:8px;overflow:hidden;cursor:pointer;border:2px solid transparent;transition:.2s}
+.sw-card:hover{border-color:#6ee7b7}
+.sw-card.a{border-color:#059669;box-shadow:0 0 0 1px #059669}
+.sw-thumb{height:60px;display:flex;align-items:center;justify-content:center;font-size:7px;letter-spacing:1px;color:#fff;text-transform:uppercase}
+.sw-name{padding:4px 6px;font-size:8px;font-weight:500;color:#064e3b;background:#fff;text-align:center}
+.sw-check{position:absolute;top:3px;right:3px;width:14px;height:14px;border-radius:50%;background:#059669;color:#fff;display:flex;align-items:center;justify-content:center;font-size:8px}
+.sw-card-inner{position:relative}
+/* Map controls */
+.mc{position:absolute;right:12px;top:12px;display:flex;flex-direction:column;gap:3px}
+.mb{width:28px;height:28px;background:#fff;border:1px solid #a7f3d0;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:12px;color:#059669;cursor:pointer}
+.bb{height:24px;background:#fff;display:flex;align-items:center;padding:0 12px;gap:10px;border-top:1px solid #a7f3d0;font-size:8px;color:#6ee7b7;flex-shrink:0}
+.bb .hl{color:#059669;font-weight:600}
+</style>
+</head>
+<body>
+<div class="top"><span class="logo">MMGIS</span><div class="right"><div class="av">A</div></div></div>
+<div class="ws">
+<div class="sb"><div class="t a">&#9776;</div><div class="t">i</div><div class="t">&#9998;</div><div class="t">M</div></div>
+<div class="map"><div class="ml">San Francisco Bay</div>
+<div class="mc"><div class="mb">+</div><div class="mb">-</div><div class="mb">&#8962;</div></div>
+<div class="switcher">
+<div class="sw-header"><span class="sw-title">Map Style</span><span class="sw-close">&times;</span></div>
+<div class="sw-grid">
+<div class="sw-card a"><div class="sw-card-inner"><div class="sw-thumb" style="background:linear-gradient(135deg,#059669,#10b981)">Standard</div><div class="sw-check">&#10003;</div></div><div class="sw-name">Standard</div></div>
+<div class="sw-card"><div class="sw-thumb" style="background:linear-gradient(135deg,#1e3a5f,#2563eb)">Satellite</div><div class="sw-name">Satellite</div></div>
+<div class="sw-card"><div class="sw-thumb" style="background:linear-gradient(135deg,#e5e7eb,#f9fafb)"><span style="color:#6b7280">Terrain</span></div><div class="sw-name">Terrain</div></div>
+<div class="sw-card"><div class="sw-thumb" style="background:linear-gradient(135deg,#1a1a2e,#16213e)">Dark</div><div class="sw-name">Dark Mode</div></div>
+<div class="sw-card"><div class="sw-thumb" style="background:linear-gradient(135deg,#fef3c7,#fde68a)"><span style="color:#92400e">Warm</span></div><div class="sw-name">Warm Light</div></div>
+<div class="sw-card"><div class="sw-thumb" style="background:linear-gradient(135deg,#0f172a,#334155)">Night</div><div class="sw-name">Night Vision</div></div>
+<div class="sw-card"><div class="sw-thumb" style="background:linear-gradient(135deg,#7c3aed,#a855f7)">Spectral</div><div class="sw-name">Spectral</div></div>
+<div class="sw-card"><div class="sw-thumb" style="background:linear-gradient(135deg,#dc2626,#f97316)">Thermal</div><div class="sw-name">Thermal</div></div>
+<div class="sw-card"><div class="sw-thumb" style="background:linear-gradient(135deg,#78716c,#a8a29e)">Topo</div><div class="sw-name">Topographic</div></div>
+</div></div>
+</div></div>
+<div class="bb"><span class="hl">Map Style: Standard</span> | 9 styles available | Click to switch</div>
+</body>
+</html>

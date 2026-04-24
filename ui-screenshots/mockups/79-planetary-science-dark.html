@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>MMGIS Mockup 79: Planetary Science Dark</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Inter',system-ui,sans-serif;background:#09090b;color:#d4d4d8;height:100vh;overflow:hidden;display:flex;flex-direction:column}
+.top{height:38px;background:linear-gradient(90deg,#18181b,#27272a);display:flex;align-items:center;padding:0 14px;border-bottom:1px solid #3f3f46;flex-shrink:0}
+.logo{font-size:13px;font-weight:700;background:linear-gradient(135deg,#c084fc,#818cf8);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.mission{color:#52525b;font-size:9px;margin-left:8px}
+.right{margin-left:auto;display:flex;gap:8px;align-items:center}
+.sol{padding:3px 8px;background:#27272a;border:1px solid #3f3f46;border-radius:4px;font-size:9px;color:#a78bfa;font-weight:600}
+.status{display:flex;gap:4px;align-items:center;font-size:8px;color:#52525b}
+.status-dot{width:5px;height:5px;border-radius:50%;background:#4ade80;animation:blink 2s infinite}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.3}}
+.av{width:22px;height:22px;border-radius:50%;background:linear-gradient(135deg,#7c3aed,#6366f1);color:#fff;display:flex;align-items:center;justify-content:center;font-size:8px;font-weight:700}
+.ws{flex:1;display:flex;overflow:hidden}
+/* Left panel: mission data */
+.left{width:220px;background:#18181b;border-right:1px solid #27272a;display:flex;flex-direction:column;flex-shrink:0}
+.lh{padding:8px 10px;border-bottom:1px solid #27272a;font-size:9px;font-weight:600;color:#a78bfa;text-transform:uppercase;letter-spacing:1px}
+.mission-stats{padding:8px 10px;display:grid;grid-template-columns:1fr 1fr;gap:4px;border-bottom:1px solid #27272a}
+.ms{background:#27272a;border-radius:4px;padding:6px;text-align:center}
+.ms-val{font-size:14px;font-weight:700;color:#c084fc}
+.ms-label{font-size:7px;color:#52525b;text-transform:uppercase;letter-spacing:.5px;margin-top:1px}
+.layers-list{flex:1;overflow-y:auto;padding:4px}
+.layer{display:flex;align-items:center;gap:6px;padding:5px 6px;border-radius:4px;cursor:pointer;margin-bottom:1px}
+.layer:hover{background:#27272a}
+.layer.a{background:#27272a;border-left:2px solid #a78bfa;padding-left:4px}
+.l-vis{width:10px;height:10px;border-radius:2px;border:1.5px solid #3f3f46}
+.l-vis.on{background:#a78bfa;border-color:#a78bfa}
+.l-name{font-size:9px;flex:1;color:#a1a1aa}
+.layer.a .l-name{color:#d4d4d8}
+.l-count{font-size:7px;color:#52525b}
+/* Center: map/globe */
+.center{flex:1;display:flex;flex-direction:column;position:relative}
+.view-tabs{height:28px;background:#18181b;display:flex;align-items:center;padding:0 8px;gap:1px;border-bottom:1px solid #27272a;flex-shrink:0}
+.vt{padding:4px 10px;font-size:8px;border-radius:3px;color:#52525b;cursor:pointer}
+.vt.a{background:#27272a;color:#a78bfa;font-weight:600}
+.map{flex:1;background:radial-gradient(ellipse at center,#18181b 0%,#09090b 100%);display:flex;align-items:center;justify-content:center;position:relative}
+.planet{width:200px;height:200px;border-radius:50%;background:radial-gradient(circle at 35% 35%,#52525b,#27272a,#18181b);box-shadow:0 0 40px rgba(167,139,250,.1),inset -20px -20px 40px rgba(0,0,0,.5);position:relative}
+.planet::after{content:'';position:absolute;width:60%;height:60%;top:10%;left:15%;border-radius:50%;background:radial-gradient(circle at 40% 40%,rgba(255,255,255,.05),transparent)}
+/* Grid overlay */
+.grid-line{position:absolute;border:1px solid #27272a22}
+.gl-h1{top:25%;left:0;right:0;height:0}
+.gl-h2{top:50%;left:0;right:0;height:0}
+.gl-h3{top:75%;left:0;right:0;height:0}
+.gl-v1{left:25%;top:0;bottom:0;width:0}
+.gl-v2{left:50%;top:0;bottom:0;width:0}
+.gl-v3{left:75%;top:0;bottom:0;width:0}
+/* Right panel: data */
+.rpanel{width:200px;background:#18181b;border-left:1px solid #27272a;display:flex;flex-direction:column;flex-shrink:0}
+.rh{padding:8px 10px;border-bottom:1px solid #27272a;font-size:9px;font-weight:600;color:#818cf8;text-transform:uppercase;letter-spacing:1px}
+.telemetry{padding:6px 8px;border-bottom:1px solid #27272a}
+.tel-row{display:flex;justify-content:space-between;padding:2px 0;font-size:8px}
+.tel-key{color:#52525b}
+.tel-val{color:#a78bfa;font-family:monospace;font-size:8px}
+.spectrum{padding:8px;border-bottom:1px solid #27272a}
+.sp-title{font-size:8px;color:#52525b;margin-bottom:4px}
+.sp-bars{display:flex;align-items:flex-end;gap:1px;height:40px}
+.sp-bar{flex:1;border-radius:1px 1px 0 0;min-width:2px}
+.activity{padding:8px}
+.act-title{font-size:8px;color:#52525b;margin-bottom:4px}
+.act-item{display:flex;align-items:center;gap:4px;padding:2px 0;font-size:8px;color:#71717a}
+.act-dot{width:4px;height:4px;border-radius:50%}
+.bb{height:22px;background:#18181b;display:flex;align-items:center;padding:0 10px;gap:8px;border-top:1px solid #27272a;font-size:7px;color:#3f3f46;flex-shrink:0}
+.bb .hl{color:#a78bfa}
+</style>
+</head>
+<body>
+<div class="top"><span class="logo">MMGIS</span><span class="mission">Mars Surface Ops</span><div class="right"><div class="sol">SOL 1247</div><div class="status"><div class="status-dot"></div>CONNECTED</div><div class="av">A</div></div></div>
+<div class="ws">
+<div class="left"><div class="lh">Mission Overview</div>
+<div class="mission-stats"><div class="ms"><div class="ms-val">1247</div><div class="ms-label">Sol</div></div><div class="ms"><div class="ms-val">22</div><div class="ms-label">Layers</div></div><div class="ms"><div class="ms-val">4.2k</div><div class="ms-label">Features</div></div><div class="ms"><div class="ms-val">89%</div><div class="ms-label">Coverage</div></div></div>
+<div class="lh" style="color:#71717a">Layers</div>
+<div class="layers-list">
+<div class="layer a"><div class="l-vis on"></div><span class="l-name">Base Tiles</span><span class="l-count">1</span></div>
+<div class="layer"><div class="l-vis on"></div><span class="l-name">Points Basic</span><span class="l-count">48</span></div>
+<div class="layer"><div class="l-vis on"></div><span class="l-name">Traverse Path</span><span class="l-count">1</span></div>
+<div class="layer"><div class="l-vis"></div><span class="l-name">Raster DEM</span><span class="l-count">1</span></div>
+<div class="layer"><div class="l-vis"></div><span class="l-name">Polygons Styled</span><span class="l-count">6</span></div>
+<div class="layer"><div class="l-vis"></div><span class="l-name">3D Model</span><span class="l-count">1</span></div>
+<div class="layer"><div class="l-vis on"></div><span class="l-name">Lines Basic</span><span class="l-count">12</span></div>
+</div></div>
+<div class="center">
+<div class="view-tabs"><div class="vt">2D Map</div><div class="vt a">3D Globe</div><div class="vt">Data</div><div class="vt">Timeline</div></div>
+<div class="map"><div class="grid-line gl-h1"></div><div class="grid-line gl-h2"></div><div class="grid-line gl-h3"></div><div class="grid-line gl-v1"></div><div class="grid-line gl-v2"></div><div class="grid-line gl-v3"></div><div class="planet"></div></div>
+</div>
+<div class="rpanel"><div class="rh">Telemetry</div>
+<div class="telemetry">
+<div class="tel-row"><span class="tel-key">Lat</span><span class="tel-val">37.775°N</span></div>
+<div class="tel-row"><span class="tel-key">Lon</span><span class="tel-val">122.419°W</span></div>
+<div class="tel-row"><span class="tel-key">Elev</span><span class="tel-val">-4,215m</span></div>
+<div class="tel-row"><span class="tel-key">Temp</span><span class="tel-val">-63°C</span></div>
+<div class="tel-row"><span class="tel-key">Pressure</span><span class="tel-val">636 Pa</span></div>
+</div>
+<div class="spectrum"><div class="sp-title">Spectral Analysis</div>
+<div class="sp-bars"><div class="sp-bar" style="height:30%;background:#ef4444"></div><div class="sp-bar" style="height:50%;background:#f97316"></div><div class="sp-bar" style="height:80%;background:#eab308"></div><div class="sp-bar" style="height:100%;background:#22c55e"></div><div class="sp-bar" style="height:70%;background:#06b6d4"></div><div class="sp-bar" style="height:40%;background:#3b82f6"></div><div class="sp-bar" style="height:60%;background:#8b5cf6"></div><div class="sp-bar" style="height:35%;background:#ec4899"></div></div></div>
+<div class="activity"><div class="act-title">Recent Activity</div>
+<div class="act-item"><div class="act-dot" style="background:#4ade80"></div>Traverse updated</div>
+<div class="act-item"><div class="act-dot" style="background:#a78bfa"></div>New waypoint added</div>
+<div class="act-item"><div class="act-dot" style="background:#f59e0b"></div>DEM processed</div>
+<div class="act-item"><div class="act-dot" style="background:#ef4444"></div>Alert: low coverage</div>
+</div>
+</div></div>
+<div class="bb"><span class="hl">Planetary Science</span> | SOL 1247 | 37.775°N, 122.419°W | 4 layers | <span class="hl">3D Globe View</span></div>
+</body>
+</html>

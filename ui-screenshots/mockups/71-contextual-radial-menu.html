@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>MMGIS Mockup 71: Contextual Radial Menu</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Inter',system-ui,sans-serif;background:#1a1a2e;color:#e2e8f0;height:100vh;overflow:hidden;display:flex;flex-direction:column}
+.top{height:34px;background:#16213e;display:flex;align-items:center;padding:0 12px;border-bottom:1px solid #0f3460;flex-shrink:0}
+.logo{font-size:13px;font-weight:700;color:#e94560}
+.mission{color:#475569;font-size:9px;margin-left:8px}
+.right{margin-left:auto;font-size:8px;color:#475569}
+.ws{flex:1;display:flex;overflow:hidden;position:relative}
+.sb{width:32px;background:#16213e;border-right:1px solid #0f3460;display:flex;flex-direction:column;align-items:center;padding:4px 0;gap:2px;flex-shrink:0}
+.t{width:24px;height:24px;display:flex;align-items:center;justify-content:center;border-radius:4px;font-size:9px;color:#475569;cursor:pointer}
+.t.a{color:#e94560;background:#0f3460}
+.map{flex:1;background:#1a1a2e;position:relative;display:flex;align-items:center;justify-content:center}
+.ml{font-size:9px;color:#16213e;letter-spacing:3px;text-transform:uppercase}
+/* Radial menu */
+.radial{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:240px;height:240px}
+.radial-center{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:44px;height:44px;background:#e94560;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-size:14px;z-index:3;box-shadow:0 0 20px rgba(233,69,96,.4);cursor:pointer}
+.radial-ring{position:absolute;inset:0;border:1px solid #0f346066;border-radius:50%}
+.radial-ring2{position:absolute;inset:20px;border:1px solid #0f346044;border-radius:50%}
+/* Menu items positioned in a circle */
+.rm{position:absolute;width:50px;height:50px;display:flex;flex-direction:column;align-items:center;justify-content:center;border-radius:12px;background:#16213e;border:1px solid #0f3460;cursor:pointer;transition:.2s;gap:2px}
+.rm:hover{background:#0f3460;border-color:#e94560;transform:scale(1.1)}
+.rm.a{border-color:#e94560;background:#0f346088;box-shadow:0 0 10px rgba(233,69,96,.2)}
+.rm-icon{font-size:14px}
+.rm-label{font-size:6px;color:#94a3b8;text-align:center;line-height:1}
+/* Position 8 items around the circle */
+.rm1{top:-10px;left:50%;transform:translateX(-50%)}
+.rm2{top:12px;right:-10px}
+.rm3{top:50%;right:-18px;transform:translateY(-50%)}
+.rm4{bottom:12px;right:-10px}
+.rm5{bottom:-10px;left:50%;transform:translateX(-50%)}
+.rm6{bottom:12px;left:-10px}
+.rm7{top:50%;left:-18px;transform:translateY(-50%)}
+.rm8{top:12px;left:-10px}
+/* Context hint */
+.ctx-hint{position:absolute;bottom:50%;right:calc(50% - 200px);transform:translateY(50%);background:#16213e;border:1px solid #0f3460;border-radius:8px;padding:8px 12px;min-width:140px}
+.ch-title{font-size:10px;font-weight:600;color:#e94560;margin-bottom:3px}
+.ch-desc{font-size:8px;color:#94a3b8;line-height:1.4}
+.ch-shortcut{font-size:7px;color:#475569;margin-top:4px;display:flex;align-items:center;gap:3px}
+.kbd{padding:1px 4px;background:#0f3460;border-radius:2px;font-size:7px;font-family:monospace;color:#94a3b8}
+/* Feature tooltip */
+.feat{position:absolute;top:20%;left:20%;background:#16213e;border:1px solid #0f3460;border-radius:6px;padding:6px 10px}
+.feat-name{font-size:9px;font-weight:600;color:#e2e8f0;margin-bottom:2px}
+.feat-type{font-size:7px;color:#e94560}
+.feat-coords{font-size:7px;color:#475569;font-family:monospace;margin-top:2px}
+.bb{height:22px;background:#16213e;display:flex;align-items:center;padding:0 10px;gap:8px;border-top:1px solid #0f3460;font-size:8px;color:#475569;flex-shrink:0}
+.bb .hl{color:#e94560}
+</style>
+</head>
+<body>
+<div class="top"><span class="logo">MMGIS</span><span class="mission">Reference Mission</span><div class="right">Right-click for radial menu</div></div>
+<div class="ws">
+<div class="sb"><div class="t">&#9776;</div><div class="t">i</div><div class="t">&#9998;</div><div class="t">M</div><div class="t">T</div></div>
+<div class="map"><div class="ml">San Francisco Bay</div>
+<div class="feat"><div class="feat-name">Waypoint WP-042</div><div class="feat-type">Points Basic</div><div class="feat-coords">37.812°N, 122.477°W</div></div>
+<div class="radial">
+<div class="radial-ring"></div><div class="radial-ring2"></div>
+<div class="radial-center">&#x2699;</div>
+<div class="rm rm1"><span class="rm-icon">&#128270;</span><span class="rm-label">Identify</span></div>
+<div class="rm rm2 a"><span class="rm-icon">&#9998;</span><span class="rm-label">Draw</span></div>
+<div class="rm rm3"><span class="rm-icon">&#128207;</span><span class="rm-label">Measure</span></div>
+<div class="rm rm4"><span class="rm-icon">&#128205;</span><span class="rm-label">Pin</span></div>
+<div class="rm rm5"><span class="rm-icon">&#128247;</span><span class="rm-label">Screenshot</span></div>
+<div class="rm rm6"><span class="rm-icon">&#128279;</span><span class="rm-label">Share</span></div>
+<div class="rm rm7"><span class="rm-icon">&#9776;</span><span class="rm-label">Layers</span></div>
+<div class="rm rm8"><span class="rm-icon">&#127760;</span><span class="rm-label">Globe</span></div>
+</div>
+<div class="ctx-hint"><div class="ch-title">Draw Tool</div><div class="ch-desc">Create points, lines, and polygons on the map.</div><div class="ch-shortcut"><span class="kbd">D</span> shortcut &bull; <span class="kbd">Esc</span> to close</div></div>
+</div></div>
+<div class="bb"><span class="hl">Radial Menu</span> | Right-click or hold <span class="kbd">Space</span> | 8 actions | Selected: Draw</div>
+</body>
+</html>

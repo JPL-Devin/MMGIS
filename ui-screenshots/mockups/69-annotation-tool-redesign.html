@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>MMGIS Mockup 69: Annotation Tool Redesign</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Inter',system-ui,sans-serif;background:#f0fdf4;color:#14532d;height:100vh;overflow:hidden;display:flex;flex-direction:column}
+.top{height:40px;background:#fff;display:flex;align-items:center;padding:0 14px;border-bottom:1px solid #bbf7d0;flex-shrink:0}
+.logo{font-size:15px;font-weight:700;color:#16a34a}
+.right{margin-left:auto;display:flex;gap:6px;align-items:center}
+.chip{padding:3px 8px;border-radius:4px;font-size:9px;background:#dcfce7;color:#166534;font-weight:500}
+.ws{flex:1;display:flex;overflow:hidden}
+.sb{width:36px;background:#f0fdf4;border-right:1px solid #bbf7d0;display:flex;flex-direction:column;align-items:center;padding:4px 0;gap:2px;flex-shrink:0}
+.t{width:26px;height:26px;display:flex;align-items:center;justify-content:center;border-radius:4px;font-size:10px;color:#15803d;cursor:pointer;opacity:.4}
+.t.a{opacity:1;background:#dcfce7;color:#16a34a}
+/* Annotation toolbar */
+.ann-bar{height:40px;background:#fff;border-bottom:1px solid #bbf7d0;display:flex;align-items:center;padding:0 12px;gap:4px;flex-shrink:0}
+.ab-grp{display:flex;gap:1px;background:#f0fdf4;border-radius:6px;padding:2px}
+.ab-btn{width:30px;height:28px;display:flex;align-items:center;justify-content:center;border-radius:4px;font-size:12px;color:#15803d;cursor:pointer}
+.ab-btn:hover{background:#dcfce7}
+.ab-btn.a{background:#16a34a;color:#fff}
+.ab-sep{width:1px;height:20px;background:#bbf7d0;margin:0 4px}
+.ab-color{width:18px;height:18px;border-radius:4px;cursor:pointer;border:2px solid #fff;box-shadow:0 0 0 1px #bbf7d0}
+.ab-colors{display:flex;gap:3px;align-items:center}
+.ab-label{font-size:8px;color:#15803d;margin-right:4px}
+.map{flex:1;background:#f0fdf4;position:relative;display:flex;align-items:center;justify-content:center}
+.ml{font-size:10px;color:#bbf7d0;letter-spacing:3px}
+/* Annotation on map */
+.ann{position:absolute;border:2px solid #16a34a;border-radius:4px;display:flex;flex-direction:column}
+.ann1{top:15%;left:25%;width:180px}
+.ann2{top:40%;left:55%;width:150px}
+.ann-header{background:#16a34a;color:#fff;padding:3px 6px;font-size:8px;font-weight:600;display:flex;align-items:center;gap:4px;border-radius:2px 2px 0 0}
+.ann-body{background:#fff;padding:6px;font-size:9px;color:#14532d;line-height:1.4;border-radius:0 0 2px 2px}
+.ann-meta{font-size:7px;color:#15803d;margin-top:3px;opacity:.6}
+.ann-pin{position:absolute;width:20px;height:20px;border-radius:50%;background:#16a34a;color:#fff;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:700;box-shadow:0 2px 4px rgba(0,0,0,.15);cursor:pointer}
+.ap1{top:60%;left:30%}
+.ap2{top:25%;left:70%}
+.ap3{top:50%;left:45%}
+/* Right properties panel */
+.props{width:240px;background:#fff;border-left:1px solid #bbf7d0;display:flex;flex-direction:column;flex-shrink:0}
+.props-h{padding:8px 10px;border-bottom:1px solid #bbf7d0;font-size:10px;font-weight:600}
+.props-section{padding:8px 10px;border-bottom:1px solid #f0fdf4}
+.ps-label{font-size:8px;color:#15803d;text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px}
+.ps-input{width:100%;padding:4px 6px;background:#f0fdf4;border:1px solid #bbf7d0;border-radius:4px;font-size:9px;font-family:inherit;color:#14532d;margin-bottom:4px}
+.ps-row{display:flex;gap:4px;margin-bottom:4px}
+.ps-tag{padding:2px 6px;background:#dcfce7;border-radius:3px;font-size:8px;color:#166534}
+.ps-toggle{display:flex;align-items:center;gap:6px;font-size:9px;color:#14532d;margin-bottom:3px}
+.ps-switch{width:26px;height:14px;background:#bbf7d0;border-radius:7px;position:relative;cursor:pointer}
+.ps-switch::after{content:'';width:10px;height:10px;background:#fff;border-radius:50%;position:absolute;top:2px;left:2px;transition:.2s}
+.ps-switch.on{background:#16a34a}
+.ps-switch.on::after{left:14px}
+.bb{height:24px;background:#fff;display:flex;align-items:center;padding:0 12px;gap:10px;border-top:1px solid #bbf7d0;font-size:8px;color:#15803d;flex-shrink:0}
+.bb .hl{color:#16a34a;font-weight:600}
+</style>
+</head>
+<body>
+<div class="top"><span class="logo">MMGIS</span><div class="right"><div class="chip">3 annotations</div><div class="chip">2 pins</div></div></div>
+<div class="ann-bar">
+<div class="ab-grp"><div class="ab-btn">&#9654;</div><div class="ab-btn a">&#128205;</div><div class="ab-btn">&#9633;</div><div class="ab-btn">&#9675;</div><div class="ab-btn">&#9998;</div><div class="ab-btn">T</div></div>
+<div class="ab-sep"></div>
+<span class="ab-label">Color:</span>
+<div class="ab-colors"><div class="ab-color" style="background:#16a34a"></div><div class="ab-color" style="background:#dc2626"></div><div class="ab-color" style="background:#2563eb"></div><div class="ab-color" style="background:#d97706"></div><div class="ab-color" style="background:#7c3aed"></div></div>
+<div class="ab-sep"></div>
+<div class="ab-grp"><div class="ab-btn" style="font-size:9px">1px</div><div class="ab-btn a" style="font-size:9px">2px</div><div class="ab-btn" style="font-size:9px">3px</div></div>
+</div>
+<div class="ws">
+<div class="sb"><div class="t">&#9776;</div><div class="t">i</div><div class="t a">&#128205;</div><div class="t">&#9998;</div><div class="t">M</div></div>
+<div class="map"><div class="ml">San Francisco Bay</div>
+<div class="ann ann1"><div class="ann-header">&#128205; Waypoint Alpha</div><div class="ann-body">Potential survey site identified via orbital imagery. Flat terrain with good sun exposure.<div class="ann-meta">by admin &bull; Jan 15, 2026</div></div></div>
+<div class="ann ann2"><div class="ann-header">&#128205; Anomaly B-7</div><div class="ann-body">Spectral anomaly detected in DEM data. Requires ground-truth verification.<div class="ann-meta">by admin &bull; Jan 14, 2026</div></div></div>
+<div class="ann-pin ap1">1</div><div class="ann-pin ap2">2</div><div class="ann-pin ap3">3</div>
+</div>
+<div class="props">
+<div class="props-h">Annotation Properties</div>
+<div class="props-section"><div class="ps-label">Title</div><input class="ps-input" value="Waypoint Alpha" readonly/></div>
+<div class="props-section"><div class="ps-label">Description</div><textarea class="ps-input" rows="2" readonly>Potential survey site identified via orbital imagery.</textarea></div>
+<div class="props-section"><div class="ps-label">Tags</div><div class="ps-row"><div class="ps-tag">survey</div><div class="ps-tag">priority</div><div class="ps-tag">terrain</div></div></div>
+<div class="props-section"><div class="ps-label">Visibility</div>
+<div class="ps-toggle"><div class="ps-switch on"></div>Show on map</div>
+<div class="ps-toggle"><div class="ps-switch on"></div>Show label</div>
+<div class="ps-toggle"><div class="ps-switch"></div>Lock position</div>
+</div>
+<div class="props-section"><div class="ps-label">Coordinates</div><input class="ps-input" value="37.819°N, 122.478°W" readonly/></div>
+</div></div>
+<div class="bb"><span class="hl">Annotation Tool</span> | 3 annotations, 3 pins | Click map to add | Selected: Waypoint Alpha</div>
+</body>
+</html>

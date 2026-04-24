@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>MMGIS Mockup 77: Grayscale Minimal Pro</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Helvetica Neue',Arial,sans-serif;background:#fafafa;color:#333;height:100vh;overflow:hidden;display:flex;flex-direction:column}
+.top{height:48px;background:#fff;display:flex;align-items:center;padding:0 20px;border-bottom:1px solid #eee;flex-shrink:0}
+.logo{font-size:18px;font-weight:300;color:#333;letter-spacing:4px;text-transform:uppercase}
+.right{margin-left:auto;display:flex;gap:16px;align-items:center}
+.nav{font-size:11px;color:#999;letter-spacing:1px;text-transform:uppercase;cursor:pointer}
+.nav.a{color:#333}
+.nav:hover{color:#333}
+.av{width:28px;height:28px;border-radius:50%;background:#333;color:#fff;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:300}
+.ws{flex:1;display:flex;overflow:hidden}
+/* Ultra minimal sidebar */
+.sb{width:48px;background:#fff;border-right:1px solid #eee;display:flex;flex-direction:column;align-items:center;padding:12px 0;gap:8px;flex-shrink:0}
+.t{width:28px;height:28px;display:flex;align-items:center;justify-content:center;font-size:12px;color:#ccc;cursor:pointer;border-radius:2px}
+.t:hover{color:#333}
+.t.a{color:#333}
+/* Layers panel - ultra clean */
+.layers{width:240px;background:#fff;border-right:1px solid #eee;display:flex;flex-direction:column;flex-shrink:0}
+.lh{padding:16px;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:#999;border-bottom:1px solid #f5f5f5}
+.ll{flex:1;overflow-y:auto;padding:8px 0}
+.li{display:flex;align-items:center;gap:12px;padding:8px 16px;cursor:pointer}
+.li:hover{background:#fafafa}
+.li.a{background:#f5f5f5}
+.li-dot{width:4px;height:4px;border-radius:50%}
+.li-name{font-size:11px;color:#666;font-weight:300;flex:1}
+.li.a .li-name{color:#333;font-weight:400}
+.li-toggle{font-size:8px;color:#ccc}
+.map{flex:1;background:#fafafa;position:relative;display:flex;align-items:center;justify-content:center}
+.ml{font-size:12px;color:#eee;letter-spacing:6px;text-transform:uppercase;font-weight:300}
+.mc{position:absolute;right:20px;bottom:40px;display:flex;flex-direction:column;gap:1px}
+.mb{width:32px;height:32px;background:#fff;border:1px solid #eee;display:flex;align-items:center;justify-content:center;font-size:14px;color:#999;cursor:pointer;font-weight:300}
+.mb:first-child{border-radius:4px 4px 0 0}
+.mb:last-child{border-radius:0 0 4px 4px}
+.scale{position:absolute;bottom:20px;left:50%;transform:translateX(-50%);display:flex;align-items:center;gap:6px;font-size:9px;color:#ccc;letter-spacing:1px}
+.scale-line{width:60px;height:1px;background:#ccc}
+.bb{height:24px;background:#fff;display:flex;align-items:center;justify-content:center;padding:0 20px;border-top:1px solid #eee;font-size:9px;color:#ccc;flex-shrink:0;letter-spacing:1px}
+</style>
+</head>
+<body>
+<div class="top"><span class="logo">mmgis</span><div class="right"><span class="nav a">Map</span><span class="nav">Globe</span><span class="nav">Data</span><div class="av">A</div></div></div>
+<div class="ws">
+<div class="sb"><div class="t a">&#9776;</div><div class="t">&#9737;</div><div class="t">&#9998;</div><div class="t">&#9634;</div><div class="t">&#8635;</div></div>
+<div class="layers"><div class="lh">Layers</div><div class="ll">
+<div class="li a"><div class="li-dot" style="background:#333"></div><span class="li-name">XYZ Base Tiles</span><span class="li-toggle">&#10003;</span></div>
+<div class="li a"><div class="li-dot" style="background:#666"></div><span class="li-name">Points Basic</span><span class="li-toggle">&#10003;</span></div>
+<div class="li a"><div class="li-dot" style="background:#999"></div><span class="li-name">Lines Basic</span><span class="li-toggle">&#10003;</span></div>
+<div class="li"><div class="li-dot" style="background:#ccc"></div><span class="li-name">Polygons Styled</span></div>
+<div class="li"><div class="li-dot" style="background:#ccc"></div><span class="li-name">Raster DEM</span></div>
+<div class="li"><div class="li-dot" style="background:#ccc"></div><span class="li-name">Traverse Path</span></div>
+<div class="li"><div class="li-dot" style="background:#ccc"></div><span class="li-name">Hillshade</span></div>
+<div class="li"><div class="li-dot" style="background:#ccc"></div><span class="li-name">3D Tiles Model</span></div>
+<div class="li"><div class="li-dot" style="background:#ccc"></div><span class="li-name">Contour Lines</span></div>
+<div class="li"><div class="li-dot" style="background:#ccc"></div><span class="li-name">Waypoints</span></div>
+</div></div>
+<div class="map"><div class="ml">San Francisco Bay</div>
+<div class="mc"><div class="mb">+</div><div class="mb">&minus;</div></div>
+<div class="scale"><div class="scale-line"></div>2 km</div>
+</div></div>
+<div class="bb">37.775&deg;N &nbsp; 122.419&deg;W &nbsp; Z12 &nbsp; 3 layers</div>
+</body>
+</html>

@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>MMGIS Mockup 67: Bookmarked Saved Views</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Inter',system-ui,sans-serif;background:#fdf2f8;color:#831843;height:100vh;overflow:hidden;display:flex;flex-direction:column}
+.top{height:42px;background:#fff;display:flex;align-items:center;padding:0 14px;border-bottom:1px solid #fce7f3;flex-shrink:0}
+.logo{font-size:15px;font-weight:700;color:#db2777}
+.mission{color:#9d174d;font-size:10px;margin-left:10px;opacity:.5}
+.right{margin-left:auto;display:flex;gap:6px;align-items:center}
+.bk-btn{padding:5px 12px;background:#db2777;color:#fff;border-radius:6px;font-size:10px;cursor:pointer;font-weight:500;display:flex;align-items:center;gap:4px}
+.av{width:24px;height:24px;border-radius:50%;background:#db2777;color:#fff;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:700}
+.ws{flex:1;display:flex;overflow:hidden}
+.sb{width:36px;background:#fff;border-right:1px solid #fce7f3;display:flex;flex-direction:column;align-items:center;padding:4px 0;gap:2px;flex-shrink:0}
+.t{width:26px;height:26px;display:flex;align-items:center;justify-content:center;border-radius:4px;font-size:10px;color:#9d174d;cursor:pointer;opacity:.4}
+.t:hover{opacity:1;background:#fce7f3}
+.t.a{opacity:1;color:#db2777;background:#fce7f3}
+/* Bookmarks panel */
+.bookmarks{width:280px;background:#fff;border-right:1px solid #fce7f3;display:flex;flex-direction:column;flex-shrink:0}
+.bk-header{padding:10px 12px;border-bottom:1px solid #fce7f3;display:flex;align-items:center;gap:6px}
+.bk-title{font-size:12px;font-weight:600;color:#831843}
+.bk-count{font-size:9px;color:#be185d;background:#fce7f3;padding:1px 6px;border-radius:8px}
+.bk-search{margin:6px 8px;padding:6px 10px;background:#fdf2f8;border:1px solid #fce7f3;border-radius:6px;font-size:10px;color:#831843;font-family:inherit}
+.bk-list{flex:1;overflow-y:auto;padding:4px 8px}
+.bk-card{background:#fdf2f8;border:1px solid #fce7f3;border-radius:8px;padding:8px;margin-bottom:6px;cursor:pointer}
+.bk-card:hover{border-color:#f9a8d4;box-shadow:0 2px 8px rgba(219,39,119,.08)}
+.bk-card.a{border-color:#db2777;background:#fff}
+.bk-card-top{display:flex;align-items:center;gap:6px;margin-bottom:4px}
+.bk-icon{font-size:14px}
+.bk-name{font-size:11px;font-weight:600;color:#831843;flex:1}
+.bk-star{color:#f59e0b;font-size:12px}
+.bk-desc{font-size:9px;color:#9d174d;opacity:.6;line-height:1.3;margin-bottom:4px}
+.bk-meta{display:flex;gap:6px;font-size:8px;color:#be185d;opacity:.5}
+.bk-thumb{width:100%;height:60px;background:#fce7f3;border-radius:4px;margin-bottom:4px;display:flex;align-items:center;justify-content:center;font-size:8px;color:#f9a8d4;letter-spacing:1px}
+.bk-footer{padding:6px 12px;border-top:1px solid #fce7f3;display:flex;gap:4px}
+.bk-ft-btn{flex:1;padding:4px;text-align:center;font-size:8px;color:#9d174d;border:1px solid #fce7f3;border-radius:4px;cursor:pointer}
+.bk-ft-btn:hover{background:#fce7f3}
+.map{flex:1;background:#fdf2f8;position:relative;display:flex;align-items:center;justify-content:center}
+.ml{font-size:10px;color:#fce7f3;letter-spacing:3px;text-transform:uppercase}
+.mc{position:absolute;right:10px;top:10px;display:flex;flex-direction:column;gap:3px}
+.mb{width:28px;height:28px;background:#fff;border:1px solid #fce7f3;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:12px;color:#9d174d;cursor:pointer}
+.bb{height:26px;background:#fff;display:flex;align-items:center;padding:0 12px;gap:10px;border-top:1px solid #fce7f3;font-size:9px;color:#9d174d;flex-shrink:0;opacity:.6}
+.bb .hl{color:#db2777;opacity:1;font-weight:600}
+</style>
+</head>
+<body>
+<div class="top"><span class="logo">MMGIS</span><span class="mission">Reference Mission</span><div class="right"><div class="bk-btn">&#128278; Save Current View</div><div class="av">A</div></div></div>
+<div class="ws">
+<div class="sb"><div class="t">&#9776;</div><div class="t">i</div><div class="t a">&#128278;</div><div class="t">&#9998;</div><div class="t">M</div><div class="t">T</div></div>
+<div class="bookmarks">
+<div class="bk-header"><span class="bk-title">Saved Views</span><span class="bk-count">6</span></div>
+<input class="bk-search" placeholder="Search bookmarks..." readonly/>
+<div class="bk-list">
+<div class="bk-card a"><div class="bk-thumb">Golden Gate Overview</div><div class="bk-card-top"><span class="bk-icon">&#128205;</span><span class="bk-name">Golden Gate Overview</span><span class="bk-star">&#9733;</span></div><div class="bk-desc">Full view of the Golden Gate Bridge area with DEM layer and traverse paths visible.</div><div class="bk-meta"><span>Z14</span><span>5 layers</span><span>Jan 13</span></div></div>
+<div class="bk-card"><div class="bk-thumb">Western Sector Survey</div><div class="bk-card-top"><span class="bk-icon">&#128270;</span><span class="bk-name">Western Sector Survey</span></div><div class="bk-desc">Survey area in the western sector with all styled layers active.</div><div class="bk-meta"><span>Z16</span><span>8 layers</span><span>Jan 12</span></div></div>
+<div class="bk-card"><div class="bk-thumb">Bay Area Full Extent</div><div class="bk-card-top"><span class="bk-icon">&#127758;</span><span class="bk-name">Bay Area Full Extent</span><span class="bk-star">&#9733;</span></div><div class="bk-desc">Zoomed out view showing entire SF Bay Area with base tiles.</div><div class="bk-meta"><span>Z10</span><span>2 layers</span><span>Jan 11</span></div></div>
+<div class="bk-card"><div class="bk-thumb">Elevation Analysis</div><div class="bk-card-top"><span class="bk-icon">&#128200;</span><span class="bk-name">Elevation Analysis</span></div><div class="bk-desc">DEM with elevation profile active, showing terrain variations.</div><div class="bk-meta"><span>Z13</span><span>3 layers</span><span>Jan 10</span></div></div>
+<div class="bk-card"><div class="bk-thumb">Night Ops View</div><div class="bk-card-top"><span class="bk-icon">&#127769;</span><span class="bk-name">Night Ops View</span></div><div class="bk-desc">Dark basemap with highlighted waypoints for nighttime ops.</div><div class="bk-meta"><span>Z15</span><span>4 layers</span><span>Jan 9</span></div></div>
+</div>
+<div class="bk-footer"><div class="bk-ft-btn">&#128194; Folders</div><div class="bk-ft-btn">&#128279; Share</div><div class="bk-ft-btn">&#x2913; Export</div></div>
+</div>
+<div class="map"><div class="ml">San Francisco Bay</div><div class="mc"><div class="mb">+</div><div class="mb">-</div><div class="mb">&#8962;</div></div></div>
+</div>
+<div class="bb"><span class="hl">Saved View: Golden Gate Overview</span> | 37.819&deg;N, 122.478&deg;W | Z14 | 5 layers active</div>
+</body>
+</html>

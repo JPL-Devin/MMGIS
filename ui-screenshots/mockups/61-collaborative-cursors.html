@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>MMGIS Mockup 61: Collaborative Multi-Cursor</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Inter',system-ui,sans-serif;background:#0f172a;color:#e2e8f0;height:100vh;overflow:hidden;display:flex;flex-direction:column}
+.top{height:36px;background:#1e293b;display:flex;align-items:center;padding:0 12px;border-bottom:1px solid #334155;flex-shrink:0}
+.logo{font-size:14px;font-weight:700;color:#3b82f6}
+.mission{color:#64748b;font-size:10px;margin-left:10px}
+.collab{margin-left:auto;display:flex;gap:-4px;align-items:center}
+.collab-avatar{width:24px;height:24px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:700;border:2px solid #1e293b;margin-left:-6px;cursor:pointer}
+.collab-count{font-size:9px;color:#64748b;margin-left:8px}
+.share-btn{margin-left:8px;padding:4px 12px;background:#3b82f6;border-radius:6px;font-size:10px;color:#fff;cursor:pointer}
+.ws{flex:1;display:flex;overflow:hidden}
+.sb{width:36px;background:#1e293b;border-right:1px solid #334155;display:flex;flex-direction:column;align-items:center;padding:4px 0;gap:2px;flex-shrink:0}
+.t{width:26px;height:26px;display:flex;align-items:center;justify-content:center;border-radius:4px;font-size:10px;color:#64748b;cursor:pointer}
+.t:hover{background:#334155;color:#e2e8f0}
+.t.a{color:#3b82f6;background:#334155}
+.map{flex:1;background:#0f172a;position:relative;display:flex;align-items:center;justify-content:center}
+.ml{font-size:10px;color:#1e293b;letter-spacing:4px;text-transform:uppercase}
+/* Remote cursors */
+.cursor{position:absolute;z-index:10}
+.cursor-pointer{width:0;height:0;border-left:6px solid transparent;border-right:6px solid transparent;border-bottom:12px solid currentColor;transform:rotate(-30deg)}
+.cursor-label{padding:2px 6px;border-radius:3px;font-size:8px;color:#fff;font-weight:600;white-space:nowrap;margin-left:8px;margin-top:-4px}
+.c1{color:#f97316;top:30%;left:35%}
+.c1 .cursor-label{background:#f97316}
+.c2{color:#10b981;top:55%;left:60%}
+.c2 .cursor-label{background:#10b981}
+.c3{color:#a855f7;top:40%;left:70%}
+.c3 .cursor-label{background:#a855f7}
+/* Selection highlights from other users */
+.selection{position:absolute;border:2px dashed;border-radius:4px;opacity:.3}
+.s1{border-color:#f97316;background:#f9731622;top:25%;left:30%;width:15%;height:12%}
+.s2{border-color:#10b981;background:#10b98122;top:50%;left:55%;width:18%;height:15%}
+/* Chat sidebar */
+.chat{width:260px;background:#1e293b;border-left:1px solid #334155;display:flex;flex-direction:column;flex-shrink:0}
+.ch-header{padding:8px 10px;border-bottom:1px solid #334155;font-size:11px;font-weight:600;display:flex;align-items:center;gap:6px}
+.ch-online{width:6px;height:6px;border-radius:50%;background:#10b981}
+.ch-messages{flex:1;overflow-y:auto;padding:6px}
+.msg{margin-bottom:8px}
+.msg-header{display:flex;align-items:center;gap:4px;margin-bottom:2px}
+.msg-av{width:16px;height:16px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:7px;font-weight:700}
+.msg-name{font-size:9px;font-weight:600}
+.msg-time{font-size:7px;color:#64748b;margin-left:auto}
+.msg-text{font-size:10px;color:#94a3b8;line-height:1.4;padding-left:20px}
+.msg-action{font-size:9px;color:#3b82f6;padding-left:20px;cursor:pointer;margin-top:2px}
+.ch-input{padding:6px;border-top:1px solid #334155}
+.ch-input-box{width:100%;padding:6px 8px;background:#0f172a;border:1px solid #334155;border-radius:6px;font-size:10px;color:#e2e8f0;font-family:inherit}
+/* Presence indicators on layers */
+.pnl{width:200px;background:#1e293b;border-right:1px solid #334155;display:flex;flex-direction:column;flex-shrink:0}
+.ph{padding:6px 8px;border-bottom:1px solid #334155;font-size:10px;font-weight:600}
+.ll{flex:1;overflow-y:auto;padding:2px 4px}
+.li{padding:3px 6px;display:flex;align-items:center;gap:4px;font-size:9px;color:#94a3b8;border-radius:3px}
+.li:hover{background:#334155}
+.li-dot{width:4px;height:10px;border-radius:1px}
+.li-name{flex:1}
+.li-users{display:flex;gap:-2px}
+.li-user{width:12px;height:12px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:6px;font-weight:700;border:1px solid #1e293b;margin-left:-3px}
+.mc{position:absolute;right:8px;top:8px;display:flex;flex-direction:column;gap:3px}
+.mb{width:24px;height:24px;background:#1e293b;border:1px solid #334155;border-radius:4px;display:flex;align-items:center;justify-content:center;color:#64748b;font-size:10px;cursor:pointer}
+.bb{height:24px;background:#1e293b;display:flex;align-items:center;padding:0 10px;gap:8px;border-top:1px solid #334155;font-size:8px;color:#64748b;flex-shrink:0}
+.bb .hl{color:#3b82f6}
+</style>
+</head>
+<body>
+<div class="top"><span class="logo">MMGIS</span><span class="mission">Reference Mission</span><div class="collab"><div class="collab-avatar" style="background:#3b82f6;color:#fff;z-index:4">You</div><div class="collab-avatar" style="background:#f97316;color:#fff;z-index:3">SC</div><div class="collab-avatar" style="background:#10b981;color:#fff;z-index:2">JD</div><div class="collab-avatar" style="background:#a855f7;color:#fff;z-index:1">MK</div><span class="collab-count">4 online</span><div class="share-btn">Share</div></div></div>
+<div class="ws">
+<div class="sb"><div class="t a">&#9776;</div><div class="t">i</div><div class="t">&#9998;</div><div class="t">M</div><div class="t">T</div><div class="t">&#127760;</div></div>
+<div class="pnl"><div class="ph">Layers</div><div class="ll">
+<div class="li"><div class="li-dot" style="background:#3b82f6"></div><div class="li-name">Points Basic</div><div class="li-users"><div class="li-user" style="background:#f97316;color:#fff">S</div><div class="li-user" style="background:#10b981;color:#fff">J</div></div></div>
+<div class="li"><div class="li-dot" style="background:#10b981"></div><div class="li-name">Lines Basic</div></div>
+<div class="li"><div class="li-dot" style="background:#ef4444"></div><div class="li-name">Arrows</div><div class="li-users"><div class="li-user" style="background:#a855f7;color:#fff">M</div></div></div>
+<div class="li"><div class="li-dot" style="background:#8b5cf6"></div><div class="li-name">Points Styled</div></div>
+<div class="li"><div class="li-dot" style="background:#f97316"></div><div class="li-name">Polygons Styled</div></div>
+<div class="li"><div class="li-dot" style="background:#6366f1"></div><div class="li-name">Raster DEM</div></div>
+</div></div>
+<div class="map"><div class="ml">San Francisco Bay</div>
+<div class="selection s1"></div><div class="selection s2"></div>
+<div class="cursor c1"><div class="cursor-pointer"></div><div class="cursor-label">Sarah C.</div></div>
+<div class="cursor c2"><div class="cursor-pointer"></div><div class="cursor-label">John D.</div></div>
+<div class="cursor c3"><div class="cursor-pointer"></div><div class="cursor-label">Maria K.</div></div>
+<div class="mc"><div class="mb">+</div><div class="mb">-</div></div>
+</div>
+<div class="chat"><div class="ch-header"><div class="ch-online"></div>Team Chat (4)</div>
+<div class="ch-messages">
+<div class="msg"><div class="msg-header"><div class="msg-av" style="background:#f97316;color:#fff">S</div><span class="msg-name" style="color:#f97316">Sarah C.</span><span class="msg-time">2m ago</span></div><div class="msg-text">I've updated the traverse path in the western sector. Can you check?</div><div class="msg-action">&#128205; Jump to location</div></div>
+<div class="msg"><div class="msg-header"><div class="msg-av" style="background:#10b981;color:#fff">J</div><span class="msg-name" style="color:#10b981">John D.</span><span class="msg-time">1m ago</span></div><div class="msg-text">Looks good! The elevation data matches the DEM layer. I'll add waypoints.</div></div>
+<div class="msg"><div class="msg-header"><div class="msg-av" style="background:#a855f7;color:#fff">M</div><span class="msg-name" style="color:#a855f7">Maria K.</span><span class="msg-time">30s ago</span></div><div class="msg-text">Adding annotations to the arrow features. Time range set to Jan 10-15.</div></div>
+</div>
+<div class="ch-input"><input class="ch-input-box" placeholder="Type a message..." readonly/></div>
+</div></div>
+<div class="bb"><span class="hl">4 collaborators</span> | 37.775&deg;N, 122.419&deg;W | Z12 | 8/29 layers | Real-time sync: ON</div>
+</body>
+</html>

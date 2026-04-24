@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>MMGIS Mockup 65: Keyboard Shortcuts Overlay</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Inter',system-ui,sans-serif;background:#0f172a;color:#e2e8f0;height:100vh;overflow:hidden;display:flex;flex-direction:column}
+.top{height:36px;background:#1e293b;display:flex;align-items:center;padding:0 12px;border-bottom:1px solid #334155;flex-shrink:0}
+.logo{font-size:14px;font-weight:700;color:#06b6d4}
+.right{margin-left:auto;display:flex;gap:6px;align-items:center;font-size:9px;color:#64748b}
+.ws{flex:1;display:flex;overflow:hidden;position:relative}
+.sb{width:36px;background:#1e293b;border-right:1px solid #334155;display:flex;flex-direction:column;align-items:center;padding:4px 0;gap:2px;flex-shrink:0}
+.t{width:26px;height:26px;display:flex;align-items:center;justify-content:center;border-radius:4px;font-size:10px;color:#64748b;cursor:pointer}
+.t.a{color:#06b6d4;background:#334155}
+.map{flex:1;background:#0f172a;position:relative;display:flex;align-items:center;justify-content:center}
+.ml{font-size:10px;color:#1e293b;letter-spacing:4px;text-transform:uppercase}
+/* Keyboard shortcuts overlay */
+.overlay{position:absolute;inset:0;background:#0f172aee;backdrop-filter:blur(8px);z-index:100;display:flex;align-items:center;justify-content:center;padding:20px}
+.shortcuts-modal{background:#1e293b;border:1px solid #334155;border-radius:12px;padding:20px;max-width:720px;width:100%;max-height:80vh;overflow-y:auto;box-shadow:0 20px 60px rgba(0,0,0,.4)}
+.sm-header{display:flex;align-items:center;margin-bottom:16px}
+.sm-title{font-size:16px;font-weight:700}
+.sm-close{margin-left:auto;width:24px;height:24px;border-radius:6px;background:#334155;display:flex;align-items:center;justify-content:center;color:#94a3b8;cursor:pointer;font-size:12px}
+.sm-search{width:100%;padding:8px 12px;background:#0f172a;border:1px solid #334155;border-radius:8px;font-size:12px;color:#e2e8f0;font-family:inherit;margin-bottom:16px}
+.sm-columns{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.sc-group{margin-bottom:12px}
+.sc-title{font-size:9px;text-transform:uppercase;letter-spacing:1px;color:#06b6d4;font-weight:700;margin-bottom:6px;padding-bottom:4px;border-bottom:1px solid #334155}
+.sc-item{display:flex;align-items:center;padding:3px 0;gap:8px}
+.sc-keys{display:flex;gap:2px;min-width:80px;justify-content:flex-end}
+.kbd{padding:2px 6px;background:#0f172a;border:1px solid #334155;border-radius:4px;font-size:9px;font-family:monospace;color:#94a3b8;min-width:18px;text-align:center;line-height:1.4;box-shadow:0 1px 0 #334155}
+.sc-desc{font-size:10px;color:#cbd5e1}
+.sm-footer{margin-top:12px;padding-top:8px;border-top:1px solid #334155;font-size:9px;color:#64748b;display:flex;align-items:center;gap:4px}
+.bb{height:24px;background:#1e293b;display:flex;align-items:center;padding:0 12px;gap:10px;border-top:1px solid #334155;font-size:8px;color:#64748b;flex-shrink:0}
+.bb .hl{color:#06b6d4}
+</style>
+</head>
+<body>
+<div class="top"><span class="logo">MMGIS</span><div class="right"><span>Press <kbd style="padding:1px 4px;background:#334155;border-radius:2px;font-size:8px">?</kbd> for shortcuts</span></div></div>
+<div class="ws">
+<div class="sb"><div class="t a">&#9776;</div><div class="t">i</div><div class="t">&#9998;</div><div class="t">M</div><div class="t">T</div></div>
+<div class="map"><div class="ml">San Francisco Bay</div>
+<div class="overlay">
+<div class="shortcuts-modal">
+<div class="sm-header"><span class="sm-title">Keyboard Shortcuts</span><div class="sm-close">&times;</div></div>
+<input class="sm-search" placeholder="Search shortcuts..." readonly/>
+<div class="sm-columns">
+<div>
+<div class="sc-group"><div class="sc-title">Navigation</div>
+<div class="sc-item"><div class="sc-keys"><span class="kbd">+</span></div><span class="sc-desc">Zoom in</span></div>
+<div class="sc-item"><div class="sc-keys"><span class="kbd">-</span></div><span class="sc-desc">Zoom out</span></div>
+<div class="sc-item"><div class="sc-keys"><span class="kbd">H</span></div><span class="sc-desc">Reset view / home</span></div>
+<div class="sc-item"><div class="sc-keys"><span class="kbd">&#8593;</span><span class="kbd">&#8595;</span><span class="kbd">&#8592;</span><span class="kbd">&#8594;</span></div><span class="sc-desc">Pan map</span></div>
+<div class="sc-item"><div class="sc-keys"><span class="kbd">&#8984;</span><span class="kbd">F</span></div><span class="sc-desc">Fullscreen toggle</span></div>
+</div>
+<div class="sc-group"><div class="sc-title">Tools</div>
+<div class="sc-item"><div class="sc-keys"><span class="kbd">L</span></div><span class="sc-desc">Open Layers panel</span></div>
+<div class="sc-item"><div class="sc-keys"><span class="kbd">D</span></div><span class="sc-desc">Open Draw tool</span></div>
+<div class="sc-item"><div class="sc-keys"><span class="kbd">M</span></div><span class="sc-desc">Open Measure tool</span></div>
+<div class="sc-item"><div class="sc-keys"><span class="kbd">I</span></div><span class="sc-desc">Open Identify tool</span></div>
+<div class="sc-item"><div class="sc-keys"><span class="kbd">G</span></div><span class="sc-desc">Toggle 3D Globe</span></div>
+<div class="sc-item"><div class="sc-keys"><span class="kbd">T</span></div><span class="sc-desc">Toggle Timeline</span></div>
+</div>
+</div>
+<div>
+<div class="sc-group"><div class="sc-title">Layers</div>
+<div class="sc-item"><div class="sc-keys"><span class="kbd">1</span>-<span class="kbd">9</span></div><span class="sc-desc">Toggle layer 1-9</span></div>
+<div class="sc-item"><div class="sc-keys"><span class="kbd">&#8984;</span><span class="kbd">A</span></div><span class="sc-desc">Toggle all layers</span></div>
+<div class="sc-item"><div class="sc-keys"><span class="kbd">[</span></div><span class="sc-desc">Decrease opacity</span></div>
+<div class="sc-item"><div class="sc-keys"><span class="kbd">]</span></div><span class="sc-desc">Increase opacity</span></div>
+<div class="sc-item"><div class="sc-keys"><span class="kbd">&#8984;</span><span class="kbd">&#8679;</span><span class="kbd">L</span></div><span class="sc-desc">Layer search</span></div>
+</div>
+<div class="sc-group"><div class="sc-title">General</div>
+<div class="sc-item"><div class="sc-keys"><span class="kbd">&#8984;</span><span class="kbd">K</span></div><span class="sc-desc">Command palette</span></div>
+<div class="sc-item"><div class="sc-keys"><span class="kbd">/</span></div><span class="sc-desc">Search features</span></div>
+<div class="sc-item"><div class="sc-keys"><span class="kbd">&#8984;</span><span class="kbd">S</span></div><span class="sc-desc">Save current view</span></div>
+<div class="sc-item"><div class="sc-keys"><span class="kbd">&#8984;</span><span class="kbd">E</span></div><span class="sc-desc">Export data</span></div>
+<div class="sc-item"><div class="sc-keys"><span class="kbd">Esc</span></div><span class="sc-desc">Close panel / cancel</span></div>
+<div class="sc-item"><div class="sc-keys"><span class="kbd">?</span></div><span class="sc-desc">Show this dialog</span></div>
+</div>
+<div class="sc-group"><div class="sc-title">Timeline</div>
+<div class="sc-item"><div class="sc-keys"><span class="kbd">Space</span></div><span class="sc-desc">Play / Pause</span></div>
+<div class="sc-item"><div class="sc-keys"><span class="kbd">&#8592;</span></div><span class="sc-desc">Previous frame</span></div>
+<div class="sc-item"><div class="sc-keys"><span class="kbd">&#8594;</span></div><span class="sc-desc">Next frame</span></div>
+</div>
+</div>
+</div>
+<div class="sm-footer">Press <span class="kbd">?</span> to toggle &bull; Press <span class="kbd">Esc</span> to close</div>
+</div></div>
+</div></div>
+<div class="bb"><span class="hl">Shortcuts overlay</span> | Press ? to toggle | 37.775&deg;N, 122.419&deg;W</div>
+</body>
+</html>

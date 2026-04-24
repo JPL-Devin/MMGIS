@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>MMGIS Mockup 70: Sandstone Warm Light</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Georgia','Times New Roman',serif;background:#faf6f1;color:#44403c;height:100vh;overflow:hidden;display:flex;flex-direction:column}
+.top{height:44px;background:#fff;display:flex;align-items:center;padding:0 16px;border-bottom:2px solid #e7e5e4;flex-shrink:0}
+.logo{font-size:16px;font-weight:700;color:#78716c;letter-spacing:2px;text-transform:uppercase}
+.mission{color:#a8a29e;font-size:11px;margin-left:12px;font-style:italic}
+.right{margin-left:auto;display:flex;gap:8px;align-items:center}
+.nav-link{font-size:10px;color:#78716c;text-decoration:none;padding:4px 8px}
+.nav-link:hover{color:#44403c}
+.nav-link.a{color:#44403c;border-bottom:2px solid #a16207}
+.av{width:26px;height:26px;border-radius:50%;background:#a16207;color:#fff;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;font-family:system-ui}
+.ws{flex:1;display:flex;overflow:hidden}
+.sb{width:200px;background:#fff;border-right:1px solid #e7e5e4;display:flex;flex-direction:column;flex-shrink:0}
+.sb-header{padding:12px 14px;border-bottom:1px solid #e7e5e4;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:#78716c}
+.sb-section{padding:8px 14px;border-bottom:1px solid #f5f5f4}
+.ss-title{font-size:9px;color:#a8a29e;text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px}
+.ss-item{display:flex;align-items:center;gap:8px;padding:4px 0;cursor:pointer;font-size:11px;color:#57534e}
+.ss-item:hover{color:#44403c}
+.ss-item.a{color:#a16207;font-weight:600}
+.ss-dot{width:6px;height:6px;border-radius:50%;flex-shrink:0}
+.ss-count{margin-left:auto;font-size:8px;color:#a8a29e;font-family:system-ui}
+.map{flex:1;background:#faf6f1;position:relative;display:flex;align-items:center;justify-content:center}
+.ml{font-size:11px;color:#d6d3d1;letter-spacing:4px;text-transform:uppercase;font-family:system-ui}
+.mc{position:absolute;right:12px;top:12px;display:flex;flex-direction:column;gap:4px}
+.mb{width:30px;height:30px;background:#fff;border:1px solid #e7e5e4;border-radius:4px;display:flex;align-items:center;justify-content:center;font-size:14px;color:#78716c;cursor:pointer;font-family:system-ui}
+.mb:hover{border-color:#a8a29e}
+/* Scale bar */
+.scale{position:absolute;bottom:40px;left:50%;transform:translateX(-50%);display:flex;align-items:center;gap:4px;font-size:8px;color:#a8a29e;font-family:system-ui}
+.scale-bar{width:80px;height:2px;background:#a8a29e;position:relative}
+.scale-bar::before,.scale-bar::after{content:'';position:absolute;width:1px;height:6px;background:#a8a29e;top:-2px}
+.scale-bar::before{left:0}
+.scale-bar::after{right:0}
+.bb{height:28px;background:#fff;display:flex;align-items:center;padding:0 16px;gap:12px;border-top:2px solid #e7e5e4;font-size:9px;color:#a8a29e;flex-shrink:0;font-family:system-ui}
+.bb .hl{color:#a16207}
+.coord{font-family:'Courier New',monospace;font-size:9px}
+</style>
+</head>
+<body>
+<div class="top"><span class="logo">MMGIS</span><span class="mission">Reference Mission</span><div class="right"><span class="nav-link a">Map</span><span class="nav-link">Globe</span><span class="nav-link">Data</span><span class="nav-link">Timeline</span><div class="av">A</div></div></div>
+<div class="ws">
+<div class="sb">
+<div class="sb-header">Layers</div>
+<div class="sb-section"><div class="ss-title">Base Maps</div>
+<div class="ss-item a"><div class="ss-dot" style="background:#a16207"></div>XYZ Base Tiles<span class="ss-count">1</span></div>
+<div class="ss-item"><div class="ss-dot" style="background:#78716c"></div>Terrain DEM<span class="ss-count">1</span></div>
+</div>
+<div class="sb-section"><div class="ss-title">Vector Overlays</div>
+<div class="ss-item a"><div class="ss-dot" style="background:#2563eb"></div>Points Basic<span class="ss-count">48</span></div>
+<div class="ss-item a"><div class="ss-dot" style="background:#16a34a"></div>Lines Basic<span class="ss-count">12</span></div>
+<div class="ss-item"><div class="ss-dot" style="background:#dc2626"></div>Polygons Styled<span class="ss-count">6</span></div>
+<div class="ss-item"><div class="ss-dot" style="background:#7c3aed"></div>Traverse Path<span class="ss-count">1</span></div>
+</div>
+<div class="sb-section"><div class="ss-title">Raster</div>
+<div class="ss-item a"><div class="ss-dot" style="background:#f97316"></div>Raster DEM<span class="ss-count">1</span></div>
+<div class="ss-item"><div class="ss-dot" style="background:#06b6d4"></div>Hillshade<span class="ss-count">1</span></div>
+</div>
+<div class="sb-section"><div class="ss-title">3D Models</div>
+<div class="ss-item"><div class="ss-dot" style="background:#ec4899"></div>3D Tiles Model<span class="ss-count">1</span></div>
+</div>
+</div>
+<div class="map"><div class="ml">San Francisco Bay</div>
+<div class="mc"><div class="mb">+</div><div class="mb">&minus;</div><div class="mb">&#8962;</div><div class="mb">&#8634;</div></div>
+<div class="scale"><div class="scale-bar"></div>2 km</div>
+</div></div>
+<div class="bb"><span class="hl">Reference Mission</span> | <span class="coord">37.775&deg;N, 122.419&deg;W</span> | Zoom 12 | 4 layers visible | <span class="hl">Sandstone Theme</span></div>
+</body>
+</html>

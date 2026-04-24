@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>MMGIS Mockup 80: Dual Monitor Extended Layout</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Inter',system-ui,sans-serif;background:#f0f9ff;color:#0c4a6e;height:100vh;overflow:hidden;display:flex;flex-direction:column}
+.top{height:38px;background:#fff;display:flex;align-items:center;padding:0 14px;border-bottom:1px solid #bae6fd;flex-shrink:0}
+.logo{font-size:14px;font-weight:700;color:#0284c7}
+.tabs{display:flex;gap:1px;margin-left:12px;background:#f0f9ff;border-radius:6px;padding:2px}
+.tab{padding:4px 12px;font-size:9px;border-radius:4px;color:#64748b;cursor:pointer}
+.tab.a{background:#0284c7;color:#fff;font-weight:600}
+.right{margin-left:auto;display:flex;gap:6px;align-items:center}
+.monitor-badge{padding:3px 8px;background:#e0f2fe;border:1px solid #bae6fd;border-radius:4px;font-size:8px;color:#0284c7;display:flex;align-items:center;gap:4px}
+.mon-icon{font-size:10px}
+.av{width:24px;height:24px;border-radius:50%;background:#0284c7;color:#fff;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:700}
+.ws{flex:1;display:flex;overflow:hidden}
+/* Two "monitors" side by side */
+.monitor{flex:1;display:flex;flex-direction:column;position:relative}
+.mon-left{border-right:3px solid #0284c7}
+.mon-right{}
+.mon-header{height:24px;display:flex;align-items:center;padding:0 8px;gap:4px;flex-shrink:0}
+.mh-left{background:#e0f2fe}
+.mh-right{background:#fef3c7}
+.mh-label{font-size:8px;font-weight:600}
+.mh-info{font-size:7px;color:#64748b;margin-left:auto}
+/* Left: 2D Map with layers */
+.left-content{flex:1;display:flex;overflow:hidden}
+.layers-slim{width:140px;background:#fff;border-right:1px solid #e0f2fe;overflow-y:auto;padding:4px;flex-shrink:0}
+.ls-title{font-size:8px;color:#64748b;padding:4px 6px;text-transform:uppercase;letter-spacing:.5px;font-weight:600}
+.ls-item{display:flex;align-items:center;gap:4px;padding:3px 6px;font-size:9px;color:#334155;border-radius:3px;cursor:pointer}
+.ls-item:hover{background:#f0f9ff}
+.ls-item.on{color:#0284c7;font-weight:500}
+.ls-dot{width:5px;height:5px;border-radius:50%;flex-shrink:0}
+.map2d{flex:1;background:#f0f9ff;display:flex;align-items:center;justify-content:center;font-size:9px;color:#bae6fd;letter-spacing:2px}
+/* Right: 3D Globe with tools */
+.right-content{flex:1;display:flex;overflow:hidden}
+.globe{flex:1;background:radial-gradient(circle at 40% 40%,#e0f2fe,#f0f9ff);display:flex;align-items:center;justify-content:center;position:relative}
+.globe-sphere{width:180px;height:180px;border-radius:50%;background:radial-gradient(circle at 35% 35%,#7dd3fc,#38bdf8,#0284c7);box-shadow:0 0 30px rgba(2,132,199,.15);position:relative}
+.globe-sphere::after{content:'';position:absolute;width:50%;height:50%;top:10%;left:15%;border-radius:50%;background:radial-gradient(circle,rgba(255,255,255,.15),transparent)}
+.tools-slim{width:140px;background:#fff;border-left:1px solid #fef3c7;overflow-y:auto;padding:4px;flex-shrink:0}
+.ts-title{font-size:8px;color:#64748b;padding:4px 6px;text-transform:uppercase;letter-spacing:.5px;font-weight:600}
+.ts-item{display:flex;align-items:center;gap:6px;padding:5px 6px;font-size:9px;color:#334155;border-radius:4px;cursor:pointer;margin-bottom:1px}
+.ts-item:hover{background:#fffbeb}
+.ts-item.a{background:#fef3c7;color:#d97706;font-weight:500}
+.ts-icon{font-size:12px;width:18px;text-align:center}
+/* Shared bottom bar */
+.bb{height:26px;background:#fff;display:flex;align-items:center;padding:0 12px;gap:6px;border-top:1px solid #bae6fd;font-size:8px;color:#64748b;flex-shrink:0}
+.bb .hl{color:#0284c7;font-weight:600}
+.bb-sep{width:1px;height:14px;background:#e2e8f0}
+.sync-indicator{display:flex;align-items:center;gap:3px;font-size:8px;color:#16a34a;font-weight:500}
+.sync-dot{width:5px;height:5px;border-radius:50%;background:#16a34a}
+</style>
+</head>
+<body>
+<div class="top"><span class="logo">MMGIS</span><div class="tabs"><div class="tab a">Dual View</div><div class="tab">Map Only</div><div class="tab">Globe Only</div><div class="tab">Data</div></div><div class="right"><div class="monitor-badge"><span class="mon-icon">&#128421;</span>Dual Monitor</div><div class="av">A</div></div></div>
+<div class="ws">
+<div class="monitor mon-left">
+<div class="mon-header mh-left"><span class="mh-label" style="color:#0284c7">&#128506; 2D Map View</span><span class="mh-info">Z12 | EPSG:4326</span></div>
+<div class="left-content">
+<div class="layers-slim"><div class="ls-title">Layers</div>
+<div class="ls-item on"><div class="ls-dot" style="background:#0284c7"></div>Base Tiles</div>
+<div class="ls-item on"><div class="ls-dot" style="background:#16a34a"></div>Points Basic</div>
+<div class="ls-item on"><div class="ls-dot" style="background:#dc2626"></div>Lines Basic</div>
+<div class="ls-item"><div class="ls-dot" style="background:#ccc"></div>Polygons</div>
+<div class="ls-item on"><div class="ls-dot" style="background:#d97706"></div>Raster DEM</div>
+<div class="ls-item"><div class="ls-dot" style="background:#ccc"></div>Traverse</div>
+<div class="ls-item"><div class="ls-dot" style="background:#ccc"></div>Hillshade</div>
+<div class="ls-item"><div class="ls-dot" style="background:#ccc"></div>3D Model</div>
+</div>
+<div class="map2d">SAN FRANCISCO BAY &mdash; 2D</div>
+</div></div>
+<div class="monitor mon-right">
+<div class="mon-header mh-right"><span class="mh-label" style="color:#d97706">&#127760; 3D Globe View</span><span class="mh-info">LithoSphere | Synced</span></div>
+<div class="right-content">
+<div class="globe"><div class="globe-sphere"></div></div>
+<div class="tools-slim"><div class="ts-title">Tools</div>
+<div class="ts-item"><span class="ts-icon">&#128270;</span>Identify</div>
+<div class="ts-item a"><span class="ts-icon">&#9998;</span>Draw</div>
+<div class="ts-item"><span class="ts-icon">&#128207;</span>Measure</div>
+<div class="ts-item"><span class="ts-icon">&#128205;</span>Sites</div>
+<div class="ts-item"><span class="ts-icon">&#128247;</span>Screenshot</div>
+<div class="ts-item"><span class="ts-icon">&#128339;</span>Timeline</div>
+<div class="ts-item"><span class="ts-icon">&#128202;</span>Charts</div>
+<div class="ts-item"><span class="ts-icon">&#128279;</span>Share</div>
+</div></div></div>
+</div>
+<div class="bb"><span class="hl">Dual Monitor</span><div class="bb-sep"></div><span>Left: 2D Map (37.775°N, 122.419°W)</span><div class="bb-sep"></div><span>Right: 3D Globe (synced)</span><div class="bb-sep"></div><div class="sync-indicator"><div class="sync-dot"></div>Views Synced</div><div class="bb-sep"></div><span>4 layers | Z12</span></div>
+</body>
+</html>

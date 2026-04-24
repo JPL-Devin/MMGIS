@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>MMGIS Mockup 75: Split Screen Layer Comparison</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Inter',system-ui,sans-serif;background:#f5f5f5;color:#262626;height:100vh;overflow:hidden;display:flex;flex-direction:column}
+.top{height:40px;background:#fff;display:flex;align-items:center;padding:0 14px;border-bottom:1px solid #e5e5e5;flex-shrink:0}
+.logo{font-size:15px;font-weight:700;color:#7c3aed}
+.mode-badge{margin-left:8px;padding:3px 8px;background:#ede9fe;color:#7c3aed;border-radius:4px;font-size:9px;font-weight:600}
+.right{margin-left:auto;display:flex;gap:6px;align-items:center}
+.mode-tabs{display:flex;gap:1px;background:#f5f5f5;border-radius:6px;padding:2px}
+.mt{padding:4px 10px;font-size:9px;border-radius:4px;color:#737373;cursor:pointer}
+.mt.a{background:#7c3aed;color:#fff;font-weight:600}
+.av{width:24px;height:24px;border-radius:50%;background:#7c3aed;color:#fff;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:700}
+.ws{flex:1;display:flex;overflow:hidden;position:relative}
+/* Split panels */
+.split-left,.split-right{flex:1;display:flex;flex-direction:column;position:relative}
+.split-left{border-right:none}
+.split-right{border-left:none}
+.panel-header{height:28px;display:flex;align-items:center;padding:0 10px;gap:6px;flex-shrink:0}
+.ph-left{background:#ede9fe}
+.ph-right{background:#fef3c7}
+.ph-label{font-size:9px;font-weight:600}
+.ph-select{padding:2px 6px;background:#fff;border:1px solid #e5e5e5;border-radius:4px;font-size:8px;color:#525252;font-family:inherit}
+.ph-info{margin-left:auto;font-size:8px;color:#737373}
+.panel-map{flex:1;display:flex;align-items:center;justify-content:center;font-size:9px;letter-spacing:2px;text-transform:uppercase}
+.pm-left{background:#f5f3ff;color:#c4b5fd}
+.pm-right{background:#fffbeb;color:#fde68a}
+/* Divider */
+.divider{width:4px;background:#7c3aed;cursor:col-resize;flex-shrink:0;position:relative;z-index:10}
+.divider::before{content:'';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:20px;height:36px;background:#7c3aed;border-radius:8px;display:flex;align-items:center;justify-content:center}
+.divider::after{content:'⟺';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);color:#fff;font-size:10px;z-index:2}
+/* Sync controls */
+.sync-bar{height:32px;background:#fff;border-top:1px solid #e5e5e5;display:flex;align-items:center;padding:0 12px;gap:8px;flex-shrink:0}
+.sync-toggle{display:flex;align-items:center;gap:4px;font-size:9px;color:#525252}
+.sync-switch{width:26px;height:14px;border-radius:7px;background:#7c3aed;position:relative;cursor:pointer}
+.sync-switch::after{content:'';width:10px;height:10px;border-radius:50%;background:#fff;position:absolute;top:2px;left:14px}
+.sync-label{font-weight:500}
+.sync-sep{width:1px;height:16px;background:#e5e5e5}
+.diff-stat{display:flex;align-items:center;gap:4px;font-size:8px;color:#737373}
+.diff-badge{padding:1px 5px;border-radius:3px;font-size:7px;font-weight:600}
+.bb{height:24px;background:#fff;display:flex;align-items:center;padding:0 12px;gap:10px;border-top:1px solid #e5e5e5;font-size:8px;color:#737373;flex-shrink:0}
+.bb .hl{color:#7c3aed;font-weight:600}
+</style>
+</head>
+<body>
+<div class="top"><span class="logo">MMGIS</span><span class="mode-badge">Compare Mode</span><div class="right"><div class="mode-tabs"><div class="mt">Single</div><div class="mt a">Split</div><div class="mt">Swipe</div><div class="mt">Overlay</div></div><div class="av">A</div></div></div>
+<div class="ws">
+<div class="split-left"><div class="panel-header ph-left"><span class="ph-label" style="color:#7c3aed">Left Panel</span><select class="ph-select"><option>Raster DEM</option></select><span class="ph-info">Jan 01, 2026</span></div><div class="panel-map pm-left">Raster DEM — Jan 01</div></div>
+<div class="divider"></div>
+<div class="split-right"><div class="panel-header ph-right"><span class="ph-label" style="color:#d97706">Right Panel</span><select class="ph-select"><option>Raster DEM (Updated)</option></select><span class="ph-info">Jan 20, 2026</span></div><div class="panel-map pm-right">Raster DEM — Jan 20</div></div>
+</div>
+<div class="sync-bar">
+<div class="sync-toggle"><div class="sync-switch"></div><span class="sync-label">Sync Pan/Zoom</span></div>
+<div class="sync-sep"></div>
+<div class="sync-toggle"><div class="sync-switch"></div><span class="sync-label">Sync Layers</span></div>
+<div class="sync-sep"></div>
+<div class="diff-stat">Difference: <span class="diff-badge" style="background:#dcfce7;color:#16a34a">+12.4%</span> coverage increase <span class="diff-badge" style="background:#fee2e2;color:#dc2626">-3.2m</span> avg elevation change</div>
+</div>
+<div class="bb"><span class="hl">Split Compare</span> | Left: Raster DEM (Jan 01) | Right: Raster DEM Updated (Jan 20) | Sync: ON</div>
+</body>
+</html>

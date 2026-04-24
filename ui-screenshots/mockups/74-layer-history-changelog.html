@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>MMGIS Mockup 74: Layer History & Changelog</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Inter',system-ui,sans-serif;background:#0c0a09;color:#e7e5e4;height:100vh;overflow:hidden;display:flex;flex-direction:column}
+.top{height:36px;background:#1c1917;display:flex;align-items:center;padding:0 12px;border-bottom:1px solid #292524;flex-shrink:0}
+.logo{font-size:14px;font-weight:700;color:#f97316}
+.right{margin-left:auto;font-size:9px;color:#57534e}
+.ws{flex:1;display:flex;overflow:hidden}
+.sb{width:34px;background:#1c1917;border-right:1px solid #292524;display:flex;flex-direction:column;align-items:center;padding:4px 0;gap:2px;flex-shrink:0}
+.t{width:24px;height:24px;display:flex;align-items:center;justify-content:center;border-radius:4px;font-size:10px;color:#57534e;cursor:pointer}
+.t.a{color:#f97316;background:#292524}
+.map{flex:1;background:#0c0a09;position:relative;display:flex;align-items:center;justify-content:center}
+.ml{font-size:9px;color:#1c1917;letter-spacing:3px}
+/* History panel */
+.history{width:300px;background:#1c1917;border-left:1px solid #292524;display:flex;flex-direction:column;flex-shrink:0}
+.hh{padding:10px 12px;border-bottom:1px solid #292524;display:flex;align-items:center;gap:6px}
+.hh-title{font-size:11px;font-weight:600}
+.hh-filter{margin-left:auto;padding:3px 8px;background:#292524;border-radius:4px;font-size:8px;color:#a8a29e;cursor:pointer}
+.h-list{flex:1;overflow-y:auto;padding:4px 8px}
+.h-day{font-size:8px;color:#78716c;padding:6px 4px 3px;text-transform:uppercase;letter-spacing:.5px;font-weight:600}
+.h-item{display:flex;gap:8px;padding:6px;border-radius:6px;margin-bottom:2px;cursor:pointer;position:relative}
+.h-item:hover{background:#29252488}
+.h-item.a{background:#292524}
+.h-line{width:2px;background:#292524;flex-shrink:0;border-radius:1px;position:relative}
+.h-dot{width:8px;height:8px;border-radius:50%;position:absolute;top:4px;left:-3px}
+.h-content{flex:1;min-width:0}
+.h-action{font-size:9px;font-weight:500;color:#e7e5e4}
+.h-detail{font-size:8px;color:#78716c;margin-top:1px;line-height:1.3}
+.h-time{font-size:7px;color:#57534e;margin-top:2px}
+.h-user{display:flex;align-items:center;gap:3px;margin-top:3px}
+.h-avatar{width:14px;height:14px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:6px;color:#fff;font-weight:700}
+.h-username{font-size:7px;color:#a8a29e}
+.h-restore{padding:2px 6px;background:#f97316;color:#fff;border-radius:3px;font-size:7px;cursor:pointer;margin-top:3px;display:inline-block}
+.h-footer{padding:8px 12px;border-top:1px solid #292524;display:flex;gap:4px}
+.hf-btn{flex:1;padding:4px;text-align:center;font-size:8px;color:#a8a29e;background:#292524;border-radius:4px;cursor:pointer}
+.hf-btn:hover{color:#e7e5e4}
+.bb{height:22px;background:#1c1917;display:flex;align-items:center;padding:0 10px;gap:8px;border-top:1px solid #292524;font-size:8px;color:#57534e;flex-shrink:0}
+.bb .hl{color:#f97316}
+</style>
+</head>
+<body>
+<div class="top"><span class="logo">MMGIS</span><div class="right">Layer History</div></div>
+<div class="ws">
+<div class="sb"><div class="t">&#9776;</div><div class="t">i</div><div class="t">&#9998;</div><div class="t">M</div><div class="t a">&#128339;</div></div>
+<div class="map"><div class="ml">San Francisco Bay</div></div>
+<div class="history">
+<div class="hh"><span class="hh-title">History</span><span class="hh-filter">All Changes &#9662;</span></div>
+<div class="h-list">
+<div class="h-day">Today</div>
+<div class="h-item a"><div class="h-line"><div class="h-dot" style="background:#f97316"></div></div><div class="h-content"><div class="h-action">Layer visibility toggled</div><div class="h-detail">Raster DEM turned ON, opacity set to 75%</div><div class="h-time">2 minutes ago</div><div class="h-user"><div class="h-avatar" style="background:#f97316">A</div><span class="h-username">admin</span></div></div></div>
+<div class="h-item"><div class="h-line"><div class="h-dot" style="background:#3b82f6"></div></div><div class="h-content"><div class="h-action">Feature drawn</div><div class="h-detail">New polygon added to "Survey Areas" layer</div><div class="h-time">15 minutes ago</div><div class="h-user"><div class="h-avatar" style="background:#3b82f6">A</div><span class="h-username">admin</span></div></div></div>
+<div class="h-item"><div class="h-line"><div class="h-dot" style="background:#10b981"></div></div><div class="h-content"><div class="h-action">Style changed</div><div class="h-detail">Points Basic color changed from blue to green</div><div class="h-time">28 minutes ago</div><div class="h-user"><div class="h-avatar" style="background:#10b981">A</div><span class="h-username">admin</span></div></div></div>
+<div class="h-day">Yesterday</div>
+<div class="h-item"><div class="h-line"><div class="h-dot" style="background:#8b5cf6"></div></div><div class="h-content"><div class="h-action">Layer added</div><div class="h-detail">New layer "Traverse Path v2" added to mission</div><div class="h-time">Jan 23, 14:32</div><div class="h-user"><div class="h-avatar" style="background:#8b5cf6">A</div><span class="h-username">admin</span></div><div class="h-restore">Revert</div></div></div>
+<div class="h-item"><div class="h-line"><div class="h-dot" style="background:#ec4899"></div></div><div class="h-content"><div class="h-action">Feature deleted</div><div class="h-detail">3 waypoints removed from "Points Basic"</div><div class="h-time">Jan 23, 11:05</div><div class="h-user"><div class="h-avatar" style="background:#ec4899">A</div><span class="h-username">admin</span></div><div class="h-restore">Revert</div></div></div>
+<div class="h-item"><div class="h-line"><div class="h-dot" style="background:#06b6d4"></div></div><div class="h-content"><div class="h-action">View bookmarked</div><div class="h-detail">Saved "Golden Gate Overview" at Z14</div><div class="h-time">Jan 23, 09:15</div></div></div>
+<div class="h-day">Jan 22</div>
+<div class="h-item"><div class="h-line"><div class="h-dot" style="background:#eab308"></div></div><div class="h-content"><div class="h-action">Mission config updated</div><div class="h-detail">Time enabled for 3 layers, globe view activated</div><div class="h-time">Jan 22, 16:42</div></div></div>
+</div>
+<div class="h-footer"><div class="hf-btn">&#x21BA; Undo</div><div class="hf-btn">&#x21BB; Redo</div><div class="hf-btn">&#x2913; Export</div></div>
+</div></div>
+<div class="bb"><span class="hl">History</span> | 8 changes tracked | Last: 2 min ago | <span class="hl">Click to restore</span></div>
+</body>
+</html>

@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>MMGIS Mockup 62: Breadcrumb Workflow Navigation</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Inter',system-ui,sans-serif;background:#fafaf9;color:#292524;height:100vh;overflow:hidden;display:flex;flex-direction:column}
+.top{height:48px;background:#fff;display:flex;align-items:center;padding:0 16px;border-bottom:1px solid #e7e5e4;flex-shrink:0;gap:12px}
+.logo{font-size:16px;font-weight:800;color:#dc2626}
+.breadcrumb{display:flex;align-items:center;gap:4px;font-size:11px}
+.bc-item{color:#78716c;cursor:pointer;padding:2px 6px;border-radius:4px}
+.bc-item:hover{background:#f5f5f4;color:#292524}
+.bc-item.current{color:#292524;font-weight:600;background:#fef2f2}
+.bc-sep{color:#d6d3d1;font-size:10px}
+.right{margin-left:auto;display:flex;gap:8px;align-items:center}
+.step-indicator{display:flex;gap:2px;align-items:center}
+.step{width:24px;height:4px;border-radius:2px;background:#e7e5e4}
+.step.done{background:#dc2626}
+.step.active{background:#dc2626;width:36px}
+.step-label{font-size:8px;color:#78716c;margin-left:4px}
+.av{width:28px;height:28px;border-radius:50%;background:#dc2626;color:#fff;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700}
+/* Workflow panel */
+.workflow-bar{height:40px;background:#fff;border-bottom:1px solid #e7e5e4;display:flex;align-items:center;padding:0 16px;gap:6px;flex-shrink:0}
+.wf-btn{padding:6px 14px;border-radius:6px;font-size:10px;cursor:pointer;display:flex;align-items:center;gap:4px;font-weight:500}
+.wf-btn.primary{background:#dc2626;color:#fff}
+.wf-btn.secondary{background:#f5f5f4;color:#57534e;border:1px solid #e7e5e4}
+.wf-btn.ghost{color:#78716c}
+.wf-divider{width:1px;height:20px;background:#e7e5e4}
+.wf-status{font-size:9px;color:#78716c;margin-left:auto;display:flex;align-items:center;gap:4px}
+.wf-dot{width:6px;height:6px;border-radius:50%;background:#10b981}
+.ws{flex:1;display:flex;overflow:hidden}
+.sidebar{width:240px;background:#fff;border-right:1px solid #e7e5e4;display:flex;flex-direction:column;flex-shrink:0}
+.sb-section{border-bottom:1px solid #e7e5e4}
+.sb-title{padding:8px 12px;font-size:9px;font-weight:600;color:#78716c;text-transform:uppercase;letter-spacing:.5px}
+.sb-item{padding:6px 12px;font-size:11px;color:#57534e;display:flex;align-items:center;gap:8px;cursor:pointer}
+.sb-item:hover{background:#f5f5f4}
+.sb-item.a{background:#fef2f2;color:#dc2626;font-weight:500}
+.sb-icon{font-size:14px;width:18px;text-align:center}
+.sb-badge{margin-left:auto;padding:1px 6px;border-radius:8px;font-size:8px;background:#fef2f2;color:#dc2626;font-weight:600}
+.map{flex:1;background:#f5f5f4;position:relative;display:flex;align-items:center;justify-content:center}
+.ml{font-size:10px;color:#d6d3d1;letter-spacing:3px;text-transform:uppercase}
+/* Context card */
+.context{position:absolute;top:12px;left:12px;background:#fff;border-radius:8px;box-shadow:0 2px 8px rgba(0,0,0,.06);padding:12px;width:280px;border:1px solid #e7e5e4}
+.ctx-step{font-size:8px;text-transform:uppercase;letter-spacing:.5px;color:#dc2626;font-weight:600;margin-bottom:4px}
+.ctx-title{font-size:14px;font-weight:700;color:#292524;margin-bottom:4px}
+.ctx-desc{font-size:10px;color:#78716c;line-height:1.5;margin-bottom:8px}
+.ctx-checklist{list-style:none;padding:0}
+.ctx-check{padding:3px 0;font-size:10px;color:#57534e;display:flex;align-items:center;gap:6px}
+.ctx-checkbox{width:14px;height:14px;border-radius:3px;border:1.5px solid #d6d3d1;display:flex;align-items:center;justify-content:center;font-size:8px;color:#fff;flex-shrink:0}
+.ctx-checkbox.done{background:#dc2626;border-color:#dc2626}
+.mc{position:absolute;right:12px;bottom:12px;display:flex;flex-direction:column;gap:4px}
+.mb{width:32px;height:32px;background:#fff;border:1px solid #e7e5e4;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:14px;color:#78716c;cursor:pointer;box-shadow:0 1px 3px rgba(0,0,0,.04)}
+.bb{height:28px;background:#fff;display:flex;align-items:center;padding:0 16px;gap:12px;border-top:1px solid #e7e5e4;font-size:9px;color:#78716c;flex-shrink:0}
+.bb .hl{color:#dc2626}
+</style>
+</head>
+<body>
+<div class="top"><span class="logo">MMGIS</span><div class="breadcrumb"><span class="bc-item">Missions</span><span class="bc-sep">&rsaquo;</span><span class="bc-item">Reference Mission</span><span class="bc-sep">&rsaquo;</span><span class="bc-item current">Site Survey</span></div><div class="right"><div class="step-indicator"><div class="step done"></div><div class="step done"></div><div class="step active"></div><div class="step"></div><div class="step"></div><span class="step-label">Step 3 of 5</span></div><div class="av">A</div></div></div>
+<div class="workflow-bar"><div class="wf-btn secondary">&#8592; Back</div><div class="wf-btn primary">Mark Complete &amp; Next &#8594;</div><div class="wf-divider"></div><div class="wf-btn ghost">&#128190; Save Draft</div><div class="wf-btn ghost">&#128206; Attach File</div><div class="wf-btn ghost">&#128172; Comment</div><div class="wf-status"><div class="wf-dot"></div>Auto-saved 30s ago</div></div>
+<div class="ws">
+<div class="sidebar">
+<div class="sb-section"><div class="sb-title">Workflow Steps</div>
+<div class="sb-item"><span class="sb-icon">&#10003;</span>1. Select Study Area<span class="sb-badge">Done</span></div>
+<div class="sb-item"><span class="sb-icon">&#10003;</span>2. Load Base Layers<span class="sb-badge">Done</span></div>
+<div class="sb-item a"><span class="sb-icon">&#9654;</span>3. Site Survey<span class="sb-badge">Active</span></div>
+<div class="sb-item"><span class="sb-icon">&#9675;</span>4. Add Annotations</div>
+<div class="sb-item"><span class="sb-icon">&#9675;</span>5. Export Report</div>
+</div>
+<div class="sb-section"><div class="sb-title">Active Layers</div>
+<div class="sb-item"><span class="sb-icon">&#128205;</span>Points Basic</div>
+<div class="sb-item"><span class="sb-icon">&#128200;</span>Lines Basic</div>
+<div class="sb-item"><span class="sb-icon">&#10140;</span>Arrows</div>
+<div class="sb-item"><span class="sb-icon">&#127748;</span>Raster DEM</div>
+</div></div>
+<div class="map"><div class="ml">San Francisco Bay</div>
+<div class="context"><div class="ctx-step">Step 3 of 5</div><div class="ctx-title">Site Survey</div><div class="ctx-desc">Place waypoints at potential observation sites. Use the Draw tool to mark traverse paths between sites.</div>
+<ul class="ctx-checklist">
+<li class="ctx-check"><div class="ctx-checkbox done">&#10003;</div>Place primary observation waypoint</li>
+<li class="ctx-check"><div class="ctx-checkbox done">&#10003;</div>Place secondary waypoint</li>
+<li class="ctx-check"><div class="ctx-checkbox">&#10003;</div>Draw traverse path</li>
+<li class="ctx-check"><div class="ctx-checkbox">&#10003;</div>Measure total distance</li>
+<li class="ctx-check"><div class="ctx-checkbox">&#10003;</div>Check elevation profile</li>
+</ul></div>
+<div class="mc"><div class="mb">+</div><div class="mb">&minus;</div><div class="mb">&#8962;</div></div>
+</div></div>
+<div class="bb"><span class="hl">37.775&deg;N, 122.419&deg;W</span> | Z12 | Step 3: Site Survey | 2/5 checklist items done</div>
+</body>
+</html>

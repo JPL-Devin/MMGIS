@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>MMGIS Mockup 63: Data Table View</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Inter',system-ui,sans-serif;background:#f8fafc;color:#334155;height:100vh;overflow:hidden;display:flex;flex-direction:column}
+.top{height:40px;background:#fff;display:flex;align-items:center;padding:0 14px;border-bottom:1px solid #e2e8f0;flex-shrink:0}
+.logo{font-size:14px;font-weight:700;color:#0ea5e9}
+.tabs{display:flex;gap:1px;margin-left:16px;background:#f1f5f9;border-radius:6px;padding:2px}
+.tab{padding:4px 12px;font-size:10px;color:#64748b;border-radius:4px;cursor:pointer}
+.tab.a{background:#fff;color:#0ea5e9;font-weight:600;box-shadow:0 1px 2px rgba(0,0,0,.05)}
+.right{margin-left:auto;display:flex;gap:6px;align-items:center;font-size:9px;color:#94a3b8}
+.av{width:24px;height:24px;border-radius:50%;background:#0ea5e9;color:#fff;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:700}
+.ws{flex:1;display:flex;overflow:hidden}
+/* Mini map on left */
+.mini-map{width:300px;background:#e2e8f0;position:relative;flex-shrink:0;border-right:1px solid #e2e8f0}
+.mm-label{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-size:9px;color:#94a3b8;letter-spacing:2px;text-transform:uppercase}
+.mm-header{position:absolute;top:0;left:0;right:0;height:28px;background:#fff;border-bottom:1px solid #e2e8f0;display:flex;align-items:center;padding:0 8px;font-size:9px;color:#64748b;font-weight:600}
+.mm-controls{position:absolute;bottom:8px;right:8px;display:flex;gap:2px}
+.mm-btn{width:20px;height:20px;background:#fff;border:1px solid #e2e8f0;border-radius:4px;display:flex;align-items:center;justify-content:center;font-size:10px;color:#64748b;cursor:pointer}
+/* Data table */
+.data-area{flex:1;display:flex;flex-direction:column;background:#fff}
+.da-toolbar{height:36px;display:flex;align-items:center;padding:0 12px;gap:8px;border-bottom:1px solid #e2e8f0;flex-shrink:0}
+.da-search{padding:4px 10px;background:#f1f5f9;border:1px solid #e2e8f0;border-radius:6px;font-size:10px;color:#334155;width:200px;font-family:inherit}
+.da-filters{display:flex;gap:4px}
+.da-filter{padding:3px 8px;border-radius:4px;font-size:9px;color:#64748b;border:1px solid #e2e8f0;cursor:pointer}
+.da-filter.a{background:#eff6ff;color:#0ea5e9;border-color:#bae6fd}
+.da-actions{margin-left:auto;display:flex;gap:4px}
+.da-act{padding:3px 8px;border-radius:4px;font-size:9px;color:#64748b;border:1px solid #e2e8f0;cursor:pointer}
+.da-act.primary{background:#0ea5e9;color:#fff;border-color:#0ea5e9}
+.table-wrap{flex:1;overflow:auto}
+table{width:100%;border-collapse:collapse;font-size:11px}
+thead{position:sticky;top:0;z-index:1}
+th{text-align:left;padding:6px 10px;background:#f8fafc;color:#64748b;font-weight:600;border-bottom:2px solid #e2e8f0;font-size:9px;text-transform:uppercase;letter-spacing:.3px;cursor:pointer;white-space:nowrap}
+th:hover{color:#0ea5e9}
+th.sorted{color:#0ea5e9}
+th .arrow{font-size:8px;margin-left:2px}
+td{padding:6px 10px;border-bottom:1px solid #f1f5f9;color:#475569}
+tr:hover td{background:#f8fafc}
+tr.selected td{background:#eff6ff}
+.row-check{width:14px;height:14px;border:1.5px solid #cbd5e1;border-radius:3px;cursor:pointer;display:flex;align-items:center;justify-content:center}
+.row-check.on{background:#0ea5e9;border-color:#0ea5e9;color:#fff;font-size:8px}
+.layer-badge{padding:1px 6px;border-radius:3px;font-size:8px;font-weight:500}
+.lb-vec{background:#dbeafe;color:#2563eb}
+.lb-rast{background:#fef3c7;color:#d97706}
+.coord{font-family:monospace;font-size:10px;color:#64748b}
+.da-footer{height:32px;display:flex;align-items:center;padding:0 12px;gap:8px;border-top:1px solid #e2e8f0;font-size:9px;color:#94a3b8;flex-shrink:0}
+.da-footer .hl{color:#0ea5e9;font-weight:600}
+.pagination{margin-left:auto;display:flex;gap:2px;align-items:center}
+.pg-btn{padding:2px 6px;border:1px solid #e2e8f0;border-radius:3px;font-size:9px;color:#64748b;cursor:pointer}
+.pg-btn.a{background:#0ea5e9;color:#fff;border-color:#0ea5e9}
+</style>
+</head>
+<body>
+<div class="top"><span class="logo">MMGIS</span><div class="tabs"><div class="tab">Map</div><div class="tab">Globe</div><div class="tab a">Data</div><div class="tab">Timeline</div></div><div class="right"><span>Reference Mission</span><div class="av">A</div></div></div>
+<div class="ws">
+<div class="mini-map"><div class="mm-header">Map Preview</div><div class="mm-label">SF Bay Area &bull; Z12</div><div class="mm-controls"><div class="mm-btn">+</div><div class="mm-btn">-</div></div></div>
+<div class="data-area">
+<div class="da-toolbar"><input class="da-search" placeholder="&#128269; Filter features..." readonly/><div class="da-filters"><div class="da-filter a">All (312)</div><div class="da-filter">Points (245)</div><div class="da-filter">Lines (42)</div><div class="da-filter">Polygons (25)</div></div><div class="da-actions"><div class="da-act">&#x2913; Export CSV</div><div class="da-act">&#x2913; Export GeoJSON</div><div class="da-act primary">+ Add Feature</div></div></div>
+<div class="table-wrap"><table>
+<thead><tr><th style="width:30px"><div class="row-check on">&#10003;</div></th><th class="sorted">Name <span class="arrow">&#9650;</span></th><th>Layer</th><th>Type</th><th>Latitude</th><th>Longitude</th><th>Elevation</th><th>Date</th><th>Properties</th></tr></thead>
+<tbody>
+<tr class="selected"><td><div class="row-check on">&#10003;</div></td><td><strong>Waypoint Alpha</strong></td><td><span class="layer-badge lb-vec">Points Basic</span></td><td>Point</td><td class="coord">37.7749</td><td class="coord">-122.4194</td><td>12m</td><td>Jan 13</td><td>type: primary</td></tr>
+<tr class="selected"><td><div class="row-check on">&#10003;</div></td><td><strong>Waypoint Beta</strong></td><td><span class="layer-badge lb-vec">Points Basic</span></td><td>Point</td><td class="coord">37.7812</td><td class="coord">-122.4108</td><td>45m</td><td>Jan 13</td><td>type: secondary</td></tr>
+<tr><td><div class="row-check"></div></td><td>Traverse Path 1</td><td><span class="layer-badge lb-vec">Lines Basic</span></td><td>LineString</td><td class="coord">37.7765</td><td class="coord">-122.4155</td><td>--</td><td>Jan 12</td><td>length: 2.4km</td></tr>
+<tr><td><div class="row-check"></div></td><td>Direction Arrow 1</td><td><span class="layer-badge lb-vec">Arrows</span></td><td>Arrow</td><td class="coord">37.7798</td><td class="coord">-122.4131</td><td>89m</td><td>Jan 11</td><td>bearing: 42&deg;</td></tr>
+<tr><td><div class="row-check"></div></td><td>Sample Site A</td><td><span class="layer-badge lb-vec">Points Styled</span></td><td>Point</td><td class="coord">37.7731</td><td class="coord">-122.4220</td><td>8m</td><td>Jan 10</td><td>status: active</td></tr>
+<tr><td><div class="row-check"></div></td><td>Study Area West</td><td><span class="layer-badge lb-vec">Polygons Styled</span></td><td>Polygon</td><td class="coord">37.7780</td><td class="coord">-122.4160</td><td>--</td><td>Jan 9</td><td>area: 2.1km&sup2;</td></tr>
+<tr><td><div class="row-check"></div></td><td>Observation Point C</td><td><span class="layer-badge lb-vec">Points Basic</span></td><td>Point</td><td class="coord">37.7695</td><td class="coord">-122.4285</td><td>22m</td><td>Jan 8</td><td>type: tertiary</td></tr>
+<tr><td><div class="row-check"></div></td><td>Traverse Path 2</td><td><span class="layer-badge lb-vec">Lines Basic</span></td><td>LineString</td><td class="coord">37.7720</td><td class="coord">-122.4200</td><td>--</td><td>Jan 7</td><td>length: 1.8km</td></tr>
+<tr><td><div class="row-check"></div></td><td>DEM Coverage</td><td><span class="layer-badge lb-rast">Raster DEM</span></td><td>Raster</td><td class="coord">37.7500</td><td class="coord">-122.4500</td><td>0-200m</td><td>Jan 5</td><td>res: 30m/px</td></tr>
+</tbody></table></div>
+<div class="da-footer"><span><span class="hl">2</span> selected</span><span>&bull;</span><span>Showing <span class="hl">312</span> features from <span class="hl">8</span> layers</span><div class="pagination"><div class="pg-btn">&laquo;</div><div class="pg-btn">&lsaquo;</div><div class="pg-btn a">1</div><div class="pg-btn">2</div><div class="pg-btn">3</div><div class="pg-btn">...</div><div class="pg-btn">32</div><div class="pg-btn">&rsaquo;</div><div class="pg-btn">&raquo;</div></div></div>
+</div></div>
+</body>
+</html>

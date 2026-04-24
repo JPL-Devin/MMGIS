@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>MMGIS Mockup 64: Comparison Split View</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Inter',system-ui,sans-serif;background:#111827;color:#e5e7eb;height:100vh;overflow:hidden;display:flex;flex-direction:column}
+.top{height:36px;background:#1f2937;display:flex;align-items:center;padding:0 12px;border-bottom:1px solid #374151;flex-shrink:0}
+.logo{font-size:14px;font-weight:700;color:#f59e0b}
+.mission{color:#6b7280;font-size:10px;margin-left:10px}
+.mode{margin-left:16px;display:flex;gap:1px;background:#374151;border-radius:6px;padding:2px}
+.mode-btn{padding:3px 10px;font-size:9px;border-radius:4px;color:#9ca3af;cursor:pointer}
+.mode-btn.a{background:#f59e0b;color:#111827;font-weight:600}
+.right{margin-left:auto;display:flex;gap:6px;align-items:center;font-size:9px;color:#6b7280}
+.av{width:22px;height:22px;border-radius:50%;background:#f59e0b;color:#111827;display:flex;align-items:center;justify-content:center;font-size:8px;font-weight:700}
+.ws{flex:1;display:flex;overflow:hidden;position:relative}
+/* Split comparison */
+.split-left{flex:1;background:#0f1729;position:relative;display:flex;align-items:center;justify-content:center;overflow:hidden}
+.split-right{flex:1;background:#0f1729;position:relative;display:flex;align-items:center;justify-content:center;overflow:hidden;border-left:1px solid #374151}
+.split-label{position:absolute;top:8px;padding:3px 10px;background:#1f2937;border-radius:4px;font-size:9px;font-weight:600;z-index:2}
+.sl-left{left:8px;color:#60a5fa;border:1px solid #3b82f6}
+.sl-right{right:8px;color:#f59e0b;border:1px solid #f59e0b}
+.ml{font-size:9px;color:#1f2937;letter-spacing:3px;text-transform:uppercase}
+/* Slider handle */
+.slider-handle{position:absolute;top:0;bottom:0;left:50%;width:4px;background:#f59e0b;z-index:10;cursor:col-resize;display:flex;align-items:center;justify-content:center}
+.slider-grip{width:20px;height:40px;background:#f59e0b;border-radius:10px;display:flex;align-items:center;justify-content:center;color:#111827;font-size:12px;font-weight:700}
+/* Date selectors */
+.date-selectors{position:absolute;bottom:12px;left:50%;transform:translateX(-50%);display:flex;gap:20px;z-index:5}
+.date-sel{background:#1f2937;border:1px solid #374151;border-radius:8px;padding:6px 12px;display:flex;flex-direction:column;align-items:center;gap:2px}
+.ds-label{font-size:7px;text-transform:uppercase;letter-spacing:.5px;color:#6b7280}
+.ds-date{font-size:11px;font-weight:600}
+.ds-left .ds-date{color:#60a5fa}
+.ds-right .ds-date{color:#f59e0b}
+/* Layer info */
+.layer-info{position:absolute;top:8px;left:50%;transform:translateX(-50%);background:#1f2937;border:1px solid #374151;border-radius:6px;padding:4px 12px;font-size:9px;color:#9ca3af;z-index:5;display:flex;gap:8px;align-items:center}
+.li-layer{color:#e5e7eb;font-weight:500}
+/* Stats bar */
+.stats{position:absolute;bottom:50px;left:50%;transform:translateX(-50%);display:flex;gap:4px;z-index:5}
+.stat{background:#1f2937;border:1px solid #374151;border-radius:6px;padding:4px 10px;text-align:center}
+.stat-value{font-size:12px;font-weight:700;color:#f59e0b}
+.stat-label{font-size:7px;color:#6b7280;text-transform:uppercase;letter-spacing:.3px}
+/* Map controls */
+.mc{position:absolute;right:8px;bottom:50%;transform:translateY(50%);display:flex;flex-direction:column;gap:3px;z-index:5}
+.mb{width:24px;height:24px;background:#1f2937;border:1px solid #374151;border-radius:4px;display:flex;align-items:center;justify-content:center;color:#9ca3af;font-size:10px;cursor:pointer}
+.bb{height:24px;background:#1f2937;display:flex;align-items:center;padding:0 12px;gap:10px;border-top:1px solid #374151;font-size:8px;color:#6b7280;flex-shrink:0}
+.bb .hl{color:#f59e0b}
+</style>
+</head>
+<body>
+<div class="top"><span class="logo">MMGIS</span><span class="mission">Reference Mission</span><div class="mode"><div class="mode-btn">Single</div><div class="mode-btn a">Compare</div><div class="mode-btn">Swipe</div><div class="mode-btn">Blink</div></div><div class="right"><span>Synced Z12</span><div class="av">A</div></div></div>
+<div class="ws">
+<div class="split-left"><div class="split-label sl-left">Before &mdash; Jan 01, 2024</div><div class="ml">Before View</div></div>
+<div class="slider-handle"><div class="slider-grip">&hArr;</div></div>
+<div class="split-right"><div class="split-label sl-right">After &mdash; Jan 20, 2024</div><div class="ml">After View</div></div>
+<div class="layer-info"><span class="li-layer">Raster DEM</span><span>|</span><span>Elevation change analysis</span></div>
+<div class="stats">
+<div class="stat"><div class="stat-value">+2.4m</div><div class="stat-label">Max Change</div></div>
+<div class="stat"><div class="stat-value">-0.8m</div><div class="stat-label">Min Change</div></div>
+<div class="stat"><div class="stat-value">+0.3m</div><div class="stat-label">Mean Change</div></div>
+<div class="stat"><div class="stat-value">85%</div><div class="stat-label">Overlap</div></div>
+</div>
+<div class="date-selectors">
+<div class="date-sel ds-left"><span class="ds-label">Left Panel</span><span class="ds-date">Jan 01, 2024</span></div>
+<div class="date-sel ds-right"><span class="ds-label">Right Panel</span><span class="ds-date">Jan 20, 2024</span></div>
+</div>
+<div class="mc"><div class="mb">+</div><div class="mb">-</div><div class="mb">&#8962;</div><div class="mb">&#128279;</div></div>
+</div>
+<div class="bb"><span class="hl">Compare Mode</span> | 37.775&deg;N, 122.419&deg;W | Z12 | Layer: Raster DEM | <span class="hl">Drag slider to compare</span></div>
+</body>
+</html>
