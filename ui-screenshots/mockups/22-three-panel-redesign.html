@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>MMGIS Mockup 22: Three Panel System Redesign</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Inter',system-ui,sans-serif;background:#0f172a;color:#e2e8f0;height:100vh;overflow:hidden;display:flex;flex-direction:column}
+.top{height:40px;background:#1e293b;display:flex;align-items:center;padding:0 12px;border-bottom:1px solid #334155;flex-shrink:0}
+.logo{font-size:14px;font-weight:700;color:#38bdf8}
+.mission{color:#64748b;font-size:11px;margin-left:12px}
+.tabs{display:flex;gap:0;margin-left:24px;height:100%}
+.tab{padding:0 14px;font-size:11px;color:#94a3b8;cursor:pointer;display:flex;align-items:center;border-bottom:2px solid transparent}
+.tab:hover{color:#e2e8f0;background:#334155}
+.tab.a{color:#38bdf8;border-bottom-color:#38bdf8}
+.right{margin-left:auto;display:flex;gap:6px;align-items:center}
+.av{width:24px;height:24px;border-radius:50%;background:#38bdf8;color:#0f172a;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700}
+.workspace{flex:1;display:flex;flex-direction:column;overflow:hidden}
+.panel-tabs{height:32px;background:#1e293b;display:flex;align-items:center;padding:0 8px;gap:4px;border-bottom:1px solid #334155;flex-shrink:0}
+.panel-tab{display:flex;align-items:center;gap:6px;padding:4px 12px;font-size:10px;color:#94a3b8;border-radius:6px 6px 0 0;cursor:pointer;background:#0f172a;border:1px solid #334155;border-bottom:none;position:relative;top:1px}
+.panel-tab.a{color:#e2e8f0;background:#1e293b}
+.panel-tab .dot{width:6px;height:6px;border-radius:50%}
+.panel-tab .close{margin-left:4px;font-size:8px;color:#64748b}
+.layout-btns{margin-left:auto;display:flex;gap:2px}
+.lb{width:24px;height:18px;border:1px solid #334155;border-radius:3px;display:flex;cursor:pointer;overflow:hidden;padding:1px}
+.lb:hover{border-color:#38bdf8}
+.lb.a{border-color:#38bdf8}
+.lb div{background:#334155;border-radius:1px}
+.panels{flex:1;display:flex;overflow:hidden;gap:2px;padding:2px}
+.panel{flex:1;background:#1e293b;border-radius:8px;border:1px solid #334155;position:relative;display:flex;flex-direction:column;overflow:hidden}
+.panel.large{flex:2}
+.panel-header{height:28px;display:flex;align-items:center;padding:0 10px;gap:6px;border-bottom:1px solid #334155;flex-shrink:0;font-size:10px;font-weight:600;color:#cbd5e1}
+.panel-header .icon{font-size:12px;color:#38bdf8}
+.panel-header .badge{font-size:8px;background:#334155;padding:1px 5px;border-radius:4px;color:#94a3b8}
+.panel-header .actions{margin-left:auto;display:flex;gap:3px}
+.panel-header .act{font-size:10px;color:#64748b;cursor:pointer}
+.panel-header .act:hover{color:#38bdf8}
+.panel-body{flex:1;display:flex;align-items:center;justify-content:center;position:relative}
+.map-bg{position:absolute;inset:0;background:radial-gradient(ellipse at 40% 50%,#1e3a5f 0%,#0f172a 70%);opacity:0.4}
+.panel-label{font-size:10px;color:#334155;letter-spacing:3px;text-transform:uppercase;z-index:1}
+.mc{position:absolute;right:6px;top:6px;display:flex;flex-direction:column;gap:2px;z-index:2}
+.mb{width:22px;height:22px;background:#0f172acc;border:1px solid #334155;border-radius:4px;display:flex;align-items:center;justify-content:center;color:#38bdf8;cursor:pointer;font-size:10px}
+.splitter{width:4px;cursor:col-resize;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.splitter:hover .grip{background:#38bdf8}
+.grip{width:2px;height:20px;background:#334155;border-radius:1px}
+.sync-bar{height:24px;background:#1e293b;display:flex;align-items:center;justify-content:center;gap:12px;border-top:1px solid #334155;flex-shrink:0;font-size:9px;color:#64748b}
+.sync-icon{color:#38bdf8}
+.bottom{height:36px;background:#1e293b;display:flex;align-items:center;padding:0 12px;gap:12px;border-top:1px solid #334155;flex-shrink:0;font-size:10px}
+.cd{color:#38bdf8;font-family:monospace;font-size:10px}
+.ts{flex:1;display:flex;align-items:center;gap:6px}
+.tl{color:#64748b;font-size:9px}
+.tt{flex:1;height:3px;background:#334155;border-radius:1.5px;position:relative}
+.tf{width:55%;height:100%;background:#38bdf8;border-radius:1.5px}
+.th{position:absolute;width:8px;height:8px;border-radius:50%;background:#38bdf8;border:2px solid #1e293b;top:-2.5px;left:55%}
+/* Stacked layout variant */
+.panels-stacked{flex:1;display:flex;flex-direction:column;overflow:hidden;gap:2px;padding:2px;display:none}
+</style>
+</head>
+<body>
+<div class="top">
+<div class="logo">MMGIS</div><div class="mission">Reference Mission</div>
+<div class="tabs"><div class="tab a">Split View</div><div class="tab">Map Only</div><div class="tab">Globe Only</div><div class="tab">Data</div></div>
+<div class="right"><div class="av">A</div></div>
+</div>
+<div class="workspace">
+<div class="panel-tabs">
+<div class="panel-tab a"><span class="dot" style="background:#34d399"></span>Viewer<span class="close">&times;</span></div>
+<div class="panel-tab a"><span class="dot" style="background:#38bdf8"></span>2D Map<span class="close">&times;</span></div>
+<div class="panel-tab a"><span class="dot" style="background:#a78bfa"></span>3D Globe<span class="close">&times;</span></div>
+<div class="panel-tab"><span class="dot" style="background:#f59e0b"></span>Data View</div>
+<div class="layout-btns">
+<div class="lb" title="Side by side" style="gap:1px"><div style="flex:1;height:100%"></div><div style="flex:1;height:100%"></div><div style="flex:1;height:100%"></div></div>
+<div class="lb a" title="Map focused" style="gap:1px"><div style="flex:1;height:100%"></div><div style="flex:2;height:100%"></div><div style="flex:1;height:100%"></div></div>
+<div class="lb" title="Stacked"><div style="width:100%;height:45%"></div><div style="width:100%;height:1px;background:transparent"></div><div style="width:100%;height:45%"></div></div>
+<div class="lb" title="Single"><div style="width:100%;height:100%"></div></div>
+</div>
+</div>
+<div class="panels">
+<div class="panel">
+<div class="panel-header"><span class="icon">&#128247;</span>Viewer<span class="badge">Imagery</span><div class="actions"><span class="act">&#8689;</span><span class="act">&times;</span></div></div>
+<div class="panel-body"><div class="map-bg" style="opacity:0.2"></div><div class="panel-label">Viewer Panel</div></div>
+</div>
+<div class="splitter"><div class="grip"></div></div>
+<div class="panel large">
+<div class="panel-header"><span class="icon">&#127758;</span>2D Map<span class="badge">Leaflet</span><div class="actions"><span class="act">&#128269;</span><span class="act">&#8689;</span><span class="act">&times;</span></div></div>
+<div class="panel-body"><div class="map-bg"></div><div class="panel-label">San Francisco Bay</div><div class="mc"><div class="mb">+</div><div class="mb">&minus;</div><div class="mb">&#8962;</div></div></div>
+</div>
+<div class="splitter"><div class="grip"></div></div>
+<div class="panel">
+<div class="panel-header"><span class="icon">&#127760;</span>3D Globe<span class="badge">Cesium</span><div class="actions"><span class="act">&#8635;</span><span class="act">&#8689;</span><span class="act">&times;</span></div></div>
+<div class="panel-body"><div class="map-bg" style="opacity:0.3"></div><div class="panel-label">&#127760; Globe</div></div>
+</div>
+</div>
+<div class="sync-bar"><span class="sync-icon">&#8644;</span>Views synced &bull; Camera: -122.419&deg;, 37.775&deg; &bull; Zoom: 12 &bull; Bearing: 0&deg;</div>
+</div>
+<div class="bottom">
+<div class="cd">-122.419&deg;, 37.775&deg;</div>
+<div class="ts"><span class="tl">2024-01-01</span><div class="tt"><div class="tf"></div><div class="th"></div></div><span class="tl">2024-01-20</span></div>
+</div>
+</body>
+</html>

@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>MMGIS Mockup 17: Ribbon Toolbar (Office-Style)</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Segoe UI',system-ui,sans-serif;background:#f0f0f0;color:#333;height:100vh;overflow:hidden;display:flex;flex-direction:column}
+.titlebar{height:28px;background:#1a5276;display:flex;align-items:center;padding:0 12px;flex-shrink:0}
+.titlebar .logo{color:#fff;font-size:12px;font-weight:600}
+.titlebar .mission{color:#aed6f1;font-size:11px;margin-left:10px}
+.titlebar .right{margin-left:auto;display:flex;gap:8px}
+.titlebar .btn{color:#aed6f1;font-size:10px;cursor:pointer}
+.ribbon-tabs{height:26px;background:#2980b9;display:flex;align-items:flex-end;padding:0 8px;gap:0;flex-shrink:0}
+.ribbon-tabs .tab{padding:4px 16px;font-size:11px;color:#d4e6f1;cursor:pointer;border-radius:4px 4px 0 0}
+.ribbon-tabs .tab:hover{background:rgba(255,255,255,0.1)}
+.ribbon-tabs .tab.a{background:#fff;color:#333;font-weight:600}
+.ribbon{height:90px;background:#fff;border-bottom:1px solid #ccc;display:flex;padding:4px 8px;gap:0;flex-shrink:0;overflow-x:auto}
+.ribbon-group{display:flex;flex-direction:column;padding:2px 8px;border-right:1px solid #e0e0e0;min-width:80px}
+.ribbon-group-title{font-size:8px;color:#888;text-align:center;text-transform:uppercase;letter-spacing:0.5px;margin-top:auto;padding-top:2px;border-top:1px solid #eee}
+.ribbon-group-content{display:flex;gap:2px;flex:1;align-items:flex-start;padding:2px 0}
+.ribbon-btn{display:flex;flex-direction:column;align-items:center;padding:4px 6px;border-radius:3px;cursor:pointer;min-width:44px}
+.ribbon-btn:hover{background:#e8f0fe}
+.ribbon-btn .icon{font-size:20px;color:#2980b9;height:24px;display:flex;align-items:center}
+.ribbon-btn .label{font-size:8px;color:#555;margin-top:1px;white-space:nowrap}
+.ribbon-btn.large .icon{font-size:28px;height:32px}
+.ribbon-btn-row{display:flex;flex-direction:column;gap:1px}
+.ribbon-btn-sm{display:flex;align-items:center;gap:4px;padding:2px 6px;border-radius:2px;cursor:pointer;font-size:10px;color:#555}
+.ribbon-btn-sm:hover{background:#e8f0fe}
+.ribbon-btn-sm .icon{font-size:12px;color:#2980b9;width:16px;text-align:center}
+.workspace{flex:1;display:flex;overflow:hidden}
+.side-panel{width:220px;background:#fff;border-right:1px solid #ddd;display:flex;flex-direction:column;flex-shrink:0}
+.panel-header{padding:8px 10px;font-size:11px;font-weight:600;background:#f7f7f7;border-bottom:1px solid #eee;display:flex;justify-content:space-between;align-items:center}
+.panel-header .close{cursor:pointer;color:#999;font-size:14px}
+.layer-list{flex:1;overflow-y:auto;padding:4px 0}
+.layer-group{border-bottom:1px solid #f0f0f0}
+.layer-group-header{padding:5px 10px;font-size:10px;font-weight:600;color:#2980b9;cursor:pointer;display:flex;align-items:center;gap:4px;background:#f9f9f9}
+.layer-item{padding:4px 10px 4px 20px;display:flex;align-items:center;gap:6px;font-size:10px}
+.layer-item:hover{background:#f0f7ff}
+.cb{width:14px;height:14px;border:1.5px solid #aaa;border-radius:2px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:8px;color:#2980b9}
+.cb.on{background:#2980b9;border-color:#2980b9;color:#fff}
+.map-area{flex:1;background:#e8e8e8;position:relative;display:flex;align-items:center;justify-content:center}
+.map-placeholder{font-size:12px;color:#bbb;letter-spacing:4px;text-transform:uppercase}
+.map-controls{position:absolute;top:8px;right:8px;display:flex;flex-direction:column;gap:2px}
+.map-btn{width:28px;height:28px;background:#fff;border:1px solid #ccc;border-radius:3px;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:14px;color:#555}
+.map-btn:hover{background:#e8f0fe;border-color:#2980b9}
+.statusbar{height:24px;background:#f7f7f7;border-top:1px solid #ddd;display:flex;align-items:center;padding:0 12px;font-size:10px;color:#888;gap:20px;flex-shrink:0}
+.statusbar .coord{color:#2980b9;font-family:monospace}
+.statusbar .zoom{margin-left:auto}
+.minimap{position:absolute;bottom:8px;right:8px;width:120px;height:80px;background:#fff;border:1px solid #ccc;border-radius:3px;overflow:hidden}
+.minimap-inner{width:100%;height:100%;background:#dce6f0;display:flex;align-items:center;justify-content:center;font-size:8px;color:#8faec0}
+.minimap-rect{position:absolute;border:1.5px solid #e74c3c;width:30px;height:20px;top:25px;left:40px}
+</style>
+</head>
+<body>
+<div class="titlebar"><span class="logo">MMGIS</span><span class="mission">— Reference Mission</span><div class="right"><span class="btn">&#9881; Settings</span><span class="btn">&#128100; Admin</span></div></div>
+<div class="ribbon-tabs">
+<div class="tab a">Home</div><div class="tab">View</div><div class="tab">Analysis</div><div class="tab">Draw</div><div class="tab">Data</div><div class="tab">Help</div>
+</div>
+<div class="ribbon">
+<div class="ribbon-group">
+<div class="ribbon-group-content">
+<div class="ribbon-btn large"><span class="icon">&#9776;</span><span class="label">Layers</span></div>
+<div class="ribbon-btn large"><span class="icon">&#128269;</span><span class="label">Search</span></div>
+</div>
+<div class="ribbon-group-title">Navigation</div>
+</div>
+<div class="ribbon-group">
+<div class="ribbon-group-content">
+<div class="ribbon-btn"><span class="icon">&#9998;</span><span class="label">Draw</span></div>
+<div class="ribbon-btn"><span class="icon">&#8676;</span><span class="label">Measure</span></div>
+<div class="ribbon-btn"><span class="icon">&#128205;</span><span class="label">Identify</span></div>
+</div>
+<div class="ribbon-group-title">Tools</div>
+</div>
+<div class="ribbon-group">
+<div class="ribbon-group-content">
+<div class="ribbon-btn-row">
+<div class="ribbon-btn-sm"><span class="icon">&#9737;</span>Viewshed</div>
+<div class="ribbon-btn-sm"><span class="icon">&#9201;</span>Isochrone</div>
+<div class="ribbon-btn-sm"><span class="icon">&#9878;</span>Chemistry</div>
+</div>
+<div class="ribbon-btn-row">
+<div class="ribbon-btn-sm"><span class="icon">&#9681;</span>Shade</div>
+<div class="ribbon-btn-sm"><span class="icon">&#9649;</span>Curtain</div>
+<div class="ribbon-btn-sm"><span class="icon">&#9635;</span>Segment</div>
+</div>
+</div>
+<div class="ribbon-group-title">Analysis</div>
+</div>
+<div class="ribbon-group">
+<div class="ribbon-group-content">
+<div class="ribbon-btn"><span class="icon">&#127760;</span><span class="label">Globe</span></div>
+<div class="ribbon-btn"><span class="icon">&#9638;</span><span class="label">Split</span></div>
+<div class="ribbon-btn-row">
+<div class="ribbon-btn-sm"><span class="icon">&#8634;</span>Reset View</div>
+<div class="ribbon-btn-sm"><span class="icon">&#9783;</span>Full Screen</div>
+<div class="ribbon-btn-sm"><span class="icon">&#128247;</span>Screenshot</div>
+</div>
+</div>
+<div class="ribbon-group-title">View</div>
+</div>
+<div class="ribbon-group">
+<div class="ribbon-group-content">
+<div class="ribbon-btn"><span class="icon">&#9873;</span><span class="label">Sites</span></div>
+<div class="ribbon-btn"><span class="icon">&#9883;</span><span class="label">Legend</span></div>
+<div class="ribbon-btn"><span class="icon">&#8505;</span><span class="label">Info</span></div>
+</div>
+<div class="ribbon-group-title">Information</div>
+</div>
+<div class="ribbon-group">
+<div class="ribbon-group-content">
+<div class="ribbon-btn"><span class="icon">&#9654;</span><span class="label">Animate</span></div>
+<div class="ribbon-btn-row">
+<div class="ribbon-btn-sm"><span class="icon">&#128197;</span>Timeline</div>
+<div class="ribbon-btn-sm"><span class="icon">&#9203;</span>Time Range</div>
+</div>
+</div>
+<div class="ribbon-group-title">Time</div>
+</div>
+</div>
+<div class="workspace">
+<div class="side-panel">
+<div class="panel-header">Layers <span class="close">&times;</span></div>
+<div class="layer-list">
+<div class="layer-group"><div class="layer-group-header">&#9660; Vector Layers</div>
+<div class="layer-item"><div class="cb on">&#10003;</div>Points Basic</div>
+<div class="layer-item"><div class="cb on">&#10003;</div>Lines Basic</div>
+<div class="layer-item"><div class="cb">&#160;</div>Polygons Basic</div>
+<div class="layer-item"><div class="cb on">&#10003;</div>Arrows</div>
+<div class="layer-item"><div class="cb">&#160;</div>Annotations</div></div>
+<div class="layer-group"><div class="layer-group-header">&#9660; Feature Styling</div>
+<div class="layer-item"><div class="cb on">&#10003;</div>Points Styled</div>
+<div class="layer-item"><div class="cb">&#160;</div>Lines Styled</div>
+<div class="layer-item"><div class="cb on">&#10003;</div>Polygons Styled</div>
+<div class="layer-item"><div class="cb">&#160;</div>Style From Prop</div></div>
+<div class="layer-group"><div class="layer-group-header">&#9654; Feature Behavior (6)</div></div>
+<div class="layer-group"><div class="layer-group-header">&#9654; Geodatasets (5)</div></div>
+<div class="layer-group"><div class="layer-group-header">&#9654; Data Layers (9)</div></div>
+</div>
+</div>
+<div class="map-area">
+<div class="map-placeholder">San Francisco Bay Area</div>
+<div class="map-controls"><div class="map-btn">+</div><div class="map-btn">&minus;</div><div class="map-btn">&#8962;</div></div>
+<div class="minimap"><div class="minimap-inner">Overview<div class="minimap-rect"></div></div></div>
+</div>
+</div>
+<div class="statusbar">
+<span>Ready</span>
+<span class="coord">-122.419&deg;, 37.775&deg;</span>
+<span>Zoom: 12</span>
+<span>Layers: 8/29</span>
+<span class="zoom">WGS84 / EPSG:4326</span>
+</div>
+</body>
+</html>

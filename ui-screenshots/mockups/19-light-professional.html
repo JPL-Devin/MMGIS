@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>MMGIS Mockup 19: Light Professional</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Inter',system-ui,sans-serif;background:#f8fafc;color:#1e293b;height:100vh;overflow:hidden;display:flex;flex-direction:column}
+.top{height:48px;background:#fff;display:flex;align-items:center;padding:0 20px;border-bottom:1px solid #e2e8f0;flex-shrink:0;box-shadow:0 1px 3px rgba(0,0,0,0.04)}
+.logo{font-size:18px;font-weight:800;color:#3b82f6;letter-spacing:-0.5px}
+.sep{width:1px;height:24px;background:#e2e8f0;margin:0 16px}
+.mission-sel{display:flex;align-items:center;gap:6px;padding:6px 12px;border:1px solid #e2e8f0;border-radius:8px;font-size:12px;color:#475569;cursor:pointer}
+.mission-sel:hover{border-color:#93c5fd}
+.search{margin-left:24px;background:#f1f5f9;border:1px solid #e2e8f0;border-radius:8px;padding:8px 14px 8px 32px;font-size:12px;color:#64748b;width:280px;position:relative}
+.search-icon{position:absolute;left:10px;top:8px;color:#94a3b8;font-size:14px}
+.right{margin-left:auto;display:flex;gap:8px;align-items:center}
+.top-btn{padding:6px 12px;font-size:11px;color:#64748b;border-radius:6px;cursor:pointer;border:1px solid transparent}
+.top-btn:hover{background:#f1f5f9;border-color:#e2e8f0}
+.top-btn.primary{background:#3b82f6;color:#fff;font-weight:500}
+.avatar{width:32px;height:32px;border-radius:50%;background:#3b82f6;color:#fff;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:600}
+.workspace{flex:1;display:flex;overflow:hidden}
+.sidebar{width:56px;background:#fff;border-right:1px solid #e2e8f0;display:flex;flex-direction:column;align-items:center;padding:12px 0;gap:4px;flex-shrink:0}
+.tool{width:40px;height:40px;display:flex;align-items:center;justify-content:center;border-radius:10px;font-size:16px;color:#94a3b8;cursor:pointer;transition:all 0.15s}
+.tool:hover{background:#f1f5f9;color:#3b82f6}
+.tool.a{background:#eff6ff;color:#3b82f6}
+.tool-divider{width:24px;height:1px;background:#e2e8f0;margin:4px 0}
+.panel{width:300px;background:#fff;border-right:1px solid #e2e8f0;display:flex;flex-direction:column;flex-shrink:0}
+.panel-top{padding:16px 16px 12px;display:flex;justify-content:space-between;align-items:center}
+.panel-title{font-size:14px;font-weight:600;color:#1e293b}
+.panel-count{font-size:11px;color:#94a3b8;background:#f1f5f9;padding:2px 8px;border-radius:10px}
+.panel-search{margin:0 16px 12px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;padding:8px 12px;font-size:12px;color:#64748b}
+.filter-row{display:flex;gap:4px;padding:0 16px 12px}
+.filter-chip{padding:4px 10px;border-radius:6px;font-size:10px;background:#f1f5f9;color:#64748b;cursor:pointer;border:1px solid transparent}
+.filter-chip:hover{border-color:#93c5fd}
+.filter-chip.a{background:#eff6ff;color:#3b82f6;border-color:#93c5fd}
+.layer-list{flex:1;overflow-y:auto;padding:0 8px}
+.layer-group{margin-bottom:4px}
+.group-header{padding:8px 8px;font-size:11px;font-weight:600;color:#64748b;display:flex;align-items:center;gap:6px;cursor:pointer;border-radius:6px}
+.group-header:hover{background:#f8fafc}
+.group-count{font-size:10px;color:#94a3b8;margin-left:auto}
+.layer{padding:8px;display:flex;align-items:center;gap:10px;border-radius:8px;margin:1px 0}
+.layer:hover{background:#f8fafc}
+.layer-color{width:4px;height:24px;border-radius:2px}
+.layer-info{flex:1;min-width:0}
+.layer-name{font-size:12px;color:#334155;font-weight:500}
+.layer-type{font-size:10px;color:#94a3b8}
+.layer-toggle{width:36px;height:20px;border-radius:10px;background:#e2e8f0;position:relative;cursor:pointer;flex-shrink:0}
+.layer-toggle.on{background:#3b82f6}
+.layer-toggle::after{content:'';position:absolute;width:16px;height:16px;border-radius:50%;background:#fff;top:2px;left:2px;box-shadow:0 1px 2px rgba(0,0,0,0.1);transition:left 0.15s}
+.layer-toggle.on::after{left:18px}
+.map-area{flex:1;background:#e8edf3;position:relative;display:flex;align-items:center;justify-content:center}
+.map-label{font-size:12px;color:#94a3b8;letter-spacing:4px;text-transform:uppercase}
+.zoom{position:absolute;right:16px;top:16px;display:flex;flex-direction:column;gap:4px}
+.zoom-btn{width:36px;height:36px;background:#fff;border:1px solid #e2e8f0;border-radius:10px;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:16px;color:#475569;box-shadow:0 1px 3px rgba(0,0,0,0.04)}
+.zoom-btn:hover{border-color:#93c5fd;color:#3b82f6}
+.compass{position:absolute;right:16px;top:140px;width:36px;height:36px;background:#fff;border:1px solid #e2e8f0;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:#ef4444;box-shadow:0 1px 3px rgba(0,0,0,0.04)}
+.bottom{height:44px;background:#fff;border-top:1px solid #e2e8f0;display:flex;align-items:center;padding:0 20px;gap:16px;font-size:11px;color:#64748b;flex-shrink:0}
+.coord{font-family:'SF Mono','Fira Code',monospace;color:#3b82f6;font-size:11px;background:#eff6ff;padding:3px 8px;border-radius:4px}
+.scale{margin-left:auto;display:flex;align-items:center;gap:6px}
+.scale-bar{width:60px;height:3px;background:#cbd5e1;border-radius:1.5px}
+.time-section{display:flex;align-items:center;gap:8px;margin-left:16px;padding-left:16px;border-left:1px solid #e2e8f0}
+.time-label{font-size:10px;color:#94a3b8}
+.time-slider{width:200px;height:4px;background:#e2e8f0;border-radius:2px;position:relative}
+.time-fill{width:55%;height:100%;background:#3b82f6;border-radius:2px}
+.time-thumb{position:absolute;width:12px;height:12px;border-radius:50%;background:#3b82f6;border:2px solid #fff;box-shadow:0 1px 3px rgba(0,0,0,0.15);top:-4px;left:calc(55% - 6px)}
+.time-val{font-size:10px;color:#3b82f6;font-weight:500}
+</style>
+</head>
+<body>
+<div class="top">
+<div class="logo">MMGIS</div>
+<div class="sep"></div>
+<div class="mission-sel">&#128640; Reference Mission &#9662;</div>
+<div style="position:relative"><span class="search-icon">&#128269;</span><input class="search" placeholder="Search layers, tools, locations..." readonly/></div>
+<div class="right">
+<div class="top-btn">&#128247; Screenshot</div>
+<div class="top-btn">&#9881; Settings</div>
+<div class="top-btn primary">&#43; New Drawing</div>
+<div class="avatar">A</div>
+</div>
+</div>
+<div class="workspace">
+<div class="sidebar">
+<div class="tool a">&#9776;</div>
+<div class="tool">&#8505;</div>
+<div class="tool">&#9873;</div>
+<div class="tool-divider"></div>
+<div class="tool">&#9998;</div>
+<div class="tool">&#8676;</div>
+<div class="tool">&#8981;</div>
+<div class="tool-divider"></div>
+<div class="tool">&#9201;</div>
+<div class="tool">&#9737;</div>
+<div class="tool">&#9878;</div>
+<div class="tool-divider"></div>
+<div class="tool">&#127760;</div>
+<div class="tool">&#9654;</div>
+<div class="tool">&#9883;</div>
+</div>
+<div class="panel">
+<div class="panel-top"><span class="panel-title">Layers</span><span class="panel-count">29 layers</span></div>
+<input class="panel-search" placeholder="&#128269; Filter layers..." readonly/>
+<div class="filter-row">
+<div class="filter-chip a">All</div>
+<div class="filter-chip">Vector</div>
+<div class="filter-chip">Raster</div>
+<div class="filter-chip">Data</div>
+<div class="filter-chip">Model</div>
+</div>
+<div class="layer-list">
+<div class="layer-group">
+<div class="group-header">&#9660; Vector Layers<span class="group-count">5</span></div>
+<div class="layer"><div class="layer-color" style="background:#3b82f6"></div><div class="layer-info"><div class="layer-name">Points Basic</div><div class="layer-type">Vector &bull; GeoJSON</div></div><div class="layer-toggle on"></div></div>
+<div class="layer"><div class="layer-color" style="background:#10b981"></div><div class="layer-info"><div class="layer-name">Lines Basic</div><div class="layer-type">Vector &bull; GeoJSON</div></div><div class="layer-toggle on"></div></div>
+<div class="layer"><div class="layer-color" style="background:#f59e0b"></div><div class="layer-info"><div class="layer-name">Polygons Basic</div><div class="layer-type">Vector &bull; GeoJSON</div></div><div class="layer-toggle"></div></div>
+<div class="layer"><div class="layer-color" style="background:#ef4444"></div><div class="layer-info"><div class="layer-name">Arrows</div><div class="layer-type">Vector &bull; Styled</div></div><div class="layer-toggle on"></div></div>
+<div class="layer"><div class="layer-color" style="background:#8b5cf6"></div><div class="layer-info"><div class="layer-name">Annotations</div><div class="layer-type">Vector &bull; Text</div></div><div class="layer-toggle"></div></div>
+</div>
+<div class="layer-group">
+<div class="group-header">&#9660; Feature Styling<span class="group-count">4</span></div>
+<div class="layer"><div class="layer-color" style="background:#ec4899"></div><div class="layer-info"><div class="layer-name">Points Styled</div><div class="layer-type">Vector &bull; Custom</div></div><div class="layer-toggle on"></div></div>
+<div class="layer"><div class="layer-color" style="background:#14b8a6"></div><div class="layer-info"><div class="layer-name">Lines Styled</div><div class="layer-type">Vector &bull; Custom</div></div><div class="layer-toggle"></div></div>
+<div class="layer"><div class="layer-color" style="background:#f97316"></div><div class="layer-info"><div class="layer-name">Polygons Styled</div><div class="layer-type">Vector &bull; Custom</div></div><div class="layer-toggle on"></div></div>
+</div>
+<div class="layer-group"><div class="group-header">&#9654; Feature Behavior<span class="group-count">6</span></div></div>
+<div class="layer-group"><div class="group-header">&#9654; Geodatasets<span class="group-count">5</span></div></div>
+<div class="layer-group"><div class="group-header">&#9654; Data Layers<span class="group-count">9</span></div></div>
+</div>
+</div>
+<div class="map-area">
+<div class="map-label">San Francisco Bay Area</div>
+<div class="zoom"><div class="zoom-btn">+</div><div class="zoom-btn">&minus;</div><div class="zoom-btn">&#8962;</div></div>
+<div class="compass">N</div>
+</div>
+</div>
+<div class="bottom">
+<span class="coord">-122.419&deg;, 37.775&deg;</span>
+<span>Elevation: 12m</span>
+<span>Zoom: 12</span>
+<div class="time-section">
+<span class="time-label">Jan 01</span>
+<div class="time-slider"><div class="time-fill"></div><div class="time-thumb"></div></div>
+<span class="time-val">Jan 12, 2024</span>
+</div>
+<div class="scale"><div class="scale-bar"></div><span>2 km</span></div>
+</div>
+</body>
+</html>

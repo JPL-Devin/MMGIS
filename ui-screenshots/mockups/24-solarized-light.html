@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>MMGIS Mockup 24: Solarized Light</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Source Sans Pro',system-ui,sans-serif;background:#fdf6e3;color:#657b83;height:100vh;overflow:hidden;display:flex;flex-direction:column}
+.top{height:44px;background:#eee8d5;display:flex;align-items:center;padding:0 16px;border-bottom:1px solid #d3c6a6;flex-shrink:0}
+.logo{font-size:16px;font-weight:700;color:#268bd2}
+.mission{color:#93a1a1;font-size:11px;margin-left:12px}
+.nav{display:flex;gap:2px;margin-left:20px}
+.nav div{padding:5px 12px;font-size:11px;color:#586e75;border-radius:6px;cursor:pointer}
+.nav div:hover{background:#fdf6e3}
+.nav div.a{background:#fdf6e3;color:#268bd2;font-weight:600}
+.right{margin-left:auto;display:flex;gap:8px;align-items:center;font-size:11px;color:#93a1a1}
+.avatar{width:28px;height:28px;border-radius:50%;background:#268bd2;color:#fdf6e3;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700}
+.ws{flex:1;display:flex;overflow:hidden}
+.sb{width:48px;background:#eee8d5;border-right:1px solid #d3c6a6;display:flex;flex-direction:column;align-items:center;padding:10px 0;gap:2px;flex-shrink:0}
+.t{width:34px;height:34px;display:flex;align-items:center;justify-content:center;border-radius:8px;font-size:14px;color:#93a1a1;cursor:pointer}
+.t:hover{background:#fdf6e3;color:#268bd2}
+.t.a{background:#fdf6e3;color:#268bd2}
+.pnl{width:260px;background:#fdf6e3;border-right:1px solid #eee8d5;display:flex;flex-direction:column;flex-shrink:0}
+.ph{padding:12px 14px;font-size:13px;font-weight:600;color:#586e75;border-bottom:1px solid #eee8d5;display:flex;justify-content:space-between}
+.ps{margin:8px 10px;background:#eee8d5;border:1px solid #d3c6a6;border-radius:6px;padding:6px 10px;font-size:11px;color:#93a1a1}
+.ll{flex:1;overflow-y:auto;padding:4px 6px}
+.grp{margin-bottom:4px}
+.grph{padding:5px 8px;font-size:10px;font-weight:600;color:#268bd2;cursor:pointer;border-radius:6px;display:flex;align-items:center;gap:4px}
+.grph:hover{background:#eee8d5}
+.grpc{font-size:9px;color:#93a1a1;margin-left:auto;background:#eee8d5;padding:1px 5px;border-radius:4px}
+.li{padding:5px 8px 5px 16px;display:flex;align-items:center;gap:8px;border-radius:6px;font-size:11px;color:#586e75}
+.li:hover{background:#eee8d5}
+.lc{width:3px;height:18px;border-radius:2px}
+.tog{width:30px;height:16px;border-radius:8px;background:#d3c6a6;position:relative;cursor:pointer;margin-left:auto;flex-shrink:0}
+.tog.on{background:#2aa198}
+.tog::after{content:'';position:absolute;width:12px;height:12px;border-radius:50%;background:#fdf6e3;top:2px;left:2px;box-shadow:0 1px 2px rgba(0,0,0,0.1)}
+.tog.on::after{left:16px}
+.map{flex:1;background:#eee8d5;position:relative;display:flex;align-items:center;justify-content:center}
+.ml{font-size:11px;color:#d3c6a6;letter-spacing:4px;text-transform:uppercase}
+.zc{position:absolute;right:12px;top:12px;display:flex;flex-direction:column;gap:3px}
+.zb{width:32px;height:32px;background:#fdf6e3;border:1px solid #d3c6a6;border-radius:8px;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:14px;color:#586e75}
+.zb:hover{border-color:#268bd2;color:#268bd2}
+.cp{position:absolute;right:12px;top:120px;width:32px;height:32px;background:#fdf6e3;border:1px solid #d3c6a6;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:700;color:#dc322f}
+.bb{height:40px;background:#eee8d5;display:flex;align-items:center;padding:0 16px;gap:16px;border-top:1px solid #d3c6a6;flex-shrink:0;font-size:10px;color:#93a1a1}
+.cd{font-family:monospace;color:#268bd2;background:#fdf6e3;padding:2px 6px;border-radius:4px;font-size:10px}
+.ts{flex:1;display:flex;align-items:center;gap:6px;margin-left:20px}
+.tl{font-size:9px;color:#93a1a1}
+.tt{flex:1;height:3px;background:#d3c6a6;border-radius:2px;position:relative}
+.tf{width:55%;height:100%;background:#268bd2;border-radius:2px}
+.th{position:absolute;width:10px;height:10px;border-radius:50%;background:#268bd2;border:2px solid #fdf6e3;top:-3.5px;left:calc(55% - 5px)}
+</style>
+</head>
+<body>
+<div class="top">
+<div class="logo">MMGIS</div><div class="mission">Reference Mission</div>
+<div class="nav"><div class="a">Map</div><div>Globe</div><div>Data</div><div>Timeline</div></div>
+<div class="right">&#9881; <div class="avatar">A</div></div>
+</div>
+<div class="ws">
+<div class="sb"><div class="t a">&#9776;</div><div class="t">&#8505;</div><div class="t">&#9873;</div><div class="t">&#9998;</div><div class="t">&#8676;</div><div class="t">&#8981;</div><div class="t">&#9201;</div><div class="t">&#9737;</div><div class="t">&#9878;</div><div class="t">&#127760;</div><div class="t">&#9654;</div><div class="t">&#9883;</div></div>
+<div class="pnl">
+<div class="ph">Layers <span style="font-size:10px;color:#93a1a1">29</span></div>
+<input class="ps" placeholder="&#128269; Search layers..." readonly/>
+<div class="ll">
+<div class="grp"><div class="grph">&#9660; Vector Layers<span class="grpc">5</span></div>
+<div class="li"><div class="lc" style="background:#268bd2"></div>Points Basic<div class="tog on"></div></div>
+<div class="li"><div class="lc" style="background:#2aa198"></div>Lines Basic<div class="tog on"></div></div>
+<div class="li"><div class="lc" style="background:#b58900"></div>Polygons Basic<div class="tog"></div></div>
+<div class="li"><div class="lc" style="background:#dc322f"></div>Arrows<div class="tog on"></div></div>
+<div class="li"><div class="lc" style="background:#6c71c4"></div>Annotations<div class="tog"></div></div></div>
+<div class="grp"><div class="grph">&#9660; Feature Styling<span class="grpc">4</span></div>
+<div class="li"><div class="lc" style="background:#d33682"></div>Points Styled<div class="tog on"></div></div>
+<div class="li"><div class="lc" style="background:#2aa198"></div>Lines Styled<div class="tog"></div></div>
+<div class="li"><div class="lc" style="background:#cb4b16"></div>Polygons Styled<div class="tog on"></div></div>
+<div class="li"><div class="lc" style="background:#859900"></div>Style From Prop<div class="tog"></div></div></div>
+<div class="grp"><div class="grph">&#9654; Feature Behavior<span class="grpc">6</span></div></div>
+<div class="grp"><div class="grph">&#9654; Geodatasets<span class="grpc">5</span></div></div>
+<div class="grp"><div class="grph">&#9654; Data Layers<span class="grpc">9</span></div></div>
+</div>
+</div>
+<div class="map"><div class="ml">San Francisco Bay Area</div><div class="zc"><div class="zb">+</div><div class="zb">&minus;</div><div class="zb">&#8962;</div></div><div class="cp">N</div></div>
+</div>
+<div class="bb"><span class="cd">-122.419&deg;, 37.775&deg;</span><span>Zoom: 12</span><div class="ts"><span class="tl">Jan 01</span><div class="tt"><div class="tf"></div><div class="th"></div></div><span class="tl">Jan 20, 2024</span></div></div>
+</body>
+</html>

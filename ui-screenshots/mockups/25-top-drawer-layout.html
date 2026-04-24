@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>MMGIS Mockup 25: Top Drawer Layout</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Inter',system-ui,sans-serif;background:#0a0a0a;color:#e5e5e5;height:100vh;overflow:hidden;display:flex;flex-direction:column}
+.map-area{flex:1;background:#111;position:relative;display:flex;align-items:center;justify-content:center}
+.map-label{font-size:11px;color:#222;letter-spacing:4px;text-transform:uppercase}
+.mc{position:absolute;right:12px;bottom:60px;display:flex;flex-direction:column;gap:3px}
+.mb{width:32px;height:32px;background:#1a1a1acc;border:1px solid #333;border-radius:8px;display:flex;align-items:center;justify-content:center;color:#10b981;cursor:pointer;font-size:14px;backdrop-filter:blur(8px)}
+/* Top drawer - slides down from top */
+.drawer{height:200px;background:#0a0a0aee;border-bottom:1px solid #222;display:flex;flex-direction:column;flex-shrink:0;backdrop-filter:blur(12px)}
+.drawer-header{height:36px;display:flex;align-items:center;padding:0 16px;gap:12px;border-bottom:1px solid #1a1a1a;flex-shrink:0}
+.drawer-tab{padding:4px 12px;font-size:10px;color:#666;border-radius:4px;cursor:pointer}
+.drawer-tab:hover{color:#e5e5e5}
+.drawer-tab.a{color:#10b981;background:#10b98111}
+.drawer-handle{margin-left:auto;display:flex;align-items:center;gap:4px;color:#444;font-size:10px;cursor:pointer}
+.drawer-handle:hover{color:#10b981}
+.drawer-content{flex:1;display:flex;overflow:hidden}
+.drawer-section{flex:1;border-right:1px solid #1a1a1a;padding:10px;overflow-y:auto}
+.drawer-section:last-child{border-right:none}
+.ds-title{font-size:9px;text-transform:uppercase;letter-spacing:1px;color:#555;margin-bottom:6px;font-weight:600}
+.layer-row{display:flex;align-items:center;gap:6px;padding:3px 0;font-size:10px}
+.layer-row:hover{color:#10b981}
+.ldot{width:6px;height:6px;border-radius:50%;flex-shrink:0}
+.lname{flex:1;color:#999}
+.ltog{width:24px;height:12px;border-radius:6px;background:#222;position:relative;cursor:pointer;flex-shrink:0}
+.ltog.on{background:#10b98133}
+.ltog::after{content:'';position:absolute;width:8px;height:8px;border-radius:50%;background:#555;left:2px;top:2px}
+.ltog.on::after{left:14px;background:#10b981}
+.tool-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:4px}
+.tg-item{display:flex;flex-direction:column;align-items:center;gap:2px;padding:6px 4px;border-radius:6px;cursor:pointer;font-size:14px;color:#555}
+.tg-item:hover{background:#1a1a1a;color:#10b981}
+.tg-item span{font-size:8px;color:#555}
+.info-section{font-size:10px;color:#666;line-height:1.6}
+.info-section .val{color:#10b981;font-family:monospace}
+.info-section .label{color:#444;font-size:9px;text-transform:uppercase}
+/* Floating bottom bar */
+.float-bar{position:absolute;bottom:12px;left:50%;transform:translateX(-50%);background:#0a0a0add;border:1px solid #222;border-radius:12px;padding:6px 16px;display:flex;align-items:center;gap:16px;backdrop-filter:blur(12px)}
+.fb-coord{font-family:monospace;font-size:10px;color:#10b981}
+.fb-sep{width:1px;height:16px;background:#222}
+.fb-time{display:flex;align-items:center;gap:6px;font-size:10px;color:#666}
+.fb-slider{width:160px;height:2px;background:#222;border-radius:1px;position:relative}
+.fb-fill{width:55%;height:100%;background:#10b981;border-radius:1px}
+.fb-thumb{position:absolute;width:8px;height:8px;border-radius:50%;background:#10b981;top:-3px;left:calc(55% - 4px);border:1px solid #0a0a0a}
+.fb-val{font-size:9px;color:#10b981}
+.fb-zoom{font-size:10px;color:#666}
+</style>
+</head>
+<body>
+<div class="drawer">
+<div class="drawer-header">
+<div class="drawer-tab a">Layers</div>
+<div class="drawer-tab">Tools</div>
+<div class="drawer-tab">Info</div>
+<div class="drawer-tab">Sites</div>
+<div class="drawer-tab">Legend</div>
+<div class="drawer-handle">&#9650; Collapse</div>
+</div>
+<div class="drawer-content">
+<div class="drawer-section">
+<div class="ds-title">Layers (29)</div>
+<div class="layer-row"><div class="ldot" style="background:#3b82f6"></div><span class="lname">Points Basic</span><div class="ltog on"></div></div>
+<div class="layer-row"><div class="ldot" style="background:#10b981"></div><span class="lname">Lines Basic</span><div class="ltog on"></div></div>
+<div class="layer-row"><div class="ldot" style="background:#f59e0b"></div><span class="lname">Polygons Basic</span><div class="ltog"></div></div>
+<div class="layer-row"><div class="ldot" style="background:#ef4444"></div><span class="lname">Arrows</span><div class="ltog on"></div></div>
+<div class="layer-row"><div class="ldot" style="background:#8b5cf6"></div><span class="lname">Annotations</span><div class="ltog"></div></div>
+<div class="layer-row"><div class="ldot" style="background:#ec4899"></div><span class="lname">Points Styled</span><div class="ltog on"></div></div>
+<div class="layer-row"><div class="ldot" style="background:#14b8a6"></div><span class="lname">Lines Styled</span><div class="ltog"></div></div>
+<div class="layer-row"><div class="ldot" style="background:#f97316"></div><span class="lname">Polygons Styled</span><div class="ltog on"></div></div>
+</div>
+<div class="drawer-section">
+<div class="ds-title">Tools</div>
+<div class="tool-grid">
+<div class="tg-item">&#9998;<span>Draw</span></div>
+<div class="tg-item">&#8676;<span>Measure</span></div>
+<div class="tg-item">&#8981;<span>Identify</span></div>
+<div class="tg-item">&#9201;<span>Isochrone</span></div>
+<div class="tg-item">&#9737;<span>Viewshed</span></div>
+<div class="tg-item">&#9878;<span>Chemistry</span></div>
+<div class="tg-item">&#9654;<span>Animate</span></div>
+<div class="tg-item">&#9681;<span>Shade</span></div>
+<div class="tg-item">&#9649;<span>Curtain</span></div>
+</div>
+</div>
+<div class="drawer-section">
+<div class="ds-title">Mission Info</div>
+<div class="info-section">
+<div class="label">Mission</div>
+<div class="val">Reference Mission</div>
+<div class="label" style="margin-top:6px">Location</div>
+<div class="val">San Francisco Bay Area</div>
+<div class="label" style="margin-top:6px">Projection</div>
+<div class="val">EPSG:4326</div>
+<div class="label" style="margin-top:6px">Layers</div>
+<div class="val">8 active / 29 total</div>
+<div class="label" style="margin-top:6px">Features</div>
+<div class="val">1,247 loaded</div>
+</div>
+</div>
+</div>
+</div>
+<div class="map-area">
+<div class="map-label">San Francisco Bay Area</div>
+<div class="mc"><div class="mb">+</div><div class="mb">&minus;</div><div class="mb">&#8962;</div><div class="mb">&#127760;</div></div>
+<div class="float-bar">
+<span class="fb-coord">-122.419&deg;, 37.775&deg;</span>
+<div class="fb-sep"></div>
+<div class="fb-time"><span class="fb-val">Jan 01</span><div class="fb-slider"><div class="fb-fill"></div><div class="fb-thumb"></div></div><span class="fb-val">Jan 20</span></div>
+<div class="fb-sep"></div>
+<span class="fb-zoom">Z12</span>
+</div>
+</div>
+</body>
+</html>

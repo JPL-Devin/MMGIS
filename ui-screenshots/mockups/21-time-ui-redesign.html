@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>MMGIS Mockup 21: Time UI Redesign</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Inter',system-ui,sans-serif;background:#f1f5f9;color:#1e293b;height:100vh;overflow:hidden;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:24px}
+.label{font-size:11px;font-weight:600;color:#64748b;text-transform:uppercase;letter-spacing:1px;align-self:flex-start;margin-left:calc(50% - 360px)}
+/* Compact time bar (collapsed) */
+.time-compact{width:720px;height:48px;background:#fff;border-radius:12px;box-shadow:0 2px 12px rgba(0,0,0,0.06);border:1px solid #e2e8f0;display:flex;align-items:center;padding:0 12px;gap:8px}
+.tc-mode{padding:4px 10px;background:#eff6ff;color:#3b82f6;border-radius:6px;font-size:10px;font-weight:600;cursor:pointer;white-space:nowrap}
+.tc-btn{width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;color:#64748b;cursor:pointer;font-size:14px;border:1px solid #e2e8f0}
+.tc-btn:hover{background:#f1f5f9;color:#3b82f6}
+.tc-btn.play{background:#3b82f6;color:#fff;border-color:#3b82f6}
+.tc-divider{width:1px;height:24px;background:#e2e8f0}
+.tc-time{font-size:11px;color:#1e293b;font-weight:500;white-space:nowrap}
+.tc-time span{color:#94a3b8;font-weight:400}
+.tc-timeline{flex:1;height:24px;background:#f8fafc;border-radius:6px;position:relative;border:1px solid #e2e8f0;overflow:hidden}
+.tc-extent{position:absolute;height:100%;background:#dbeafe;left:15%;width:40%}
+.tc-play-extent{position:absolute;height:100%;background:#bfdbfe44;left:15%;width:25%}
+.tc-slider{position:absolute;width:3px;height:100%;background:#3b82f6;left:30%;top:0}
+.tc-slider::after{content:'';position:absolute;width:10px;height:10px;border-radius:50%;background:#3b82f6;border:2px solid #fff;box-shadow:0 1px 3px rgba(0,0,0,0.2);left:-3.5px;top:50%;transform:translateY(-50%)}
+.tc-histo{position:absolute;bottom:0;left:0;right:0;height:12px;display:flex;align-items:flex-end;gap:1px;padding:0 2px}
+.tc-histo div{flex:1;background:#93c5fd44;border-radius:1px 1px 0 0}
+.tc-expand{width:28px;height:28px;border-radius:6px;display:flex;align-items:center;justify-content:center;color:#94a3b8;cursor:pointer;font-size:12px}
+.tc-expand:hover{background:#f1f5f9;color:#3b82f6}
+
+/* Expanded time panel */
+.time-expanded{width:720px;background:#fff;border-radius:16px;box-shadow:0 4px 24px rgba(0,0,0,0.08);border:1px solid #e2e8f0;overflow:hidden}
+.te-top{padding:12px 16px;display:flex;align-items:center;gap:8px;border-bottom:1px solid #f1f5f9}
+.te-top .tc-mode{font-size:11px}
+.te-controls{display:flex;gap:4px;margin-left:auto}
+.te-timeline-area{padding:12px 16px;border-bottom:1px solid #f1f5f9}
+.te-timeline{height:40px;background:#f8fafc;border-radius:8px;position:relative;border:1px solid #e2e8f0;overflow:hidden}
+.te-extent{position:absolute;height:100%;background:#dbeafe;left:15%;width:40%}
+.te-slider{position:absolute;width:3px;height:100%;background:#3b82f6;left:30%;top:0}
+.te-slider::after{content:'';position:absolute;width:12px;height:12px;border-radius:50%;background:#3b82f6;border:2px solid #fff;box-shadow:0 1px 3px rgba(0,0,0,0.2);left:-4.5px;top:50%;transform:translateY(-50%)}
+.te-histo{position:absolute;bottom:0;left:0;right:0;height:18px;display:flex;align-items:flex-end;gap:1px;padding:0 4px}
+.te-histo div{flex:1;background:#93c5fd55;border-radius:2px 2px 0 0}
+.te-time-labels{display:flex;justify-content:space-between;padding:4px 0 0;font-size:9px;color:#94a3b8}
+.te-rows{padding:8px 16px 12px}
+.te-row{display:flex;align-items:center;gap:0;margin:2px 0}
+.te-row-label{width:60px;font-size:10px;color:#94a3b8;font-weight:500}
+.te-row-cells{display:flex;gap:2px;flex:1}
+.te-cell{flex:1;height:24px;border-radius:4px;display:flex;align-items:center;justify-content:center;font-size:9px;color:#64748b;cursor:pointer;background:#f8fafc;border:1px solid transparent;position:relative}
+.te-cell:hover{background:#eff6ff;border-color:#bfdbfe}
+.te-cell.in-range{background:#dbeafe;color:#2563eb;font-weight:500}
+.te-cell.start{border-radius:4px 0 0 4px;background:#3b82f6;color:#fff;font-weight:600}
+.te-cell.end{border-radius:0 4px 4px 0;background:#3b82f6;color:#fff;font-weight:600}
+.te-cell.has-data::after{content:'';position:absolute;bottom:2px;width:4px;height:2px;border-radius:1px;background:#3b82f6}
+.te-inputs{padding:0 16px 12px;display:flex;gap:12px}
+.te-input-group{flex:1}
+.te-input-label{font-size:10px;color:#94a3b8;margin-bottom:4px;font-weight:500}
+.te-input{width:100%;padding:8px 10px;border:1px solid #e2e8f0;border-radius:8px;font-size:12px;color:#1e293b;font-family:inherit;background:#f8fafc}
+.te-playback{padding:12px 16px;background:#f8fafc;border-top:1px solid #f1f5f9;display:flex;align-items:center;gap:12px}
+.te-playback-label{font-size:10px;color:#94a3b8;font-weight:500}
+.te-playback-select{padding:4px 8px;border:1px solid #e2e8f0;border-radius:6px;font-size:10px;color:#475569;background:#fff;font-family:inherit}
+.te-step-btns{display:flex;gap:2px;margin-left:auto}
+.te-step-btn{width:28px;height:28px;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:12px;color:#64748b;cursor:pointer;border:1px solid #e2e8f0;background:#fff}
+.te-step-btn:hover{color:#3b82f6;border-color:#93c5fd}
+.te-step-btn.play{background:#3b82f6;color:#fff;border-color:#3b82f6;width:36px}
+
+/* Quick select panel */
+.time-quick{width:720px;background:#fff;border-radius:16px;box-shadow:0 4px 24px rgba(0,0,0,0.08);border:1px solid #e2e8f0;padding:16px;display:flex;gap:16px}
+.tq-section{flex:1}
+.tq-title{font-size:10px;font-weight:600;color:#94a3b8;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:8px}
+.tq-options{display:flex;flex-direction:column;gap:4px}
+.tq-opt{padding:6px 10px;border-radius:6px;font-size:11px;color:#475569;cursor:pointer;display:flex;align-items:center;gap:6px}
+.tq-opt:hover{background:#f1f5f9}
+.tq-opt.a{background:#eff6ff;color:#3b82f6;font-weight:500}
+.tq-opt .icon{font-size:14px}
+</style>
+</head>
+<body>
+<div class="label">Compact View (Collapsed)</div>
+<div class="time-compact">
+<div class="tc-mode">Range</div>
+<div class="tc-btn">&#9664;</div>
+<div class="tc-btn play">&#9654;</div>
+<div class="tc-btn">&#9654;</div>
+<div class="tc-divider"></div>
+<div class="tc-time"><span>Start</span> Jan 01, 2024</div>
+<div class="tc-timeline">
+<div class="tc-extent"></div>
+<div class="tc-play-extent"></div>
+<div class="tc-histo">
+<div style="height:30%"></div><div style="height:50%"></div><div style="height:80%"></div><div style="height:60%"></div><div style="height:90%"></div><div style="height:70%"></div><div style="height:40%"></div><div style="height:65%"></div><div style="height:85%"></div><div style="height:55%"></div><div style="height:75%"></div><div style="height:45%"></div><div style="height:95%"></div><div style="height:50%"></div><div style="height:30%"></div><div style="height:60%"></div><div style="height:70%"></div><div style="height:80%"></div><div style="height:40%"></div><div style="height:55%"></div>
+</div>
+<div class="tc-slider"></div>
+</div>
+<div class="tc-time"><span>End</span> Jan 20, 2024</div>
+<div class="tc-expand">&#9650;</div>
+</div>
+
+<div class="label">Expanded View</div>
+<div class="time-expanded">
+<div class="te-top">
+<div class="tc-mode">Range &#9662;</div>
+<div class="tc-btn" style="width:28px;height:28px;font-size:12px">&#128197;</div>
+<div class="tc-btn" style="width:28px;height:28px;font-size:12px">&#127909;</div>
+<div class="te-controls">
+<div class="tc-btn" style="width:28px;height:28px;font-size:12px">&#8634;</div>
+<div class="tc-btn" style="width:28px;height:28px;font-size:12px">&#8981;</div>
+<div class="tc-btn" style="width:28px;height:28px;font-size:12px">&#9201;</div>
+<div class="tc-expand" style="font-size:12px">&#9660;</div>
+</div>
+</div>
+<div class="te-timeline-area">
+<div class="te-timeline">
+<div class="te-extent"></div>
+<div class="te-histo">
+<div style="height:30%"></div><div style="height:50%"></div><div style="height:80%"></div><div style="height:60%"></div><div style="height:90%"></div><div style="height:70%"></div><div style="height:40%"></div><div style="height:65%"></div><div style="height:85%"></div><div style="height:55%"></div><div style="height:75%"></div><div style="height:45%"></div><div style="height:95%"></div><div style="height:50%"></div><div style="height:30%"></div><div style="height:60%"></div><div style="height:70%"></div><div style="height:80%"></div><div style="height:40%"></div><div style="height:55%"></div>
+</div>
+<div class="te-slider"></div>
+</div>
+<div class="te-time-labels"><span>2024-01-01</span><span>2024-01-05</span><span>2024-01-10</span><span>2024-01-15</span><span>2024-01-20</span></div>
+</div>
+<div class="te-rows">
+<div class="te-row"><div class="te-row-label">Years</div><div class="te-row-cells"><div class="te-cell">2020</div><div class="te-cell">2021</div><div class="te-cell">2022</div><div class="te-cell">2023</div><div class="te-cell in-range start">2024</div><div class="te-cell">2025</div></div></div>
+<div class="te-row"><div class="te-row-label">Months</div><div class="te-row-cells"><div class="te-cell in-range start">Jan</div><div class="te-cell has-data">Feb</div><div class="te-cell has-data">Mar</div><div class="te-cell has-data">Apr</div><div class="te-cell has-data">May</div><div class="te-cell has-data">Jun</div><div class="te-cell">Jul</div><div class="te-cell">Aug</div><div class="te-cell">Sep</div><div class="te-cell">Oct</div><div class="te-cell">Nov</div><div class="te-cell">Dec</div></div></div>
+<div class="te-row"><div class="te-row-label">Days</div><div class="te-row-cells"><div class="te-cell in-range start">01</div><div class="te-cell in-range has-data">05</div><div class="te-cell in-range has-data">10</div><div class="te-cell in-range has-data">12</div><div class="te-cell in-range has-data">15</div><div class="te-cell in-range end">20</div><div class="te-cell">25</div><div class="te-cell">31</div></div></div>
+<div class="te-row"><div class="te-row-label">Hours</div><div class="te-row-cells"><div class="te-cell">00</div><div class="te-cell">03</div><div class="te-cell">06</div><div class="te-cell">09</div><div class="te-cell in-range start">12</div><div class="te-cell in-range end">15</div><div class="te-cell">18</div><div class="te-cell">21</div></div></div>
+</div>
+<div class="te-inputs">
+<div class="te-input-group"><div class="te-input-label">Start Time</div><input class="te-input" value="01/01/2024, 12:00:00 AM" readonly/></div>
+<div class="te-input-group"><div class="te-input-label">End Time</div><input class="te-input" value="01/20/2024, 03:00:00 PM" readonly/></div>
+</div>
+<div class="te-playback">
+<div class="te-playback-label">Step:</div>
+<select class="te-playback-select"><option>1 day</option></select>
+<div class="te-playback-label">Every:</div>
+<select class="te-playback-select"><option>6 seconds</option></select>
+<div class="te-step-btns">
+<div class="te-step-btn">&#9664;</div>
+<div class="te-step-btn play">&#9654;</div>
+<div class="te-step-btn">&#9654;</div>
+</div>
+</div>
+</div>
+
+<div class="label">Quick Select</div>
+<div class="time-quick">
+<div class="tq-section">
+<div class="tq-title">Preset Ranges</div>
+<div class="tq-options">
+<div class="tq-opt"><span class="icon">&#128197;</span>Last 24 hours</div>
+<div class="tq-opt"><span class="icon">&#128197;</span>Last 7 days</div>
+<div class="tq-opt a"><span class="icon">&#128197;</span>Last 30 days</div>
+<div class="tq-opt"><span class="icon">&#128197;</span>This year</div>
+<div class="tq-opt"><span class="icon">&#128197;</span>All time</div>
+</div>
+</div>
+<div class="tq-section">
+<div class="tq-title">Relative</div>
+<div class="tq-options">
+<div class="tq-opt"><span class="icon">&#9203;</span>Last N hours</div>
+<div class="tq-opt"><span class="icon">&#9203;</span>Last N days</div>
+<div class="tq-opt"><span class="icon">&#9203;</span>Last N weeks</div>
+</div>
+</div>
+<div class="tq-section">
+<div class="tq-title">Special</div>
+<div class="tq-options">
+<div class="tq-opt"><span class="icon">&#9201;</span>Now (live)</div>
+<div class="tq-opt"><span class="icon">&#8981;</span>Follow feature</div>
+<div class="tq-opt"><span class="icon">&#8634;</span>Fit to data</div>
+</div>
+</div>
+</div>
+</body>
+</html>

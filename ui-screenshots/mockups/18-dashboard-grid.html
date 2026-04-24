@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>MMGIS Mockup 18: Dashboard Grid Layout</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Inter',system-ui,sans-serif;background:#111827;color:#e5e7eb;height:100vh;overflow:hidden;display:flex;flex-direction:column}
+.top{height:44px;background:#1f2937;display:flex;align-items:center;padding:0 16px;border-bottom:1px solid #374151;flex-shrink:0}
+.logo{font-size:16px;font-weight:700;color:#60a5fa}
+.mission{color:#6b7280;font-size:12px;margin-left:12px}
+.nav{display:flex;gap:4px;margin-left:24px}
+.nav div{padding:6px 12px;font-size:11px;color:#9ca3af;border-radius:6px;cursor:pointer}
+.nav div:hover{background:#374151}
+.nav div.a{background:#374151;color:#f9fafb;font-weight:500}
+.right{margin-left:auto;display:flex;gap:10px;align-items:center}
+.search{background:#374151;border:1px solid #4b5563;border-radius:6px;padding:5px 12px;font-size:11px;color:#9ca3af;width:180px}
+.avatar{width:28px;height:28px;border-radius:50%;background:#3b82f6;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:#fff}
+.grid{flex:1;display:grid;grid-template-columns:2fr 1fr;grid-template-rows:2fr 1fr;gap:8px;padding:8px;overflow:hidden}
+.cell{background:#1f2937;border-radius:10px;border:1px solid #374151;overflow:hidden;display:flex;flex-direction:column;position:relative}
+.cell-header{padding:8px 12px;font-size:11px;font-weight:600;color:#d1d5db;display:flex;align-items:center;gap:8px;border-bottom:1px solid #374151;flex-shrink:0}
+.cell-header .badge{font-size:9px;background:#374151;padding:1px 6px;border-radius:8px;color:#9ca3af}
+.cell-header .actions{margin-left:auto;display:flex;gap:4px}
+.cell-header .act{font-size:12px;color:#6b7280;cursor:pointer}
+.cell-body{flex:1;position:relative;display:flex;align-items:center;justify-content:center;overflow:hidden}
+.map-bg{position:absolute;inset:0;background-image:radial-gradient(circle at 40% 50%,#1e3a5f 0%,#111827 70%);opacity:0.5}
+.map-label{font-size:11px;color:#374151;letter-spacing:3px;text-transform:uppercase;z-index:1}
+.mc{position:absolute;right:8px;top:8px;display:flex;flex-direction:column;gap:2px;z-index:2}
+.mb{width:24px;height:24px;background:#111827cc;border:1px solid #374151;border-radius:4px;display:flex;align-items:center;justify-content:center;color:#60a5fa;cursor:pointer;font-size:12px}
+.layers-list{padding:4px 0;overflow-y:auto;flex:1}
+.li{padding:5px 12px;display:flex;align-items:center;gap:8px;font-size:10px}
+.li:hover{background:#11182744}
+.dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+.dot.green{background:#34d399}
+.dot.blue{background:#60a5fa}
+.dot.orange{background:#f59e0b}
+.dot.red{background:#ef4444}
+.dot.gray{background:#6b7280}
+.tog{width:28px;height:14px;border-radius:7px;background:#374151;position:relative;flex-shrink:0;margin-left:auto}
+.tog.on{background:#34d39944}
+.tog::after{content:'';position:absolute;width:10px;height:10px;border-radius:50%;background:#6b7280;left:2px;top:2px}
+.tog.on::after{left:16px;background:#34d399}
+.stats-grid{display:grid;grid-template-columns:1fr 1fr;gap:6px;padding:10px}
+.stat{background:#111827;border-radius:6px;padding:8px 10px}
+.stat-label{font-size:9px;color:#6b7280;text-transform:uppercase;letter-spacing:0.5px}
+.stat-value{font-size:18px;font-weight:700;color:#f9fafb;margin-top:2px}
+.stat-change{font-size:9px;margin-top:2px}
+.stat-change.up{color:#34d399}
+.stat-change.down{color:#ef4444}
+.timeline{padding:10px;flex:1;display:flex;flex-direction:column}
+.time-bar{flex:1;background:#111827;border-radius:4px;position:relative;overflow:hidden}
+.time-fill{position:absolute;left:0;top:0;bottom:0;width:60%;background:linear-gradient(90deg,#3b82f6,#60a5fa);border-radius:4px}
+.time-markers{display:flex;justify-content:space-between;padding:4px 0;font-size:9px;color:#6b7280}
+.time-current{font-size:11px;font-weight:600;color:#60a5fa;text-align:center;margin-top:6px}
+.globe-placeholder{font-size:48px;color:#1f2937;z-index:1}
+.coords{position:absolute;bottom:6px;left:10px;font-size:9px;color:#4b5563;font-family:monospace;z-index:1}
+</style>
+</head>
+<body>
+<div class="top">
+<div class="logo">MMGIS</div>
+<div class="mission">Reference Mission</div>
+<div class="nav"><div class="a">Dashboard</div><div>Map</div><div>Globe</div><div>Data</div><div>Timeline</div></div>
+<div class="right"><input class="search" placeholder="&#128269; Search layers, tools..." readonly/><div class="avatar">A</div></div>
+</div>
+<div class="grid">
+<div class="cell">
+<div class="cell-header">&#127758; 2D Map <span class="badge">Leaflet</span><div class="actions"><span class="act">&#9881;</span><span class="act">&#8689;</span></div></div>
+<div class="cell-body"><div class="map-bg"></div><div class="map-label">San Francisco Bay</div><div class="mc"><div class="mb">+</div><div class="mb">&minus;</div></div><div class="coords">-122.419&deg;, 37.775&deg; | Z12</div></div>
+</div>
+<div class="cell">
+<div class="cell-header">&#9776; Layers <span class="badge">29</span><div class="actions"><span class="act">&#128269;</span></div></div>
+<div class="layers-list">
+<div class="li"><div class="dot green"></div>Points Basic<div class="tog on"></div></div>
+<div class="li"><div class="dot green"></div>Lines Basic<div class="tog on"></div></div>
+<div class="li"><div class="dot gray"></div>Polygons Basic<div class="tog"></div></div>
+<div class="li"><div class="dot blue"></div>Arrows<div class="tog on"></div></div>
+<div class="li"><div class="dot gray"></div>Annotations<div class="tog"></div></div>
+<div class="li"><div class="dot orange"></div>Points Styled<div class="tog on"></div></div>
+<div class="li"><div class="dot gray"></div>Lines Styled<div class="tog"></div></div>
+<div class="li"><div class="dot orange"></div>Polygons Styled<div class="tog on"></div></div>
+<div class="li"><div class="dot gray"></div>Style From Prop<div class="tog"></div></div>
+<div class="li"><div class="dot red"></div>Time Points<div class="tog on"></div></div>
+<div class="li"><div class="dot blue"></div>Hover Data<div class="tog on"></div></div>
+<div class="li"><div class="dot gray"></div>Click Popup<div class="tog"></div></div>
+</div>
+</div>
+<div class="cell">
+<div class="cell-header">&#128202; Mission Stats<div class="actions"><span class="act">&#8634;</span></div></div>
+<div class="cell-body" style="display:block;padding:0">
+<div class="stats-grid">
+<div class="stat"><div class="stat-label">Active Layers</div><div class="stat-value">8</div><div class="stat-change up">&#9650; 2 today</div></div>
+<div class="stat"><div class="stat-label">Features</div><div class="stat-value">1,247</div><div class="stat-change up">&#9650; 34 new</div></div>
+<div class="stat"><div class="stat-label">Drawings</div><div class="stat-value">23</div><div class="stat-change down">&#9660; 1 removed</div></div>
+<div class="stat"><div class="stat-label">Sites</div><div class="stat-value">5</div><div class="stat-change up">&#9650; Active</div></div>
+</div>
+<div class="timeline">
+<div class="time-current">2024-01-12 14:30 UTC</div>
+<div class="time-bar"><div class="time-fill"></div></div>
+<div class="time-markers"><span>Jan 01</span><span>Jan 05</span><span>Jan 10</span><span>Jan 15</span><span>Jan 20</span></div>
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="cell-header">&#127760; 3D Globe <span class="badge">Cesium</span><div class="actions"><span class="act">&#8635;</span><span class="act">&#8689;</span></div></div>
+<div class="cell-body"><div class="globe-placeholder">&#127760;</div></div>
+</div>
+</div>
+</body>
+</html>
