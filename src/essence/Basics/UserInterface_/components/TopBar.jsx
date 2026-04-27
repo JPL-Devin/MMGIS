@@ -75,12 +75,12 @@ function TopBar({ UserInterface }) {
         }
     }, [UserInterface])
 
-    const handleToggleGlobe = useCallback(() => {
+    const handleToggleGlobe = useCallback(async () => {
         const newState = !uiStore.getState().globePanelOpen
         uiStore.getState().setGlobePanelOpen(newState)
-        // Lazy-init Globe on first open
+        // Lazy-init Globe on first open — await so renderer is ready before resize
         if (newState && !Globe_._initialized) {
-            Globe_.lazyInit()
+            await Globe_.lazyInit()
         }
         if (UserInterface && UserInterface.setPanelPercents) {
             const pp = UserInterface.getPanelPercents()

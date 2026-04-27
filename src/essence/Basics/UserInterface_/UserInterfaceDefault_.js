@@ -878,13 +878,23 @@ var UserInterface = {
 
         resize()
 
-        // Sync Globe to Map's current center on first open (only if no globe coords in URL)
+        // Lazy-init Globe when opened (deeplink, programmatic, or first toggle)
         if (wasGlobeClosed && isGlobeOpening && Globe_ != null) {
-            if (!Globe_.hasBeenOpened) {
+            if (!Globe_._initialized) {
+                Globe_.lazyInit().then(() => {
+                    if (!Globe_.hasBeenOpened) {
+                        Globe_.hasBeenOpened = true
+                        if (L_.FUTURES.globeView == null) {
+                            setTimeout(() => {
+                                Globe_.syncToMapCenter()
+                            }, 100)
+                        }
+                    }
+                    resize()
+                })
+            } else if (!Globe_.hasBeenOpened) {
                 Globe_.hasBeenOpened = true
-                // Only sync to map center if no globe coordinates were specified in URL
                 if (L_.FUTURES.globeView == null) {
-                    // Use setTimeout to ensure resize completes first
                     setTimeout(() => {
                         Globe_.syncToMapCenter()
                     }, 100)
