@@ -216,14 +216,19 @@ const ReactPDF = (props) => {
 }
 
 let pdfRoot = null
+let pdfRootContainer = null
 
 export default function (options) {
     options = options || {}
 
     async function changePDF(pdfPath, canvasId) {
         const container = document.getElementById('pdfViewerWrapper')
-        if (!pdfRoot) {
+        if (!pdfRoot || pdfRootContainer !== container) {
+            if (pdfRoot) {
+                pdfRoot.unmount()
+            }
             pdfRoot = createRoot(container)
+            pdfRootContainer = container
         }
         pdfRoot.render(<ReactPDF pdfPath={pdfPath} />)
     }

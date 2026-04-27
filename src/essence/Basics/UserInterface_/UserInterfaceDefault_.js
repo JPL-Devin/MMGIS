@@ -391,46 +391,93 @@ var UserInterface = {
         this.tScreen = $('<div>').attr('id', 'tScreen')
         this.splitscreens.append(this.tScreen)
 
-        var bodyRGB = $('body').css('background-color')
-        bodyRGB = 'rgb(15,17,17)'
-        var bodyHEX = F_.rgb2hex(bodyRGB)
-        bodyRGB = F_.rgbToArray(bodyRGB)
-        var c = 'rgba(' + bodyRGB[0] + ',' + bodyRGB[1] + ',' + bodyRGB[2]
-        var c = 'rgba(0,0,0'
-        //The tools screen
+        // Floating bottom bar — wraps horizontal tool content + TimeUI
+        this.bottomFloatingBar = $('<div>')
+            .attr('id', 'bottomFloatingBar')
+            .css({
+                position: 'absolute',
+                bottom: '12px',
+                left: (this.topSize + 12) + 'px',
+                right: '12px',
+                'z-index': '1003',
+                'border-radius': '10px',
+                border: '1px solid #1f2937',
+                background: 'rgba(26, 26, 27, 0.92)',
+                'backdrop-filter': 'blur(20px)',
+                '-webkit-backdrop-filter': 'blur(20px)',
+                overflow: 'hidden',
+                display: 'flex',
+                'flex-direction': 'column',
+                'pointer-events': 'auto',
+            })
+        this.splitscreens.append(this.bottomFloatingBar)
+
+        //The tools screen (horizontal tool content — expands upward)
         this.toolsScreen = $('<div>')
             .attr('id', 'toolsWrapper')
             .css({
-                height: this.pxIsTools + 'px',
-                width: '0%',
+                height: '0px',
+                width: '100%',
                 margin: '0',
-                background: 'var(--color-a)',
-                left: 0 + 'px',
-                bottom: '0px',
-                'z-index': '1003',
+                background: 'rgba(26, 26, 27, 0.95)',
+                overflow: 'hidden',
+                'border-bottom': '1px solid transparent',
             })
-        this.tScreen.append(this.toolsScreen)
+        this.bottomFloatingBar.append(this.toolsScreen)
 
         const toolsDiv = $('<div>').attr('id', 'tools').css({
-            position: 'absolute',
-            top: '0px',
+            position: 'relative',
             height: '100%',
             'padding-bottom': '0px',
             width: '100%',
         })
         this.toolsScreen.append(toolsDiv)
 
-        //The tools slider
-        this.toolsSplit = $('<div>')
-            .attr('class', 'splitterH')
-            .attr('id', 'toolsSplit')
+        // TimeUI dock — #timeUI will be reparented here after creation
+        this.timeUIDock = $('<div>')
+            .attr('id', 'timeUIDock')
             .css({
-                height: this.splitterSize / 2 + 'px',
-                left: 0 + 'px',
-                bottom: this.pxIsTools - this.splitterSize / 2 + 'px',
-                'z-index': '3',
+                width: '100%',
+                'min-height': '0px',
             })
-        this.toolsScreen.append(this.toolsSplit)
+        this.bottomFloatingBar.append(this.timeUIDock)
+
+        // Initially hide the floating bar (shown when TimeUI activates or horizontal tool opens)
+        this.bottomFloatingBar.css('display', 'none')
+
+        // Watch for #timeUI being added to the DOM and reparent it into the floating bar
+        const bottomBar = this.bottomFloatingBar
+        const timeUIDock = this.timeUIDock
+        const observer = new MutationObserver(function (mutations) {
+            mutations.forEach(function (mutation) {
+                mutation.addedNodes.forEach(function (node) {
+                    if (node.id === 'timeUI') {
+                        // Reparent #timeUI into the floating bottom bar
+                        timeUIDock.append(node)
+                        // Override timeUI positioning since it's now inside the bar
+                        $(node).css({
+                            position: 'relative',
+                            bottom: 'auto',
+                            left: 'auto',
+                            width: '100%',
+                        })
+                        // Show the floating bar and update dependents
+                        UserInterface._updateBottomBarVisibility()
+                        UserInterface._updateBottomBarDependents()
+
+                        // Watch for TimeUI class changes (active/expanded)
+                        const timeUIObserver = new MutationObserver(function () {
+                            UserInterface._updateBottomBarVisibility()
+                            setTimeout(function () {
+                                UserInterface._updateBottomBarDependents()
+                            }, 350)
+                        })
+                        timeUIObserver.observe(node, { attributes: true, attributeFilter: ['class'] })
+                    }
+                })
+            })
+        })
+        observer.observe(this.splitscreens[0], { childList: true, subtree: true })
         //The toolbar
         this.toolbar = $('<div>')
             .attr('id', 'toolbar')
@@ -604,147 +651,87 @@ var UserInterface = {
                 UserInterface.mainHeight - UserInterface.splitterSize
         }
 
-        var opacity = 1
         if (pxHeight == 0) {
-            opacity = 0
             UserInterface.pxIsTools = 0
-            //$( '#toolsWrapper' ).css( 'box-shadow', 'none' );
-            //$( '#toolsWrapper' ).css( 'border-left', 'none' );
-        } else {
-            //$( '#toolsWrapper' ).css( 'box-shadow', '0px 0px 3px 0px black' );
-            //$( '#toolsWrapper' ).css( 'border-left', '1px solid #26a8ff' );
         }
+
         var duration = 400
         if (shouldntAnimate) duration = 0
 
-        //The tools screen
+        // Animate toolsWrapper height inside the floating bottom bar
         $('#toolsWrapper').animate(
             {
                 height: UserInterface.pxIsTools + 'px',
-                opacity: opacity,
             },
             {
                 duration: duration,
+                step: function () {
+                    UserInterface._updateBottomBarDependents()
+                },
+                complete: function () {
+                    // Show/hide border between tools and timeUI
+                    if (UserInterface.pxIsTools > 0) {
+                        $('#toolsWrapper').css('border-bottom', '1px solid #1f2937')
+                    } else {
+                        $('#toolsWrapper').css('border-bottom', '1px solid transparent')
+                    }
+                    UserInterface._updateBottomBarDependents()
+                },
             }
         )
+
+        // Also update the floating bar visibility
+        UserInterface._updateBottomBarVisibility()
+        UserInterface._updateBottomBarDependents()
+    },
+    setToolWidth(newWidth, alignment) {
+        // In the floating bottom bar, toolsWrapper always spans 100% of the bar
+        // The bar itself handles positioning (left: toolbar+12, right: 12)
+        $('#toolsWrapper').css({
+            width: '100%',
+        })
+    },
+    _updateBottomBarVisibility: function () {
+        const bar = $('#bottomFloatingBar')
+        if (!bar.length) return
+
         let timeUIActive = false
-        let timeUIExpanded = false
         if ($('#timeUI').length) {
             timeUIActive = $('#timeUI').hasClass('active')
-            timeUIExpanded = $('#timeUI').hasClass('expanded')
         }
+        const hasToolContent = UserInterface.pxIsTools > 0
+        if (timeUIActive || hasToolContent) {
+            bar.css('display', 'flex')
+        } else {
+            bar.css('display', 'none')
+        }
+    },
+    _updateBottomBarDependents: function () {
+        const bar = $('#bottomFloatingBar')
+        if (!bar.length) return
 
-        const timeUIHeight = timeUIActive ? (timeUIExpanded ? 145 : 40) : 0
+        // Total height of the floating bar from bottom edge of viewport
+        const barHeight = bar.outerHeight() || 0
+        const barBottom = 12 // matches the bar's bottom offset
+        const totalOffset = barHeight + barBottom
 
-        $('#mapToolBar').css({
-            bottom: UserInterface.pxIsTools + timeUIHeight + 'px',
-        })
-        $('.leaflet-control-scalefactor').css({
-            bottom:
-                UserInterface.pxIsTools +
-                28 +
-                (timeUIActive ? timeUIHeight - 40 : 0) +
-                'px',
-        })
-        $('#mmgis-attributions').css({
-            bottom:
-                UserInterface.pxIsTools +
-                (timeUIActive ? timeUIHeight - 40 : 0) +
-                'px',
-        })
-        // Only set compass position if no attributions exist (Attributions.js manages it when they do)
+        // Only offset map controls if the bar is visible
+        const isVisible = bar.css('display') !== 'none'
+        const offset = isVisible ? totalOffset : 0
+
+        $('#mapToolBar').css({ bottom: offset + 'px' })
+        $('.leaflet-control-scalefactor').css({ bottom: (offset + 28) + 'px' })
+        $('#mmgis-attributions').css({ bottom: offset + 'px' })
         if (
             $('#mmgis-attributions').length === 0 ||
             $('#mmgis-attributions').text().trim().length === 0
         ) {
-            $('#mmgis-map-compass').css({
-                bottom:
-                    UserInterface.pxIsTools +
-                    38 +
-                    (timeUIActive ? timeUIHeight - 40 : 0) +
-                    'px',
-            })
+            $('#mmgis-map-compass').css({ bottom: (offset + 38) + 'px' })
         } else {
-            $('#mmgis-map-compass').css({
-                bottom:
-                    UserInterface.pxIsTools +
-                    58 +
-                    (timeUIActive ? timeUIHeight - 40 : 0) +
-                    'px',
-            })
+            $('#mmgis-map-compass').css({ bottom: (offset + 58) + 'px' })
         }
-        $('.leaflet-bottom.leaflet-right').css({
-            bottom: UserInterface.pxIsTools + timeUIHeight + 'px',
-        })
-        $('#CoordinatesDiv').css({
-            bottom: UserInterface.pxIsTools + timeUIHeight + 'px',
-        })
-        $('#timeUI').css({
-            bottom:
-                UserInterface.pxIsTools +
-                (timeUIActive ? 0 : timeUIExpanded ? -148 : -40) +
-                'px',
-        })
-
-        //The tools slider
-        $('#toolsSplit').animate(
-            {
-                bottom:
-                    UserInterface.pxIsTools -
-                    UserInterface.splitterSize / 2 +
-                    'px',
-            },
-            {
-                duration: duration,
-            }
-        )
-
-        //The viewer slider
-        $('#viewerSplit').animate(
-            {
-                height:
-                    UserInterface.mainHeight -
-                    UserInterface.pxIsTools -
-                    UserInterface.topSize +
-                    'px',
-            },
-            { duration: duration }
-        )
-
-        //The map slider
-        $('#mapSplit').animate(
-            {
-                height:
-                    UserInterface.mainHeight -
-                    UserInterface.pxIsTools -
-                    UserInterface.topSize +
-                    'px',
-            },
-            { duration: duration }
-        )
-
-        //The globe slider
-        $('#globeSplit').animate(
-            {
-                height:
-                    UserInterface.mainHeight -
-                    UserInterface.pxIsTools -
-                    UserInterface.topSize +
-                    'px',
-            },
-            { duration: duration }
-        )
-    },
-    setToolWidth(newWidth, alignment) {
-        if (newWidth == 'full') {
-            newWidth = `calc(100vw - ${$('#toolbar').width()}px)`
-        } else {
-            newWidth += 'px'
-        }
-
-        $('#toolsWrapper').css({
-            width: newWidth,
-        })
+        $('.leaflet-bottom.leaflet-right').css({ bottom: offset + 'px' })
+        $('#CoordinatesDiv').css({ bottom: offset + 'px' })
     },
     getPanelPercents: function () {
         // Account for the splitterSize that was subtracted when setting pxIsViewer

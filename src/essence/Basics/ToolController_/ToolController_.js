@@ -48,9 +48,10 @@ let ToolController_ = {
                 'position': 'absolute',
                 'top': '12px',
                 'left': '12px',
-                'z-index': '50',
+                'z-index': '1002',
                 'display': 'flex',
                 'gap': '12px',
+                'pointer-events': 'none',
             })
         $('#splitscreens').append(this.separatedContentDiv)
 
@@ -72,10 +73,17 @@ let ToolController_ = {
         // Helper function to create a separated tool
         // Button goes in toolbar, content floats over map
         const createSeparatedTool = (i) => {
-            // Tool content container (floating panel over map)
-            const toolContent = $('<div>')
-                .attr('id', `toolContentSeparated_${tools[i].name}`)
+            const toolWidth = this.toolModules[tools[i].name + 'Tool']
+                ? this.toolModules[tools[i].name + 'Tool'].width || 200
+                : 200
+
+            // Outer floating panel wrapper (glassy styling)
+            const toolPanel = $('<div>')
+                .attr('id', `toolPanelSeparated_${tools[i].name}`)
+                .attr('class', 'sep-tool-panel')
                 .css({
+                    'width': toolWidth + 'px',
+                    'max-height': 'calc(100vh - 120px)',
                     'border-radius': '10px',
                     'background': 'rgba(26,26,27,0.88)',
                     'border': '1px solid #1f2937',
@@ -83,9 +91,65 @@ let ToolController_ = {
                     '-webkit-backdrop-filter': 'blur(20px)',
                     'box-shadow': '0 8px 32px rgba(0,0,0,0.4)',
                     'display': 'none',
+                    'flex-direction': 'column',
                     'overflow': 'hidden',
+                    'pointer-events': 'auto',
                 })
-            this.separatedContentDiv.append(toolContent)
+            this.separatedContentDiv.append(toolPanel)
+
+            // Header with title and close button (matching mockup)
+            const toolHeader = $('<div>')
+                .attr('class', 'sep-tool-header')
+                .css({
+                    'display': 'flex',
+                    'align-items': 'center',
+                    'justify-content': 'space-between',
+                    'padding': '10px 12px',
+                    'border-bottom': '1px solid #1f2937',
+                    'flex-shrink': '0',
+                })
+            const headerTitle = $('<span>')
+                .css({
+                    'font-size': '13px',
+                    'font-weight': '600',
+                    'color': '#e5e5e5',
+                    'text-transform': 'uppercase',
+                    'letter-spacing': '0.05em',
+                })
+                .text(tools[i].name)
+            const headerClose = $('<div>')
+                .attr('title', 'Close')
+                .css({
+                    'cursor': 'pointer',
+                    'color': '#6b7280',
+                    'width': '20px',
+                    'height': '20px',
+                    'display': 'flex',
+                    'align-items': 'center',
+                    'justify-content': 'center',
+                    'border-radius': '4px',
+                    'transition': 'all 0.15s',
+                })
+                .html('<i class="mdi mdi-close" style="font-size:14px"></i>')
+                .on('mouseenter', function() { $(this).css({'color': '#e5e5e5', 'background': 'rgba(255,255,255,0.1)'}) })
+                .on('mouseleave', function() { $(this).css({'color': '#6b7280', 'background': 'none'}) })
+                .on('click', (function(i) {
+                    return function() {
+                        $(`#toolButtonSeparated_${tools[i].name}`).click()
+                    }
+                })(i))
+            toolHeader.append(headerTitle).append(headerClose)
+            toolPanel.append(toolHeader)
+
+            // Inner content area (this is what the tool targets for rendering)
+            const toolContent = $('<div>')
+                .attr('id', `toolContentSeparated_${tools[i].name}`)
+                .css({
+                    'flex': '1',
+                    'overflow': 'auto',
+                    'min-height': '0',
+                })
+            toolPanel.append(toolContent)
 
             // Tool button in the toolbar (dedicated section)
             const toolButton = $('<div>')
@@ -116,7 +180,7 @@ let ToolController_ = {
                                     tM.make(
                                         `toolContentSeparated_${ToolController_.tools[i].name}`
                                     )
-                                    $(`#toolContentSeparated_${ToolController_.tools[i].name}`).css('display', 'block')
+                                    $(`#toolPanelSeparated_${ToolController_.tools[i].name}`).css('display', 'flex')
                                     ToolController_.activeSeparatedTools.push(
                                         ToolController_.tools[i].name + 'Tool'
                                     )
@@ -125,7 +189,7 @@ let ToolController_ = {
                                     ).addClass('active')
                                 } else {
                                     tM.destroy()
-                                    $(`#toolContentSeparated_${ToolController_.tools[i].name}`).css('display', 'none')
+                                    $(`#toolPanelSeparated_${ToolController_.tools[i].name}`).css('display', 'none')
                                     ToolController_.activeSeparatedTools =
                                         ToolController_.activeSeparatedTools.filter(
                                             (a) =>

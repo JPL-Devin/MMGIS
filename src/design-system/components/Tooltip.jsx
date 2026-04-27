@@ -17,7 +17,7 @@ function Tooltip(props) {
                 <BaseTooltip.Portal>
                     <BaseTooltip.Positioner side={placement}>
                         <BaseTooltip.Popup
-                            className={`ds-tooltip ${className}`}
+                            className={`ds-tooltip-popup ${className}`}
                         >
                             {content}
                         </BaseTooltip.Popup>

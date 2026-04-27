@@ -86,3 +86,19 @@
     background: #2a3444;
     margin: 4px auto;
 }
+
+/* Separated tool floating panels */
+.sep-tool-panel {
+    color: #e5e5e5;
+}
+
+/* Hide the Legend tool's own header since the panel wrapper provides one */
+#toolContentSeparated_Legend > div:first-child {
+    display: none !important;
+}
+
+/* Fix Legend content area height inside our wrapper */
+#toolContentSeparated_Legend #LegendTool {
+    height: auto !important;
+    max-height: calc(100vh - 200px) !important;
+}
