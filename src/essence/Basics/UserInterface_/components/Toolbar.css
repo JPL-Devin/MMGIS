@@ -25,7 +25,7 @@
     padding: 0 !important;
 }
 
-#toolcontroller_septoolbar {
+#toolcontroller_sepdiv {
     width: 100% !important;
     display: flex !important;
     flex-direction: column !important;

@@ -56,7 +56,7 @@ let ToolController_ = {
 
         // Separator + container for separated tool buttons in toolbar
         this.sepToolbarDiv = $('<div>')
-            .attr('id', 'toolcontroller_septoolbar')
+            .attr('id', 'toolcontroller_sepdiv')
         mainDiv.append(this.sepToolbarDiv)
 
         const sepDivider = $('<div>')

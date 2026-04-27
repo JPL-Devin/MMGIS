@@ -13,9 +13,10 @@ const UserInterfaceBridge = {
     },
 
     fina(l_, UserInterface) {
-        // Apply theme from mission config (both sets store and calls applyTheme)
+        // Only sync theme name to store; don't re-apply theme CSS since Stylize.js
+        // already applied it and then layered individual color overrides on top.
         if (l_.configData && l_.configData.look && l_.configData.look.theme) {
-            uiStore.getState().setTheme(l_.configData.look.theme)
+            uiStore.setState({ themeName: l_.configData.look.theme })
         }
 
         // Sync panel state from UserInterface
