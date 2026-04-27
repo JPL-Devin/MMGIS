@@ -1,0 +1,32 @@
+.ds-menu-popup {
+    background: var(--color-a);
+    border: 1px solid var(--color-a1);
+    border-radius: 8px;
+    padding: 4px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+    z-index: 9999;
+    min-width: 160px;
+}
+.ds-menu-item {
+    padding: 5px 10px;
+    font-size: 12px;
+    color: var(--color-a5);
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background 0.1s;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    outline: none;
+    font-family: inherit;
+}
+.ds-menu-item:hover,
+.ds-menu-item[data-highlighted] {
+    background: var(--color-a1);
+    color: var(--color-f);
+}
+.ds-menu-separator {
+    height: 1px;
+    background: var(--color-a1);
+    margin: 4px 0;
+}

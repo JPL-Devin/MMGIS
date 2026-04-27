@@ -1,0 +1,102 @@
+.ds-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    cursor: pointer;
+    font-family: inherit;
+    font-weight: 500;
+    transition: all 0.15s ease-in;
+    white-space: nowrap;
+    vertical-align: middle;
+    gap: 6px;
+    outline: none;
+}
+.ds-button:focus-visible {
+    box-shadow: inset 0 0 0 2px var(--color-mmgis);
+}
+
+/* Sizes */
+.ds-button--compact { height: 24px; font-size: 11px; padding: 0 8px; border-radius: 4px; }
+.ds-button--small { height: 28px; font-size: 12px; padding: 0 12px; border-radius: 4px; }
+.ds-button--medium { height: 30px; font-size: 13px; padding: 0 14px; border-radius: 6px; }
+.ds-button--default { height: 36px; font-size: 14px; padding: 0 16px; border-radius: 8px; }
+
+/* Primary variant */
+.ds-button--primary {
+    color: var(--color-a4);
+    background-color: var(--color-a-5);
+    border: 1px solid var(--color-a1);
+}
+.ds-button--primary:hover { color: var(--color-f); }
+.ds-button--primary.ds-button--active {
+    color: var(--color-a-5);
+    background-color: var(--color-a6);
+    font-weight: 600;
+}
+
+/* Secondary variant */
+.ds-button--secondary {
+    color: var(--color-a4);
+    background: transparent;
+    border: 1px solid transparent;
+}
+.ds-button--secondary:hover {
+    color: var(--color-f);
+    border-bottom-color: var(--color-f);
+}
+.ds-button--secondary.ds-button--active {
+    color: var(--color-f);
+    background-color: var(--color-o);
+}
+
+/* Ghost variant */
+.ds-button--ghost {
+    color: var(--color-a5);
+    background-color: var(--color-a);
+    border: 1px solid transparent;
+}
+.ds-button--ghost:hover { color: var(--color-f); }
+.ds-button--ghost.ds-button--active {
+    color: var(--color-f);
+    background-color: var(--color-o);
+}
+
+/* Subtle variant */
+.ds-button--subtle {
+    color: var(--color-a4);
+    background-color: var(--color-a-5);
+    border: 1px solid var(--color-a1);
+}
+.ds-button--subtle:hover { color: var(--color-a7); }
+.ds-button--subtle.ds-button--active {
+    color: var(--color-a7);
+    background-color: var(--color-a7);
+    font-weight: 600;
+}
+
+/* Toolbar variant */
+.ds-button--toolbar {
+    color: var(--color-a3);
+    background: transparent;
+    border: 1px solid transparent;
+    border-radius: 8px;
+}
+.ds-button--toolbar:hover {
+    color: var(--color-f);
+    background: var(--color-a1);
+}
+.ds-button--toolbar.ds-button--active {
+    background: var(--color-o);
+    color: var(--color-mmgis);
+}
+
+/* Icon mode */
+.ds-button--icon {
+    padding: 0;
+    aspect-ratio: 1;
+}
+.ds-button--icon.ds-button--compact { width: 24px; }
+.ds-button--icon.ds-button--small { width: 28px; }
+.ds-button--icon.ds-button--medium { width: 30px; }
+.ds-button--icon.ds-button--default { width: 36px; }

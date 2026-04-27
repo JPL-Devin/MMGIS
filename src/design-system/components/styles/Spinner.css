@@ -1,0 +1,14 @@
+.ds-spinner {
+    display: inline-block;
+    border-radius: 50%;
+    border: 2px solid var(--color-a1);
+    border-top-color: var(--color-mmgis);
+    animation: ds-spin 0.7s linear infinite;
+}
+.ds-spinner--small { width: 16px; height: 16px; }
+.ds-spinner--medium { width: 24px; height: 24px; }
+.ds-spinner--large { width: 36px; height: 36px; }
+
+@keyframes ds-spin {
+    to { transform: rotate(360deg); }
+}

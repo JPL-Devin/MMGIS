@@ -1,0 +1,34 @@
+.ds-slider {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    position: relative;
+}
+.ds-slider-track {
+    height: 3px;
+    width: 100%;
+    background: var(--color-a1);
+    border-radius: 2px;
+    position: relative;
+}
+.ds-slider-indicator {
+    height: 100%;
+    background: var(--color-mmgis);
+    border-radius: 2px;
+}
+.ds-slider-thumb {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--color-mmgis);
+    cursor: pointer;
+    border: 1.5px solid var(--color-a);
+    outline: none;
+    transition: transform 0.15s;
+}
+.ds-slider-thumb:hover {
+    transform: scale(1.3);
+}
+.ds-slider-thumb:focus-visible {
+    box-shadow: 0 0 0 2px var(--color-mmgis);
+}

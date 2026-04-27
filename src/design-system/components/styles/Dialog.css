@@ -1,0 +1,48 @@
+.ds-dialog-backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.6);
+    z-index: 9998;
+}
+.ds-dialog-popup {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: var(--color-a);
+    border: 1px solid var(--color-a1);
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 16px 48px rgba(0,0,0,0.5);
+    z-index: 9999;
+    max-width: 480px;
+    width: 90vw;
+    color: var(--color-f);
+}
+.ds-dialog-title {
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 12px;
+    color: var(--color-f);
+}
+.ds-dialog-description {
+    font-size: 13px;
+    color: var(--color-a4);
+    line-height: 1.5;
+}
+.ds-dialog-close {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    width: 24px;
+    height: 24px;
+    border: none;
+    background: transparent;
+    color: var(--color-a3);
+    cursor: pointer;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.ds-dialog-close:hover { background: var(--color-a1); color: var(--color-f); }
