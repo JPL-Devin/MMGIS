@@ -320,6 +320,9 @@ var essence = {
         }
     },
     init: async function (config, missionsList, swapping) {
+        // Reset finalized flag on swap so fina() re-runs for the new mission
+        if (swapping) essence.finalized = false
+
         //Save the config data
         essence.configData = config
 
