@@ -13,9 +13,9 @@ import './FloatingElements.css'
 
 function UserInterfaceLayout({ UserInterface }) {
     useEffect(() => {
-        const themeName = uiStore.getState().themeName
-        applyTheme(themeName)
-
+        // Only subscribe to future theme changes; do NOT apply theme on mount
+        // because Stylize.js has already applied the base theme + individual
+        // color overrides by this point — re-applying would wipe overrides.
         const unsub = uiStore.subscribe((state, prev) => {
             if (state.themeName !== prev.themeName) {
                 applyTheme(state.themeName)
