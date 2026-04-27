@@ -406,9 +406,8 @@ var UserInterface = {
                 'backdrop-filter': 'blur(20px)',
                 '-webkit-backdrop-filter': 'blur(20px)',
                 overflow: 'hidden',
-                display: 'flex',
-                'flex-direction': 'column',
                 'pointer-events': 'auto',
+                'max-height': 'calc(100% - 24px)',
             })
         this.splitscreens.append(this.bottomFloatingBar)
 
@@ -590,6 +589,7 @@ var UserInterface = {
     },
     openToolPanel: function (width) {
         UserInterface.toolPanel.empty()
+        $('#tools').empty()
         UserInterface.toolPanel.css({
             width: width + 'px',
             opacity: '1',
@@ -600,6 +600,7 @@ var UserInterface = {
             left: width + UserInterface.topSize + 22 + 'px',
             display: 'block',
         })
+        UserInterface._repositionSeparatedContent(width)
     },
     resizeToolPanel: function (width) {
         width = Math.max(
@@ -612,6 +613,7 @@ var UserInterface = {
             left: width + UserInterface.topSize + 22 + 'px',
             display: 'block',
         })
+        UserInterface._repositionSeparatedContent(width)
     },
     closeToolPanel: function () {
         UserInterface.toolPanel.empty()
@@ -622,6 +624,7 @@ var UserInterface = {
             'box-shadow': 'none',
         })
         UserInterface.toolPanelDrag.css('display', 'none')
+        UserInterface._repositionSeparatedContent(0)
     },
     // can also be 'full'
     setToolHeight: function (pxHeight, shouldntAnimate) {
@@ -701,14 +704,36 @@ var UserInterface = {
         }
         const hasToolContent = UserInterface.pxIsTools > 0
         if (timeUIActive || hasToolContent) {
-            bar.css('display', 'flex')
+            bar.css('display', 'block')
+            UserInterface._syncBottomBarHeight()
         } else {
             bar.css('display', 'none')
         }
     },
+    _repositionSeparatedContent: function (toolPanelWidth) {
+        const sepContent = $('#toolcontroller_sep_content')
+        if (!sepContent.length) return
+
+        // Offset = toolPanel width + gap (24px for drag handle + margin)
+        const offset = toolPanelWidth > 0 ? (toolPanelWidth + 24) : 0
+        sepContent.css({
+            'left': (12 + offset) + 'px',
+            'transition': 'left 0.2s ease-out',
+        })
+    },
+    _syncBottomBarHeight: function () {
+        const bar = $('#bottomFloatingBar')
+        if (!bar.length) return
+
+        const twH = $('#toolsWrapper').outerHeight() || 0
+        const tdH = $('#timeUIDock').outerHeight() || 0
+        bar.css('height', (twH + tdH) + 'px')
+    },
     _updateBottomBarDependents: function () {
         const bar = $('#bottomFloatingBar')
         if (!bar.length) return
+
+        UserInterface._syncBottomBarHeight()
 
         // Total height of the floating bar from bottom edge of viewport
         const barHeight = bar.outerHeight() || 0

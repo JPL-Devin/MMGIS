@@ -20,6 +20,11 @@
 import $ from 'jquery'
 import WebSocket from 'isomorphic-ws'
 import M from 'materialize-css'
+
+// Register Chart.js components needed by tools (Measure uses Line chart).
+// Required after react-chartjs-2 v4 upgrade (v3 auto-registered via chart.js/auto).
+import { Chart, CategoryScale, LinearScale, PointElement, LineElement, LineController, Filler, Tooltip as ChartTooltip, Legend as ChartLegend } from 'chart.js'
+Chart.register(CategoryScale, LinearScale, PointElement, LineElement, LineController, Filler, ChartTooltip, ChartLegend)
 import F_ from './Basics/Formulae_/Formulae_'
 import T_ from './Basics/Test_/Test_'
 import L_ from './Basics/Layers_/Layers_'

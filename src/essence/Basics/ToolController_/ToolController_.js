@@ -566,7 +566,11 @@ let ToolController_ = {
                     typeof tool.destroy === 'function'
                 ) {
                     if (this.activeTool != null) {
-                        this.activeTool.destroy()
+                        try {
+                            this.activeTool.destroy()
+                        } catch (e) {
+                            console.warn('Tool destroy error (non-fatal):', e)
+                        }
                     }
 
                     this.activeTool = tool
@@ -635,7 +639,11 @@ let ToolController_ = {
         prevActive.parent().css({ background: 'none' })
 
         if (this.activeTool != null) {
-            this.activeTool.destroy()
+            try {
+                this.activeTool.destroy()
+            } catch (e) {
+                console.warn('Tool destroy error (non-fatal):', e)
+            }
             $('#tools').empty()
             this.UserInterface.closeToolPanel()
         }
