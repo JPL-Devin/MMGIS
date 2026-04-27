@@ -493,23 +493,28 @@ var UserInterface = {
         // Initially hide the floating bar (shown when TimeUI activates or horizontal tool opens)
         this.bottomFloatingBar.css('display', 'none')
 
-        // Watch for #timeUI being added to the DOM and reparent it into the floating bar
-        const bottomBar = this.bottomFloatingBar
+        // Watch for #timeUI being added to the DOM and reparent it into the floating bar.
+        // IMPORTANT: observe only direct children (subtree:false) and disconnect
+        // once #timeUI is found to avoid infinite observer loops (DOM mutations
+        // inside the callback would re-trigger a subtree observer).
         const timeUIDock = this.timeUIDock
-        const observer = new MutationObserver(function (mutations) {
-            mutations.forEach(function (mutation) {
-                mutation.addedNodes.forEach(function (node) {
-                    if (node.id === 'timeUI') {
+        const observer = new MutationObserver(function (mutations, obs) {
+            for (let i = 0; i < mutations.length; i++) {
+                const added = mutations[i].addedNodes
+                for (let j = 0; j < added.length; j++) {
+                    const node = added[j]
+                    if (node.id === 'timeUI' || (node.querySelector && node.querySelector('#timeUI'))) {
+                        const timeUI = node.id === 'timeUI' ? node : node.querySelector('#timeUI')
+                        // Stop observing before any DOM changes to prevent re-entry
+                        obs.disconnect()
                         // Reparent #timeUI into the floating bottom bar
-                        timeUIDock.append(node)
-                        // Override timeUI positioning since it's now inside the bar
-                        $(node).css({
+                        timeUIDock.append(timeUI)
+                        $(timeUI).css({
                             position: 'relative',
                             bottom: 'auto',
                             left: 'auto',
                             width: '100%',
                         })
-                        // Show the floating bar and update dependents
                         UserInterface._updateBottomBarVisibility()
                         UserInterface._updateBottomBarDependents()
 
@@ -520,10 +525,11 @@ var UserInterface = {
                                 UserInterface._updateBottomBarDependents()
                             }, 350)
                         })
-                        timeUIObserver.observe(node, { attributes: true, attributeFilter: ['class'] })
+                        timeUIObserver.observe(timeUI, { attributes: true, attributeFilter: ['class'] })
+                        return
                     }
-                })
-            })
+                }
+            }
         })
         observer.observe(this.splitscreens[0], { childList: true, subtree: true })
         //The toolbar
@@ -878,23 +884,12 @@ var UserInterface = {
 
         resize()
 
-        // Lazy-init Globe when opened (deeplink, programmatic, or first toggle)
         if (wasGlobeClosed && isGlobeOpening && Globe_ != null) {
-            if (!Globe_._initialized) {
-                Globe_.lazyInit().then(() => {
-                    if (!Globe_.hasBeenOpened) {
-                        Globe_.hasBeenOpened = true
-                        if (L_.FUTURES.globeView == null) {
-                            setTimeout(() => {
-                                Globe_.syncToMapCenter()
-                            }, 100)
-                        }
-                    }
-                    resize()
-                })
-            } else if (!Globe_.hasBeenOpened) {
+            if (!Globe_.hasBeenOpened) {
                 Globe_.hasBeenOpened = true
+                // Only sync to map center if no globe coordinates were specified in URL
                 if (L_.FUTURES.globeView == null) {
+                    // Use setTimeout to ensure resize completes first
                     setTimeout(() => {
                         Globe_.syncToMapCenter()
                     }, 100)
