@@ -269,23 +269,26 @@ let Globe_ = {
         )
     },
     getMockLitho: function () {
-        const pendingLayers = []
+        const pendingOps = []
+        const bufferOp = function (method) {
+            return function () {
+                pendingOps.push({ method, args: Array.from(arguments) })
+            }
+        }
         return {
-            _pendingLayers: pendingLayers,
-            removeLayer: function () {},
-            addLayer: function (type, options) {
-                pendingLayers.push({ type, options })
-            },
-            toggleLayer: function () {},
+            _pendingOps: pendingOps,
+            removeLayer: bufferOp('removeLayer'),
+            addLayer: bufferOp('addLayer'),
+            toggleLayer: bufferOp('toggleLayer'),
             hasLayer: function () {},
             getCenter: function () {},
             setCenter: function () {},
             getCameras: function () {},
-            setLayerOpacity: function () {},
-            setLayerFilterEffect: function () {},
-            orderLayers: function () {},
+            setLayerOpacity: bufferOp('setLayerOpacity'),
+            setLayerFilterEffect: bufferOp('setLayerFilterEffect'),
+            orderLayers: bufferOp('orderLayers'),
             invalidateSize: function () {},
-            setLayerSpecificOptions: function () {},
+            setLayerSpecificOptions: bufferOp('setLayerSpecificOptions'),
             getElevationAtLngLat: function () {
                 return 0
             },
@@ -297,18 +300,20 @@ let Globe_ = {
     // Called when Globe panel is opened for the first time
     lazyInit: async function () {
         if (this._initialized) return
-        // Capture pending layers from mock before init replaces this.litho
-        const pendingLayers = this.litho && this.litho._pendingLayers
-            ? [...this.litho._pendingLayers] : []
+        // Capture pending operations from mock before init replaces this.litho
+        const pendingOps = this.litho && this.litho._pendingOps
+            ? [...this.litho._pendingOps] : []
         await this.init()
         // Run deferred finalization if fina() was already called
         if (this._pendingFinaCoordinates && !this._finalized) {
             this.fina(this._pendingFinaCoordinates)
         }
-        // Replay buffered addLayer calls on the real renderer
-        if (pendingLayers.length > 0 && this.litho && this.litho._pendingLayers == null) {
-            pendingLayers.forEach(function (entry) {
-                Globe_.litho.addLayer(entry.type, entry.options)
+        // Replay all buffered operations on the real renderer in order
+        if (pendingOps.length > 0 && this.litho && this.litho._pendingOps == null) {
+            pendingOps.forEach(function (entry) {
+                if (typeof Globe_.litho[entry.method] === 'function') {
+                    Globe_.litho[entry.method].apply(Globe_.litho, entry.args)
+                }
             })
         }
     },

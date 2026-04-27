@@ -48,10 +48,10 @@ function TopBar({ UserInterface }) {
 
     const handleToggleMap = useCallback(() => {
         const newState = !uiStore.getState().mapPanelOpen
-        uiStore.getState().setMapPanelOpen(newState)
         if (UserInterface && UserInterface.setPanelPercents) {
             const pp = UserInterface.getPanelPercents()
             if (newState) {
+                uiStore.getState().setMapPanelOpen(true)
                 if (pp.viewer > 0 && pp.globe > 0) {
                     UserInterface.setPanelPercents(pp.viewer / 2, 50, pp.globe / 2)
                 } else if (pp.viewer > 0) {
@@ -62,15 +62,17 @@ function TopBar({ UserInterface }) {
                     UserInterface.setPanelPercents(0, 100, 0)
                 }
             } else {
-                if (pp.viewer > 0 && pp.globe > 0) {
-                    UserInterface.setPanelPercents(pp.viewer + pp.map / 2, 0, pp.globe + pp.map / 2)
-                } else if (pp.viewer > 0) {
-                    UserInterface.setPanelPercents(pp.viewer + pp.map, 0, 0)
-                } else if (pp.globe > 0) {
-                    UserInterface.setPanelPercents(0, 0, pp.globe + pp.map)
-                } else {
-                    return
+                if (pp.viewer > 0 || pp.globe > 0) {
+                    uiStore.getState().setMapPanelOpen(false)
+                    if (pp.viewer > 0 && pp.globe > 0) {
+                        UserInterface.setPanelPercents(pp.viewer + pp.map / 2, 0, pp.globe + pp.map / 2)
+                    } else if (pp.viewer > 0) {
+                        UserInterface.setPanelPercents(pp.viewer + pp.map, 0, 0)
+                    } else {
+                        UserInterface.setPanelPercents(0, 0, pp.globe + pp.map)
+                    }
                 }
+                // If no other panels open, do nothing (can't close the only panel)
             }
         }
     }, [UserInterface])
