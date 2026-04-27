@@ -1,6 +1,7 @@
 import React, { useState, useCallback, useEffect } from 'react'
 import { Button, Input } from '../../../../design-system'
 import uiStore from '../store/uiStore'
+import Globe_ from '../../Globe_/Globe_'
 
 import './TopBar.css'
 
@@ -77,6 +78,10 @@ function TopBar({ UserInterface }) {
     const handleToggleGlobe = useCallback(() => {
         const newState = !uiStore.getState().globePanelOpen
         uiStore.getState().setGlobePanelOpen(newState)
+        // Lazy-init Globe on first open
+        if (newState && !Globe_._initialized) {
+            Globe_.lazyInit()
+        }
         if (UserInterface && UserInterface.setPanelPercents) {
             const pp = UserInterface.getPanelPercents()
             if (newState) {

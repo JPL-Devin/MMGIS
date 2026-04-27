@@ -371,8 +371,8 @@ var essence = {
         //Initialize CursorInfo
         if (!swapping) CursorInfo.init()
 
-        //Make the globe
-        if (!swapping) Globe_.init()
+        //Make the globe — defer init until Globe panel is actually opened
+        //Globe_.init() is now async and called lazily from TopBar toggle
 
         //Make the viewer
         if (!swapping) Viewer_.init()

@@ -3,17 +3,26 @@ import L_ from '../Layers_/Layers_'
 import $ from 'jquery'
 
 import TimeControl from '../TimeControl_/TimeControl'
-import GlobeRenderer from './GlobeRenderer'
 
 let Globe_ = {
-    litho: null,
+    litho: null, // Will be set to mock in module init below
     id: 'globe',
     renderType: null, // default lithosphere
     controls: {
         link: null,
     },
     hasBeenOpened: false, // Track if Globe panel has been opened before
-    init: function () {
+    _initialized: false,
+    _finalized: false,
+    _pendingFinaCoordinates: null,
+    // Lazy init — only called when Globe panel is actually opened
+    init: async function () {
+        if (this._initialized) return
+        this._initialized = true
+
+        // Dynamically import GlobeRenderer so Cesium is not loaded at startup
+        const { default: GlobeRenderer } = await import('./GlobeRenderer')
+
         const containerId = this.id
         let initialView = null
         if (L_.FUTURES.globeView != null) {
@@ -228,6 +237,12 @@ let Globe_ = {
         //console.log(this.litho)
     },
     fina: function (coordinates) {
+        if (!this._initialized) {
+            // Globe not yet initialized — store coordinates for deferred finalization
+            this._pendingFinaCoordinates = coordinates
+            return
+        }
+        this._finalized = true
         // Passes in Coordinates so that LithoSphere can share the same coordinate ui element
         // as the rest of the application
         $(`#${this.id}`).on('mousemove', () => {
@@ -254,9 +269,13 @@ let Globe_ = {
         )
     },
     getMockLitho: function () {
+        const pendingLayers = []
         return {
+            _pendingLayers: pendingLayers,
             removeLayer: function () {},
-            addLayer: function () {},
+            addLayer: function (type, options) {
+                pendingLayers.push({ type, options })
+            },
             toggleLayer: function () {},
             hasLayer: function () {},
             getCenter: function () {},
@@ -270,9 +289,27 @@ let Globe_ = {
             getElevationAtLngLat: function () {
                 return 0
             },
-            projection: this.litho.projection,
+            projection: (this.litho && this.litho.projection) || {},
             _: {},
             options: {},
+        }
+    },
+    // Called when Globe panel is opened for the first time
+    lazyInit: async function () {
+        if (this._initialized) return
+        // Capture pending layers from mock before init replaces this.litho
+        const pendingLayers = this.litho && this.litho._pendingLayers
+            ? [...this.litho._pendingLayers] : []
+        await this.init()
+        // Run deferred finalization if fina() was already called
+        if (this._pendingFinaCoordinates && !this._finalized) {
+            this.fina(this._pendingFinaCoordinates)
+        }
+        // Replay buffered addLayer calls on the real renderer
+        if (pendingLayers.length > 0 && this.litho && this.litho._pendingLayers == null) {
+            pendingLayers.forEach(function (entry) {
+                Globe_.litho.addLayer(entry.type, entry.options)
+            })
         }
     },
     reset: function () {},
@@ -305,5 +342,8 @@ let Globe_ = {
     findSpriteObject: function () {},
     radargram: function () {},
 }
+
+// Start with mock litho so tools can safely reference Globe_.litho before init
+Globe_.litho = Globe_.getMockLitho()
 
 export default Globe_
