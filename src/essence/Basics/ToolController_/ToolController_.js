@@ -541,9 +541,13 @@ let ToolController_ = {
     },
     clear() {
         $('#toolbarTools').remove()
+        $('#toolcontroller_sep_content').remove()
         this.tools = null
         this.incToolsDiv = null
         this.excToolsDiv = null
+        this.separatedContentDiv = null
+        this.sepToolbarDiv = null
+        this.activeSeparatedTools = []
         this.toolModuleNames = []
         this.toolModules = []
     },
