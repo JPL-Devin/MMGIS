@@ -13,9 +13,9 @@ const UserInterfaceBridge = {
     },
 
     fina(l_, UserInterface) {
-        // Sync theme name to store (Stylize.js handles actual CSS application)
+        // Apply theme from mission config (both sets store and calls applyTheme)
         if (l_.configData && l_.configData.look && l_.configData.look.theme) {
-            uiStore.setState({ themeName: l_.configData.look.theme })
+            uiStore.getState().setTheme(l_.configData.look.theme)
         }
 
         // Sync panel state from UserInterface
