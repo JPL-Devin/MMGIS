@@ -587,16 +587,10 @@ let ToolController_ = {
                     }
                     this.prevHeight = this.activeTool.height;
                     */
-                    // Toggle drag handle
-                    $('#toolPanelDrag').css(
-                        'display',
-                        toolConfigs[ToolController_.tools[idx].name]
-                            ?.expandable === true
-                            ? 'block'
-                            : 'none'
-                    )
-
                     this.activeTool.make(this)
+
+                    // Inject close X button into the tool's content area
+                    ToolController_.injectCloseButton()
                 } else {
                     console.warn(
                         'WARNING: ' +
@@ -607,8 +601,6 @@ let ToolController_ = {
                 }
                 this.activeToolName = name
             } else {
-                // Toggle drag handle
-                $('#toolPanelDrag').css('display', 'none')
                 //close tool
                 this.closeActiveTool()
             }
@@ -653,6 +645,55 @@ let ToolController_ = {
             this.UserInterface.setToolHeight(0)
         }
         this.prevHeight = 0
+    },
+    injectCloseButton: function () {
+        // Determine which container the tool rendered into
+        const isHorizontal = this.activeTool && this.activeTool.height > 0
+        const container = isHorizontal ? $('#tools') : $('#toolPanel')
+        if (!container.length) return
+
+        // Remove any existing injected close button
+        container.find('.tool-close-btn').remove()
+
+        const closeBtn = $('<div>')
+            .addClass('tool-close-btn')
+            .attr('title', 'Close Tool')
+            .css({
+                position: 'absolute',
+                top: '6px',
+                right: '6px',
+                width: '26px',
+                height: '26px',
+                display: 'flex',
+                'align-items': 'center',
+                'justify-content': 'center',
+                cursor: 'pointer',
+                'border-radius': '4px',
+                'z-index': '10',
+                color: '#9ca3af',
+                'font-size': '18px',
+                transition: 'background 0.15s, color 0.15s',
+            })
+            .html("<i class='mdi mdi-close mdi-18px'></i>")
+            .on('mouseenter', function () {
+                $(this).css({ background: 'rgba(255,255,255,0.1)', color: '#fff' })
+            })
+            .on('mouseleave', function () {
+                $(this).css({ background: 'transparent', color: '#9ca3af' })
+            })
+            .on('click', function () {
+                ToolController_.closeActiveTool()
+            })
+
+        // Ensure the container has position:relative for absolute positioning
+        const firstChild = container.children().first()
+        if (firstChild.length) {
+            firstChild.css('position', 'relative')
+            firstChild.append(closeBtn)
+        } else {
+            container.css('position', 'relative')
+            container.append(closeBtn)
+        }
     },
     getToolsUrl: function () {
         var toolsUrl = ''

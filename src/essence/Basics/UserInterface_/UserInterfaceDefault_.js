@@ -138,67 +138,112 @@ var UserInterface = {
                 opacity: '0',
             })
         $('#main-container').append(this.toolPanel)
-        // Drag
+        // Right-edge resize strip for the vertical tool panel
         this.toolPanelDrag = $('<div>').attr('id', 'toolPanelDrag').css({
             position: 'absolute',
-            width: '24px',
-            height: `28px`,
-            padding: '10px 2px',
-            margin: '0px 3px',
-            'text-align': 'center',
-            top: (this.topSize + 13) + 'px',
-            color: '#6b7280',
-            overflow: 'hidden',
+            width: '6px',
+            top: (this.topSize + 12) + 'px',
+            height: 'calc(100% - ' + (this.topSize + 24) + 'px)',
             cursor: 'col-resize',
             display: 'none',
-            'z-index': '1400',
-            'border-right': '1px solid transparent',
+            'z-index': '1401',
+            background: 'transparent',
         })
         $('#main-container').append(this.toolPanelDrag)
-        const toolPanelDragInner = $('<div>').html(
-            "<i class='mdi mdi-drag-vertical mdi-18px'></i>"
-        )
-        this.toolPanelDrag.append(toolPanelDragInner)
+        // Hover highlight
+        this.toolPanelDrag.on('mouseenter', function () {
+            $(this).css('background', 'rgba(var(--color-mmgis-rgb, 0,128,255), 0.3)')
+        }).on('mouseleave', function () {
+            if (!UserInterface._toolDragActive)
+                $(this).css('background', 'transparent')
+        })
+
+        UserInterface._toolDragActive = false
         UserInterface.handleToolDragDragging = function (e) {
-            UserInterface.toolDrags.left =
-                UserInterface.toolDrags.offset0.left +
-                (e.pageX - UserInterface.toolDrags.pageX0)
-
+            const newWidth = e.pageX - UserInterface.topSize - 12
             $('body').css('user-select', 'none')
-
-            UserInterface.toolPanelDrag.css({
-                left: UserInterface.toolDrags.left + 'px',
-                height: '100%',
-                'border-right': '2px solid var(--color-a1)',
-            })
+            UserInterface.toolPanelDrag.css('background', 'rgba(var(--color-mmgis-rgb, 0,128,255), 0.5)')
+            // Live resize
+            const clamped = Math.max(
+                Math.min(newWidth, window.innerWidth / 2),
+                ToolController_.getTool(ToolController_.activeToolName)?.width || 300
+            )
+            UserInterface.toolPanel.css('width', clamped + 'px')
+            UserInterface.toolPanelDrag.css('left', (clamped + UserInterface.topSize + 12) + 'px')
         }
 
         UserInterface.handleToolDragMouseup = function () {
+            UserInterface._toolDragActive = false
             $('body')
                 .off('mousemove', UserInterface.handleToolDragDragging)
                 .off('mouseup', UserInterface.handleToolDragMouseup)
-            if (UserInterface.toolDrags?.left != null)
-                UserInterface.resizeToolPanel(
-                    UserInterface.toolDrags.left - UserInterface.topSize - 12
-                )
+            const currentWidth = parseInt(UserInterface.toolPanel.css('width'))
+            UserInterface.resizeToolPanel(currentWidth)
             $('body').css('user-select', 'auto')
-            UserInterface.toolPanelDrag.css({
-                color: 'var(--color-a3)',
-                height: '28px',
-                'border-right': '1px solid transparent',
-            })
+            UserInterface.toolPanelDrag.css('background', 'transparent')
         }
         UserInterface.handleToolDragMousedown = function (e) {
-            UserInterface.toolDrags = {}
-            UserInterface.toolDrags.pageX0 = e.pageX
-            UserInterface.toolDrags.elem = this
-            UserInterface.toolDrags.offset0 = $(this).offset()
-            UserInterface.toolPanelDrag.css('color', 'var(--color-mmgis)')
+            UserInterface._toolDragActive = true
+            e.preventDefault()
             $('body')
                 .on('mouseup', UserInterface.handleToolDragMouseup)
                 .on('mousemove', UserInterface.handleToolDragDragging)
         }
         $('#toolPanelDrag').on('mousedown', this.handleToolDragMousedown)
+
+        // Top-edge resize strip for the floating bottom bar (horizontal tools)
+        this.bottomBarDrag = $('<div>').attr('id', 'bottomBarDrag').css({
+            position: 'absolute',
+            height: '6px',
+            left: '0',
+            right: '0',
+            top: '-3px',
+            cursor: 'row-resize',
+            'z-index': '1004',
+            background: 'transparent',
+            display: 'none',
+        })
+        // Hover highlight
+        this.bottomBarDrag.on('mouseenter', function () {
+            $(this).css('background', 'rgba(var(--color-mmgis-rgb, 0,128,255), 0.3)')
+        }).on('mouseleave', function () {
+            if (!UserInterface._bottomDragActive)
+                $(this).css('background', 'transparent')
+        })
+
+        UserInterface._bottomDragActive = false
+        UserInterface.handleBottomDragDragging = function (e) {
+            $('body').css('user-select', 'none')
+            UserInterface.bottomBarDrag.css('background', 'rgba(var(--color-mmgis-rgb, 0,128,255), 0.5)')
+            const bar = $('#bottomFloatingBar')
+            const barBottom = bar.offset().top + bar.outerHeight()
+            const timeUIDockH = $('#timeUIDock').outerHeight() || 0
+            let newToolsH = barBottom - e.pageY - timeUIDockH
+            const minH = 100
+            const maxH = window.innerHeight * 0.6
+            newToolsH = Math.max(minH, Math.min(maxH, newToolsH))
+            $('#toolsWrapper').css('height', newToolsH + 'px')
+            UserInterface.pxIsTools = newToolsH
+            UserInterface._syncBottomBarHeight()
+            UserInterface._updateBottomBarDependents()
+        }
+
+        UserInterface.handleBottomDragMouseup = function () {
+            UserInterface._bottomDragActive = false
+            $('body')
+                .off('mousemove', UserInterface.handleBottomDragDragging)
+                .off('mouseup', UserInterface.handleBottomDragMouseup)
+            $('body').css('user-select', 'auto')
+            UserInterface.bottomBarDrag.css('background', 'transparent')
+        }
+        UserInterface.handleBottomDragMousedown = function (e) {
+            UserInterface._bottomDragActive = true
+            e.preventDefault()
+            $('body')
+                .on('mouseup', UserInterface.handleBottomDragMouseup)
+                .on('mousemove', UserInterface.handleBottomDragDragging)
+        }
+        this.bottomBarDrag.on('mousedown', UserInterface.handleBottomDragMousedown)
 
         //Main container div
         this.splitscreens = $('<div>')
@@ -441,6 +486,10 @@ var UserInterface = {
             })
         this.bottomFloatingBar.append(this.timeUIDock)
 
+        // Append the top-edge drag strip to the floating bar
+        this.bottomFloatingBar.css('position', 'absolute')
+        this.bottomFloatingBar.append(this.bottomBarDrag)
+
         // Initially hide the floating bar (shown when TimeUI activates or horizontal tool opens)
         this.bottomFloatingBar.css('display', 'none')
 
@@ -597,7 +646,7 @@ var UserInterface = {
             'box-shadow': '0 8px 32px rgba(0,0,0,0.4)',
         })
         UserInterface.toolPanelDrag.css({
-            left: width + UserInterface.topSize + 22 + 'px',
+            left: (width + UserInterface.topSize + 12) + 'px',
             display: 'block',
         })
         UserInterface._repositionSeparatedContent(width)
@@ -610,7 +659,7 @@ var UserInterface = {
         )
         UserInterface.toolPanel.css('width', width + 'px')
         UserInterface.toolPanelDrag.css({
-            left: width + UserInterface.topSize + 22 + 'px',
+            left: (width + UserInterface.topSize + 12) + 'px',
             display: 'block',
         })
         UserInterface._repositionSeparatedContent(width)
@@ -706,8 +755,11 @@ var UserInterface = {
         if (timeUIActive || hasToolContent) {
             bar.css('display', 'block')
             UserInterface._syncBottomBarHeight()
+            // Show top-edge drag strip only when a horizontal tool is open
+            $('#bottomBarDrag').css('display', hasToolContent ? 'block' : 'none')
         } else {
             bar.css('display', 'none')
+            $('#bottomBarDrag').css('display', 'none')
         }
     },
     _repositionSeparatedContent: function (toolPanelWidth) {
