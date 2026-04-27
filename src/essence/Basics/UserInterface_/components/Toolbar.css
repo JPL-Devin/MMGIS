@@ -2,28 +2,42 @@
 #toolbar {
     background: var(--color-a) !important;
     border-right: 1px solid var(--color-a1) !important;
+    box-shadow: 4px 0 12px rgba(0, 0, 0, 0.3) !important;
+    z-index: 99 !important;
 }
 
 #toolbar .toolButton {
     width: 34px !important;
     height: 34px !important;
-    margin: 2px 3px !important;
+    margin: 1px 3px !important;
     border-radius: 8px !important;
     display: flex !important;
     align-items: center !important;
     justify-content: center !important;
-    transition: background 0.15s, color 0.15s !important;
+    color: var(--color-a3) !important;
+    transition: all 0.15s !important;
+    position: relative;
 }
 
 #toolbar .toolButton:hover {
     background: var(--color-a1) !important;
+    color: var(--color-a5) !important;
 }
 
 #toolbar .toolButton.active,
 #toolbar .toolButtonActivated {
     background: var(--color-o) !important;
+    color: var(--color-mmgis) !important;
 }
 
 #toolbar .toolButton .mdi {
     font-size: 18px !important;
+}
+
+#toolbar .toolSep {
+    color: var(--color-mmgis) !important;
+}
+
+#toolbar .toolSep:hover {
+    background: rgba(30, 58, 95, 0.19) !important;
 }

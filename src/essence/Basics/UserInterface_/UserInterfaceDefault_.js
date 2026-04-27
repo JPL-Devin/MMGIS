@@ -631,11 +631,11 @@ var UserInterface = {
                 //'box-shadow': 'inset 0px 2px 7px black',
                 //'box-shadow': '7px 0px 7px rgba(0,0,0,0.2)',
                 width: this.topSize + 'px',
-                'padding-top': '40px',
+                'padding-top': '0px',
                 background: 'var(--color-a)',
                 'border-right': '1px solid var(--color-a-5)',
-                top: '0px',
-                height: '100%',
+                top: this.topSize + 'px',
+                height: 'calc(100% - ' + this.topSize + 'px)',
                 'z-index': '1004',
             })
         $('#main-container').append(this.toolbar)
@@ -643,7 +643,7 @@ var UserInterface = {
         this.toolbarLogo = $('<div>')
             .attr('id', 'mmgislogo')
             .css({
-                display: this.topSize == 0 ? 'inherit' : 'none',
+                display: 'inherit',
                 padding: '9px 6px',
                 cursor: 'pointer',
                 width: '40px',
@@ -1101,24 +1101,8 @@ var UserInterface = {
             )
         }
     },
-    minimalist(is) {
-        if (is) {
-            this.toolbarLogo.css('display', 'inherit')
-            this.toolbar.css({
-                top: '0px',
-                height: '100%',
-                'padding-top': '40px',
-            })
-            this.toolPanel.css({
-                top: '0px',
-                height: '100%',
-            })
-            this.splitscreens.css({
-                top: '0px',
-                height: '100%',
-            })
-        }
-    },
+    // minimalist() removed — splitscreens, toolbar, and toolPanel now use their
+    // default positioning (below topBar, beside toolbar) so they never underlap.
     fullHide(is) {
         if (is) {
             UserInterface.topBar.css('display', 'none')
@@ -1177,8 +1161,6 @@ var UserInterface = {
                 l_.FUTURES.panelPercents[1],
                 l_.FUTURES.panelPercents[2]
             )
-
-        UserInterface.minimalist(true)
 
         clearUnwantedPanels(this.hasViewer, true, this.hasGlobe)
         if (l_.configData.look) {

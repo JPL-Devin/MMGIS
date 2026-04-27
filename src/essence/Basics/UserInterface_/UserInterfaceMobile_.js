@@ -677,7 +677,7 @@ var UserInterface = {
         this.toolbarLogo = $('<div>')
             .attr('id', 'mmgislogo')
             .css({
-                'display': this.topSize == 0 ? 'inherit' : 'none',
+                'display': 'inherit',
                 'padding': '9px 6px',
                 'cursor': 'pointer',
                 'width': '40px',
@@ -1069,18 +1069,8 @@ var UserInterface = {
 
         resize()
     },
-    minimalist(is) {
-        if (is) {
-            this.toolbarLogo.css('display', 'inherit')
-            this.toolbar.css('bottom', '0px')
-            this.toolbar.css('height', this.topSize + 'px')
-            this.toolbar.css('padding-top', '0px') // 40px
-            this.toolPanel.css('top', '0px')
-            this.toolPanel.css('height', '100%')
-            this.splitscreens.css('top', '0px')
-            this.splitscreens.css('height', '100%')
-        }
-    },
+    // minimalist() removed — splitscreens, toolbar, and toolPanel now use their
+    // default positioning (below topBar, beside toolbar) so they never underlap.
     fullHide(is) {
         if (is) {
             UserInterface.topBar.css('display', 'none')
@@ -1136,8 +1126,6 @@ var UserInterface = {
                 l_.FUTURES.panelPercents[1],
                 l_.FUTURES.panelPercents[2]
             )
-
-        UserInterface.minimalist(true)
 
         clearUnwantedPanels(this.hasViewer, true, this.hasGlobe)
         if (l_.configData.look) {

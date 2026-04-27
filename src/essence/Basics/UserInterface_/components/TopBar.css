@@ -5,19 +5,48 @@
     margin-left: auto;
     height: 100%;
     padding-right: 8px;
+    pointer-events: auto;
 }
 
 .topbar-panel-toggles {
     display: flex;
     align-items: center;
-    gap: 2px;
+    background: var(--color-a-5);
+    border: 1px solid var(--color-a1);
+    border-radius: 8px;
+    overflow: hidden;
+    height: 28px;
     margin-right: 8px;
 }
 
 .topbar-toggle-btn {
-    font-size: 11px !important;
-    letter-spacing: 0.03em;
-    padding: 0 10px !important;
+    font-size: 10px !important;
+    font-weight: 500 !important;
+    letter-spacing: 0.02em;
+    padding: 0 12px !important;
+    height: 100% !important;
+    border-radius: 0 !important;
+    border: none !important;
+    border-right: 1px solid var(--color-a1) !important;
+    color: var(--color-a3) !important;
+    background: transparent !important;
+    transition: all 0.15s !important;
+    cursor: pointer;
+}
+
+.topbar-toggle-btn:last-child {
+    border-right: none !important;
+}
+
+.topbar-toggle-btn:hover {
+    color: var(--color-a5) !important;
+    background: var(--color-a-5) !important;
+}
+
+.topbar-toggle-btn[data-active='true'],
+.topbar-toggle-btn.ds-btn-active {
+    background: var(--color-o) !important;
+    color: var(--color-mmgis) !important;
 }
 
 .topbar-search-wrapper {
@@ -26,8 +55,16 @@
 
 .topbar-search-input {
     height: 26px !important;
-    font-size: 11px !important;
-    background: var(--color-g) !important;
-    border-color: var(--color-a1) !important;
-    border-radius: 14px !important;
+    font-size: 10px !important;
+    background: var(--color-a-5) !important;
+    border: 1px solid var(--color-a1) !important;
+    border-radius: 8px !important;
+    color: var(--color-a3) !important;
+    padding: 5px 10px !important;
+    outline: none;
+    transition: border-color 0.15s;
+}
+
+.topbar-search-input:focus {
+    border-color: rgba(8, 174, 234, 0.25) !important;
 }
