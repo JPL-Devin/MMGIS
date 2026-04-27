@@ -24,6 +24,7 @@ function TopBar({ UserInterface }) {
     }, [])
 
     const handleToggleViewer = useCallback(() => {
+        if (UserInterface && UserInterface.hasViewer === false) return
         const newState = !uiStore.getState().viewerPanelOpen
         uiStore.getState().setViewerPanelOpen(newState)
         if (UserInterface && UserInterface.setPanelPercents) {
@@ -78,12 +79,21 @@ function TopBar({ UserInterface }) {
     }, [UserInterface])
 
     const handleToggleGlobe = useCallback(async () => {
+        if (UserInterface && UserInterface.hasGlobe === false) return
+        if (Globe_._isInitializing) return
         const newState = !uiStore.getState().globePanelOpen
-        uiStore.getState().setGlobePanelOpen(newState)
         // Lazy-init Globe on first open — await so renderer is ready before resize
         if (newState && !Globe_._initialized) {
-            await Globe_.lazyInit()
+            Globe_._isInitializing = true
+            try {
+                await Globe_.lazyInit()
+            } finally {
+                Globe_._isInitializing = false
+            }
+            // Re-check desired state after async init in case user toggled again
+            if (uiStore.getState().globePanelOpen === newState) return
         }
+        uiStore.getState().setGlobePanelOpen(newState)
         if (UserInterface && UserInterface.setPanelPercents) {
             const pp = UserInterface.getPanelPercents()
             if (newState) {
