@@ -111,7 +111,7 @@ const ReactPDF = (props) => {
                                 setPageNumber(
                                     Math.max(
                                         1,
-                                        Math.min(numPages, e.target.val())
+                                        Math.min(numPages, e.target.value)
                                     )
                                 )
                             }}

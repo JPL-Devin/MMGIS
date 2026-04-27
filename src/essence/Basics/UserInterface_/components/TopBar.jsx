@@ -28,17 +28,19 @@ function TopBar({ UserInterface }) {
         if (UserInterface && UserInterface.setPanelPercents) {
             const pp = UserInterface.getPanelPercents()
             if (newState) {
-                UserInterface.setPanelPercents(
-                    33,
-                    pp.globe > 0 ? 34 : 67,
-                    pp.globe
-                )
+                const globeAmt = pp.globe > 0 ? 33 : 0
+                const mapAmt = 100 - 33 - globeAmt
+                UserInterface.setPanelPercents(33, mapAmt, globeAmt)
             } else {
-                UserInterface.setPanelPercents(
-                    0,
-                    pp.map + pp.viewer,
-                    pp.globe
-                )
+                if (pp.map > 0 && pp.globe > 0) {
+                    UserInterface.setPanelPercents(0, pp.map + pp.viewer / 2, pp.globe + pp.viewer / 2)
+                } else if (pp.map > 0) {
+                    UserInterface.setPanelPercents(0, pp.map + pp.viewer, 0)
+                } else if (pp.globe > 0) {
+                    UserInterface.setPanelPercents(0, 0, pp.globe + pp.viewer)
+                } else {
+                    UserInterface.setPanelPercents(0, 100, 0)
+                }
             }
         }
     }, [UserInterface])
@@ -49,22 +51,25 @@ function TopBar({ UserInterface }) {
         if (UserInterface && UserInterface.setPanelPercents) {
             const pp = UserInterface.getPanelPercents()
             if (newState) {
-                const total = pp.viewer + pp.globe
-                if (total === 0) {
-                    UserInterface.setPanelPercents(0, 100, 0)
+                if (pp.viewer > 0 && pp.globe > 0) {
+                    UserInterface.setPanelPercents(pp.viewer / 2, 50, pp.globe / 2)
+                } else if (pp.viewer > 0) {
+                    UserInterface.setPanelPercents(pp.viewer / 2, 50, 0)
+                } else if (pp.globe > 0) {
+                    UserInterface.setPanelPercents(0, 50, pp.globe / 2)
                 } else {
-                    UserInterface.setPanelPercents(
-                        pp.viewer > 0 ? pp.viewer / 2 : 0,
-                        50,
-                        pp.globe > 0 ? pp.globe / 2 : 0
-                    )
+                    UserInterface.setPanelPercents(0, 100, 0)
                 }
             } else {
-                UserInterface.setPanelPercents(
-                    pp.viewer > 0 ? pp.viewer + pp.map / 2 : 0,
-                    0,
-                    pp.globe > 0 ? pp.globe + pp.map / 2 : 0
-                )
+                if (pp.viewer > 0 && pp.globe > 0) {
+                    UserInterface.setPanelPercents(pp.viewer + pp.map / 2, 0, pp.globe + pp.map / 2)
+                } else if (pp.viewer > 0) {
+                    UserInterface.setPanelPercents(pp.viewer + pp.map, 0, 0)
+                } else if (pp.globe > 0) {
+                    UserInterface.setPanelPercents(0, 0, pp.globe + pp.map)
+                } else {
+                    return
+                }
             }
         }
     }, [UserInterface])
@@ -75,17 +80,19 @@ function TopBar({ UserInterface }) {
         if (UserInterface && UserInterface.setPanelPercents) {
             const pp = UserInterface.getPanelPercents()
             if (newState) {
-                UserInterface.setPanelPercents(
-                    pp.viewer,
-                    pp.viewer > 0 ? 34 : 67,
-                    33
-                )
+                const viewerAmt = pp.viewer > 0 ? 33 : 0
+                const mapAmt = 100 - 33 - viewerAmt
+                UserInterface.setPanelPercents(viewerAmt, mapAmt, 33)
             } else {
-                UserInterface.setPanelPercents(
-                    pp.viewer,
-                    pp.map + pp.globe,
-                    0
-                )
+                if (pp.map > 0 && pp.viewer > 0) {
+                    UserInterface.setPanelPercents(pp.viewer + pp.globe / 2, pp.map + pp.globe / 2, 0)
+                } else if (pp.map > 0) {
+                    UserInterface.setPanelPercents(0, pp.map + pp.globe, 0)
+                } else if (pp.viewer > 0) {
+                    UserInterface.setPanelPercents(pp.viewer + pp.globe, 0, 0)
+                } else {
+                    UserInterface.setPanelPercents(0, 100, 0)
+                }
             }
         }
     }, [UserInterface])

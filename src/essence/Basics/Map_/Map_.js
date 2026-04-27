@@ -2096,6 +2096,8 @@ function allLayersLoaded() {
                     ToolController_.toolModules['LegendTool'].make(
                         'toolContentSeparated_Legend'
                     )
+                    $('#toolContentSeparated_Legend').css('display', 'block')
+                    $('#toolButtonSeparated_Legend').addClass('active')
                     ToolController_.activeSeparatedTools.push('LegendTool')
                     let _event = new CustomEvent('toggleSeparatedTool', {
                         detail: {

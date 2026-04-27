@@ -1,22 +1,28 @@
+#topBar {
+    background: #1a1a1b !important;
+    border-bottom: 1px solid #1f2937 !important;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.4) !important;
+    z-index: 100 !important;
+}
+
 .topbar-react-overlay {
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: 10px;
     margin-left: auto;
     height: 100%;
-    padding-right: 8px;
+    padding-right: 14px;
     pointer-events: auto;
 }
 
 .topbar-panel-toggles {
     display: flex;
     align-items: center;
-    background: var(--color-a-5);
-    border: 1px solid var(--color-a1);
+    background: #111318;
+    border: 1px solid #1f2937;
     border-radius: 8px;
     overflow: hidden;
     height: 28px;
-    margin-right: 8px;
 }
 
 .topbar-toggle-btn {
@@ -27,8 +33,8 @@
     height: 100% !important;
     border-radius: 0 !important;
     border: none !important;
-    border-right: 1px solid var(--color-a1) !important;
-    color: var(--color-a3) !important;
+    border-right: 1px solid #1f2937 !important;
+    color: #6b7280 !important;
     background: transparent !important;
     transition: all 0.15s !important;
     cursor: pointer;
@@ -39,14 +45,14 @@
 }
 
 .topbar-toggle-btn:hover {
-    color: var(--color-a5) !important;
-    background: var(--color-a-5) !important;
+    color: #d1d5db !important;
+    background: #1a1e28 !important;
 }
 
 .topbar-toggle-btn[data-active='true'],
 .topbar-toggle-btn.ds-btn-active {
-    background: var(--color-o) !important;
-    color: var(--color-mmgis) !important;
+    background: #1e3a5f !important;
+    color: #08aeea !important;
 }
 
 .topbar-search-wrapper {
@@ -56,13 +62,14 @@
 .topbar-search-input {
     height: 26px !important;
     font-size: 10px !important;
-    background: var(--color-a-5) !important;
-    border: 1px solid var(--color-a1) !important;
+    background: #111318 !important;
+    border: 1px solid #1f2937 !important;
     border-radius: 8px !important;
-    color: var(--color-a3) !important;
+    color: #6b7280 !important;
     padding: 5px 10px !important;
     outline: none;
     transition: border-color 0.15s;
+    font-family: inherit;
 }
 
 .topbar-search-input:focus {

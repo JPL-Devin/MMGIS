@@ -123,15 +123,19 @@ var UserInterface = {
             .css({
                 position: 'absolute',
                 width: '0px',
-                top: this.topSize + 'px',
-                height: 'calc( 100% - ' + this.topSize + 'px )',
-                left: this.topSize + 'px',
-                background: 'var(--color-k)',
-                //'border-left': '1px solid #26a8ff',
-                //'box-shadow': '5px 0px 3px rgba(0,0,0,0.2)',
-                transition: 'width 0.2s ease-out',
+                top: (this.topSize + 12) + 'px',
+                height: 'calc(100% - ' + (this.topSize + 24) + 'px)',
+                left: (this.topSize + 12) + 'px',
+                background: 'rgba(26,26,27,0.88)',
+                'border': '1px solid transparent',
+                'border-radius': '10px',
+                'backdrop-filter': 'blur(20px)',
+                '-webkit-backdrop-filter': 'blur(20px)',
+                transition: 'width 0.2s ease-out, opacity 0.2s ease-out, border-color 0.2s ease-out',
                 overflow: 'hidden',
                 'z-index': '1400',
+                'box-shadow': 'none',
+                opacity: '0',
             })
         $('#main-container').append(this.toolPanel)
         // Drag
@@ -142,8 +146,8 @@ var UserInterface = {
             padding: '10px 2px',
             margin: '0px 3px',
             'text-align': 'center',
-            top: '1px',
-            color: 'var(--color-a3)',
+            top: (this.topSize + 13) + 'px',
+            color: '#6b7280',
             overflow: 'hidden',
             cursor: 'col-resize',
             display: 'none',
@@ -175,7 +179,7 @@ var UserInterface = {
                 .off('mouseup', UserInterface.handleToolDragMouseup)
             if (UserInterface.toolDrags?.left != null)
                 UserInterface.resizeToolPanel(
-                    UserInterface.toolDrags.left - UserInterface.topSize + 24
+                    UserInterface.toolDrags.left - UserInterface.topSize - 12
                 )
             $('body').css('user-select', 'auto')
             UserInterface.toolPanelDrag.css({
@@ -329,82 +333,7 @@ var UserInterface = {
             })
         this.vmgScreen.append(this.mapSplit)
 
-        this.mapSplitInner = $('<div>')
-            .attr('class', 'splitterVInner')
-            .attr('id', 'mapSplitInner')
-            .css({
-                width: this.splitterSizeHidden * 2 + 'px',
-            })
-        this.mapSplit.append(this.mapSplitInner)
-
-        const mapSplitInnerLeftBg = $('<div>').css({
-            background: 'var(--color-a)',
-            width: '30px',
-            height: '30px',
-            position: 'absolute',
-            left: '-19px',
-            'z-index': '-1',
-        })
-        this.mapSplitInner.append(mapSplitInnerLeftBg)
-
-        const mapSplitInnerLeft = $('<i>')
-            .attr('id', 'mapSplitInnerLeft')
-            .attr('tabindex', 500)
-            .attr('class', 'mdi mdi-chevron-double-left mdi-24px')
-            .css({
-                transition: 'all 0.2s ease-in',
-                position: 'absolute',
-                left: '-28px',
-            })
-            .on('click touchstart', function () {
-                var pp = UserInterface.getPanelPercents()
-                if (pp.map == 0) {
-                    UserInterface.setPanelPercents(0, 0, 100)
-                } else {
-                    UserInterface.setPanelPercents(
-                        0,
-                        pp.map + pp.viewer,
-                        pp.globe
-                    )
-                }
-            })
-        this.mapSplitInner.append(mapSplitInnerLeft)
-
-        const mapSplitInnerRightBg = $('<div>').css({
-            background: 'var(--color-a)',
-            width: '30px',
-            height: '30px',
-            position: 'absolute',
-            left: '23px',
-            'z-index': '-1',
-        })
-        this.mapSplitInner.append(mapSplitInnerRightBg)
-
-        const mapSplitInnerRight = $('<i>')
-            .attr('id', 'mapSplitInnerRight')
-            .attr('tabindex', 501)
-            .attr('class', 'mdi mdi-chevron-double-right mdi-24px')
-            .css({
-                transition: 'all 0.2s ease-in',
-                position: 'absolute',
-                right: '-29px',
-            })
-            .on('click touchstart', function () {
-                var pp = UserInterface.getPanelPercents()
-                UserInterface.openViewerPanel()
-                return
-            })
-        this.mapSplitInner.append(mapSplitInnerRight)
-
-        const mapSplitInnerViewerInfo = $('<div>')
-            .attr('id', 'mapSplitInnerViewerInfo')
-            .html('Viewer')
-        this.mapSplitInner.append(mapSplitInnerViewerInfo)
-
-        const mapSplitInnerVMapInfo = $('<div>')
-            .attr('id', 'mapSplitInnerVMapInfo')
-            .html('Map')
-        this.mapSplitInner.append(mapSplitInnerVMapInfo)
+        // Splitter arrow buttons removed — panel selection is via TopBar toggles
 
         //The globe screen
         this.globeScreen = $('<div>')
@@ -456,127 +385,7 @@ var UserInterface = {
             })
         this.vmgScreen.append(this.globeSplit)
 
-        this.globeSplitInner = $('<div>')
-            .attr('class', 'splitterVInner')
-            .attr('id', 'globeSplitInner')
-            .css({
-                width: this.splitterSizeHidden * 2 + 'px',
-            })
-        this.globeSplit.append(this.globeSplitInner)
-
-        const globeSplitInnerLeftBg = $('<div>').css({
-            background: 'var(--color-a)',
-            width: '30px',
-            height: '30px',
-            position: 'absolute',
-            left: '-18px',
-            'z-index': '-1',
-        })
-        this.globeSplitInner.append(globeSplitInnerLeftBg)
-
-        const globeSplitInnerLeft = $('<i>')
-            .attr('id', 'globeSplitInnerLeft')
-            .attr('tabindex', 502)
-            .attr('class', 'mdi mdi-chevron-double-left mdi-24px')
-            .css({
-                transition: 'all 0.2s ease-in',
-                position: 'absolute',
-                left: '-27px',
-            })
-            .on('click touchstart', function () {
-                var pp = UserInterface.getPanelPercents()
-                if (pp.map == 0) {
-                    UserInterface.setPanelPercents(
-                        pp.viewer - pp.viewer / 2,
-                        0,
-                        pp.globe + pp.viewer / 2
-                    )
-                } else {
-                    UserInterface.setPanelPercents(
-                        pp.viewer,
-                        pp.map - pp.map / 2,
-                        pp.globe + pp.map / 2
-                    )
-                }
-            })
-        this.globeSplitInner.append(globeSplitInnerLeft)
-
-        const globeSplitInnerRightBg = $('<div>').css({
-            background: 'var(--color-a)',
-            width: '30px',
-            height: '30px',
-            position: 'absolute',
-            left: '22px',
-            'z-index': '-1',
-        })
-        this.globeSplitInner.append(globeSplitInnerRightBg)
-
-        const globeSplitInnerRight = $('<i>')
-            .attr('id', 'globeSplitInnerRight')
-            .attr('tabindex', 503)
-            .attr('class', 'mdi mdi-chevron-double-right mdi-24px')
-            .css({
-                transition: 'all 0.2s ease-in',
-                position: 'absolute',
-                right: '-28px',
-            })
-            .on('click touchstart', function () {
-                var pp = UserInterface.getPanelPercents()
-                if (pp.map == 0) {
-                    UserInterface.setPanelPercents(
-                        pp.viewer,
-                        pp.map + pp.globe / 2,
-                        pp.globe - pp.globe / 2
-                    )
-                } else {
-                    UserInterface.setPanelPercents(
-                        pp.viewer,
-                        pp.map + pp.globe,
-                        0
-                    )
-                }
-            })
-        this.globeSplitInner.append(globeSplitInnerRight)
-
-        const mapSplitInnerGlobeInfo = $('<div>')
-            .attr('id', 'mapSplitInnerGlobeInfo')
-            .html('Globe')
-        this.globeSplitInner.append(mapSplitInnerGlobeInfo)
-
-        const mapSplitInnerGMapInfo = $('<div>')
-            .attr('id', 'mapSplitInnerGMapInfo')
-            .html('Map')
-        this.globeSplitInner.append(mapSplitInnerGMapInfo)
-
-        //thumb lines
-        /*
-            this.globeSplit.append( 'div' )
-                    .style( 'position', 'absolute' )
-                    .style( 'top', '50%' )
-                    .style( 'left', this.splitterSize/2.8 + 'px' )
-                    .style( 'height', '20px' )
-                    .style( 'border-left', '1px solid #444' );
-            this.globeSplit.append( 'div' )
-                    .style( 'position', 'absolute' )
-                    .style( 'top', 'calc(50% - 5px)' )
-                    .style( 'left', this.splitterSize/2 + 'px' )
-                    .style( 'height', '30px' )
-                    .style( 'border-left', '1px solid #444' );
-            this.globeSplit.append( 'div' )
-                    .style( 'position', 'absolute' )
-                    .style( 'top', '50%' )
-                    .style( 'left', this.splitterSize - this.splitterSize/2.8 + 'px' )
-                    .style( 'height', '20px' )
-                    .style( 'border-left', '1px solid #444' );
-            */
-        /*
-                this.globeSplit.append( 'div' )
-                        .attr( 'id', 'globeSplitText' )
-                        .attr( 'class', 'splitterText' )
-                        .style( 'font-size', this.splitterSize - 6 + 'px' )
-                        .style( 'line-height', this.splitterSize + 'px' )
-                        .html( 'Globe' );
-                */
+        // Globe splitter arrow buttons removed — panel selection is via TopBar toggles
 
         //The 'bottom' tools panel
         this.tScreen = $('<div>').attr('id', 'tScreen')
@@ -626,17 +435,9 @@ var UserInterface = {
         this.toolbar = $('<div>')
             .attr('id', 'toolbar')
             .css({
-                //'box-shadow': 'inset 0px 0px 9px #0F1111',
-                //'background-color': bodyHEX,
-                //'box-shadow': 'inset 0px 2px 7px black',
-                //'box-shadow': '7px 0px 7px rgba(0,0,0,0.2)',
                 width: this.topSize + 'px',
-                'padding-top': '0px',
-                background: 'var(--color-a)',
-                'border-right': '1px solid var(--color-a-5)',
                 top: this.topSize + 'px',
                 height: 'calc(100% - ' + this.topSize + 'px)',
-                'z-index': '1004',
             })
         $('#main-container').append(this.toolbar)
 
@@ -742,22 +543,16 @@ var UserInterface = {
     },
     openToolPanel: function (width) {
         UserInterface.toolPanel.empty()
-        UserInterface.toolPanel.css('width', width + 'px')
-        UserInterface.toolPanelDrag.css('left', width + 10 + 'px')
-        UserInterface.splitscreens.css(
-            'width',
-            'calc(100% - ' + (width + 40) + 'px)'
-        )
-        $('#topBar').css({
-            'padding-left': '0px',
-            'margin-left': `${width + 40}px`,
-            width: `calc(100% - ${width + 40}px)`,
+        UserInterface.toolPanel.css({
+            width: width + 'px',
+            opacity: '1',
+            'border-color': '#1f2937',
+            'box-shadow': '0 8px 32px rgba(0,0,0,0.4)',
         })
-        UserInterface.splitscreens.css('left', width + 40 + 'px')
-        UserInterface.mainWidth = $('#splitscreens').width()
-        UserInterface.mainHeight = $('#splitscreens').height()
-        const pp = UserInterface.getPanelPercents()
-        UserInterface.setPanelPercents(pp.viewer, pp.map, pp.globe)
+        UserInterface.toolPanelDrag.css({
+            left: width + UserInterface.topSize + 22 + 'px',
+            display: 'block',
+        })
     },
     resizeToolPanel: function (width) {
         width = Math.max(
@@ -766,63 +561,20 @@ var UserInterface = {
                 300
         )
         UserInterface.toolPanel.css('width', width + 'px')
-        UserInterface.toolPanelDrag.css('left', width + 10 + 'px')
-        UserInterface.splitscreens.css(
-            'width',
-            'calc(100% - ' + (width + 40) + 'px)'
-        )
-        $('#topBar').css({
-            'padding-left': '0px',
-            'margin-left': `${width + 40}px`,
-            width: `calc(100% - ${width + 40}px)`,
+        UserInterface.toolPanelDrag.css({
+            left: width + UserInterface.topSize + 22 + 'px',
+            display: 'block',
         })
-        UserInterface.splitscreens.css('left', width + 40 + 'px')
-        UserInterface.mainWidth = $('#splitscreens').width()
-        UserInterface.mainHeight = $('#splitscreens').height()
-
-        // Scale panel widths proportionally
-        if (oldMainWidth > 0) {
-            const scale = UserInterface.mainWidth / oldMainWidth
-            UserInterface.pxIsViewer = UserInterface.pxIsViewer * scale
-            UserInterface.pxIsGlobe = UserInterface.pxIsGlobe * scale
-            UserInterface.pxIsMap =
-                UserInterface.mainWidth -
-                UserInterface.pxIsViewer -
-                UserInterface.pxIsGlobe
-
-            // Update only widths, not positions
-            UserInterface.viewerScreen.style(
-                'width',
-                UserInterface.pxIsViewer + 'px'
-            )
-            UserInterface.mapScreen.style(
-                'width',
-                UserInterface.pxIsMap - UserInterface.splitterSize * 2 + 'px'
-            )
-            UserInterface.globeScreen.style(
-                'width',
-                UserInterface.pxIsGlobe + 'px'
-            )
-
-            resize()
-        }
     },
     closeToolPanel: function () {
         UserInterface.toolPanel.empty()
-        UserInterface.toolPanel.css('width', '0')
-        $('#topBar').css({
-            'padding-left': '40px',
-            'margin-left': '0px',
-            width: '100%',
+        UserInterface.toolPanel.css({
+            width: '0',
+            opacity: '0',
+            'border-color': 'transparent',
+            'box-shadow': 'none',
         })
-        //UserInterface.toolPanel.css( 'border-left', '1px solid rgb(38, 168, 255)' );
-        UserInterface.toolbar.css('box-shadow', 'none')
-        UserInterface.splitscreens.css('width', 'calc(100% - ' + 40 + 'px)')
-        UserInterface.splitscreens.css('left', 40 + 'px')
-        UserInterface.mainWidth = $('#splitscreens').width()
-        UserInterface.mainHeight = $('#splitscreens').height()
-        var pp = UserInterface.getPanelPercents()
-        UserInterface.setPanelPercents(pp.viewer, pp.map, pp.globe)
+        UserInterface.toolPanelDrag.css('display', 'none')
     },
     // can also be 'full'
     setToolHeight: function (pxHeight, shouldntAnimate) {
@@ -984,23 +736,14 @@ var UserInterface = {
         )
     },
     setToolWidth(newWidth, alignment) {
-        const toolbarWidth = $('#toolbar').width()
-        let newTopWidth = toolbarWidth
-
         if (newWidth == 'full') {
             newWidth = `calc(100vw - ${$('#toolbar').width()}px)`
         } else {
-            newTopWidth = newTopWidth + newWidth
             newWidth += 'px'
         }
 
         $('#toolsWrapper').css({
             width: newWidth,
-        })
-
-        $('#topBar').css({
-            'margin-left': newTopWidth + 'px',
-            width: `calc(100% - ${newTopWidth}px)`,
         })
     },
     getPanelPercents: function () {

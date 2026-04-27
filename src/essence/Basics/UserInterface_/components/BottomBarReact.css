@@ -1,6 +1,7 @@
 /* BottomBar styling overrides for mockup alignment */
 #barBottom {
     z-index: 1005 !important;
+    align-items: center !important;
 }
 
 #barBottom > i,
@@ -11,7 +12,7 @@
     align-items: center !important;
     justify-content: center !important;
     border-radius: 6px !important;
-    margin: 1px 2px !important;
+    margin: 1px 0 !important;
     cursor: pointer !important;
     transition: all 0.15s !important;
     color: var(--color-a3) !important;

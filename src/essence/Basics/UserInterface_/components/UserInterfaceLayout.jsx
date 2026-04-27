@@ -9,6 +9,7 @@ import ToolPanel from './ToolPanel'
 import SplitScreens from './SplitScreens'
 
 import './UserInterfaceLayout.css'
+import './FloatingElements.css'
 
 function UserInterfaceLayout({ UserInterface }) {
     useEffect(() => {

@@ -4,7 +4,6 @@
 import $ from 'jquery'
 import L_ from '../Basics/Layers_/Layers_'
 import F_ from '../Basics/Formulae_/Formulae_'
-import { applyTheme } from '../../design-system/applyTheme'
 import uiStore from '../Basics/UserInterface_/store/uiStore'
 
 export function stylize() {
@@ -14,7 +13,6 @@ export function stylize() {
 
         // Apply theme preset first if set in mission config
         if (L_.configData.look.theme && L_.configData.look.theme !== '') {
-            applyTheme(L_.configData.look.theme)
             uiStore.getState().setTheme(L_.configData.look.theme)
         }
 

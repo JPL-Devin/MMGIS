@@ -1,17 +1,8 @@
 /* Floating tool panel styling per mockup */
-#toolPanel {
-    border-radius: 0 10px 10px 0 !important;
-    box-shadow: 8px 0 32px rgba(0, 0, 0, 0.4) !important;
-    border-right: 1px solid var(--color-a1) !important;
-    background: rgba(26, 26, 27, 0.88) !important;
-    backdrop-filter: blur(20px) !important;
-    -webkit-backdrop-filter: blur(20px) !important;
-}
-
 #toolPanel #tools {
     overflow-y: auto !important;
     scrollbar-width: thin !important;
-    scrollbar-color: var(--color-a2) transparent !important;
+    scrollbar-color: #374151 transparent !important;
 }
 
 #toolPanel #tools::-webkit-scrollbar {
@@ -23,15 +14,14 @@
 }
 
 #toolPanel #tools::-webkit-scrollbar-thumb {
-    background: var(--color-a2);
+    background: #374151;
     border-radius: 2px;
 }
 
 #toolPanelDrag {
-    color: var(--color-a3) !important;
     transition: color 0.15s !important;
 }
 
 #toolPanelDrag:hover {
-    color: var(--color-mmgis) !important;
+    color: #08aeea !important;
 }

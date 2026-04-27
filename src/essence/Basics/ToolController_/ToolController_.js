@@ -9,9 +9,8 @@ let ToolController_ = {
     tools: null,
     incToolsDiv: null,
     excToolsDiv: null,
-    separatedDiv: null,
-    separatedDivLeft: null,
-    separatedDivRight: null,
+    separatedContentDiv: null,
+    sepToolbarDiv: null,
     activeSeparatedTools: [],
     toolModuleNames: [],
     toolModules: toolModules,
@@ -42,96 +41,67 @@ let ToolController_ = {
             })
         mainDiv.append(this.incToolsDiv)
 
-        // Create three separate containers for left, center, and right justified tools
-        this.separatedDivLeft = $('<div>')
-            .attr('id', 'toolcontroller_sepdiv_left')
+        // Container for separated tool content (floats over the map)
+        this.separatedContentDiv = $('<div>')
+            .attr('id', 'toolcontroller_sep_content')
             .css({
                 'position': 'absolute',
-                'top': '40px',
-                'left': '5px',
-                'z-index': '1004'
+                'top': '12px',
+                'left': '12px',
+                'z-index': '50',
+                'display': 'flex',
+                'gap': '12px',
             })
-        $('#splitscreens').append(this.separatedDivLeft)
+        $('#splitscreens').append(this.separatedContentDiv)
 
-        this.separatedDiv = $('<div>')
-            .attr('id', 'toolcontroller_sepdiv')
+        // Separator + container for separated tool buttons in toolbar
+        this.sepToolbarDiv = $('<div>')
+            .attr('id', 'toolcontroller_septoolbar')
+        mainDiv.append(this.sepToolbarDiv)
+
+        const sepDivider = $('<div>')
+            .attr('class', 'toolSepDivider')
             .css({
-                'position': 'absolute',
-                'top': '40px',
-                'left': '5px',
-                'z-index': '1004'
+                'width': '26px',
+                'height': '1px',
+                'background': '#2a3444',
+                'margin': '4px auto',
             })
-        $('#splitscreens').append(this.separatedDiv)
-
-        // Adjust right position if zoom controls are enabled
-        const rightPosition =
-            L_.configData.look && L_.configData.look.zoomcontrol
-                ? '40px'
-                : '5px'
-
-        this.separatedDivRight = $('<div>')
-            .attr('id', 'toolcontroller_sepdiv_right')
-            .css({
-                'position': 'absolute',
-                'top': '40px',
-                'right': rightPosition,
-                'z-index': '1004'
-            })
-        $('#splitscreens').append(this.separatedDivRight)
+        this.sepToolbarDiv.append(sepDivider)
 
         // Helper function to create a separated tool
+        // Button goes in toolbar, content floats over map
         const createSeparatedTool = (i) => {
-            $('#viewerToolBar').css('padding-left', '36px')
-
-            // Determine which container to use based on justification
-            let targetDiv = this.separatedDiv // default to center/left
-            const justification = tools[i].variables?.justification
-            if (justification === 'left') {
-                targetDiv = this.separatedDivLeft
-            } else if (justification === 'right') {
-                targetDiv = this.separatedDivRight
-            }
-
-            let sep = $('<div>')
-                .attr('id', `toolSeparated_${tools[i].name}`)
-                .css({
-                    'position': 'relative',
-                    'border-radius': '3px',
-                    'background': 'var(--color-a)',
-                    'margin-bottom': '5px'
-                })
-            targetDiv.append(sep)
-
+            // Tool content container (floating panel over map)
             const toolContent = $('<div>')
                 .attr('id', `toolContentSeparated_${tools[i].name}`)
                 .css({
-                    'position': 'absolute',
-                    'top': '0px',
-                    'left': '0px',
-                    'border-radius': '3px',
-                    'background': 'var(--color-a)',
-                    'transform': justification === 'right'
-                        ? 'translateX(calc(-100% + 30px))'
-                        : 'unset'
+                    'border-radius': '10px',
+                    'background': 'rgba(26,26,27,0.88)',
+                    'border': '1px solid #1f2937',
+                    'backdrop-filter': 'blur(20px)',
+                    '-webkit-backdrop-filter': 'blur(20px)',
+                    'box-shadow': '0 8px 32px rgba(0,0,0,0.4)',
+                    'display': 'none',
+                    'overflow': 'hidden',
                 })
-            sep.append(toolContent)
+            this.separatedContentDiv.append(toolContent)
 
+            // Tool button in the toolbar (dedicated section)
             const toolButton = $('<div>')
                 .attr('id', `toolButtonSeparated_${tools[i].name}`)
-                .attr('class', 'toolButtonSep')
+                .attr('class', 'toolButton toolSep')
                 .attr('tabindex', i + 1)
                 .css({
-                    'position': 'relative',
-                    'width': '30px',
-                    'height': '30px',
+                    'width': '100%',
+                    'height': '36px',
                     'display': 'inline-block',
                     'text-align': 'center',
-                    'line-height': '30px',
-                    //'text-shadow': '0px 1px #111',
+                    'line-height': '36px',
                     'vertical-align': 'middle',
                     'cursor': 'pointer',
-                    'transition': 'all 0.2s ease-in',
-                    'color': ToolController_.defaultColor
+                    'transition': 'all 0.15s',
+                    'color': '#08aeea',
                 })
                 .on(
                     'click',
@@ -146,6 +116,7 @@ let ToolController_ = {
                                     tM.make(
                                         `toolContentSeparated_${ToolController_.tools[i].name}`
                                     )
+                                    $(`#toolContentSeparated_${ToolController_.tools[i].name}`).css('display', 'block')
                                     ToolController_.activeSeparatedTools.push(
                                         ToolController_.tools[i].name + 'Tool'
                                     )
@@ -154,6 +125,7 @@ let ToolController_ = {
                                     ).addClass('active')
                                 } else {
                                     tM.destroy()
+                                    $(`#toolContentSeparated_${ToolController_.tools[i].name}`).css('display', 'none')
                                     ToolController_.activeSeparatedTools =
                                         ToolController_.activeSeparatedTools.filter(
                                             (a) =>
@@ -183,13 +155,31 @@ let ToolController_ = {
                         }
                     })(i)
                 )
-            sep.append(toolButton)
+                .on('mouseover', function () {
+                    if (!$(this).hasClass('active')) {
+                        $(this).css({ background: 'rgba(30,58,95,0.19)' })
+                    }
+                })
+                .on('mouseleave', function () {
+                    if (!$(this).hasClass('active')) {
+                        $(this).css({ background: 'none' })
+                    }
+                })
+            this.sepToolbarDiv.append(toolButton)
 
             const sepIcon = $('<i>')
                 .attr('id', tools[i].name + 'Tool')
                 .attr('class', 'mdi mdi-' + tools[i].icon + ' mdi-18px')
                 .css('cursor', 'pointer')
             toolButton.append(sepIcon)
+
+            if (!L_.UserInterface_.isMobile) {
+                tippy(`#toolButtonSeparated_${tools[i].name}`, {
+                    content: tools[i].name,
+                    placement: 'right',
+                    theme: 'blue',
+                })
+            }
         }
 
         let legendToolIndex = -1
