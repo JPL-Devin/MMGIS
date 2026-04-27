@@ -1,11 +1,11 @@
 import React from 'react'
-import * as BaseDialog from '@base-ui-components/react/dialog'
+import { Dialog as BaseDialog } from '@base-ui-components/react/dialog'
 import './styles/Dialog.css'
 
 function Dialog(props) {
-    const { title, children, trigger, className = '', ...rest } = props
+    const { title, children, trigger, className = '' } = props
     return (
-        <BaseDialog.Root {...rest}>
+        <BaseDialog.Root>
             {trigger && <BaseDialog.Trigger render={trigger} />}
             <BaseDialog.Portal>
                 <BaseDialog.Backdrop className="ds-dialog-backdrop" />
@@ -16,7 +16,7 @@ function Dialog(props) {
                         </BaseDialog.Title>
                     )}
                     <BaseDialog.Close className="ds-dialog-close">
-                        <span className="mdi mdi-close" />
+                        <i className="mdi mdi-close" />
                     </BaseDialog.Close>
                     {children}
                 </BaseDialog.Popup>
@@ -25,6 +25,4 @@ function Dialog(props) {
     )
 }
 
-Dialog.Description = BaseDialog.Description
-Dialog.Close = BaseDialog.Close
 export default Dialog

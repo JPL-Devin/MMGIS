@@ -1,0 +1,24 @@
+/* BottomBar styling overrides for mockup alignment */
+#barBottom {
+    z-index: 1005 !important;
+}
+
+#barBottom > i,
+#barBottom > div {
+    width: 34px !important;
+    height: 34px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    border-radius: 8px !important;
+    margin: 1px 3px !important;
+    cursor: pointer !important;
+    transition: background 0.15s !important;
+    color: var(--color-a3) !important;
+}
+
+#barBottom > i:hover,
+#barBottom > div:hover {
+    background: var(--color-a1) !important;
+    color: var(--color-f) !important;
+}

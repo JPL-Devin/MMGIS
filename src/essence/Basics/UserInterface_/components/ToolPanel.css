@@ -1,0 +1,22 @@
+/* Floating tool panel styling per mockup */
+#toolPanel {
+    border-radius: 0 12px 12px 0 !important;
+    box-shadow: 4px 0 24px rgba(0, 0, 0, 0.3) !important;
+    border-right: 1px solid var(--color-a1) !important;
+    background: var(--color-k) !important;
+}
+
+#toolPanel #tools {
+    overflow-y: auto !important;
+    scrollbar-width: thin !important;
+    scrollbar-color: var(--color-a2) transparent !important;
+}
+
+#toolPanelDrag {
+    color: var(--color-a3) !important;
+    transition: color 0.15s !important;
+}
+
+#toolPanelDrag:hover {
+    color: var(--color-mmgis) !important;
+}

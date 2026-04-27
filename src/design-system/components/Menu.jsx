@@ -1,5 +1,5 @@
 import React from 'react'
-import * as BaseMenu from '@base-ui-components/react/menu'
+import { Menu as BaseMenu } from '@base-ui-components/react/menu'
 import './styles/Menu.css'
 
 function Menu(props) {

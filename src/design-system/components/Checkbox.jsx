@@ -1,5 +1,5 @@
 import React from 'react'
-import * as BaseCheckbox from '@base-ui-components/react/checkbox'
+import { Checkbox as BaseCheckbox } from '@base-ui-components/react/checkbox'
 import './styles/Checkbox.css'
 
 function Checkbox(props) {

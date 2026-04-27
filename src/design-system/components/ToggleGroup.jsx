@@ -1,6 +1,6 @@
 import React from 'react'
-import * as BaseToggleGroup from '@base-ui-components/react/toggle-group'
-import * as BaseToggle from '@base-ui-components/react/toggle'
+import { ToggleGroup as BaseToggleGroup } from '@base-ui-components/react/toggle-group'
+import { Toggle as BaseToggle } from '@base-ui-components/react/toggle'
 import './styles/ToggleGroup.css'
 
 function ToggleGroup(props) {
@@ -20,18 +20,18 @@ function ToggleGroup(props) {
         .join(' ')
 
     return (
-        <BaseToggleGroup.Root className={cls} {...rest}>
+        <BaseToggleGroup className={cls} {...rest}>
             {children}
-        </BaseToggleGroup.Root>
+        </BaseToggleGroup>
     )
 }
 
 function ToggleItem(props) {
     const { children, className = '', ...rest } = props
     return (
-        <BaseToggle.Root className={`ds-toggle-item ${className}`} {...rest}>
+        <BaseToggle className={`ds-toggle-item ${className}`} {...rest}>
             {children}
-        </BaseToggle.Root>
+        </BaseToggle>
     )
 }
 

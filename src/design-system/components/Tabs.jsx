@@ -1,11 +1,11 @@
 import React from 'react'
-import * as BaseTabs from '@base-ui-components/react/tabs'
+import { Tabs as BaseTabs } from '@base-ui-components/react/tabs'
 import './styles/Tabs.css'
 
 function Tabs(props) {
     const { children, className = '', ...rest } = props
     return (
-        <BaseTabs.Root className={className} {...rest}>
+        <BaseTabs.Root className={`ds-tabs ${className}`} {...rest}>
             {children}
         </BaseTabs.Root>
     )

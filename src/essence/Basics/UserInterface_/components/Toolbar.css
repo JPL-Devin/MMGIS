@@ -1,0 +1,29 @@
+/* Toolbar styling overrides for mockup alignment */
+#toolbar {
+    background: var(--color-a) !important;
+    border-right: 1px solid var(--color-a1) !important;
+}
+
+#toolbar .toolButton {
+    width: 34px !important;
+    height: 34px !important;
+    margin: 2px 3px !important;
+    border-radius: 8px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    transition: background 0.15s, color 0.15s !important;
+}
+
+#toolbar .toolButton:hover {
+    background: var(--color-a1) !important;
+}
+
+#toolbar .toolButton.active,
+#toolbar .toolButtonActivated {
+    background: var(--color-o) !important;
+}
+
+#toolbar .toolButton .mdi {
+    font-size: 18px !important;
+}

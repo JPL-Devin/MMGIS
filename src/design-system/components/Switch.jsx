@@ -1,5 +1,5 @@
 import React from 'react'
-import * as BaseSwitch from '@base-ui-components/react/switch'
+import { Switch as BaseSwitch } from '@base-ui-components/react/switch'
 import './styles/Switch.css'
 
 function Switch(props) {

@@ -1,0 +1,34 @@
+/* Panel layout styling per mockup */
+#splitscreens {
+    background: var(--color-a-5) !important;
+}
+
+#viewerScreen {
+    background-color: var(--color-a-5) !important;
+}
+
+#mapScreen {
+    background-color: var(--color-a-5) !important;
+}
+
+#globeScreen {
+    background-color: var(--color-a1) !important;
+}
+
+/* Splitter styling */
+.splitterV {
+    z-index: 402 !important;
+}
+
+.splitterVInner {
+    transition: opacity 0.2s !important;
+}
+
+.splitterVInner i {
+    color: var(--color-a3) !important;
+    transition: color 0.15s !important;
+}
+
+.splitterVInner:hover i {
+    color: var(--color-mmgis) !important;
+}

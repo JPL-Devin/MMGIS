@@ -1,5 +1,5 @@
 import React from 'react'
-import * as BaseSelect from '@base-ui-components/react/select'
+import { Select as BaseSelect } from '@base-ui-components/react/select'
 import './styles/Select.css'
 
 function Select(props) {
@@ -17,16 +17,16 @@ function Select(props) {
                             const val = typeof opt === 'string' ? opt : opt.value
                             const label = typeof opt === 'string' ? opt : opt.label
                             return (
-                                <BaseSelect.Option
+                                <BaseSelect.Item
                                     key={val}
                                     value={val}
                                     className="ds-select-option"
                                 >
-                                    <BaseSelect.OptionIndicator>
+                                    <BaseSelect.ItemIndicator>
                                         <span className="mdi mdi-check" style={{ marginRight: 4 }} />
-                                    </BaseSelect.OptionIndicator>
-                                    <BaseSelect.OptionText>{label}</BaseSelect.OptionText>
-                                </BaseSelect.Option>
+                                    </BaseSelect.ItemIndicator>
+                                    <BaseSelect.ItemText>{label}</BaseSelect.ItemText>
+                                </BaseSelect.Item>
                             )
                         })}
                     </BaseSelect.Popup>

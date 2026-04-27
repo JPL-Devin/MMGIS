@@ -1,5 +1,5 @@
 import React from 'react'
-import * as BaseButton from '@base-ui-components/react/button'
+import { Button as BaseButton } from '@base-ui-components/react/button'
 import './styles/Button.css'
 
 const Button = React.forwardRef(function Button(props, ref) {
@@ -25,9 +25,9 @@ const Button = React.forwardRef(function Button(props, ref) {
         .join(' ')
 
     return (
-        <BaseButton.Root ref={ref} className={cls} {...rest}>
+        <BaseButton ref={ref} className={cls} {...rest}>
             {children}
-        </BaseButton.Root>
+        </BaseButton>
     )
 })
 

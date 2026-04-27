@@ -1,5 +1,5 @@
 import React from 'react'
-import * as BaseSlider from '@base-ui-components/react/slider'
+import { Slider as BaseSlider } from '@base-ui-components/react/slider'
 import './styles/Slider.css'
 
 function Slider(props) {

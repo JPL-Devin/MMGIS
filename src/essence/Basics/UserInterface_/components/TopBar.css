@@ -1,0 +1,33 @@
+.topbar-react-overlay {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-left: auto;
+    height: 100%;
+    padding-right: 8px;
+}
+
+.topbar-panel-toggles {
+    display: flex;
+    align-items: center;
+    gap: 2px;
+    margin-right: 8px;
+}
+
+.topbar-toggle-btn {
+    font-size: 11px !important;
+    letter-spacing: 0.03em;
+    padding: 0 10px !important;
+}
+
+.topbar-search-wrapper {
+    width: 160px;
+}
+
+.topbar-search-input {
+    height: 26px !important;
+    font-size: 11px !important;
+    background: var(--color-g) !important;
+    border-color: var(--color-a1) !important;
+    border-radius: 14px !important;
+}

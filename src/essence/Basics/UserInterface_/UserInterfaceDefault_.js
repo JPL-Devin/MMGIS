@@ -6,6 +6,7 @@ import Login from '../../Ancillary/Login/Login'
 
 import BottomBar from './BottomBar'
 import LayerUpdatedControl from './LayerUpdatedControl'
+import UserInterfaceBridge from './UserInterfaceBridge'
 
 import './UserInterfaceDefault_.css'
 
@@ -53,6 +54,7 @@ var UserInterface = {
     helpOn: true,
     layerUpdatedControl: null,
     init: function () {
+        UserInterfaceBridge.init(UserInterface)
         //Other stylings in mmgis.css
 
         // prettier-ignore
@@ -1144,6 +1146,9 @@ var UserInterface = {
         Globe_ = globe_
         this.hasViewer = l_.hasViewer
         this.hasGlobe = l_.hasGlobe
+
+        // Mount React UI overlay (design system, panel toggles, theming)
+        UserInterfaceBridge.fina(l_, this)
 
         $('#topBarTitleName').on('click', L_.home)
 
