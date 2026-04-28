@@ -1,21 +1,18 @@
-/* React overlay layout styles - mockup alignment */
+/* React overlay layout styles — layout only, colors from useTheme()/themeApplier */
 
-/* TopBar background and shadow per mockup */
+/* TopBar shadow */
 #main-container > #topBar {
-    background: var(--color-a) !important;
-    border-bottom: 1px solid var(--color-a1);
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
 }
 
-/* Title styling per mockup */
+/* Title styling */
 #main-container > #topBar #topBarTitleName {
     font-size: 11px !important;
     font-weight: 500;
-    color: var(--color-a4);
     letter-spacing: 0.02em;
 }
 
-/* TopBar icons styling per mockup */
+/* TopBar icons layout */
 #main-container > #topBar #topBarRight > i {
     width: 28px;
     height: 28px;
@@ -23,13 +20,7 @@
     align-items: center;
     justify-content: center;
     border-radius: 6px;
-    color: var(--color-a3);
     cursor: pointer;
     transition: all 0.15s;
     font-size: 16px;
-}
-
-#main-container > #topBar #topBarRight > i:hover {
-    background: var(--color-a1);
-    color: var(--color-a5);
 }

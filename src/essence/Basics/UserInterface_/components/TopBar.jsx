@@ -1,11 +1,14 @@
 import React, { useState, useCallback, useEffect, useRef } from 'react'
-import { Button, Input } from '../../../../design-system'
+import { Button } from '../../../../design-system'
+import { useTheme } from '../../../../design-system/useTheme'
 import uiStore from '../store/uiStore'
 import Globe_ from '../../Globe_/Globe_'
 
 import './TopBar.css'
 
 function TopBar({ UserInterface }) {
+    const theme = useTheme()
+
     const [viewerOpen, setViewerOpen] = useState(
         uiStore.getState().viewerPanelOpen
     )
@@ -62,6 +65,15 @@ function TopBar({ UserInterface }) {
         document.addEventListener('mousedown', handleClickOutside)
         return () => document.removeEventListener('mousedown', handleClickOutside)
     }, [])
+
+    // Apply theme colors to #topBar (jQuery-created parent)
+    useEffect(() => {
+        const topBar = document.getElementById('topBar')
+        if (topBar) {
+            topBar.style.background = theme['--color-a']
+            topBar.style.borderBottom = `1px solid ${theme['--color-a1']}`
+        }
+    }, [theme])
 
     const handleToggleViewer = useCallback(() => {
         if (UserInterface && UserInterface.hasViewer === false) return
@@ -164,9 +176,44 @@ function TopBar({ UserInterface }) {
         if (loginoutBtn) loginoutBtn.click()
     }, [])
 
+    // Inline theme styles
+    const s = {
+        toggleGroup: {
+            background: theme['--color-a-5'],
+            border: `1px solid ${theme['--color-a1']}`,
+        },
+        toggleBtn: (active) => ({
+            color: active ? theme['--color-c'] : theme['--color-a3'],
+            background: active ? theme['--color-accent-active'] : 'transparent',
+            borderRight: `1px solid ${theme['--color-a1']}`,
+        }),
+        avatar: {
+            background: theme['--color-accent-active'],
+            color: theme['--color-c'],
+            border: `1px solid ${theme['--color-a1']}`,
+        },
+        userCard: {
+            background: theme.alpha('--color-a', 0.96),
+            border: `1px solid ${theme['--color-a1']}`,
+        },
+        userCardName: {
+            color: theme['--color-a5'],
+        },
+        userCardDivider: {
+            background: theme['--color-a1'],
+        },
+        userCardAction: {
+            color: theme['--color-a3'],
+        },
+        signIn: {
+            color: theme['--color-a3'],
+            border: `1px solid ${theme['--color-a1']}`,
+        },
+    }
+
     return (
         <div className="topbar-react-overlay">
-            <div className="topbar-panel-toggles">
+            <div className="topbar-panel-toggles" style={s.toggleGroup}>
                 <Button
                     variant="toolbar"
                     size="compact"
@@ -174,6 +221,7 @@ function TopBar({ UserInterface }) {
                     onClick={handleToggleViewer}
                     className="topbar-toggle-btn"
                     title="Toggle Viewer panel"
+                    style={s.toggleBtn(viewerOpen)}
                 >
                     Viewer
                 </Button>
@@ -184,6 +232,7 @@ function TopBar({ UserInterface }) {
                     onClick={handleToggleMap}
                     className="topbar-toggle-btn"
                     title="Toggle Map panel"
+                    style={s.toggleBtn(mapOpen)}
                 >
                     Map
                 </Button>
@@ -194,6 +243,7 @@ function TopBar({ UserInterface }) {
                     onClick={handleToggleGlobe}
                     className="topbar-toggle-btn"
                     title="Toggle Globe panel"
+                    style={{...s.toggleBtn(globeOpen), borderRight: 'none'}}
                 >
                     Globe
                 </Button>
@@ -208,14 +258,15 @@ function TopBar({ UserInterface }) {
                             className="topbar-user-avatar"
                             onClick={() => setShowUserCard(!showUserCard)}
                             title={username}
+                            style={s.avatar}
                         >
                             {username[0].toUpperCase()}
                         </div>
                         {showUserCard && (
-                            <div ref={userCardRef} className="topbar-user-card">
-                                <div className="topbar-user-card-name">{username}</div>
-                                <div className="topbar-user-card-divider" />
-                                <div className="topbar-user-card-action" onClick={handleLogout}>
+                            <div ref={userCardRef} className="topbar-user-card" style={s.userCard}>
+                                <div className="topbar-user-card-name" style={s.userCardName}>{username}</div>
+                                <div className="topbar-user-card-divider" style={s.userCardDivider} />
+                                <div className="topbar-user-card-action" onClick={handleLogout} style={s.userCardAction}>
                                     <i className="mdi mdi-logout" style={{ marginRight: 6, fontSize: 14 }} />
                                     Logout
                                 </div>
@@ -227,6 +278,7 @@ function TopBar({ UserInterface }) {
                         className="topbar-signin-btn"
                         onClick={handleSignIn}
                         title="Sign In"
+                        style={s.signIn}
                     >
                         <i className="mdi mdi-login" style={{ fontSize: 16 }} />
                     </div>

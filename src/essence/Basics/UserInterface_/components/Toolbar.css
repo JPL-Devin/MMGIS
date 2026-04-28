@@ -1,7 +1,6 @@
-/* Toolbar styling per mockup */
+/* Toolbar — layout and structure only. Colors come from themeApplier.js */
+
 #toolbar {
-    background: #1a1a1b !important;
-    border-right: 1px solid #1f2937 !important;
     box-shadow: 4px 0 12px rgba(0, 0, 0, 0.3) !important;
     z-index: 101 !important;
     padding: 6px 0 !important;
@@ -40,7 +39,6 @@
     display: flex !important;
     align-items: center !important;
     justify-content: center !important;
-    color: #6b7280 !important;
     transition: all 0.15s !important;
     position: relative;
     border: none !important;
@@ -48,48 +46,20 @@
     border-bottom: none !important;
 }
 
-#toolbar .toolButton:hover {
-    background: #1f2937 !important;
-    color: #e5e5e5 !important;
-}
-
-#toolbar .toolButton.active,
-#toolbar .toolButtonActivated {
-    background: #1e3a5f !important;
-    color: #08aeea !important;
-}
-
 #toolbar .toolButton .mdi {
     font-size: 18px !important;
 }
 
 #toolbar .toolSep {
-    color: #08aeea !important;
     width: 34px !important;
     height: 34px !important;
     margin: 1px 0 !important;
 }
 
-#toolbar .toolSep:hover {
-    background: rgba(30, 58, 95, 0.19) !important;
-    color: #08aeea !important;
-}
-
-#toolbar .toolSep.active {
-    background: #1e3a5f !important;
-    color: #08aeea !important;
-}
-
 .toolSepDivider {
     width: 26px;
     height: 1px;
-    background: #2a3444;
     margin: 4px auto;
-}
-
-/* Separated tool floating panels */
-.sep-tool-panel {
-    color: #e5e5e5;
 }
 
 /* Hide the Legend tool's own header since the panel wrapper provides one */

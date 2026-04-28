@@ -1,32 +1,26 @@
 /* =========================================================
-   Floating Elements — Glassy backdrop-filter treatment
+   Floating Elements — layout and structure only.
+   Colors come from themeApplier.js (inline JS CSS).
    Rule: TopBar and Toolbar are SOLID.
-         Everything else that floats gets the glassy look:
-         semi-transparent bg + backdrop-filter blur + border.
+         Everything else that floats gets the glassy look.
    ========================================================= */
 
-/* --- TimeUI bar (bottom timeline bar) --- */
+/* --- TimeUI bar --- */
 #timeUI {
-    background: rgba(26,26,27,0.92) !important;
-    border-top: 1px solid #1f2937 !important;
     border-radius: 10px 10px 0 0 !important;
     backdrop-filter: blur(20px) !important;
     -webkit-backdrop-filter: blur(20px) !important;
     box-shadow: 0 -4px 20px rgba(0,0,0,0.3) !important;
 }
 
-/* --- Coordinate display (bottom-right) --- */
+/* --- Coordinate display --- */
 #CoordinatesDiv .mouseLngLat {
-    background: rgba(26,26,27,0.88) !important;
-    border: 1px solid #1f2937 !important;
     border-radius: 8px !important;
     backdrop-filter: blur(12px) !important;
     -webkit-backdrop-filter: blur(12px) !important;
     padding: 6px 14px !important;
 }
 #CoordinatesDiv .mouseLngLatPicking {
-    background: rgba(26,26,27,0.88) !important;
-    border: 1px solid #1f2937 !important;
     border-radius: 8px !important;
     backdrop-filter: blur(12px) !important;
     -webkit-backdrop-filter: blur(12px) !important;
@@ -34,27 +28,14 @@
 
 /* --- Map compass --- */
 #mmgis-map-compass {
-    background: rgba(26,26,27,0.88) !important;
-    border: 1px solid #1f2937 !important;
     backdrop-filter: blur(12px) !important;
     -webkit-backdrop-filter: blur(12px) !important;
     box-shadow: none !important;
-    transition: bottom 0.2s ease-out, border-color 0.15s !important;
-}
-#mmgis-map-compass:hover {
-    border-color: rgba(8,174,234,0.25) !important;
-}
-#mmgis-map-compass .info {
-    background: rgba(26,26,27,0.88) !important;
-    border: 1px solid #1f2937 !important;
-    backdrop-filter: blur(12px) !important;
-    -webkit-backdrop-filter: blur(12px) !important;
+    transition: bottom 0.2s ease-out !important;
 }
 
 /* --- Leaflet zoom controls --- */
 .leaflet-control-zoom {
-    background: rgba(26,26,27,0.88) !important;
-    border: 1px solid #1f2937 !important;
     border-radius: 10px !important;
     backdrop-filter: blur(12px) !important;
     -webkit-backdrop-filter: blur(12px) !important;
@@ -63,33 +44,25 @@
 }
 .leaflet-control-zoom a {
     background: transparent !important;
-    color: #08aeea !important;
-    border-bottom: 1px solid #1f2937 !important;
     transition: background 0.15s !important;
 }
 .leaflet-control-zoom a:last-child {
     border-bottom: none !important;
 }
-.leaflet-control-zoom a:hover {
-    background: rgba(30,58,95,0.6) !important;
-}
 
 /* --- Leaflet home button --- */
 .leaflet-control-zoom-home {
     background: transparent !important;
-    color: #08aeea !important;
 }
 
 /* --- Scale factor (goto button) --- */
 .leaflet-control-scalefactor-goto {
-    background: rgba(26,26,27,0.88) !important;
-    border: 1px solid #1f2937 !important;
     backdrop-filter: blur(12px) !important;
     -webkit-backdrop-filter: blur(12px) !important;
     box-shadow: none !important;
 }
 
-/* --- Map toolbar area (bottom-left controls wrapper) --- */
+/* --- Map toolbar area --- */
 #mapToolBar {
     pointer-events: none;
 }
@@ -97,24 +70,21 @@
     pointer-events: auto;
 }
 
-/* --- Separated tool content panels (Legend, Identifier floating panels) --- */
+/* --- Separated tool content panels --- */
 #toolcontroller_sep_content > div {
-    background: rgba(26,26,27,0.88) !important;
-    border: 1px solid #1f2937 !important;
     border-radius: 10px !important;
     backdrop-filter: blur(20px) !important;
     -webkit-backdrop-filter: blur(20px) !important;
     box-shadow: 0 8px 32px rgba(0,0,0,0.4) !important;
 }
 
-/* --- Bottom bar (link, camera, fullscreen, etc.) --- */
+/* --- Bottom bar --- */
 #barBottom {
     background: transparent !important;
 }
 
 /* --- Attributions --- */
 #mmgis-attributions {
-    background: rgba(26,26,27,0.6) !important;
     backdrop-filter: blur(8px) !important;
     -webkit-backdrop-filter: blur(8px) !important;
     border-radius: 4px !important;

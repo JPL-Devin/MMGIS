@@ -3,6 +3,7 @@ import { createRoot } from 'react-dom/client'
 import UserInterfaceLayout from './components/UserInterfaceLayout'
 import uiStore from './store/uiStore'
 import { applyTheme } from '../../../design-system/applyTheme'
+import { initThemeApplier, refreshThemeDOM } from '../../../design-system/themeApplier'
 
 let reactRoot = null
 
@@ -10,6 +11,8 @@ const UserInterfaceBridge = {
     init(UserInterface) {
         // Apply default theme on init
         applyTheme(uiStore.getState().themeName)
+        // Start the imperative theme applier for jQuery-managed elements
+        initThemeApplier()
     },
 
     fina(l_, UserInterface) {

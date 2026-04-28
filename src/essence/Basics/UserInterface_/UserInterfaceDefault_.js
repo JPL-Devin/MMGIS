@@ -7,6 +7,8 @@ import Login from '../../Ancillary/Login/Login'
 import BottomBar from './BottomBar'
 import LayerUpdatedControl from './LayerUpdatedControl'
 import UserInterfaceBridge from './UserInterfaceBridge'
+import { refreshThemeDOM } from '../../../design-system/themeApplier'
+import { getCurrentTheme } from '../../../design-system/useTheme'
 
 import './UserInterfaceDefault_.css'
 
@@ -126,7 +128,7 @@ var UserInterface = {
                 top: (this.topSize + 12) + 'px',
                 height: 'calc(100% - ' + (this.topSize + 24) + 'px)',
                 left: (this.topSize + 12) + 'px',
-                background: 'rgba(26,26,27,0.88)',
+                background: getCurrentTheme().alpha('--color-a', 0.88),
                 'border': '1px solid transparent',
                 'border-radius': '10px',
                 'backdrop-filter': 'blur(20px)',
@@ -152,7 +154,7 @@ var UserInterface = {
         $('#main-container').append(this.toolPanelDrag)
         // Hover highlight
         this.toolPanelDrag.on('mouseenter', function () {
-            $(this).css('background', 'rgba(var(--color-mmgis-rgb, 0,128,255), 0.3)')
+            $(this).css('background', getCurrentTheme().alpha('--color-c', 0.3))
         }).on('mouseleave', function () {
             if (!UserInterface._toolDragActive)
                 $(this).css('background', 'transparent')
@@ -162,7 +164,7 @@ var UserInterface = {
         UserInterface.handleToolDragDragging = function (e) {
             const newWidth = e.pageX - UserInterface.topSize - 12
             $('body').css('user-select', 'none')
-            UserInterface.toolPanelDrag.css('background', 'rgba(var(--color-mmgis-rgb, 0,128,255), 0.5)')
+            UserInterface.toolPanelDrag.css('background', getCurrentTheme().alpha('--color-c', 0.5))
             // Live resize
             const clamped = Math.max(
                 Math.min(newWidth, window.innerWidth / 2),
@@ -205,7 +207,7 @@ var UserInterface = {
         })
         // Hover highlight
         this.bottomBarDrag.on('mouseenter', function () {
-            $(this).css('background', 'rgba(var(--color-mmgis-rgb, 0,128,255), 0.3)')
+            $(this).css('background', getCurrentTheme().alpha('--color-c', 0.3))
         }).on('mouseleave', function () {
             if (!UserInterface._bottomDragActive)
                 $(this).css('background', 'transparent')
@@ -214,7 +216,7 @@ var UserInterface = {
         UserInterface._bottomDragActive = false
         UserInterface.handleBottomDragDragging = function (e) {
             $('body').css('user-select', 'none')
-            UserInterface.bottomBarDrag.css('background', 'rgba(var(--color-mmgis-rgb, 0,128,255), 0.5)')
+            UserInterface.bottomBarDrag.css('background', getCurrentTheme().alpha('--color-c', 0.5))
             const bar = $('#bottomFloatingBar')
             const barBottom = bar.offset().top + bar.outerHeight()
             const timeUIDockH = $('#timeUIDock').outerHeight() || 0
@@ -446,8 +448,8 @@ var UserInterface = {
                 right: '12px',
                 'z-index': '1003',
                 'border-radius': '10px',
-                border: '1px solid #1f2937',
-                background: 'rgba(26, 26, 27, 0.92)',
+                border: `1px solid ${getCurrentTheme()['--color-a1']}`,
+                background: getCurrentTheme().alpha('--color-a', 0.92),
                 'backdrop-filter': 'blur(20px)',
                 '-webkit-backdrop-filter': 'blur(20px)',
                 overflow: 'hidden',
@@ -464,7 +466,7 @@ var UserInterface = {
                 height: '0px',
                 width: '100%',
                 margin: '0',
-                background: 'rgba(26, 26, 27, 0.95)',
+                background: getCurrentTheme().alpha('--color-a', 0.95),
                 overflow: 'hidden',
                 'border-bottom': '1px solid transparent',
                 transition: 'height 0.3s ease-out',
@@ -650,7 +652,7 @@ var UserInterface = {
         UserInterface.toolPanel.css({
             width: width + 'px',
             opacity: '1',
-            'border-color': '#1f2937',
+            'border-color': getCurrentTheme()['--color-a1'],
             'box-shadow': '0 8px 32px rgba(0,0,0,0.4)',
         })
         UserInterface.toolPanelDrag.css({
@@ -659,6 +661,7 @@ var UserInterface = {
         })
         UserInterface._repositionSeparatedContent(width)
         UserInterface._updateBottomBarDependents()
+        refreshThemeDOM()
     },
     resizeToolPanel: function (width) {
         width = Math.max(
@@ -685,6 +688,7 @@ var UserInterface = {
         UserInterface.toolPanelDrag.css('display', 'none')
         UserInterface._repositionSeparatedContent(0)
         UserInterface._updateBottomBarDependents()
+        refreshThemeDOM()
     },
     // can also be 'full'
     setToolHeight: function (pxHeight, shouldntAnimate) {
@@ -728,7 +732,7 @@ var UserInterface = {
         // Set height — CSS transition handles smooth animation
         $('#toolsWrapper').css({
             height: UserInterface.pxIsTools + 'px',
-            'border-bottom': UserInterface.pxIsTools > 0 ? '1px solid #1f2937' : '1px solid transparent',
+            'border-bottom': UserInterface.pxIsTools > 0 ? `1px solid ${getCurrentTheme()['--color-a1']}` : '1px solid transparent',
         })
 
         // Also update the floating bar visibility

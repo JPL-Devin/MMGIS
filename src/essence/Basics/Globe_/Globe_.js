@@ -18,10 +18,11 @@ let Globe_ = {
     // Lazy init — only called when Globe panel is actually opened
     init: async function () {
         if (this._initialized) return
-        this._initialized = true
 
         // Dynamically import GlobeRenderer so Cesium is not loaded at startup
         const { default: GlobeRenderer } = await import('./GlobeRenderer')
+
+        this._initialized = true
 
         const containerId = this.id
         let initialView = null

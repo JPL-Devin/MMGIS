@@ -15,3 +15,5 @@ export { default as Spinner } from './components/Spinner'
 // Theme utilities
 export { applyTheme, getCurrentThemeName, getThemeNames, getTheme } from './applyTheme'
 export { themes } from './themes'
+export { useTheme, getCurrentTheme, hexToRgba } from './useTheme'
+export { initThemeApplier, refreshThemeDOM } from './themeApplier'
