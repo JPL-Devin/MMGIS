@@ -1,7 +1,7 @@
 /* BottomBar styling overrides for mockup alignment */
 #barBottom {
+    z-index: 1005 !important;
     align-items: center !important;
-    padding-bottom: 6px !important;
 }
 
 #barBottom > i,

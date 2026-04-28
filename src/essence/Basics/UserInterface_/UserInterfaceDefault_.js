@@ -109,11 +109,15 @@ var UserInterface = {
         Login.init()
 
         this.barBottom = $('<div>').attr('id', 'barBottom').css({
+            position: 'absolute',
             width: '40px',
+            bottom: '0px',
+            left: '0px',
             display: 'flex',
             'flex-flow': 'column',
-            'margin-top': 'auto',
+            'z-index': '1005',
         })
+        $('#main-container').append(this.barBottom)
 
         BottomBar.init('barBottom', this)
 
@@ -447,7 +451,7 @@ var UserInterface = {
                 bottom: '12px',
                 left: '12px',
                 right: '12px',
-                'z-index': '1401',
+                'z-index': '1003',
                 'border-radius': '10px',
                 border: `1px solid ${getCurrentTheme()['--color-a1']}`,
                 background: getCurrentTheme().alpha('--color-a', 0.92),
@@ -471,6 +475,7 @@ var UserInterface = {
                 margin: '0',
                 background: getCurrentTheme().alpha('--color-a', 0.95),
                 overflow: 'hidden',
+                'border-bottom': '1px solid transparent',
                 transition: 'height 0.3s ease-out',
                 'flex-shrink': '0',
             })
@@ -547,7 +552,6 @@ var UserInterface = {
                 height: 'calc(100% - ' + this.topSize + 'px)',
             })
         $('#main-container').append(this.toolbar)
-        this.toolbar.append(this.barBottom)
 
         this.toolbarLogo = $('<div>')
             .attr('id', 'mmgislogo')
@@ -798,8 +802,8 @@ var UserInterface = {
         const timeUIActive = timeUIEl && timeUIEl.classList.contains('active')
         const timeUIExpanded = timeUIEl && timeUIEl.classList.contains('expanded')
         const timeUIDockH = timeUIActive ? (timeUIExpanded ? 177 : 40) : 0
-        // Account for bar border (1px top + 1px bottom)
-        const barBorderH = (toolsH > 0 || timeUIDockH > 0) ? 2 : 0
+        // Account for bar border (1px top + 1px bottom) and toolsWrapper border-bottom (1px)
+        const barBorderH = (toolsH > 0 || timeUIDockH > 0) ? 3 : 0
         const targetBarHeight = toolsH + timeUIDockH + barBorderH
 
         const barBottom = 12
