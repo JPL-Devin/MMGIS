@@ -155,9 +155,10 @@ let BottomBar = {
         const savedMapToolBarBottom =
             $('#mapToolBar').css('bottom') || '0px'
         $('#mapToolBar').css('bottom', '0px')
-        // Hide TimeUI for screenshot
-        if ($('#toggleTimeUI').hasClass('active')) {
-            import('../../Ancillary/Coordinates').then(m => m.default.toggleTimeUI(false))
+        // Hide TimeUI for screenshot (synchronous DOM hide)
+        const wasTimeUIActive = $('#timeUI').hasClass('active')
+        if (wasTimeUIActive) {
+            $('#timeUI').css('display', 'none')
         }
 
         const documentElm = document.getElementById('mapScreen')
@@ -231,6 +232,9 @@ let BottomBar = {
         $('.leaflet-control-zoom').css('display', 'block')
         $('#scaleBar').css('margin-top', '5px')
         $('#mapToolBar').css('bottom', savedMapToolBarBottom)
+        if (wasTimeUIActive) {
+            $('#timeUI').css('display', '')
+        }
     },
     copyLink: function () {
         QueryURL.writeCoordinateURL(true, function () {
