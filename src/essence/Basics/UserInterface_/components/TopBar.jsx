@@ -82,16 +82,17 @@ function TopBar({ UserInterface }) {
         if (UserInterface && UserInterface.hasGlobe === false) return
         if (Globe_._isInitializing) return
         const newState = !uiStore.getState().globePanelOpen
-        // Lazy-init Globe on first open — await so renderer is ready before resize
-        if (newState && !Globe_._initialized) {
+        // Lazy-init Globe if not yet initialized (whether opening or already "open" via config)
+        if (!Globe_._initialized) {
             Globe_._isInitializing = true
             try {
                 await Globe_.lazyInit()
             } finally {
                 Globe_._isInitializing = false
             }
-            // Re-check desired state after async init in case user toggled again
-            if (uiStore.getState().globePanelOpen === newState) return
+            // If Globe was already shown (config default) and user clicked to close,
+            // continue with the close logic. If opening, re-check state after async init.
+            if (newState && uiStore.getState().globePanelOpen === newState) return
         }
         uiStore.getState().setGlobePanelOpen(newState)
         if (UserInterface && UserInterface.setPanelPercents) {

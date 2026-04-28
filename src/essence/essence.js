@@ -549,6 +549,14 @@ var essence = {
             } catch (err) {
                 console.error('[essence] Error initializing components:', err)
             }
+
+            // If Globe panel is configured open by default, trigger lazy init
+            if (L_.hasGlobe && !Globe_._initialized) {
+                const pp = UserInterface_.getPanelPercents()
+                if (pp && pp.globe > 0) {
+                    Globe_.lazyInit()
+                }
+            }
         }
     },
 }
