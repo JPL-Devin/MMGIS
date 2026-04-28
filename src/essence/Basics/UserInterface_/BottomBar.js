@@ -30,10 +30,11 @@ let BottomBar = {
             .attr('tabindex', 100)
             .attr('class', 'mmgisHoverBlue mdi mdi-open-in-new mdi-18px')
             .css({
-                'padding': '5px 10px',
+                'padding': '8px 0px',
                 'width': '40px',
-                'height': '36px',
-                'line-height': '26px',
+                'height': '40px',
+                'line-height': '24px',
+                'text-align': 'center',
                 'cursor': 'pointer'
             })
             .on('click', function () {
@@ -68,10 +69,11 @@ let BottomBar = {
                 'mmgisHoverBlue mdi mdi-information-outline mdi-18px'
             )
             .css({
-                'padding': '5px 10px',
+                'padding': '8px 0px',
                 'width': '40px',
-                'height': '36px',
-                'line-height': '26px',
+                'height': '40px',
+                'line-height': '24px',
+                'text-align': 'center',
                 'cursor': 'pointer'
             })
             .on('click', function () {

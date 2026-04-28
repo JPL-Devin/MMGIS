@@ -456,7 +456,7 @@ var UserInterface = {
                 background: getCurrentTheme().alpha('--color-a', 0.92),
                 'backdrop-filter': 'blur(20px)',
                 '-webkit-backdrop-filter': 'blur(20px)',
-                overflow: 'hidden',
+                overflow: 'visible',
                 'pointer-events': 'auto',
                 'max-height': 'calc(100% - 24px)',
                 'box-shadow': '0 -4px 20px rgba(0,0,0,0.3)',
@@ -814,7 +814,7 @@ var UserInterface = {
         // Calculate left offset from vertical tool panel (use stored value, not DOM read)
         const tpShift = UserInterface._toolPanelWidth || 0
 
-        $('#mapToolBar').css({ bottom: offset + 'px', left: tpShift + 'px', transition: 'bottom 0.2s ease-out, left 0.2s ease-out' })
+        $('#mapToolBar').css({ bottom: offset + 'px', left: (12 + tpShift) + 'px', transition: 'bottom 0.2s ease-out, left 0.2s ease-out' })
         // Base left positions: scalefactor=44px, compass=12px (from CSS)
         $('.leaflet-control-scalefactor').css({ bottom: (offset + 28) + 'px', left: (44 + tpShift) + 'px', transition: 'bottom 0.2s ease-out, left 0.2s ease-out' })
         $('#mmgis-map-compass').css({ bottom: (offset + 38) + 'px', left: (12 + tpShift) + 'px', transition: 'bottom 0.2s ease-out, left 0.2s ease-out' })

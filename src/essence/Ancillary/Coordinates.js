@@ -867,8 +867,8 @@ function toggleTimeUI() {
     Map_.map._fadeAnimated = active
 
     // Let the centralized positioning in UserInterfaceDefault_ handle all element positions
-    UserInterface._updateBottomBarVisibility()
-    UserInterface._updateBottomBarDependents()
+    if (typeof UserInterface._updateBottomBarVisibility === 'function') UserInterface._updateBottomBarVisibility()
+    if (typeof UserInterface._updateBottomBarDependents === 'function') UserInterface._updateBottomBarDependents()
 
     Object.keys(L_._onTimeUIToggleSubscriptions).forEach((k) => {
         L_._onTimeUIToggleSubscriptions[k](!active)

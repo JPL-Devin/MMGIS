@@ -368,25 +368,20 @@ const TimeUI = {
         }
 
         if (e == null) {
-            // Calculate TimeUI height dynamically based on expanded state
-            const timeUIHeight = $('#timeUI').hasClass('expanded') ? 177 : 40
-
             let bcr = $(`#mmgisTimeUIQuickSelectTrigger`)
                 .get(0)
                 .getBoundingClientRect()
             $(`#timeUIQuickSelectPopover`).css({
                 position: 'fixed',
                 left: bcr.left,
-                right: bcr.right,
-                bottom: timeUIHeight,
+                bottom: (window.innerHeight - bcr.top) + 'px',
             })
 
             bcr = $(`#mmgisTimeUIPlayTrigger`).get(0).getBoundingClientRect()
             $(`#timeUIPlayPopover`).css({
                 position: 'fixed',
                 left: bcr.left,
-                right: bcr.right,
-                bottom: timeUIHeight,
+                bottom: (window.innerHeight - bcr.top) + 'px',
             })
 
             // Update timeline handles when layout changes
