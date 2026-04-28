@@ -1805,10 +1805,10 @@ function interfaceWithMMGIS() {
     // prettier-ignore
     let markup = [
         "<div id='shadeTool'>",
-            "<div id='vstHeader'>",
+            "<div id='vstHeader' class='mmgisToolHeader'>",
                 "<div>",
                     "<div>",
-                        "<div id='vstTitle'>Shade</div>",
+                        "<div class='mmgisToolTitle'>Shade</div>",
                         Help.getComponent(helpKey),
                     "</div>",
                 "</div>",

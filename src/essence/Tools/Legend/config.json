@@ -20,28 +20,12 @@
             {
                 "components": [
                     {
-                        "field": "separatedTool",
-                        "name": "Separated Tool",
-                        "description": "If true, this tool will live outside the left-hand toolbar and be independently accessible.",
-                        "type": "checkbox",
-                        "width": 3,
-                        "defaultChecked": true
-                    },
-                    {
                         "field": "variables.displayOnStart",
                         "name": "Display on Start",
                         "description": "Whether the expanded legend should automatically be displayed on start.",
                         "type": "checkbox",
                         "width": 3,
                         "defaultChecked": false
-                    },
-                    {
-                        "field": "variables.justification",
-                        "name": "Justification",
-                        "description": "The legend will display on the right side of the screen if set to right, otherwise default to the left side",
-                        "type": "dropdown",
-                        "width": 2,
-                        "options": ["left", "right"]
                     },
                     {
                         "field": "variables.showHeadersInLegend",

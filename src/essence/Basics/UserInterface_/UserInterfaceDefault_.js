@@ -192,6 +192,18 @@ var UserInterface = {
                 .on('mousemove', UserInterface.handleToolDragDragging)
         }
         $('#toolPanelDrag').on('mousedown', this.handleToolDragMousedown)
+        // Thin line indicator for tool panel splitter
+        this.toolPanelDrag.append(
+            $('<div>').css({
+                position: 'absolute',
+                left: '50%',
+                top: 0,
+                width: '1px',
+                height: '100%',
+                background: 'rgba(255,255,255,0.15)',
+                'pointer-events': 'none',
+            })
+        )
 
         // Top-edge resize strip for the floating bottom bar (horizontal tools)
         this.bottomBarDrag = $('<div>').attr('id', 'bottomBarDrag').css({
@@ -246,6 +258,18 @@ var UserInterface = {
                 .on('mousemove', UserInterface.handleBottomDragDragging)
         }
         this.bottomBarDrag.on('mousedown', UserInterface.handleBottomDragMousedown)
+        // Thin horizontal line indicator for bottom bar splitter
+        this.bottomBarDrag.append(
+            $('<div>').css({
+                position: 'absolute',
+                top: '50%',
+                left: 0,
+                height: '1px',
+                width: '100%',
+                background: 'rgba(255,255,255,0.15)',
+                'pointer-events': 'none',
+            })
+        )
 
         //Main container div
         this.splitscreens = $('<div>')
@@ -299,11 +323,15 @@ var UserInterface = {
         this.viewerScreen.append(viewerDiv)
         this.viewerToolBar = $('<div>').attr('id', 'viewerToolBar').css({
             position: 'absolute',
-            top: `40px`,
-            width: '100%',
-            height: '48px',
+            top: '10px',
+            right: '10px',
+            width: 'auto',
+            height: 'auto',
             'pointer-events': 'none',
             'z-index': '5',
+            display: 'flex',
+            'flex-direction': 'column',
+            gap: '5px',
         })
         this.viewerScreen.append(this.viewerToolBar)
 
@@ -318,6 +346,18 @@ var UserInterface = {
                 cursor: 'default',
             })
         this.vmgScreen.append(this.viewerSplit)
+        // Thin line indicator for viewer splitter
+        this.viewerSplit.append(
+            $('<div>').css({
+                position: 'absolute',
+                left: '50%',
+                top: 0,
+                width: '1px',
+                height: '100%',
+                background: 'rgba(255,255,255,0.15)',
+                'pointer-events': 'none',
+            })
+        )
 
         //The map screen
         this.mapScreen = $('<div>')
@@ -379,6 +419,18 @@ var UserInterface = {
                 left: this.pxIsViewer - this.splitterSizeHidden / 2 + 'px',
             })
         this.vmgScreen.append(this.mapSplit)
+        // Thin line indicator for map splitter
+        this.mapSplit.append(
+            $('<div>').css({
+                position: 'absolute',
+                left: '50%',
+                top: 0,
+                width: '1px',
+                height: '100%',
+                background: 'rgba(255,255,255,0.15)',
+                'pointer-events': 'none',
+            })
+        )
 
         // Splitter arrow buttons removed — panel selection is via TopBar toggles
 
@@ -431,6 +483,18 @@ var UserInterface = {
                     'px',
             })
         this.vmgScreen.append(this.globeSplit)
+        // Thin line indicator for globe splitter
+        this.globeSplit.append(
+            $('<div>').css({
+                position: 'absolute',
+                left: '50%',
+                top: 0,
+                width: '1px',
+                height: '100%',
+                background: 'rgba(255,255,255,0.15)',
+                'pointer-events': 'none',
+            })
+        )
 
         // Globe splitter arrow buttons removed — panel selection is via TopBar toggles
 

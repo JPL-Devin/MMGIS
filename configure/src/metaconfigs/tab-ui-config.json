@@ -475,6 +475,20 @@
           "description": "Required in order to enable button.",
           "type": "text",
           "width": 10
+        },
+        {
+          "field": "look.infoModalTitle",
+          "name": "Info Modal Title",
+          "description": "Custom title for the Info modal (default: About MMGIS).",
+          "type": "text",
+          "width": 10
+        },
+        {
+          "field": "look.infoModalContent",
+          "name": "Info Modal Content",
+          "description": "Custom HTML/text content to display in the Info modal.",
+          "type": "text",
+          "width": 10
         }
       ]
     }

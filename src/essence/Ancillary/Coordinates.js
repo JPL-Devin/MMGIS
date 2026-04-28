@@ -864,47 +864,11 @@ function toggleTimeUI() {
     $('#toggleTimeUI').toggleClass('active')
     $('#timeUI').toggleClass('active')
 
-    const defaultExpanded = $('#timeUI').hasClass('defaultExpanded')
-    const timeUIHeight = defaultExpanded
-        ? 177
-        : $('#timeUI').hasClass('active')
-        ? 40
-        : 0
-    const newBottom = !active
-        ? timeUIHeight
-        : $('#timeUI').hasClass('active')
-        ? 40
-        : 0
-    const timeBottom = 0
-
     Map_.map._fadeAnimated = active
 
-    $('#CoordinatesDiv').css({
-        bottom: newBottom + (UserInterface.pxIsTools || 0) + 'px',
-    })
-    $('#mapToolBar').css({
-        bottom: newBottom + (UserInterface.pxIsTools || 0) + 'px',
-    })
-    $('.leaflet-bottom.leaflet-left').css({
-        bottom: newBottom + 'px',
-    })
-    $('#mmgis-attributions').css({
-        bottom: (UserInterface.pxIsTools || 0) + 'px',
-    })
-    $('.leaflet-bottom.leaflet-right').css({
-        bottom: newBottom + (UserInterface.pxIsTools || 0) + 'px',
-    })
-    $('#photosphereAzIndicator').css({
-        bottom: newBottom + (UserInterface.pxIsTools || 0) + 'px',
-        transition: 'bottom 0.2s ease-in',
-    })
-    $('#_lithosphere_controls_bottomleft').css({
-        bottom: newBottom + (UserInterface.pxIsTools || 0) + 10 + 'px',
-        transition: 'bottom 0.2s ease-in',
-    })
-    $('#timeUI').css({
-        bottom: timeBottom + (UserInterface.pxIsTools || 0) + 'px',
-    })
+    // Let the centralized positioning in UserInterfaceDefault_ handle all element positions
+    UserInterface._updateBottomBarVisibility()
+    UserInterface._updateBottomBarDependents()
 
     Object.keys(L_._onTimeUIToggleSubscriptions).forEach((k) => {
         L_._onTimeUIToggleSubscriptions[k](!active)

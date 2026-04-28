@@ -19,9 +19,12 @@ import zoomPlugin from 'chartjs-plugin-zoom'
 import * as moment from 'moment'
 
 import './MeasureTool.css'
+import Help from '../../Ancillary/Help'
 
 // Zoom isn't working nicely. Keep off
 //Chart.register(zoomPlugin)
+
+const helpKey = 'MeasureTool'
 
 // Hacky solution to exposing setState externally
 let updateProfileData = function () {}
@@ -121,6 +124,10 @@ const Measure = () => {
     // Compute line of sight for each segment and then merge back together
     recomputeLineOfSight()
 
+    useEffect(() => {
+        Help.finalize(helpKey)
+    }, [])
+
     return (
         <div
             className='MeasureTool'
@@ -129,8 +136,16 @@ const Measure = () => {
             }}
         >
             <div id='measureLeft'>
+                <div className='mmgisToolHeader'>
+                    <div>
+                        <div>
+                            <div className='mmgisToolTitle'>Measure</div>
+                            <div dangerouslySetInnerHTML={{ __html: Help.getComponent(helpKey) }} />
+                        </div>
+                    </div>
+                </div>
                 <div id='measureTop'>
-                    <div id='measureTitle'>Measure</div>
+                    <div id='measureTitle' style={{ display: 'none' }}>Measure</div>
                     <div id='measureIcons'>
                         <div
                             id='measureUndo'

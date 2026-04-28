@@ -16,11 +16,22 @@ import { fetchFile, toBlobURL } from '@ffmpeg/util'
 import OffscreenMapManager from './OffscreenMapManager'
 
 import './AnimationTool.css'
+import Help from '../../Ancillary/Help'
+
+const helpKey = 'AnimationTool'
 
 //Add the tool markup
 // prettier-ignore
 const markup = [
     "<div id='animationTool'>",
+        "<div id='animationToolHeader' class='mmgisToolHeader'>",
+            "<div>",
+                "<div>",
+                    "<div class='mmgisToolTitle'>Animation</div>",
+                    Help.getComponent(helpKey),
+                "</div>",
+            "</div>",
+        "</div>",
         "<div id='animationToolContent'>",
             "<div id='animationToolSteps'>",
                 "<div class='animation-step active' data-step='1'>",
@@ -281,6 +292,8 @@ function interfaceWithMMGIS() {
 
     const tools = $('<div>').css('height', '100%').html(markup)
     toolPanel.append(tools)
+
+    Help.finalize(helpKey)
 
     // Update export options visibility based on config
     updateExportOptionsVisibility()

@@ -3,6 +3,7 @@ import { Button } from '../../../../design-system'
 import { useTheme } from '../../../../design-system/useTheme'
 import uiStore from '../store/uiStore'
 import Globe_ from '../../Globe_/Globe_'
+import BottomBar from '../BottomBar'
 
 import './TopBar.css'
 
@@ -20,6 +21,9 @@ function TopBar({ UserInterface }) {
     const [showUserCard, setShowUserCard] = useState(false)
     const userCardRef = useRef(null)
     const userBtnRef = useRef(null)
+    const [showMenu, setShowMenu] = useState(false)
+    const menuRef = useRef(null)
+    const menuBtnRef = useRef(null)
 
     useEffect(() => {
         const unsub = uiStore.subscribe((state) => {
@@ -52,7 +56,7 @@ function TopBar({ UserInterface }) {
         }
     }, [])
 
-    // Close user card when clicking outside
+    // Close user card and menu when clicking outside
     useEffect(() => {
         function handleClickOutside(e) {
             if (
@@ -60,6 +64,12 @@ function TopBar({ UserInterface }) {
                 userBtnRef.current && !userBtnRef.current.contains(e.target)
             ) {
                 setShowUserCard(false)
+            }
+            if (
+                menuRef.current && !menuRef.current.contains(e.target) &&
+                menuBtnRef.current && !menuBtnRef.current.contains(e.target)
+            ) {
+                setShowMenu(false)
             }
         }
         document.addEventListener('mousedown', handleClickOutside)
@@ -247,6 +257,51 @@ function TopBar({ UserInterface }) {
                 >
                     Globe
                 </Button>
+            </div>
+
+            {/* Right menu (kebab) */}
+            <div className="topbar-menu-wrapper">
+                <div
+                    ref={menuBtnRef}
+                    className="topbar-menu-btn"
+                    onClick={() => setShowMenu(!showMenu)}
+                    title="Menu"
+                    style={{ color: theme['--color-a3'], cursor: 'pointer' }}
+                >
+                    <i className="mdi mdi-dots-vertical" style={{ fontSize: 20 }} />
+                </div>
+                {showMenu && (
+                    <div ref={menuRef} className="topbar-menu-dropdown" style={{
+                        background: theme.alpha('--color-a', 0.96),
+                        border: `1px solid ${theme['--color-a1']}`,
+                    }}>
+                        <div className="topbar-menu-item" style={{ color: theme['--color-a3'] }}
+                            onClick={() => { BottomBar.copyLink(); setShowMenu(false) }}>
+                            <i className="mdi mdi-open-in-new" style={{ marginRight: 8, fontSize: 14 }} />
+                            Copy Link
+                        </div>
+                        <div className="topbar-menu-item" style={{ color: theme['--color-a3'] }}
+                            onClick={() => { BottomBar.takeScreenshot(); setShowMenu(false) }}>
+                            <i className="mdi mdi-camera" style={{ marginRight: 8, fontSize: 14 }} />
+                            Screenshot
+                        </div>
+                        <div className="topbar-menu-item" style={{ color: theme['--color-a3'] }}
+                            onClick={() => { BottomBar.fullscreen(); setShowMenu(false) }}>
+                            <i className="mdi mdi-fullscreen" style={{ marginRight: 8, fontSize: 14 }} />
+                            Fullscreen
+                        </div>
+                        <div className="topbar-menu-item" style={{ color: theme['--color-a3'] }}
+                            onClick={() => { BottomBar.toggleHotkeys(true); setShowMenu(false) }}>
+                            <i className="mdi mdi-keyboard" style={{ marginRight: 8, fontSize: 14 }} />
+                            Keyboard Shortcuts
+                        </div>
+                        <div className="topbar-menu-item" style={{ color: theme['--color-a3'] }}
+                            onClick={() => { BottomBar.toggleSettings(true); setShowMenu(false) }}>
+                            <i className="mdi mdi-cog" style={{ marginRight: 8, fontSize: 14 }} />
+                            Settings
+                        </div>
+                    </div>
+                )}
             </div>
 
             {/* User account area */}

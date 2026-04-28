@@ -7,7 +7,10 @@ import IsochroneManager from './IsochroneTool_Manager'
 import models from './models'
 
 import './IsochroneTool.css'
+import Help from '../../Ancillary/Help'
 const L = window.L
+
+const helpKey = 'IsochroneTool'
 
 /*
 Handles map events, sidebar management, drawing layers and markers.
@@ -16,12 +19,19 @@ are handled in IsochroneTool_Manager and its imports.
 */
 
 const markup = `<div id="isochroneTool">
-    <div id="isochroneToolHeader">
-        <span id="isochroneToolTitle">Isochrone</span>
-        <span id="iscNew">
-            New
-            <i class="mdi mdi-plus mdi-18px"></i>
-        </span>
+    <div id="isochroneToolHeader" class="mmgisToolHeader">
+        <div>
+            <div>
+                <div class="mmgisToolTitle">Isochrone</div>
+                ${Help.getComponent(helpKey)}
+            </div>
+            <div>
+                <span id="iscNew" style="cursor:pointer;line-height:40px;padding-right:8px;">
+                    New
+                    <i class="mdi mdi-plus mdi-18px"></i>
+                </span>
+            </div>
+        </div>
     </div>
     <ul id="isochroneOptionsContainer"></ul>
 </div>`
@@ -262,6 +272,7 @@ const IsochroneTool = {
     make: function () {
         this.MMGISInterface = new interfaceWithMMGIS()
 
+        Help.finalize(helpKey)
         $('#iscNew').on('click', () => this.addIsochrone())
         this.containerEl = $('#isochroneOptionsContainer')
         this.addIsochrone()

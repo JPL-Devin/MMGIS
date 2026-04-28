@@ -625,7 +625,9 @@ function buildToolBar() {
         .attr('class', 'row childpointerevents')
         .css({
             'display': 'flex',
-            'justify-content': 'space-between',
+            'flex-direction': 'column',
+            'align-items': 'flex-end',
+            'gap': '5px',
             'padding': '0px 5px'
         }))
     $('#viewerToolBar').append(toolBarContainer)

@@ -3,6 +3,9 @@ import F_ from '../../Basics/Formulae_/Formulae_'
 import L_ from '../../Basics/Layers_/Layers_'
 import TC_ from '../../Basics/ToolController_/ToolController_'
 import Globe_ from '../../Basics/Globe_/Globe_'
+import Help from '../../Ancillary/Help'
+
+const helpKey = 'SitesTool'
 
 var SitesTool = {
     height: 0,
@@ -49,19 +52,17 @@ var SitesTool = {
 
         toolsContainer.empty()
 
-        const headerDiv = $('<div>')
-            .css({
-                'height': '40px',
-                'line-height': '40px',
-                'font-size': '16px',
-                'color': 'var(--color-l)',
-                'background': 'var(--color-a)',
-                'font-family': 'lato-light',
-                'text-transform': 'uppercase',
-                'padding-left': '6px'
-            })
-            .html('Sites')
+        const headerDiv = $('<div>').attr('class', 'mmgisToolHeader')
+            .html([
+                "<div>",
+                    "<div>",
+                        "<div class='mmgisToolTitle'>Sites</div>",
+                        Help.getComponent(helpKey),
+                    "</div>",
+                "</div>",
+            ].join(''))
         toolsContainer.append(headerDiv)
+        Help.finalize(helpKey)
 
         const tools = $('<div>')
             .attr('id', 'SitesTool')

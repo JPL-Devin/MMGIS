@@ -1524,11 +1524,11 @@ class GlobeRenderer {
         }
 
         const controlsDiv = document.createElement('div')
-        controlsDiv.setAttribute('id', '_cesium_controls_topleft')
+        controlsDiv.setAttribute('id', '_cesium_controls_topright')
         controlsDiv.style.cssText = `
             position: absolute;
             top: 10px;
-            left: 10px;
+            right: 10px;
             z-index: 1000;
             display: flex;
             flex-direction: column;
@@ -1537,6 +1537,84 @@ class GlobeRenderer {
         `
         cesiumWidget.appendChild(controlsDiv)
         this._controlContainer = controlsDiv
+
+        // Add zoom in/out/home buttons
+        const self = this
+        const btnStyle = `
+            width: 30px;
+            height: 30px;
+            background: var(--color-a, #1d1f20);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            pointer-events: all;
+            border-radius: 3px;
+            color: var(--color-f, #ccc);
+            font-size: 18px;
+            transition: color 0.2s ease-in;
+        `
+
+        const zoomIn = document.createElement('div')
+        zoomIn.style.cssText = btnStyle
+        zoomIn.title = 'Zoom In'
+        zoomIn.innerHTML = '<i class="mdi mdi-plus mdi-18px"></i>'
+        zoomIn.addEventListener('click', function () {
+            if (self.rendererType === 'cesium') {
+                const camera = self.renderer.camera
+                const height = camera.positionCartographic.height
+                camera.zoomIn(height * 0.4)
+            } else if (self.renderer && self.renderer.controls) {
+                self.renderer.zoom(1)
+            }
+        })
+        zoomIn.addEventListener('mouseenter', function () { this.style.color = 'var(--color-mmgis, #08aeea)' })
+        zoomIn.addEventListener('mouseleave', function () { this.style.color = 'var(--color-f, #ccc)' })
+        controlsDiv.appendChild(zoomIn)
+
+        const zoomOut = document.createElement('div')
+        zoomOut.style.cssText = btnStyle
+        zoomOut.title = 'Zoom Out'
+        zoomOut.innerHTML = '<i class="mdi mdi-minus mdi-18px"></i>'
+        zoomOut.addEventListener('click', function () {
+            if (self.rendererType === 'cesium') {
+                const camera = self.renderer.camera
+                const height = camera.positionCartographic.height
+                camera.zoomOut(height * 0.6)
+            } else if (self.renderer && self.renderer.controls) {
+                self.renderer.zoom(-1)
+            }
+        })
+        zoomOut.addEventListener('mouseenter', function () { this.style.color = 'var(--color-mmgis, #08aeea)' })
+        zoomOut.addEventListener('mouseleave', function () { this.style.color = 'var(--color-f, #ccc)' })
+        controlsDiv.appendChild(zoomOut)
+
+        const homeBtn = document.createElement('div')
+        homeBtn.style.cssText = btnStyle
+        homeBtn.title = 'Reset View'
+        homeBtn.innerHTML = '<i class="mdi mdi-home-variant-outline mdi-18px"></i>'
+        homeBtn.addEventListener('click', function () {
+            if (self.config.initialView) {
+                if (self.rendererType === 'cesium') {
+                    self.renderer.camera.flyTo({
+                        destination: Cesium.Cartesian3.fromDegrees(
+                            self.config.initialView.lng,
+                            self.config.initialView.lat,
+                            self._zoomToHeight(self.config.initialView.zoom)
+                        ),
+                        duration: 1.5,
+                    })
+                } else if (self.renderer && self.renderer.controls) {
+                    self.renderer.setCenter(
+                        [self.config.initialView.lat, self.config.initialView.lng],
+                        self.config.initialView.zoom
+                    )
+                }
+            }
+        })
+        homeBtn.addEventListener('mouseenter', function () { this.style.color = 'var(--color-mmgis, #08aeea)' })
+        homeBtn.addEventListener('mouseleave', function () { this.style.color = 'var(--color-f, #ccc)' })
+        controlsDiv.appendChild(homeBtn)
     }
 
     /**

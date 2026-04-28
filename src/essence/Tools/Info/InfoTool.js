@@ -19,9 +19,9 @@ const helpKey = 'InfoTool'
 // prettier-ignore
 var markup = [
     "<div id='infoTool'>",
-        "<div id='infoToolHeader'>",
+        "<div id='infoToolHeader' class='mmgisToolHeader'>",
             "<div class='left'>",
-                "<div id='infoToolTitle'>Info</div>",
+                "<div class='mmgisToolTitle'>Info</div>",
                 Help.getComponent(helpKey),
                 "<div id='infoToolEquiv' title='Number of overlapping features'></div>",
             "</div>",

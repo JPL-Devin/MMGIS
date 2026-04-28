@@ -24,6 +24,7 @@ import calls from '../../../pre/calls'
 
 import './DrawTool.css'
 
+import Help from '../../Ancillary/Help'
 import tippy from 'tippy.js'
 import hotkeys from 'hotkeys-js'
 
@@ -36,10 +37,20 @@ const DrawTool_MTTTT = null
 //const DrawTool_SetOperations = null
 const DrawTool_ScienceIntent = null
 
+const helpKey = 'DrawTool'
+
 //Add the tool markup if you want to do it this way
 // prettier-ignore
 var markup = [
     "<div id='drawTool' style='width: 100%;'>",
+      "<div id='drawToolHeader' class='mmgisToolHeader'>",
+        "<div>",
+          "<div>",
+            "<div class='mmgisToolTitle'>Draw</div>",
+            Help.getComponent(helpKey),
+          "</div>",
+        "</div>",
+      "</div>",
       "<div id='drawToolNotLoggedIn'>",
         "<div>Please log in before drawing</div>",
       "</div>",
@@ -1702,6 +1713,8 @@ function interfaceWithMMGIS() {
 
     //Add the markup to tools or do it manually
     toolsContainer.append(tools)
+
+    Help.finalize(helpKey)
 
     // Set default Public filter state
     if (window._toolStates?.draw?.filter?.public != null) {

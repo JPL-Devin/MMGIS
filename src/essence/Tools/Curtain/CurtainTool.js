@@ -12,6 +12,9 @@ import ReactDOM from 'react-dom'
 import React, { useState, useEffect, useRef } from 'react'
 
 import './CurtainTool.css'
+import Help from '../../Ancillary/Help'
+
+const helpKey = 'CurtainTool'
 
 // Expose setStates externally
 const state = {
@@ -47,11 +50,23 @@ const Curtain = () => {
 
     const activeImage = activeImages[activeImageId]
 
+    useEffect(() => {
+        Help.finalize(helpKey)
+    }, [])
+
     return (
         <div className='CurtainTool'>
             <div id='curtainLeft'>
+                <div className='mmgisToolHeader'>
+                    <div>
+                        <div>
+                            <div className='mmgisToolTitle'>Curtain</div>
+                            <div dangerouslySetInnerHTML={{ __html: Help.getComponent(helpKey) }} />
+                        </div>
+                    </div>
+                </div>
                 <div id='curtainTop'>
-                    <div id='curtainTitle'>Curtain</div>
+                    <div id='curtainTitle' style={{ display: 'none' }}>Curtain</div>
                     <div id='curtainIcons'>
                         <div
                             id='curtainClear'

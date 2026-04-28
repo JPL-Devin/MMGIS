@@ -73,27 +73,28 @@ let ToolController_ = {
         // Helper function to create a separated tool
         // Button goes in toolbar, content floats over map
         const createSeparatedTool = (i) => {
+            const isIdentifier = tools[i].name === 'Identifier'
             const toolWidth = this.toolModules[tools[i].name + 'Tool']
                 ? this.toolModules[tools[i].name + 'Tool'].width || 200
                 : 200
 
-            // Outer floating panel wrapper (glassy styling)
+            // Outer floating panel wrapper (glassy styling) — skip for Identifier (toggle-only tool)
             const toolPanel = $('<div>')
                 .attr('id', `toolPanelSeparated_${tools[i].name}`)
                 .attr('class', 'sep-tool-panel')
                 .css({
-                    'width': toolWidth + 'px',
-                    'max-height': 'calc(100vh - 120px)',
+                    'width': isIdentifier ? '0px' : toolWidth + 'px',
+                    'max-height': isIdentifier ? '0px' : 'calc(100vh - 120px)',
                     'border-radius': '10px',
-                    'background': 'rgba(26,26,27,0.88)',
-                    'border': '1px solid #1f2937',
-                    'backdrop-filter': 'blur(20px)',
-                    '-webkit-backdrop-filter': 'blur(20px)',
-                    'box-shadow': '0 8px 32px rgba(0,0,0,0.4)',
+                    'background': isIdentifier ? 'transparent' : 'rgba(26,26,27,0.88)',
+                    'border': isIdentifier ? 'none' : '1px solid #1f2937',
+                    'backdrop-filter': isIdentifier ? 'none' : 'blur(20px)',
+                    '-webkit-backdrop-filter': isIdentifier ? 'none' : 'blur(20px)',
+                    'box-shadow': isIdentifier ? 'none' : '0 8px 32px rgba(0,0,0,0.4)',
                     'display': 'none',
                     'flex-direction': 'column',
                     'overflow': 'hidden',
-                    'pointer-events': 'auto',
+                    'pointer-events': isIdentifier ? 'none' : 'auto',
                 })
             this.separatedContentDiv.append(toolPanel)
 
@@ -176,11 +177,15 @@ let ToolController_ = {
                                     `${ToolController_.tools[i].name}Tool`
                                 ]
                             if (tM) {
+                                const isIdent = ToolController_.tools[i].name === 'Identifier'
                                 if (tM.made === false) {
                                     tM.make(
                                         `toolContentSeparated_${ToolController_.tools[i].name}`
                                     )
-                                    $(`#toolPanelSeparated_${ToolController_.tools[i].name}`).css('display', 'flex')
+                                    // Only show floating panel for non-Identifier tools
+                                    if (!isIdent) {
+                                        $(`#toolPanelSeparated_${ToolController_.tools[i].name}`).css('display', 'flex')
+                                    }
                                     ToolController_.activeSeparatedTools.push(
                                         ToolController_.tools[i].name + 'Tool'
                                     )
@@ -189,7 +194,9 @@ let ToolController_ = {
                                     ).addClass('active')
                                 } else {
                                     tM.destroy()
-                                    $(`#toolPanelSeparated_${ToolController_.tools[i].name}`).css('display', 'none')
+                                    if (!isIdent) {
+                                        $(`#toolPanelSeparated_${ToolController_.tools[i].name}`).css('display', 'none')
+                                    }
                                     ToolController_.activeSeparatedTools =
                                         ToolController_.activeSeparatedTools.filter(
                                             (a) =>
@@ -333,16 +340,7 @@ let ToolController_ = {
                             }
                         })(i)
                     )
-                    .on('mouseover', function () {
-                        if (!$(this).hasClass('active')) {
-                            $(this).css({ color: ToolController_.hoverColor })
-                        }
-                    })
-                    .on('mouseleave', function () {
-                        if (!$(this).hasClass('active')) {
-                            $(this).css({ color: ToolController_.defaultColor })
-                        }
-                    })
+                    // Hover styling handled by CSS .toolButton:hover rule
                 this.incToolsDiv.append(toolButton)
 
                 const toolIcon = $('<i>')
@@ -571,6 +569,13 @@ let ToolController_ = {
                         } catch (e) {
                             console.warn('Tool destroy error (non-fatal):', e)
                         }
+                    }
+
+                    // If previous tool was horizontal, reset tools height immediately
+                    // to prevent stale pxIsTools from affecting the new tool's layout
+                    if (this.prevHeight != 0 && this.UserInterface != null) {
+                        this.UserInterface.setToolHeight(0)
+                        this.prevHeight = 0
                     }
 
                     this.activeTool = tool

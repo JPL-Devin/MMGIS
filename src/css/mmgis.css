@@ -347,6 +347,13 @@ body {
 
 .toolButton:hover {
     background: var(--color-a1-5) !important;
+    color: var(--color-c) !important;
+}
+.toolButton.active {
+    color: var(--color-c) !important;
+}
+.toolButton.active:hover {
+    color: var(--color-c) !important;
 }
 
 .toolButtonSep.active {
@@ -542,7 +549,7 @@ body {
 
 .leaflet-control-zoom {
     border: none !important;
-    margin-top: 40px !important;
+    margin-top: 10px !important;
     margin-right: 5px !important;
     user-select: none;
 }
@@ -1300,4 +1307,30 @@ mark {
 
 .cesium-widget-credits {
     display: none !important;
+}
+
+/* Standardized tool header pattern */
+.mmgisToolHeader {
+    width: 100%;
+}
+.mmgisToolHeader > div:first-child {
+    display: flex;
+    height: 40px;
+    line-height: 18px;
+    color: #ccc;
+    background: var(--color-a);
+    justify-content: space-between;
+}
+.mmgisToolHeader > div:first-child > div:first-child {
+    display: flex;
+    padding-left: 0px;
+}
+.mmgisToolTitle {
+    height: 40px;
+    line-height: 40px;
+    font-size: 16px;
+    padding-left: 6px;
+    font-family: 'lato-light';
+    text-transform: uppercase;
+    color: var(--color-l);
 }

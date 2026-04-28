@@ -3048,7 +3048,6 @@
       "js": "IdentifierTool",
       "separatedTool": true,
       "variables": {
-        "justification": "left",
         "layers": []
       }
     },
@@ -3067,7 +3066,6 @@
       "separatedTool": true,
       "variables": {
         "displayOnStart": false,
-        "justification": "right",
         "showHeadersInLegend": false
       }
     },
