@@ -268,7 +268,7 @@ let Globe_ = {
             }
         )
     },
-    getMockLitho: function () {
+    getMockLitho: function (existingLitho) {
         const pendingOps = []
         const bufferOp = function (method) {
             return function () {
@@ -292,7 +292,7 @@ let Globe_ = {
             getElevationAtLngLat: function () {
                 return 0
             },
-            projection: (this.litho && this.litho.projection) || {},
+            projection: (existingLitho && existingLitho.projection) || {},
             _: {},
             options: {},
         }
