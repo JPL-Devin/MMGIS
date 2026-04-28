@@ -386,6 +386,7 @@ let ToolController_ = {
                             }
                             var prevActive = $('#toolcontroller_incdiv .active')
                             prevActive.removeClass('active')
+                            prevActive.removeClass('toolButtonActive')
                             prevActive.parent().removeClass('toolButtonActive')
                             if (!hasActive) {
                                 var newActive = $(
@@ -455,6 +456,7 @@ let ToolController_ = {
                             }
                             var prevActive = $('#toolcontroller_incdiv .active')
                             prevActive.removeClass('active')
+                            prevActive.removeClass('toolButtonActive')
                             prevActive.parent().removeClass('toolButtonActive')
                             if (!hasActive) {
                                 var newActive = $(
@@ -606,6 +608,7 @@ let ToolController_ = {
     closeActiveTool: function () {
         var prevActive = $('#toolcontroller_incdiv .active')
         prevActive.removeClass('active')
+        prevActive.removeClass('toolButtonActive')
         prevActive.parent().removeClass('toolButtonActive')
 
         if (this.activeTool != null) {

@@ -519,8 +519,9 @@ var UserInterface = {
                 overflow: 'hidden',
                 'pointer-events': 'auto',
                 'max-height': 'calc(100% - 24px)',
-                transition: 'height 0.3s ease-out',
                 'box-shadow': '0 -4px 20px rgba(0,0,0,0.3)',
+                display: 'flex',
+                'flex-direction': 'column',
             })
         this.splitscreens.append(this.bottomFloatingBar)
 
@@ -535,6 +536,7 @@ var UserInterface = {
                 overflow: 'hidden',
                 'border-bottom': '1px solid transparent',
                 transition: 'height 0.3s ease-out',
+                'flex-shrink': '0',
             })
         this.bottomFloatingBar.append(this.toolsScreen)
 
@@ -552,6 +554,7 @@ var UserInterface = {
             .css({
                 width: '100%',
                 'min-height': '0px',
+                'flex-shrink': '0',
             })
         this.bottomFloatingBar.append(this.timeUIDock)
 
@@ -821,7 +824,7 @@ var UserInterface = {
         }
         const hasToolContent = UserInterface.pxIsTools > 0
         if (timeUIActive || hasToolContent) {
-            bar.css('display', 'block')
+            bar.css('display', 'flex')
             UserInterface._syncBottomBarHeight()
             // Show top-edge drag strip only when a horizontal tool is open
             $('#bottomBarDrag').css('display', hasToolContent ? 'block' : 'none')
@@ -842,33 +845,22 @@ var UserInterface = {
         })
     },
     _syncBottomBarHeight: function () {
-        const bar = $('#bottomFloatingBar')
-        if (!bar.length) return
-
-        // Use the known target pxIsTools rather than reading the DOM value
-        // (toolsWrapper has a CSS transition, so outerHeight() returns the
-        // current animated value, not the final target)
-        const twH = UserInterface.pxIsTools || 0
-        const tdH = $('#timeUIDock').outerHeight() || 0
-        bar.css('height', (twH + tdH) + 'px')
+        // With flex layout, the bar auto-sizes from its children.
+        // No explicit height setting needed.
     },
     _updateBottomBarDependents: function () {
         const bar = $('#bottomFloatingBar')
         if (!bar.length) return
 
         // Calculate the TARGET bar height directly from known values
-        // instead of reading bar.outerHeight() which may be mid-transition
         const toolsH = UserInterface.pxIsTools || 0
         const timeUIDockH = $('#timeUIDock').outerHeight() || 0
         const targetBarHeight = toolsH + timeUIDockH
 
-        // Sync bar to target height immediately
-        bar.css('height', targetBarHeight + 'px')
-
         const barBottom = 12
         const totalOffset = targetBarHeight + barBottom
 
-        const isVisible = bar.css('display') !== 'none'
+        const isVisible = bar[0].style.display !== 'none'
         const offset = isVisible ? totalOffset : 0
 
         $('#mapToolBar').css({ bottom: offset + 'px', transition: 'bottom 0.2s ease-out' })
