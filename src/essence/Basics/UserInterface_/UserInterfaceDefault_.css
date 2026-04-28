@@ -50,6 +50,7 @@
     height: 32px;
     margin-top: -2px;
     image-rendering: pixelated;
+    border-right: 1px solid var(--color-a1);
 }
 
 #main-container > #topBar #topBarTitle {

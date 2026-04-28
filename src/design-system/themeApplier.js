@@ -39,7 +39,7 @@ function applyThemeToDOM(themeName) {
         btn.style.color = t['--color-c']
     })
     document.querySelectorAll('.toolSepDivider').forEach((el) => {
-        el.style.background = t['--color-a1-5']
+        el.style.background = t['--color-a2']
     })
 
     // --- Floating bottom bar ---

@@ -3,6 +3,7 @@ import F_ from '../Basics/Formulae_/Formulae_'
 import ToolController_ from '../Basics/ToolController_/ToolController_'
 import QueryURL from '../Ancillary/QueryURL'
 import TimeControl from '../Basics/TimeControl_/TimeControl'
+import Coordinates from '../Ancillary/Coordinates'
 import Login from '../Ancillary/Login/Login'
 import LegendTool from '../Tools/Legend/LegendTool.js'
 
@@ -546,7 +547,7 @@ var mmgisAPI = {
      * @param {boolean} - Whether to turn the TimeUI on or off. If true, makes visible.
      * @returns {boolean} - Whether the TimeUI is now on or off
      */
-    toggleTimeUI: TimeControl.toggleTimeUI,
+    toggleTimeUI: function (on) { Coordinates.toggleTimeUI(on) },
 
     /**
      * This function sets the global time properties for all of MMGIS.

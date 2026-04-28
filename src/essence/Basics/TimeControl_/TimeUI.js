@@ -2826,7 +2826,7 @@ const TimeUI = {
             }
         }
 
-        if ($('#toggleTimeUI').hasClass('active') && ignoreHistogram !== true)
+        if ($('#timeUI').hasClass('active') && ignoreHistogram !== true)
             TimeUI._makeHistogram()
     },
     _addRangeShiftButtons: function () {

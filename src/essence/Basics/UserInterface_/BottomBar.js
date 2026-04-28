@@ -7,6 +7,7 @@ import F_ from '../Formulae_/Formulae_'
 import L_ from '../Layers_/Layers_'
 
 import Attributions from '../../Ancillary/Attributions'
+import Coordinates from '../../Ancillary/Coordinates'
 import QueryURL from '../../Ancillary/QueryURL'
 import Modal from '../../Ancillary/Modal'
 import HTML2Canvas from 'html2canvas'
@@ -155,7 +156,8 @@ let BottomBar = {
         const savedMapToolBarBottom =
             $('#mapToolBar').css('bottom') || '0px'
         $('#mapToolBar').css('bottom', '0px')
-        $(`#toggleTimeUI.active`).trigger('click')
+        const wasTimeUIActive = $('#timeUI').hasClass('active')
+        if (wasTimeUIActive) Coordinates.toggleTimeUI(false)
 
         const documentElm = document.getElementById('mapScreen')
         HTML2Canvas(documentElm, {
@@ -452,6 +454,12 @@ let BottomBar = {
                                     `<div class="mmgis-checkbox"><input type="checkbox" ${BottomBar.settings.visibility.miscellaneous ? 'checked ' : ''}id="checkbox_msmsUIV6" value='miscellaneous'/><label for="checkbox_msmsUIV6"></label></div>`,
                                     `<div>Miscellaneous</div>`,
                                 `</li>`,
+                                (L_.configData.time && L_.configData.time.enabled === true ? [
+                                `<li>`,
+                                    `<div class="mmgis-checkbox"><input type="checkbox" ${$('#timeUI').hasClass('active') ? 'checked ' : ''}id="checkbox_msmsUIV7" value='timeui'/><label for="checkbox_msmsUIV7"></label></div>`,
+                                    `<div>Time UI</div>`,
+                                `</li>`,
+                                ].join('') : ''),
                             `</ul>`,
                         `</div>`,
                         (L_.Globe_ && L_.hasGlobe ? 
@@ -549,6 +557,9 @@ let BottomBar = {
                     $('.leaflet-control-container').css('display', 'none')
                     $('.splitterVInner').css('display', 'none')
                     break
+                case 'timeui':
+                    Coordinates.toggleTimeUI(false)
+                    break
                 default:
                     break
             }
@@ -590,6 +601,9 @@ let BottomBar = {
                 case 'miscellaneous':
                     $('.leaflet-control-container').css('display', 'block')
                     $('.splitterVInner').css('display', 'inline-flex')
+                    break
+                case 'timeui':
+                    Coordinates.toggleTimeUI(true)
                     break
                 default:
                     break

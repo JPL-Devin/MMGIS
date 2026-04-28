@@ -36,7 +36,7 @@ var TimeControl = {
                 L_.configData.time.format
             )
         } else {
-            $('#toggleTimeUI').css({ display: 'none' })
+            // toggleTimeUI button removed
             $('#CoordinatesDiv').css({ marginRight: '0px' })
             return
         }

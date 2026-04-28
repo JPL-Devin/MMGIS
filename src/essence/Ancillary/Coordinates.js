@@ -36,7 +36,7 @@ const markup = [
             "<i class='mdi mdi-target mdi-18px'></i>",
         "</div>",
     "</div>",
-    "<div id='toggleTimeUI'>",
+    "<div id='toggleTimeUI' style='display:none'>",
         "<i class='mdi mdi-clock mdi-18px'></i>",
     "</div>"
 ].join('\n');
@@ -155,26 +155,10 @@ const Coordinates = {
                 placement: 'top',
                 theme: 'blue',
             })
-            tippy('#toggleTimeUI', {
-                content: 'Time',
-                placement: 'top',
-                theme: 'blue',
-                offset: [0, 20],
-            })
         }
 
-        if (
-            !(
-                L_.configData.time &&
-                L_.configData.time.enabled === true &&
-                (L_.configData.time.visible === true ||
-                    L_.configData.time.liveByDefault === true ||
-                    L_.FUTURES.live === true)
-            )
-        ) {
-            $('#toggleTimeUI').css({ display: 'none' })
-            $('#CoordinatesDiv').css({ marginRight: '0px' })
-        }
+        // Remove margin for time button since it's no longer in the coordinates bar
+        $('#CoordinatesDiv').css({ marginRight: '0px' })
         if (L_.configData.coordinates) {
             // ll
             if (L_.configData.coordinates.coordll == false)
@@ -339,7 +323,6 @@ const Coordinates = {
         // Event functions
         $('#pickLngLat').on('click', pickLngLat)
         $('#mouseGoPicking').on('click', pickLngLatGo)
-        $('#toggleTimeUI').on('click', toggleTimeUI)
         Map_.map.on('mousemove', mouseLngLatMove)
         Map_.map.on('click', urlClick)
 
@@ -686,9 +669,11 @@ const Coordinates = {
         //Clear all the stuffes
         $('#pickLngLat').off('click', pickLngLat)
         $('#mouseGoPicking').off('click', pickLngLatGo)
-        $('#toggleTimeUI').off('click', toggleTimeUI)
         Map_.map.off('mousemove', mouseLngLatMove)
         Map_.map.off('click', urlClick)
+    },
+    toggleTimeUI: function (forceState) {
+        toggleTimeUI(forceState)
     },
 }
 
@@ -859,8 +844,9 @@ function urlClick(e) {
     //QueryURL.writeCoordinateURL( e.latlng.lng, e.latlng.lat, Map_.map.getZoom() );
 }
 
-function toggleTimeUI() {
-    const active = $('#toggleTimeUI').hasClass('active')
+function toggleTimeUI(forceState) {
+    const active = $('#timeUI').hasClass('active')
+    if (forceState !== undefined && forceState === active) return
     $('#toggleTimeUI').toggleClass('active')
     $('#timeUI').toggleClass('active')
 

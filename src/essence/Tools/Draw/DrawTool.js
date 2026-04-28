@@ -1761,7 +1761,7 @@ function interfaceWithMMGIS() {
         ].join('\n'))
         $('#DrawTool_TimeToggle').css(
             'display',
-            $('#toggleTimeUI.active').length > 0 ? 'flex' : 'none'
+            $('#timeUI').hasClass('active') ? 'flex' : 'none'
         )
 
         $('#DrawTool_TimeToggle_switch').on('input', function (e) {
