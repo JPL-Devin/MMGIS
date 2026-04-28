@@ -1,0 +1,26 @@
+<!DOCTYPE html><html><head><meta charset="utf-8"/><title>LP-55 Astronomy Dark Field</title>
+<style>@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');*{margin:0;padding:0;box-sizing:border-box}
+html,body{width:100%;height:100%;overflow:hidden;font-family:'Inter',sans-serif;background:#000}
+.stars{position:absolute;inset:0;background-image:radial-gradient(1px 1px at 100px 200px,rgba(255,255,255,.6),transparent),radial-gradient(1px 1px at 300px 100px,rgba(255,255,255,.4),transparent),radial-gradient(1px 1px at 500px 300px,rgba(255,255,255,.5),transparent),radial-gradient(1px 1px at 700px 150px,rgba(255,255,255,.3),transparent),radial-gradient(1px 1px at 900px 400px,rgba(255,255,255,.4),transparent),radial-gradient(1px 1px at 200px 500px,rgba(255,255,255,.5),transparent),radial-gradient(1px 1px at 1100px 200px,rgba(255,255,255,.3),transparent),radial-gradient(1px 1px at 1300px 350px,rgba(255,255,255,.4),transparent),radial-gradient(1px 1px at 600px 600px,rgba(255,255,255,.5),transparent),radial-gradient(1px 1px at 1500px 100px,rgba(255,255,255,.3),transparent),radial-gradient(2px 2px at 400px 450px,rgba(255,255,255,.7),transparent),radial-gradient(2px 2px at 1200px 500px,rgba(255,255,255,.6),transparent)}
+.nebula{position:absolute;top:30%;left:40%;width:400px;height:300px;border-radius:50%;background:radial-gradient(ellipse,rgba(100,50,180,.03),transparent 60%);filter:blur(40px)}
+.content{position:relative;z-index:1;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center}
+.logo{text-align:center;margin-bottom:56px}.logo h1{font-size:72px;font-weight:300;color:#fff;letter-spacing:16px}.logo .dots{display:flex;gap:6px;justify-content:center;margin-top:10px}.logo .dots span{width:5px;height:5px;border-radius:50%}.logo p{font-size:11px;color:rgba(255,255,255,.15);margin-top:16px;letter-spacing:4px}
+.missions{display:flex;gap:24px}
+.mc{width:200px;padding:24px;border:1px solid rgba(255,255,255,.04);border-radius:12px;cursor:pointer;transition:all .3s;text-align:center;background:rgba(255,255,255,.01)}.mc:hover{border-color:rgba(255,255,255,.08);background:rgba(255,255,255,.02);transform:translateY(-4px)}
+.mc .planet{width:48px;height:48px;border-radius:50%;margin:0 auto 12px}
+.p1{background:radial-gradient(circle at 30% 30%,#5a9a6a,#2a5a3a)}.p2{background:radial-gradient(circle at 30% 30%,#c87040,#8a4020)}.p3{background:radial-gradient(circle at 30% 30%,#8080c0,#4040a0)}.p4{background:radial-gradient(circle at 30% 30%,#c0c0c0,#808080)}
+.mc h3{font-size:13px;font-weight:500;color:#fff;margin-bottom:4px}.mc p{font-size:10px;color:rgba(255,255,255,.2)}
+.bot{position:absolute;bottom:20px;font-size:9px;color:rgba(255,255,255,.06);letter-spacing:3px}
+</style></head><body>
+<div class="stars"></div><div class="nebula"></div>
+<div class="content">
+<div class="logo"><h1>MMGIS</h1><div class="dots"><span style="background:#fff156"></span><span style="background:#c0822f"></span><span style="background:#ffeaaf"></span><span style="background:#8ab645"></span><span style="background:#ea3a00"></span><span style="background:#edd49e"></span><span style="background:#e7bdcb"></span><span style="background:#72d1cb"></span><span style="background:#08aeea"></span></div><p>MULTI-MISSION GEOGRAPHIC INFORMATION SYSTEM</p></div>
+<div class="missions">
+<div class="mc"><div class="planet p1"></div><h3>Reference-Mission</h3><p>22 layers &middot; Earth</p></div>
+<div class="mc"><div class="planet p2"></div><h3>Mars-2020</h3><p>18 layers &middot; Mars</p></div>
+<div class="mc"><div class="planet p3"></div><h3>Europa-Survey</h3><p>12 layers &middot; Jupiter</p></div>
+<div class="mc"><div class="planet p4"></div><h3>Lunar-Recon</h3><p>15 layers &middot; Moon</p></div>
+</div>
+</div>
+<div class="bot">NASA / JPL-CALTECH</div>
+</body></html>

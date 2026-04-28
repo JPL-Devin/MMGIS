@@ -1,0 +1,38 @@
+<!DOCTYPE html><html><head><meta charset="utf-8"/><title>LP-42 File Manager</title>
+<style>@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap');*{margin:0;padding:0;box-sizing:border-box}
+html,body{width:100%;height:100%;overflow:hidden;font-family:'Inter',sans-serif;background:#1e1e1e}
+.pg{height:100%;display:flex;flex-direction:column;border-radius:12px;overflow:hidden;margin:16px;border:1px solid rgba(255,255,255,.08)}
+.titlebar{height:40px;background:#2d2d2d;display:flex;align-items:center;padding:0 16px;gap:8px;flex-shrink:0}
+.dot{width:12px;height:12px;border-radius:50%}.dot.r{background:#ff5f57}.dot.y{background:#ffbd2e}.dot.g{background:#28ca41}
+.titlebar .title{margin:0 auto;font-size:12px;color:rgba(255,255,255,.4)}
+.toolbar{height:44px;background:#252525;display:flex;align-items:center;padding:0 16px;gap:12px;border-bottom:1px solid rgba(255,255,255,.06);flex-shrink:0}
+.toolbar .nav-btn{width:28px;height:28px;border-radius:6px;background:rgba(255,255,255,.04);display:flex;align-items:center;justify-content:center;cursor:pointer;color:rgba(255,255,255,.3);font-size:14px}.toolbar .breadcrumb{font-size:12px;color:rgba(255,255,255,.4)}.toolbar .breadcrumb span{color:rgba(255,255,255,.6)}.toolbar .search{margin-left:auto;width:200px;height:28px;border-radius:6px;background:rgba(255,255,255,.04);padding:0 10px;display:flex;align-items:center;gap:6px}.toolbar .search input{flex:1;background:transparent;border:none;outline:none;font-size:11px;color:#fff;font-family:'Inter',sans-serif}.toolbar .search input::placeholder{color:rgba(255,255,255,.2)}.toolbar .search .ic{font-size:12px;color:rgba(255,255,255,.2)}
+.body-area{flex:1;display:flex}
+.sidebar-fm{width:180px;background:#252525;border-right:1px solid rgba(255,255,255,.04);padding:12px 8px}
+.sf-section{margin-bottom:12px}.sf-section .sh{font-size:9px;color:rgba(255,255,255,.2);text-transform:uppercase;letter-spacing:1px;padding:4px 8px;font-weight:500}
+.sf-item{display:flex;align-items:center;gap:8px;padding:5px 8px;border-radius:6px;cursor:pointer;font-size:12px;color:rgba(255,255,255,.5);transition:background .1s}.sf-item:hover{background:rgba(255,255,255,.04)}.sf-item.active{background:rgba(255,255,255,.06);color:#fff}.sf-item .ic{font-size:14px}
+.file-grid{flex:1;padding:24px;display:grid;grid-template-columns:repeat(4,1fr);gap:16px;align-content:start}
+.file{padding:16px;border-radius:12px;text-align:center;cursor:pointer;transition:background .15s}.file:hover{background:rgba(255,255,255,.04)}
+.file .folder-icon{width:72px;height:56px;margin:0 auto 12px;border-radius:8px;position:relative;overflow:hidden}
+.file .folder-icon::after{content:'';position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.05) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.05) 1px,transparent 1px);background-size:15px 15px}
+.f1{background:linear-gradient(135deg,#3fb950,#2ea043)}.f2{background:linear-gradient(135deg,#f0883e,#d97706)}.f3{background:linear-gradient(135deg,#a371f7,#8957e5)}.f4{background:linear-gradient(135deg,#58a6ff,#388bfd)}
+.file h3{font-size:12px;color:#fff;font-weight:500;margin-bottom:2px}.file p{font-size:10px;color:rgba(255,255,255,.25)}
+.status-bar{height:28px;background:#252525;border-top:1px solid rgba(255,255,255,.04);display:flex;align-items:center;padding:0 16px;gap:16px;font-size:10px;color:rgba(255,255,255,.2);flex-shrink:0}
+</style></head><body>
+<div class="pg">
+<div class="titlebar"><div class="dot r"></div><div class="dot y"></div><div class="dot g"></div><div class="title">MMGIS &mdash; Missions</div></div>
+<div class="toolbar"><div class="nav-btn">&lsaquo;</div><div class="nav-btn">&rsaquo;</div><div class="breadcrumb">MMGIS / <span>Missions</span></div><div class="search"><span class="ic">&#128269;</span><input type="text" placeholder="Search" /></div></div>
+<div class="body-area">
+<div class="sidebar-fm">
+<div class="sf-section"><div class="sh">Favorites</div><div class="sf-item active"><span class="ic">&#128193;</span> All Missions</div><div class="sf-item"><span class="ic">&#11088;</span> Starred</div><div class="sf-item"><span class="ic">&#128337;</span> Recent</div></div>
+<div class="sf-section"><div class="sh">Tags</div><div class="sf-item"><span class="ic" style="color:#3fb950">&#9679;</span> Earth</div><div class="sf-item"><span class="ic" style="color:#f0883e">&#9679;</span> Mars</div><div class="sf-item"><span class="ic" style="color:#a371f7">&#9679;</span> Outer</div></div>
+</div>
+<div class="file-grid">
+<div class="file"><div class="folder-icon f1"></div><h3>Reference-Mission</h3><p>22 layers &middot; 14 tools</p></div>
+<div class="file"><div class="folder-icon f2"></div><h3>Mars-2020</h3><p>18 layers &middot; 12 tools</p></div>
+<div class="file"><div class="folder-icon f3"></div><h3>Europa-Survey</h3><p>12 layers &middot; 8 tools</p></div>
+<div class="file"><div class="folder-icon f4"></div><h3>Lunar-Recon</h3><p>15 layers &middot; 10 tools</p></div>
+</div>
+</div>
+<div class="status-bar"><span>4 items</span><span>67 total layers</span><span>NASA/JPL-Caltech &middot; v4.3.27</span></div>
+</div></body></html>

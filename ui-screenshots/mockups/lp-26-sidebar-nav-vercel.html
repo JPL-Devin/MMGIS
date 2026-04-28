@@ -1,0 +1,53 @@
+<!DOCTYPE html><html><head><meta charset="utf-8"/><title>LP-26 Sidebar Navigation</title>
+<style>@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap');*{margin:0;padding:0;box-sizing:border-box}
+html,body{width:100%;height:100%;overflow:hidden;font-family:'Inter',sans-serif;background:#0a0a0a}
+.pg{height:100%;display:flex}
+.sidebar{width:260px;background:#111;border-right:1px solid rgba(255,255,255,.06);display:flex;flex-direction:column;padding:20px 0}
+.sb-logo{padding:0 20px;margin-bottom:24px;display:flex;align-items:center;gap:10px}
+.sb-logo h2{font-size:16px;font-weight:600;color:#fff;letter-spacing:2px}.sb-logo .dots{display:flex;gap:3px}.sb-logo .dots span{width:4px;height:4px;border-radius:50%}
+.sb-search{margin:0 12px 16px;padding:8px 12px;border-radius:8px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.06);display:flex;align-items:center;gap:8px}
+.sb-search input{flex:1;background:transparent;border:none;outline:none;font-size:12px;color:#fff;font-family:'Inter',sans-serif}.sb-search input::placeholder{color:rgba(255,255,255,.2)}.sb-search .k{font-size:9px;color:rgba(255,255,255,.15);padding:2px 5px;border-radius:4px;border:1px solid rgba(255,255,255,.08)}
+.sb-section{padding:0 12px;margin-bottom:16px}.sb-section .sh{font-size:10px;color:rgba(255,255,255,.2);text-transform:uppercase;letter-spacing:1px;padding:0 8px 8px;font-weight:500}
+.sb-item{display:flex;align-items:center;gap:10px;padding:8px;border-radius:8px;cursor:pointer;transition:background .15s}.sb-item:hover{background:rgba(255,255,255,.04)}
+.sb-item.active{background:rgba(255,255,255,.06)}
+.sb-item .ic{width:20px;text-align:center;font-size:14px;color:rgba(255,255,255,.4)}.sb-item .nm{font-size:13px;color:rgba(255,255,255,.7);font-weight:400}.sb-item .cnt{margin-left:auto;font-size:10px;color:rgba(255,255,255,.15);background:rgba(255,255,255,.04);padding:2px 6px;border-radius:4px}
+.sb-footer{margin-top:auto;padding:12px 20px;border-top:1px solid rgba(255,255,255,.06);font-size:10px;color:rgba(255,255,255,.15)}
+.main{flex:1;display:flex;flex-direction:column}
+.topbar{height:52px;border-bottom:1px solid rgba(255,255,255,.06);display:flex;align-items:center;padding:0 24px;gap:16px}
+.topbar .bc{font-size:12px;color:rgba(255,255,255,.3)}.topbar .bc span{color:rgba(255,255,255,.6)}.topbar .right{margin-left:auto;display:flex;align-items:center;gap:12px}.topbar .avatar{width:28px;height:28px;border-radius:50%;background:rgba(255,255,255,.08);display:flex;align-items:center;justify-content:center;font-size:11px;color:rgba(255,255,255,.4)}
+.main-content{flex:1;padding:32px;display:flex;flex-direction:column}
+.mc-header{margin-bottom:32px}.mc-header h1{font-size:24px;font-weight:600;color:#fff;margin-bottom:4px}.mc-header p{font-size:13px;color:rgba(255,255,255,.35)}
+.mission-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;flex:1}
+.mg{border-radius:12px;border:1px solid rgba(255,255,255,.06);padding:24px;cursor:pointer;transition:all .2s;display:flex;flex-direction:column}
+.mg:hover{border-color:rgba(255,255,255,.12);background:rgba(255,255,255,.02)}
+.mg .top{display:flex;align-items:center;gap:12px;margin-bottom:16px}.mg .top .ic{font-size:24px}.mg .top h3{font-size:16px;font-weight:600;color:#fff}.mg .top .status{margin-left:auto;width:8px;height:8px;border-radius:50%;background:#3fb950}
+.mg .desc{font-size:12px;color:rgba(255,255,255,.35);line-height:1.5;flex:1}
+.mg .stats{display:flex;gap:16px;margin-top:12px;padding-top:12px;border-top:1px solid rgba(255,255,255,.04)}.mg .stats span{font-size:11px;color:rgba(255,255,255,.25)}.mg .stats .v{color:rgba(255,255,255,.6);font-weight:500}
+</style></head><body>
+<div class="pg">
+<div class="sidebar">
+<div class="sb-logo"><h2>MMGIS</h2><div class="dots"><span style="background:#fff156"></span><span style="background:#c0822f"></span><span style="background:#ffeaaf"></span><span style="background:#8ab645"></span><span style="background:#ea3a00"></span><span style="background:#edd49e"></span><span style="background:#e7bdcb"></span><span style="background:#72d1cb"></span><span style="background:#08aeea"></span></div></div>
+<div class="sb-search"><input type="text" placeholder="Search..." /><span class="k">&#8984;K</span></div>
+<div class="sb-section"><div class="sh">Missions</div>
+<div class="sb-item active"><span class="ic">&#127758;</span><span class="nm">All Missions</span><span class="cnt">4</span></div>
+<div class="sb-item"><span class="ic">&#11088;</span><span class="nm">Favorites</span><span class="cnt">2</span></div>
+<div class="sb-item"><span class="ic">&#128337;</span><span class="nm">Recent</span></div>
+</div>
+<div class="sb-section"><div class="sh">Tools</div>
+<div class="sb-item"><span class="ic">&#128207;</span><span class="nm">Layers</span></div>
+<div class="sb-item"><span class="ic">&#128207;</span><span class="nm">Draw</span></div>
+<div class="sb-item"><span class="ic">&#128207;</span><span class="nm">Measure</span></div>
+</div>
+<div class="sb-footer">NASA/JPL-Caltech &middot; v4.3.27</div>
+</div>
+<div class="main">
+<div class="topbar"><div class="bc">Missions / <span>All</span></div><div class="right"><div class="avatar">TK</div></div></div>
+<div class="main-content">
+<div class="mc-header"><h1>Missions</h1><p>Select a mission to start mapping</p></div>
+<div class="mission-grid">
+<div class="mg"><div class="top"><span class="ic">&#127758;</span><h3>Reference-Mission</h3><div class="status"></div></div><div class="desc">San Francisco Bay Area reference dataset with comprehensive vector, raster, and 3D layers.</div><div class="stats"><span><span class="v">22</span> layers</span><span><span class="v">14</span> tools</span><span><span class="v">1.2M</span> features</span></div></div>
+<div class="mg"><div class="top"><span class="ic">&#127756;</span><h3>Mars-2020</h3><div class="status"></div></div><div class="desc">Jezero Crater operations map for the Perseverance rover mission.</div><div class="stats"><span><span class="v">18</span> layers</span><span><span class="v">12</span> tools</span><span><span class="v">890K</span> features</span></div></div>
+<div class="mg"><div class="top"><span class="ic">&#10052;</span><h3>Europa-Survey</h3><div class="status"></div></div><div class="desc">Europa ice shell survey and geological mapping data.</div><div class="stats"><span><span class="v">12</span> layers</span><span><span class="v">8</span> tools</span><span><span class="v">340K</span> features</span></div></div>
+<div class="mg"><div class="top"><span class="ic">&#127769;</span><h3>Lunar-Recon</h3><div class="status"></div></div><div class="desc">Lunar south pole reconnaissance and DEM datasets.</div><div class="stats"><span><span class="v">15</span> layers</span><span><span class="v">10</span> tools</span><span><span class="v">560K</span> features</span></div></div>
+</div></div>
+</div></div></body></html>

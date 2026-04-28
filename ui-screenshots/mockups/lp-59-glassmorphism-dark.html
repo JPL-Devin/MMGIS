@@ -1,0 +1,32 @@
+<!DOCTYPE html><html><head><meta charset="utf-8"/><title>LP-59 Glassmorphism Dark</title>
+<style>@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');*{margin:0;padding:0;box-sizing:border-box}
+html,body{width:100%;height:100%;overflow:hidden;font-family:'Inter',sans-serif;background:#0a0a1a}
+.bg-shapes{position:absolute;inset:0;overflow:hidden}
+.shape{position:absolute;border-radius:50%}
+.s1{width:300px;height:300px;top:10%;left:10%;background:#4040ff;filter:blur(100px);opacity:.15}
+.s2{width:250px;height:250px;bottom:10%;right:20%;background:#ff40a0;filter:blur(80px);opacity:.12}
+.s3{width:200px;height:200px;top:50%;left:60%;background:#40ffa0;filter:blur(60px);opacity:.08}
+.content{position:relative;z-index:1;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:32px}
+.glass{background:rgba(255,255,255,.04);backdrop-filter:blur(40px);border:1px solid rgba(255,255,255,.06);border-radius:20px}
+.logo-glass{padding:32px 56px;text-align:center}.logo-glass h1{font-size:44px;font-weight:700;color:#fff;letter-spacing:4px}.logo-glass .dots{display:flex;gap:4px;justify-content:center;margin-top:6px}.logo-glass .dots span{width:4px;height:4px;border-radius:50%}.logo-glass p{font-size:12px;color:rgba(255,255,255,.2);margin-top:8px}
+.cards{display:flex;gap:16px}
+.card{width:220px;padding:24px;cursor:pointer;transition:all .3s}.card:hover{background:rgba(255,255,255,.06);transform:translateY(-4px)}
+.card .top{display:flex;align-items:center;gap:10px;margin-bottom:12px}.card .top .em{font-size:24px;width:40px;height:40px;display:flex;align-items:center;justify-content:center;border-radius:10px;background:rgba(255,255,255,.04)}.card .top h3{font-size:15px;font-weight:600;color:#fff}
+.card p{font-size:11px;color:rgba(255,255,255,.25);line-height:1.5;margin-bottom:12px}
+.card .bar{height:4px;border-radius:2px;background:rgba(255,255,255,.06);overflow:hidden}.card .bar-fill{height:100%;border-radius:2px}
+.bf1{background:#3fb950;width:80%}.bf2{background:#f0883e;width:65%}.bf3{background:#a371f7;width:45%}.bf4{background:#58a6ff;width:55%}
+.card .meta{display:flex;justify-content:space-between;margin-top:6px;font-size:10px;color:rgba(255,255,255,.15)}
+.bot{position:absolute;bottom:20px;font-size:10px;color:rgba(255,255,255,.08)}
+</style></head><body>
+<div class="bg-shapes"><div class="shape s1"></div><div class="shape s2"></div><div class="shape s3"></div></div>
+<div class="content">
+<div class="glass logo-glass"><h1>MMGIS</h1><div class="dots"><span style="background:#fff156"></span><span style="background:#c0822f"></span><span style="background:#ffeaaf"></span><span style="background:#8ab645"></span><span style="background:#ea3a00"></span><span style="background:#edd49e"></span><span style="background:#e7bdcb"></span><span style="background:#72d1cb"></span><span style="background:#08aeea"></span></div><p>Multi-Mission Geographic Information System</p></div>
+<div class="cards">
+<div class="glass card"><div class="top"><div class="em">&#127758;</div><h3>Reference</h3></div><p>San Francisco Bay Area</p><div class="bar"><div class="bar-fill bf1"></div></div><div class="meta"><span>22 layers</span><span>14 tools</span></div></div>
+<div class="glass card"><div class="top"><div class="em">&#127756;</div><h3>Mars-2020</h3></div><p>Jezero Crater</p><div class="bar"><div class="bar-fill bf2"></div></div><div class="meta"><span>18 layers</span><span>12 tools</span></div></div>
+<div class="glass card"><div class="top"><div class="em">&#10052;</div><h3>Europa</h3></div><p>Pwyll Crater</p><div class="bar"><div class="bar-fill bf3"></div></div><div class="meta"><span>12 layers</span><span>8 tools</span></div></div>
+<div class="glass card"><div class="top"><div class="em">&#127769;</div><h3>Lunar</h3></div><p>South Pole</p><div class="bar"><div class="bar-fill bf4"></div></div><div class="meta"><span>15 layers</span><span>10 tools</span></div></div>
+</div>
+</div>
+<div class="bot">NASA/JPL-Caltech &middot; v4.3.27</div>
+</body></html>

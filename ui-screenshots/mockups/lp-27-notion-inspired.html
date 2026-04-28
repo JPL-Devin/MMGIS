@@ -1,0 +1,50 @@
+<!DOCTYPE html><html><head><meta charset="utf-8"/><title>LP-27 Notion-Inspired</title>
+<style>@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap');*{margin:0;padding:0;box-sizing:border-box}
+html,body{width:100%;height:100%;overflow:hidden;font-family:'Inter',sans-serif;background:#fff}
+.pg{height:100%;display:flex}
+.sidebar{width:240px;background:#f7f7f5;padding:12px 8px;display:flex;flex-direction:column;border-right:1px solid rgba(0,0,0,.04)}
+.sb-logo{padding:8px 12px;margin-bottom:12px;display:flex;align-items:center;gap:8px}.sb-logo h2{font-size:15px;font-weight:600;color:#37352f;letter-spacing:1px}.sb-logo .dots{display:flex;gap:3px}.sb-logo .dots span{width:3px;height:3px;border-radius:50%}
+.sb-item{display:flex;align-items:center;gap:8px;padding:6px 12px;border-radius:6px;cursor:pointer;transition:background .1s;font-size:13px;color:#37352f}.sb-item:hover{background:rgba(0,0,0,.03)}.sb-item.active{background:rgba(0,0,0,.04);font-weight:500}.sb-item .em{width:20px;text-align:center;font-size:14px}
+.sb-section{margin-top:16px;padding-top:12px;border-top:1px solid rgba(0,0,0,.04)}.sb-section .sh{font-size:11px;color:#9b9a97;text-transform:uppercase;letter-spacing:.5px;padding:4px 12px;font-weight:500}
+.sb-footer{margin-top:auto;padding:8px 12px;font-size:10px;color:#b4b4b0}
+.main{flex:1;display:flex;flex-direction:column;max-width:860px;margin:0 auto;padding:48px 40px}
+.breadcrumb{font-size:12px;color:#b4b4b0;margin-bottom:16px}
+.cover{height:180px;border-radius:8px;background:linear-gradient(135deg,#f8e8d0,#e0d0f0,#d0e8f0);margin-bottom:24px;position:relative}
+.cover-icon{position:absolute;bottom:-20px;left:0;font-size:48px}
+h1{font-size:40px;font-weight:700;color:#37352f;margin-top:8px;margin-bottom:4px}
+.description{font-size:15px;color:#787774;line-height:1.6;margin-bottom:32px}
+.table{width:100%;border-collapse:collapse}
+.table th{text-align:left;padding:8px 12px;font-size:12px;font-weight:500;color:#9b9a97;border-bottom:1px solid rgba(0,0,0,.06)}
+.table td{padding:12px;border-bottom:1px solid rgba(0,0,0,.03);font-size:14px;color:#37352f}
+.table tr{cursor:pointer;transition:background .1s}.table tr:hover td{background:rgba(0,0,0,.01)}
+.table .tag{display:inline-block;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:500}
+.t-green{background:#dbeddb;color:#37352f}.t-orange{background:#fadec9;color:#37352f}.t-blue{background:#d3e5ef;color:#37352f}.t-gray{background:#e8e7e4;color:#37352f}
+</style></head><body>
+<div class="pg">
+<div class="sidebar">
+<div class="sb-logo"><h2>MMGIS</h2><div class="dots"><span style="background:#fff156"></span><span style="background:#c0822f"></span><span style="background:#ffeaaf"></span><span style="background:#8ab645"></span><span style="background:#ea3a00"></span><span style="background:#edd49e"></span><span style="background:#e7bdcb"></span><span style="background:#72d1cb"></span><span style="background:#08aeea"></span></div></div>
+<div class="sb-item active"><span class="em">&#127758;</span> All Missions</div>
+<div class="sb-item"><span class="em">&#11088;</span> Favorites</div>
+<div class="sb-item"><span class="em">&#128337;</span> Recent</div>
+<div class="sb-section"><div class="sh">Missions</div>
+<div class="sb-item"><span class="em">&#127759;</span> Reference-Mission</div>
+<div class="sb-item"><span class="em">&#127756;</span> Mars-2020</div>
+<div class="sb-item"><span class="em">&#10052;</span> Europa-Survey</div>
+<div class="sb-item"><span class="em">&#127769;</span> Lunar-Recon</div>
+</div>
+<div class="sb-footer">NASA/JPL &middot; v4.3.27</div>
+</div>
+<div class="main">
+<div class="breadcrumb">MMGIS / All Missions</div>
+<div class="cover"><div class="cover-icon">&#127758;</div></div>
+<h1>Missions</h1>
+<div class="description">Browse and explore geospatial data across multiple planetary missions. Click a mission to open its map.</div>
+<table class="table">
+<thead><tr><th>Mission</th><th>Location</th><th>Layers</th><th>Tools</th><th>Status</th></tr></thead>
+<tbody>
+<tr><td><strong>Reference-Mission</strong></td><td>San Francisco Bay Area</td><td>22</td><td>14</td><td><span class="tag t-green">Active</span></td></tr>
+<tr><td><strong>Mars-2020</strong></td><td>Jezero Crater</td><td>18</td><td>12</td><td><span class="tag t-orange">Active</span></td></tr>
+<tr><td><strong>Europa-Survey</strong></td><td>Pwyll Crater</td><td>12</td><td>8</td><td><span class="tag t-blue">Active</span></td></tr>
+<tr><td><strong>Lunar-Recon</strong></td><td>South Pole</td><td>15</td><td>10</td><td><span class="tag t-gray">Active</span></td></tr>
+</tbody></table>
+</div></div></body></html>

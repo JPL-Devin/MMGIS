@@ -1,0 +1,32 @@
+<!DOCTYPE html><html><head><meta charset="utf-8"/><title>LP-19 Floating Islands</title>
+<style>@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap');*{margin:0;padding:0;box-sizing:border-box}
+html,body{width:100%;height:100%;overflow:hidden;font-family:'Outfit',sans-serif;background:linear-gradient(180deg,#1a1040 0%,#2a1858 30%,#4a2080 60%,#6a30a0 100%)}
+.stars{position:absolute;inset:0}.star{position:absolute;width:2px;height:2px;border-radius:50%;background:#fff}
+.cloud{position:absolute;border-radius:50%;background:rgba(255,255,255,.03)}
+.content{position:relative;z-index:2;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center}
+.logo{text-align:center;margin-bottom:48px}
+.logo h1{font-size:56px;font-weight:700;color:#fff;letter-spacing:6px}.logo .dots{display:flex;gap:5px;justify-content:center;margin-top:6px}.logo .dots span{width:5px;height:5px;border-radius:50%}.logo p{font-size:13px;color:rgba(255,255,255,.35);margin-top:12px;letter-spacing:2px}
+.islands{display:flex;gap:24px;align-items:flex-end}
+.island{width:180px;text-align:center;cursor:pointer;transition:all .3s}
+.island:hover{transform:translateY(-8px)}
+.island .terrain{height:100px;border-radius:20px 20px 50% 50%;position:relative;overflow:hidden;margin-bottom:12px}
+.island .terrain::after{content:'';position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.05) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.05) 1px,transparent 1px);background-size:20px 20px}
+.t1{background:linear-gradient(180deg,#3a8a5a,#2a6a3a,#1a4a2a)}
+.t2{background:linear-gradient(180deg,#c87040,#a05530,#703820)}.t3{background:linear-gradient(180deg,#7090c0,#5070a0,#304060)}.t4{background:linear-gradient(180deg,#909090,#707070,#505050)}
+.island .shadow{width:120px;height:12px;border-radius:50%;background:rgba(0,0,0,.2);margin:0 auto;filter:blur(4px)}
+.island h3{font-size:14px;font-weight:600;color:#fff;margin-bottom:2px}.island p{font-size:11px;color:rgba(255,255,255,.3)}
+.bot{position:absolute;bottom:24px;display:flex;gap:24px}.bot span{font-size:10px;color:rgba(255,255,255,.2)}
+</style></head><body>
+<div class="stars"><div class="star" style="top:5%;left:12%;opacity:.6"></div><div class="star" style="top:15%;left:35%;opacity:.3"></div><div class="star" style="top:8%;left:60%;opacity:.5"></div><div class="star" style="top:20%;left:80%;opacity:.4"></div><div class="star" style="top:12%;left:92%;opacity:.6"></div><div class="star" style="top:3%;left:50%;opacity:.3"></div></div>
+<div class="cloud" style="width:300px;height:100px;top:60%;left:5%"></div>
+<div class="cloud" style="width:200px;height:80px;top:50%;right:10%"></div>
+<div class="content">
+<div class="logo"><h1>MMGIS</h1><div class="dots"><span style="background:#fff156"></span><span style="background:#c0822f"></span><span style="background:#ffeaaf"></span><span style="background:#8ab645"></span><span style="background:#ea3a00"></span><span style="background:#edd49e"></span><span style="background:#e7bdcb"></span><span style="background:#72d1cb"></span><span style="background:#08aeea"></span></div><p>Multi-Mission Geographic Information System</p></div>
+<div class="islands">
+<div class="island" style="margin-bottom:20px"><div class="terrain t1"></div><div class="shadow"></div><h3>Reference-Mission</h3><p>22 layers</p></div>
+<div class="island" style="margin-bottom:40px"><div class="terrain t2"></div><div class="shadow"></div><h3>Mars-2020</h3><p>18 layers</p></div>
+<div class="island"><div class="terrain t3"></div><div class="shadow"></div><h3>Europa-Survey</h3><p>12 layers</p></div>
+<div class="island" style="margin-bottom:30px"><div class="terrain t4"></div><div class="shadow"></div><h3>Lunar-Recon</h3><p>15 layers</p></div>
+</div>
+<div class="bot"><span>v4.3.27</span><span>NASA/JPL-Caltech</span></div>
+</div></body></html>

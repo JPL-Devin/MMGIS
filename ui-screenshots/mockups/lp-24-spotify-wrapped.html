@@ -1,0 +1,31 @@
+<!DOCTYPE html><html><head><meta charset="utf-8"/><title>LP-24 Spotify Wrapped</title>
+<style>@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap');*{margin:0;padding:0;box-sizing:border-box}
+html,body{width:100%;height:100%;overflow:hidden;font-family:'Inter',sans-serif}
+.bg{position:absolute;inset:0;background:linear-gradient(135deg,#1a0a2e 0%,#2d1b69 25%,#ff6b35 50%,#f7c948 75%,#1db954 100%);background-size:400% 400%;animation:grad 8s ease infinite}
+@keyframes grad{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
+.content{position:relative;z-index:1;height:100%;display:flex}
+.left{flex:1;display:flex;flex-direction:column;justify-content:center;padding:80px}
+.left h2{font-size:14px;color:rgba(255,255,255,.5);text-transform:uppercase;letter-spacing:4px;margin-bottom:16px}.left h1{font-size:72px;font-weight:900;color:#fff;line-height:1;margin-bottom:12px}.left .dots{display:flex;gap:5px;margin-bottom:24px}.left .dots span{width:6px;height:6px;border-radius:50%}.left p{font-size:18px;color:rgba(255,255,255,.6);line-height:1.6;max-width:400px}
+.right{width:400px;display:flex;flex-direction:column;justify-content:center;padding:40px;gap:12px}
+.mc{padding:20px;border-radius:16px;background:rgba(0,0,0,.25);backdrop-filter:blur(20px);cursor:pointer;transition:all .2s;display:flex;align-items:center;gap:16px}
+.mc:hover{background:rgba(0,0,0,.35);transform:translateX(-8px)}
+.mc .num{font-size:32px;font-weight:900;color:rgba(255,255,255,.15);width:40px}.mc .info h3{font-size:16px;font-weight:700;color:#fff}.mc .info p{font-size:11px;color:rgba(255,255,255,.4);margin-top:2px}
+.bot{position:absolute;bottom:24px;left:80px;display:flex;gap:24px}.bot span{font-size:11px;color:rgba(255,255,255,.3)}
+</style></head><body>
+<div class="bg"></div>
+<div class="content">
+<div class="left">
+<h2>Welcome to</h2>
+<h1>MMGIS</h1>
+<div class="dots"><span style="background:#fff156"></span><span style="background:#c0822f"></span><span style="background:#ffeaaf"></span><span style="background:#8ab645"></span><span style="background:#ea3a00"></span><span style="background:#edd49e"></span><span style="background:#e7bdcb"></span><span style="background:#72d1cb"></span><span style="background:#08aeea"></span></div>
+<p>Your missions. Your maps. Your discoveries. Select a mission to begin exploring.</p>
+</div>
+<div class="right">
+<div class="mc"><div class="num">01</div><div class="info"><h3>Reference-Mission</h3><p>22 layers &middot; SF Bay Area</p></div></div>
+<div class="mc"><div class="num">02</div><div class="info"><h3>Mars-2020</h3><p>18 layers &middot; Jezero Crater</p></div></div>
+<div class="mc"><div class="num">03</div><div class="info"><h3>Europa-Survey</h3><p>12 layers &middot; Pwyll Crater</p></div></div>
+<div class="mc"><div class="num">04</div><div class="info"><h3>Lunar-Recon</h3><p>15 layers &middot; South Pole</p></div></div>
+</div>
+</div>
+<div class="bot"><span>v4.3.27</span><span>NASA/JPL-Caltech</span></div>
+</body></html>

@@ -1,0 +1,32 @@
+<!DOCTYPE html><html><head><meta charset="utf-8"/><title>LP-49 GitHub-Style</title>
+<style>@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');*{margin:0;padding:0;box-sizing:border-box}
+html,body{width:100%;height:100%;overflow:hidden;font-family:'Inter',sans-serif;background:#0d1117}
+.hero-glow{position:absolute;top:-20%;left:50%;transform:translateX(-50%);width:800px;height:600px;background:radial-gradient(ellipse,rgba(56,139,253,.08),transparent 60%);pointer-events:none}
+.pg{height:100%;display:flex;flex-direction:column;position:relative;z-index:1}
+.nav{height:56px;display:flex;align-items:center;padding:0 32px;gap:20px;background:rgba(13,17,23,.8);backdrop-filter:blur(10px);border-bottom:1px solid rgba(255,255,255,.04)}.nav .logo{display:flex;align-items:center;gap:8px}.nav .logo h2{font-size:16px;font-weight:700;color:#fff;letter-spacing:1px}.nav .logo .dots{display:flex;gap:3px}.nav .logo .dots span{width:3px;height:3px;border-radius:50%}
+.nav a{font-size:13px;color:rgba(255,255,255,.5);text-decoration:none}.nav .search{margin-left:auto;width:280px;height:32px;border-radius:6px;border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.02);padding:0 12px;font-size:12px;color:#fff;display:flex;align-items:center}.nav .search span{color:rgba(255,255,255,.2)}.nav .btn{padding:6px 14px;border-radius:6px;background:#238636;color:#fff;font-size:12px;font-weight:500;border:none;cursor:pointer}
+.hero{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:40px}
+.hero h1{font-size:56px;font-weight:800;color:#fff;line-height:1.2;max-width:700px;margin-bottom:16px}.hero h1 span{background:linear-gradient(90deg,#58a6ff,#3fb950,#f0883e);-webkit-background-clip:text;-webkit-text-fill-color:transparent}.hero p{font-size:18px;color:rgba(255,255,255,.35);max-width:500px;line-height:1.6;margin-bottom:32px}
+.cta-row{display:flex;gap:12px;margin-bottom:48px}.cta-gh{padding:12px 24px;border-radius:6px;background:#238636;color:#fff;font-size:14px;font-weight:500;border:none;cursor:pointer}.cta-ghost{padding:12px 24px;border-radius:6px;background:transparent;color:#fff;font-size:14px;font-weight:500;border:1px solid rgba(255,255,255,.15);cursor:pointer}
+.repos{display:flex;gap:16px;max-width:900px;width:100%}
+.repo{flex:1;padding:20px;border-radius:8px;border:1px solid rgba(255,255,255,.06);background:rgba(255,255,255,.02);cursor:pointer;transition:all .15s;text-align:left}.repo:hover{border-color:rgba(255,255,255,.12)}
+.repo .top{display:flex;align-items:center;gap:8px;margin-bottom:8px}.repo .top .em{font-size:16px}.repo .top h3{font-size:14px;font-weight:600;color:#58a6ff}.repo .desc{font-size:12px;color:rgba(255,255,255,.3);line-height:1.5;margin-bottom:12px}
+.repo .tags{display:flex;gap:6px;flex-wrap:wrap}.repo .tag{font-size:10px;padding:2px 8px;border-radius:12px;background:rgba(56,139,253,.1);color:#58a6ff}
+.foot{padding:16px 32px;border-top:1px solid rgba(255,255,255,.04);font-size:11px;color:rgba(255,255,255,.15);text-align:center}
+</style></head><body>
+<div class="hero-glow"></div>
+<div class="pg">
+<div class="nav"><div class="logo"><h2>MMGIS</h2><div class="dots"><span style="background:#fff156"></span><span style="background:#c0822f"></span><span style="background:#ffeaaf"></span><span style="background:#8ab645"></span><span style="background:#ea3a00"></span><span style="background:#edd49e"></span><span style="background:#e7bdcb"></span><span style="background:#72d1cb"></span><span style="background:#08aeea"></span></div></div><a href="#">Missions</a><a href="#">Docs</a><a href="#">API</a><div class="search"><span>&#128269; Search or jump to...</span></div><button class="btn">Sign In</button></div>
+<div class="hero">
+<h1>Map <span>every world</span> from your browser</h1>
+<p>The Multi-Mission Geographic Information System for planetary science. Browse, analyze, and share geospatial data.</p>
+<div class="cta-row"><button class="cta-gh">Browse Missions &rsaquo;</button><button class="cta-ghost">Read the Docs</button></div>
+<div class="repos">
+<div class="repo"><div class="top"><span class="em">&#127758;</span><h3>Reference-Mission</h3></div><div class="desc">San Francisco Bay Area reference dataset with vector, raster, and 3D layers.</div><div class="tags"><span class="tag">22 layers</span><span class="tag">14 tools</span><span class="tag">Earth</span></div></div>
+<div class="repo"><div class="top"><span class="em">&#127756;</span><h3>Mars-2020</h3></div><div class="desc">Jezero Crater operations map for Perseverance rover.</div><div class="tags"><span class="tag">18 layers</span><span class="tag">12 tools</span><span class="tag">Mars</span></div></div>
+<div class="repo"><div class="top"><span class="em">&#10052;</span><h3>Europa-Survey</h3></div><div class="desc">Europa ice shell survey and geological mapping.</div><div class="tags"><span class="tag">12 layers</span><span class="tag">8 tools</span><span class="tag">Jupiter</span></div></div>
+<div class="repo"><div class="top"><span class="em">&#127769;</span><h3>Lunar-Recon</h3></div><div class="desc">Lunar south pole reconnaissance datasets.</div><div class="tags"><span class="tag">15 layers</span><span class="tag">10 tools</span><span class="tag">Moon</span></div></div>
+</div>
+</div>
+<div class="foot">NASA/JPL-Caltech &middot; v4.3.27 &middot; Open Source</div>
+</div></body></html>

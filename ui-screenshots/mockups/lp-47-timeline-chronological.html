@@ -1,0 +1,30 @@
+<!DOCTYPE html><html><head><meta charset="utf-8"/><title>LP-47 Timeline</title>
+<style>@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');*{margin:0;padding:0;box-sizing:border-box}
+html,body{width:100%;height:100%;overflow:hidden;font-family:'Inter',sans-serif;background:#0c0c14}
+.pg{height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:40px}
+.logo{text-align:center;margin-bottom:48px}.logo h1{font-size:40px;font-weight:700;color:#fff;letter-spacing:4px}.logo .dots{display:flex;gap:4px;justify-content:center;margin-top:6px}.logo .dots span{width:4px;height:4px;border-radius:50%}.logo p{font-size:12px;color:rgba(255,255,255,.2);margin-top:8px}
+.timeline{display:flex;align-items:center;gap:0;position:relative}
+.tl-line{position:absolute;top:50%;left:0;right:0;height:2px;background:rgba(255,255,255,.04)}
+.tl-item{position:relative;z-index:1;text-align:center;width:200px;cursor:pointer;transition:all .2s}
+.tl-item:hover{transform:scale(1.05)}
+.tl-node{width:16px;height:16px;border-radius:50%;margin:0 auto 16px;position:relative}.tl-node::after{content:'';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:8px;height:8px;border-radius:50%;background:#fff}
+.n1{background:rgba(63,185,80,.3)}.n1::after{background:#3fb950}.n2{background:rgba(240,136,62,.3)}.n2::after{background:#f0883e}.n3{background:rgba(163,113,247,.3)}.n3::after{background:#a371f7}.n4{background:rgba(88,166,255,.3)}.n4::after{background:#58a6ff}
+.tl-item h3{font-size:14px;font-weight:600;color:#fff;margin-bottom:4px}.tl-item p{font-size:11px;color:rgba(255,255,255,.25)}.tl-item .year{font-size:10px;color:rgba(255,255,255,.12);margin-top:8px;letter-spacing:1px}
+.tl-connector{width:80px;height:2px;background:rgba(255,255,255,.06);position:relative;z-index:0}
+.bot{position:absolute;bottom:24px;font-size:10px;color:rgba(255,255,255,.1)}
+</style></head><body>
+<div class="pg">
+<div class="logo"><h1>MMGIS</h1><div class="dots"><span style="background:#fff156"></span><span style="background:#c0822f"></span><span style="background:#ffeaaf"></span><span style="background:#8ab645"></span><span style="background:#ea3a00"></span><span style="background:#edd49e"></span><span style="background:#e7bdcb"></span><span style="background:#72d1cb"></span><span style="background:#08aeea"></span></div><p>Mission Timeline</p></div>
+<div class="timeline">
+<div class="tl-line"></div>
+<div class="tl-item"><div class="tl-node n1"></div><h3>Reference-Mission</h3><p>22 layers &middot; SF Bay</p><div class="year">EST. 2019</div></div>
+<div class="tl-connector"></div>
+<div class="tl-item"><div class="tl-node n2"></div><h3>Mars-2020</h3><p>18 layers &middot; Jezero</p><div class="year">EST. 2020</div></div>
+<div class="tl-connector"></div>
+<div class="tl-item"><div class="tl-node n3"></div><h3>Europa-Survey</h3><p>12 layers &middot; Pwyll</p><div class="year">EST. 2024</div></div>
+<div class="tl-connector"></div>
+<div class="tl-item"><div class="tl-node n4"></div><h3>Lunar-Recon</h3><p>15 layers &middot; South Pole</p><div class="year">EST. 2025</div></div>
+</div>
+</div>
+<div class="bot">NASA/JPL-Caltech &middot; v4.3.27</div>
+</body></html>

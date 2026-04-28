@@ -1,0 +1,36 @@
+<!DOCTYPE html><html><head><meta charset="utf-8"/><title>LP-30 Split Diagonal</title>
+<style>@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');*{margin:0;padding:0;box-sizing:border-box}
+html,body{width:100%;height:100%;overflow:hidden;font-family:'Inter',sans-serif}
+.split-bg{position:absolute;inset:0}
+.split-dark{position:absolute;top:0;left:0;width:100%;height:100%;background:#0a0a14;clip-path:polygon(0 0,60% 0,40% 100%,0 100%)}
+.split-light{position:absolute;top:0;right:0;width:100%;height:100%;background:#f5f5f0;clip-path:polygon(60% 0,100% 0,100% 100%,40% 100%)}
+.grid-dark{position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.02) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.02) 1px,transparent 1px);background-size:40px 40px;clip-path:polygon(0 0,60% 0,40% 100%,0 100%)}
+.content{position:relative;z-index:1;height:100%;display:flex}
+.left-content{width:50%;display:flex;flex-direction:column;justify-content:center;padding:80px}
+.left-content h1{font-size:64px;font-weight:800;color:#fff;line-height:1.1;margin-bottom:12px;letter-spacing:-1px}.left-content .dots{display:flex;gap:5px;margin-bottom:16px}.left-content .dots span{width:5px;height:5px;border-radius:50%}.left-content p{font-size:15px;color:rgba(255,255,255,.35);line-height:1.6;max-width:360px}
+.right-content{width:50%;display:flex;flex-direction:column;justify-content:center;padding:80px;padding-left:120px}
+.right-content h2{font-size:20px;font-weight:600;color:#1a1a1a;margin-bottom:24px}
+.mission-item{padding:16px 0;border-bottom:1px solid rgba(0,0,0,.06);cursor:pointer;transition:padding .15s}
+.mission-item:hover{padding-left:8px}
+.mission-item h3{font-size:16px;font-weight:600;color:#1a1a1a;margin-bottom:2px}.mission-item p{font-size:12px;color:#888}.mission-item .arr{float:right;color:#bbb;font-size:18px;margin-top:-20px}
+.foot-left{position:absolute;bottom:24px;left:80px;font-size:10px;color:rgba(255,255,255,.15)}
+.foot-right{position:absolute;bottom:24px;right:80px;font-size:10px;color:#bbb}
+</style></head><body>
+<div class="split-bg"><div class="split-dark"></div><div class="split-light"></div><div class="grid-dark"></div></div>
+<div class="content">
+<div class="left-content">
+<h1>MMGIS</h1>
+<div class="dots"><span style="background:#fff156"></span><span style="background:#c0822f"></span><span style="background:#ffeaaf"></span><span style="background:#8ab645"></span><span style="background:#ea3a00"></span><span style="background:#edd49e"></span><span style="background:#e7bdcb"></span><span style="background:#72d1cb"></span><span style="background:#08aeea"></span></div>
+<p>Multi-Mission Geographic Information System. Browse and analyze geospatial data across planetary missions.</p>
+</div>
+<div class="right-content">
+<h2>Select Mission</h2>
+<div class="mission-item"><h3>Reference-Mission</h3><p>22 layers &middot; San Francisco Bay Area</p><span class="arr">&rsaquo;</span></div>
+<div class="mission-item"><h3>Mars-2020</h3><p>18 layers &middot; Jezero Crater</p><span class="arr">&rsaquo;</span></div>
+<div class="mission-item"><h3>Europa-Survey</h3><p>12 layers &middot; Pwyll Crater</p><span class="arr">&rsaquo;</span></div>
+<div class="mission-item"><h3>Lunar-Recon</h3><p>15 layers &middot; South Pole</p><span class="arr">&rsaquo;</span></div>
+</div>
+</div>
+<div class="foot-left">NASA/JPL-Caltech</div>
+<div class="foot-right">v4.3.27</div>
+</body></html>

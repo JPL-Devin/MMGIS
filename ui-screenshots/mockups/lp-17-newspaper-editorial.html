@@ -1,0 +1,64 @@
+<!DOCTYPE html><html><head><meta charset="utf-8"/><title>LP-17 Newspaper Editorial</title>
+<style>@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;900&family=Source+Serif+4:wght@300;400;500&display=swap');*{margin:0;padding:0;box-sizing:border-box}
+html,body{width:100%;height:100%;overflow:hidden;font-family:'Source Serif 4',serif;background:#f8f5f0}
+.pg{height:100%;display:flex;flex-direction:column;padding:40px 60px}
+.masthead{text-align:center;padding-bottom:16px;border-bottom:3px double #1a1a1a}
+.masthead .date{font-size:11px;color:#888;letter-spacing:2px;text-transform:uppercase;margin-bottom:4px}
+.masthead h1{font-family:'Playfair Display',serif;font-size:64px;font-weight:900;color:#1a1a1a;letter-spacing:4px;line-height:1}
+.masthead .dots{display:flex;gap:4px;justify-content:center;margin-top:6px}.masthead .dots span{width:5px;height:5px;border-radius:50%}
+.masthead .sub{font-size:12px;color:#666;margin-top:8px;letter-spacing:3px;text-transform:uppercase}
+.rule{height:1px;background:#ddd;margin:16px 0}
+.cols{flex:1;display:grid;grid-template-columns:2fr 1px 1fr 1px 1fr;gap:24px;overflow:hidden}
+.divider{background:#ddd}
+.col{overflow:hidden}
+.headline{font-family:'Playfair Display',serif;font-size:28px;font-weight:700;color:#1a1a1a;line-height:1.3;margin-bottom:12px}
+.lead{font-size:14px;color:#444;line-height:1.8;margin-bottom:16px}
+.byline{font-size:11px;color:#888;text-transform:uppercase;letter-spacing:1px;margin-bottom:16px}
+.mission-list{list-style:none}.mission-list li{padding:12px 0;border-bottom:1px solid #eee;cursor:pointer;transition:background .15s}.mission-list li:hover{background:rgba(0,0,0,.02);padding-left:8px}
+.mission-list .mn{font-family:'Playfair Display',serif;font-size:18px;font-weight:600;color:#1a1a1a}.mission-list .md{font-size:12px;color:#888;margin-top:2px}
+.sidebar-h{font-family:'Playfair Display',serif;font-size:16px;font-weight:700;color:#1a1a1a;margin-bottom:12px;padding-bottom:8px;border-bottom:2px solid #1a1a1a}
+.stat-row{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid #eee}.stat-row .sl{font-size:12px;color:#888}.stat-row .sv{font-size:14px;font-weight:600;color:#1a1a1a}
+.map-block{height:200px;border-radius:4px;background:linear-gradient(135deg,#d4c5a9,#c4b589);margin-top:16px;position:relative;overflow:hidden;border:1px solid #ccc}
+.map-block::after{content:'';position:absolute;inset:0;background-image:linear-gradient(rgba(0,0,0,.03) 1px,transparent 1px),linear-gradient(90deg,rgba(0,0,0,.03) 1px,transparent 1px);background-size:30px 30px}
+.map-block .cap{position:absolute;bottom:8px;left:8px;font-size:10px;color:rgba(0,0,0,.4);font-style:italic}
+.foot{text-align:center;padding-top:12px;border-top:2px solid #1a1a1a;font-size:10px;color:#888;letter-spacing:2px}
+</style></head><body>
+<div class="pg">
+<div class="masthead"><div class="date">Cartographic Intelligence &middot; April 2026</div><h1>MMGIS</h1><div class="dots"><span style="background:#fff156"></span><span style="background:#c0822f"></span><span style="background:#ffeaaf"></span><span style="background:#8ab645"></span><span style="background:#ea3a00"></span><span style="background:#edd49e"></span><span style="background:#e7bdcb"></span><span style="background:#72d1cb"></span><span style="background:#08aeea"></span></div><div class="sub">Multi-Mission Geographic Information System</div></div>
+<div class="rule"></div>
+<div class="cols">
+<div class="col">
+<div class="headline">Mapping the Worlds: Geospatial Intelligence Across Planetary Missions</div>
+<div class="byline">NASA / Jet Propulsion Laboratory</div>
+<div class="lead">The Multi-Mission Geographic Information System enables scientists and engineers to browse, analyze, and collaborate on geospatial data spanning Earth, Mars, Europa, and the Moon. Select a mission below to explore.</div>
+<ul class="mission-list">
+<li><div class="mn">Reference-Mission</div><div class="md">San Francisco Bay Area &mdash; 22 layers, 14 tools</div></li>
+<li><div class="mn">Mars-2020</div><div class="md">Jezero Crater &mdash; 18 layers, 12 tools</div></li>
+<li><div class="mn">Europa-Survey</div><div class="md">Pwyll Crater &mdash; 12 layers, 8 tools</div></li>
+<li><div class="mn">Lunar-Recon</div><div class="md">South Pole &mdash; 15 layers, 10 tools</div></li>
+</ul>
+</div>
+<div class="divider"></div>
+<div class="col">
+<div class="sidebar-h">Mission Statistics</div>
+<div class="stat-row"><span class="sl">Active Missions</span><span class="sv">4</span></div>
+<div class="stat-row"><span class="sl">Total Layers</span><span class="sv">67</span></div>
+<div class="stat-row"><span class="sl">Available Tools</span><span class="sv">44</span></div>
+<div class="stat-row"><span class="sl">Active Users</span><span class="sv">12</span></div>
+<div class="stat-row"><span class="sl">Data Points</span><span class="sv">1.2M</span></div>
+<div class="map-block"><div class="cap">San Francisco Bay Area &mdash; Reference Mission</div></div>
+</div>
+<div class="divider"></div>
+<div class="col">
+<div class="sidebar-h">Latest Updates</div>
+<div class="lead" style="font-size:12px;line-height:1.7">
+<strong>Apr 28</strong> &mdash; Layer "Roads" updated with new alignment data from USGS.<br><br>
+<strong>Apr 27</strong> &mdash; New annotation tools deployed for Mars-2020 traverse planning.<br><br>
+<strong>Apr 26</strong> &mdash; Europa ice shell thickness model v3 imported.<br><br>
+<strong>Apr 25</strong> &mdash; Lunar south pole DEM merged from three LRO datasets.<br><br>
+<strong>Apr 24</strong> &mdash; Reference Mission updated to include LIDAR point cloud overlay.
+</div>
+</div>
+</div>
+<div class="foot">NASA/JPL-CALTECH &middot; v4.3.27 &middot; ATTRIBUTIONS</div>
+</div></body></html>

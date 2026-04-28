@@ -1,0 +1,35 @@
+<!DOCTYPE html><html><head><meta charset="utf-8"/><title>LP-22 Terminal CLI</title>
+<style>@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500&display=swap');*{margin:0;padding:0;box-sizing:border-box}
+html,body{width:100%;height:100%;overflow:hidden;font-family:'JetBrains Mono',monospace;background:#0c0c0c}
+.pg{height:100%;display:flex;flex-direction:column}
+.titlebar{height:36px;background:#1a1a1a;display:flex;align-items:center;padding:0 12px;gap:8px;flex-shrink:0}
+.dot{width:12px;height:12px;border-radius:50%}.dot.r{background:#ff5f57}.dot.y{background:#ffbd2e}.dot.g{background:#28ca41}
+.titlebar .t{margin-left:auto;margin-right:auto;font-size:11px;color:rgba(255,255,255,.3)}
+.term{flex:1;padding:24px;overflow:hidden;color:#c0c0c0;font-size:13px;line-height:2}
+.prompt{color:#3fb950}.cmd{color:#fff}.comment{color:#484848}.link{color:#58a6ff;cursor:pointer;text-decoration:underline}.hl{color:#ff7b72}.cyan{color:#79c0ff}.yellow{color:#e3b341}
+.cursor{display:inline-block;width:8px;height:15px;background:#3fb950;animation:blink 1s infinite}.cursor2{display:none}
+@keyframes blink{0%,49%{opacity:1}50%,100%{opacity:0}}
+.bot{height:28px;background:#1a1a1a;display:flex;align-items:center;padding:0 12px;gap:16px;flex-shrink:0}
+.bot span{font-size:10px;color:rgba(255,255,255,.2)}
+</style></head><body>
+<div class="pg">
+<div class="titlebar"><div class="dot r"></div><div class="dot y"></div><div class="dot g"></div><div class="t">mmgis &mdash; bash &mdash; 120x40</div></div>
+<div class="term">
+<span class="comment"># ==========================================</span><br>
+<span class="comment">#  MMGIS &mdash; Multi-Mission Geographic Information System</span><br>
+<span class="comment">#  v4.3.27 &middot; NASA/JPL-Caltech</span><br>
+<span class="comment"># ==========================================</span><br><br>
+<span class="prompt">mmgis@jpl</span>:<span class="cyan">~</span>$ <span class="cmd">mmgis list-missions</span><br><br>
+<span class="yellow">AVAILABLE MISSIONS:</span><br><br>
+&nbsp;&nbsp;<span class="hl">[1]</span> <span class="cmd">Reference-Mission</span>&nbsp;&nbsp;&nbsp;&nbsp;22 layers &middot; 14 tools &middot; SF Bay Area<br>
+&nbsp;&nbsp;<span class="hl">[2]</span> <span class="cmd">Mars-2020</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;18 layers &middot; 12 tools &middot; Jezero Crater<br>
+&nbsp;&nbsp;<span class="hl">[3]</span> <span class="cmd">Europa-Survey</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;12 layers &middot;&nbsp; 8 tools &middot; Pwyll Crater<br>
+&nbsp;&nbsp;<span class="hl">[4]</span> <span class="cmd">Lunar-Recon</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;15 layers &middot; 10 tools &middot; South Pole<br><br>
+<span class="prompt">mmgis@jpl</span>:<span class="cyan">~</span>$ <span class="cmd">mmgis launch --mission</span> <span class="cursor"></span><br><br>
+<span class="comment"># Type a mission number or name to launch</span><br>
+<span class="comment"># Try: mmgis launch --mission Reference-Mission</span><br>
+<span class="comment"># Or:  mmgis search --query "crater"</span><br>
+<span class="comment"># Or:  mmgis info --mission Mars-2020</span><br>
+</div>
+<div class="bot"><span>bash</span><span>UTF-8</span><span>mmgis v4.3.27</span><span style="margin-left:auto">Ln 1, Col 1</span></div>
+</div></body></html>

@@ -1,0 +1,32 @@
+<!DOCTYPE html><html><head><meta charset="utf-8"/><title>LP-52 Radar Circles</title>
+<style>@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');*{margin:0;padding:0;box-sizing:border-box}
+html,body{width:100%;height:100%;overflow:hidden;font-family:'Inter',sans-serif;background:#050510}
+.radar{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%)}
+.rc{position:absolute;border-radius:50%;border:1px solid rgba(0,255,128,.04);top:50%;left:50%;transform:translate(-50%,-50%)}.rc1{width:200px;height:200px}.rc2{width:400px;height:400px}.rc3{width:600px;height:600px}.rc4{width:800px;height:800px}
+.sweep{position:absolute;top:50%;left:50%;width:400px;height:2px;background:linear-gradient(90deg,rgba(0,255,128,.2),transparent);transform-origin:left center;animation:sweep 6s linear infinite}
+@keyframes sweep{0%{transform:rotate(0deg)}100%{transform:rotate(360deg)}}
+.crosshair-h{position:absolute;top:50%;left:0;right:0;height:1px;background:rgba(0,255,128,.03)}.crosshair-v{position:absolute;top:0;bottom:0;left:50%;width:1px;background:rgba(0,255,128,.03)}
+.content{position:relative;z-index:1;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center}
+.logo{text-align:center;margin-bottom:32px}.logo h1{font-size:48px;font-weight:700;color:rgba(0,255,128,.8);letter-spacing:6px;text-shadow:0 0 20px rgba(0,255,128,.1)}.logo .dots{display:flex;gap:5px;justify-content:center;margin-top:8px}.logo .dots span{width:5px;height:5px;border-radius:50%}.logo p{font-size:11px;color:rgba(0,255,128,.2);letter-spacing:3px;margin-top:12px}
+.blips{position:absolute;width:600px;height:600px;top:50%;left:50%;transform:translate(-50%,-50%)}
+.blip{position:absolute;cursor:pointer;transition:all .2s}.blip:hover{transform:scale(1.1)}
+.blip .dot{width:12px;height:12px;border-radius:50%;position:relative}.blip .dot::after{content:'';position:absolute;inset:-4px;border-radius:50%;border:1px solid;opacity:.3;animation:ping 2s ease-out infinite}
+.b1 .dot{background:#3fb950}.b1 .dot::after{border-color:#3fb950}.b2 .dot{background:#f0883e}.b2 .dot::after{border-color:#f0883e}.b3 .dot{background:#a371f7}.b3 .dot::after{border-color:#a371f7}.b4 .dot{background:#58a6ff}.b4 .dot::after{border-color:#58a6ff}
+@keyframes ping{0%{transform:scale(1);opacity:.3}100%{transform:scale(2.5);opacity:0}}
+.blip .label{position:absolute;left:20px;top:-4px;white-space:nowrap}.blip .label h3{font-size:11px;font-weight:600;color:rgba(255,255,255,.7)}.blip .label p{font-size:9px;color:rgba(255,255,255,.2)}
+.b1{top:20%;left:55%}.b2{top:55%;right:15%}.b3{bottom:25%;left:30%}.b4{top:35%;left:15%}
+.bot{position:absolute;bottom:20px;display:flex;gap:20px;font-size:9px;color:rgba(0,255,128,.12);letter-spacing:2px;font-family:monospace}
+</style></head><body>
+<div class="crosshair-h"></div><div class="crosshair-v"></div>
+<div class="radar"><div class="rc rc1"></div><div class="rc rc2"></div><div class="rc rc3"></div><div class="rc rc4"></div><div class="sweep"></div></div>
+<div class="blips">
+<div class="blip b1"><div class="dot"></div><div class="label"><h3>Reference-Mission</h3><p>22 layers</p></div></div>
+<div class="blip b2"><div class="dot"></div><div class="label"><h3>Mars-2020</h3><p>18 layers</p></div></div>
+<div class="blip b3"><div class="dot"></div><div class="label"><h3>Europa-Survey</h3><p>12 layers</p></div></div>
+<div class="blip b4"><div class="dot"></div><div class="label"><h3>Lunar-Recon</h3><p>15 layers</p></div></div>
+</div>
+<div class="content">
+<div class="logo"><h1>MMGIS</h1><div class="dots"><span style="background:#fff156"></span><span style="background:#c0822f"></span><span style="background:#ffeaaf"></span><span style="background:#8ab645"></span><span style="background:#ea3a00"></span><span style="background:#edd49e"></span><span style="background:#e7bdcb"></span><span style="background:#72d1cb"></span><span style="background:#08aeea"></span></div><p>MISSION DETECTION ACTIVE</p></div>
+</div>
+<div class="bot"><span>RADAR ACTIVE</span><span>4 TARGETS</span><span>NASA/JPL</span></div>
+</body></html>

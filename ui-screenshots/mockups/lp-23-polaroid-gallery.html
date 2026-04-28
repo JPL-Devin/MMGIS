@@ -1,0 +1,30 @@
+<!DOCTYPE html><html><head><meta charset="utf-8"/><title>LP-23 Polaroid Gallery</title>
+<style>@import url('https://fonts.googleapis.com/css2?family=Caveat:wght@400;600&family=Inter:wght@300;400;500;600&display=swap');*{margin:0;padding:0;box-sizing:border-box}
+html,body{width:100%;height:100%;overflow:hidden;font-family:'Inter',sans-serif;background:#f0ebe3}
+.cork{position:absolute;inset:0;background:#d4c4a8;background-image:url("data:image/svg+xml,%3Csvg width='60' height='60' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence baseFrequency='.8' numOctaves='4'/%3E%3C/filter%3E%3Crect width='60' height='60' filter='url(%23n)' opacity='.03'/%3E%3C/svg%3E")}
+.content{position:relative;z-index:1;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:40px}
+.title{text-align:center;margin-bottom:48px}
+.title h1{font-size:48px;font-weight:600;color:#2a2420;letter-spacing:4px}.title .dots{display:flex;gap:5px;justify-content:center;margin-top:6px}.title .dots span{width:5px;height:5px;border-radius:50%}.title p{font-size:14px;color:#8a7a6a;margin-top:8px;font-family:'Caveat',cursive;font-size:20px}
+.polaroids{display:flex;gap:32px;flex-wrap:wrap;justify-content:center}
+.pol{width:200px;background:#fff;padding:12px 12px 40px;box-shadow:2px 4px 12px rgba(0,0,0,.12);cursor:pointer;transition:all .3s}
+.pol:nth-child(1){transform:rotate(-3deg)}.pol:nth-child(2){transform:rotate(2deg)}.pol:nth-child(3){transform:rotate(-1deg)}.pol:nth-child(4){transform:rotate(3deg)}
+.pol:hover{transform:rotate(0deg) scale(1.05);z-index:2}
+.pol .img{width:100%;height:140px;border-radius:2px;position:relative;overflow:hidden}
+.pol .img::after{content:'';position:absolute;inset:0;background-image:linear-gradient(rgba(0,0,0,.05) 1px,transparent 1px),linear-gradient(90deg,rgba(0,0,0,.05) 1px,transparent 1px);background-size:25px 25px}
+.i1{background:linear-gradient(135deg,#4a8a5a,#2a6a3a)}.i2{background:linear-gradient(135deg,#c87040,#a05530)}.i3{background:linear-gradient(135deg,#5070a0,#304060)}.i4{background:linear-gradient(135deg,#808080,#505050)}
+.pol .cap{font-family:'Caveat',cursive;font-size:16px;color:#4a4040;text-align:center;margin-top:10px}
+.pol .meta{font-size:10px;color:#aaa;text-align:center;margin-top:2px}
+.pin{width:12px;height:12px;border-radius:50%;position:absolute;top:-4px;left:50%;transform:translateX(-50%);box-shadow:0 1px 3px rgba(0,0,0,.2)}
+.foot{position:absolute;bottom:20px;font-family:'Caveat',cursive;font-size:16px;color:#a09080}
+</style></head><body>
+<div class="cork"></div>
+<div class="content">
+<div class="title"><h1>MMGIS</h1><div class="dots"><span style="background:#fff156"></span><span style="background:#c0822f"></span><span style="background:#ffeaaf"></span><span style="background:#8ab645"></span><span style="background:#ea3a00"></span><span style="background:#edd49e"></span><span style="background:#e7bdcb"></span><span style="background:#72d1cb"></span><span style="background:#08aeea"></span></div><p>Pick a mission to explore!</p></div>
+<div class="polaroids">
+<div class="pol" style="position:relative"><div class="pin" style="background:#ea4040"></div><div class="img i1"></div><div class="cap">Reference-Mission</div><div class="meta">22 layers &middot; SF Bay Area</div></div>
+<div class="pol" style="position:relative"><div class="pin" style="background:#40a0ea"></div><div class="img i2"></div><div class="cap">Mars-2020</div><div class="meta">18 layers &middot; Jezero Crater</div></div>
+<div class="pol" style="position:relative"><div class="pin" style="background:#40ea80"></div><div class="img i3"></div><div class="cap">Europa-Survey</div><div class="meta">12 layers &middot; Pwyll Crater</div></div>
+<div class="pol" style="position:relative"><div class="pin" style="background:#eaea40"></div><div class="img i4"></div><div class="cap">Lunar-Recon</div><div class="meta">15 layers &middot; South Pole</div></div>
+</div>
+<div class="foot">NASA/JPL-Caltech &middot; v4.3.27</div>
+</div></body></html>

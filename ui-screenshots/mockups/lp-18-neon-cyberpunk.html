@@ -1,0 +1,35 @@
+<!DOCTYPE html><html><head><meta charset="utf-8"/><title>LP-18 Neon Cyberpunk</title>
+<style>@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap');*{margin:0;padding:0;box-sizing:border-box}
+html,body{width:100%;height:100%;overflow:hidden;font-family:'Space Grotesk',sans-serif;background:#0a0a0a}
+.scanline{position:absolute;inset:0;background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,255,255,.01) 2px,rgba(0,255,255,.01) 4px);pointer-events:none;z-index:10}
+.glow-line{position:absolute;height:1px;left:0;right:0}
+.gl1{top:30%;background:linear-gradient(90deg,transparent,rgba(255,0,128,.15) 20%,rgba(0,255,255,.15) 50%,rgba(255,0,128,.15) 80%,transparent)}
+.gl2{top:70%;background:linear-gradient(90deg,transparent,rgba(0,255,255,.1) 30%,rgba(255,0,128,.1) 70%,transparent)}
+.grid-bg{position:absolute;bottom:0;left:0;right:0;height:50%;background-image:linear-gradient(rgba(0,255,255,.04) 1px,transparent 1px),linear-gradient(90deg,rgba(0,255,255,.04) 1px,transparent 1px);background-size:80px 80px;transform:perspective(400px) rotateX(60deg);transform-origin:bottom}
+.content{position:relative;z-index:2;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center}
+.logo h1{font-size:96px;font-weight:700;letter-spacing:12px;text-align:center;background:linear-gradient(180deg,#fff 30%,#0ff 70%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;text-shadow:none;position:relative}
+.logo h1::after{content:'MMGIS';position:absolute;inset:0;background:linear-gradient(180deg,transparent 30%,rgba(0,255,255,.3) 70%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;filter:blur(8px)}
+.logo .dots{display:flex;gap:6px;justify-content:center;margin-top:8px}.logo .dots span{width:6px;height:6px;border-radius:50%}
+.tag{font-size:12px;color:rgba(0,255,255,.4);letter-spacing:6px;text-transform:uppercase;margin-top:16px;text-align:center}
+.missions{display:flex;gap:16px;margin-top:48px}
+.mc{width:200px;padding:20px;border:1px solid rgba(0,255,255,.1);background:rgba(0,0,0,.5);border-radius:4px;cursor:pointer;transition:all .2s;position:relative;overflow:hidden}
+.mc::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,#0ff,transparent);opacity:0;transition:opacity .2s}
+.mc:hover::before{opacity:1}
+.mc:hover{border-color:rgba(0,255,255,.3);box-shadow:0 0 20px rgba(0,255,255,.05)}
+.mc h3{font-size:14px;font-weight:600;color:#0ff;margin-bottom:4px}.mc p{font-size:11px;color:rgba(255,255,255,.3)}.mc .arrow{position:absolute;right:12px;top:50%;transform:translateY(-50%);color:rgba(0,255,255,.2);font-size:16px}
+.bot{position:absolute;bottom:24px;display:flex;gap:24px}.bot span{font-size:10px;color:rgba(0,255,255,.15);letter-spacing:2px;font-family:monospace}
+</style></head><body>
+<div class="scanline"></div>
+<div class="glow-line gl1"></div><div class="glow-line gl2"></div>
+<div class="grid-bg"></div>
+<div class="content">
+<div class="logo"><h1>MMGIS</h1><div class="dots"><span style="background:#fff156"></span><span style="background:#c0822f"></span><span style="background:#ffeaaf"></span><span style="background:#8ab645"></span><span style="background:#ea3a00"></span><span style="background:#edd49e"></span><span style="background:#e7bdcb"></span><span style="background:#72d1cb"></span><span style="background:#08aeea"></span></div></div>
+<div class="tag">Multi-Mission Geographic Information System</div>
+<div class="missions">
+<div class="mc"><h3>Reference-Mission</h3><p>22 layers &middot; SF Bay Area</p><span class="arrow">&rsaquo;</span></div>
+<div class="mc"><h3>Mars-2020</h3><p>18 layers &middot; Jezero Crater</p><span class="arrow">&rsaquo;</span></div>
+<div class="mc"><h3>Europa-Survey</h3><p>12 layers &middot; Pwyll Crater</p><span class="arrow">&rsaquo;</span></div>
+<div class="mc"><h3>Lunar-Recon</h3><p>15 layers &middot; South Pole</p><span class="arrow">&rsaquo;</span></div>
+</div>
+<div class="bot"><span>V4.3.27</span><span>NASA//JPL-CALTECH</span></div>
+</div></body></html>

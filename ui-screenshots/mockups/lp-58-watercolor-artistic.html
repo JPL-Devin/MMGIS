@@ -1,0 +1,27 @@
+<!DOCTYPE html><html><head><meta charset="utf-8"/><title>LP-58 Watercolor Artistic</title>
+<style>@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500&display=swap');*{margin:0;padding:0;box-sizing:border-box}
+html,body{width:100%;height:100%;overflow:hidden;font-family:'Inter',sans-serif;background:#faf8f5}
+.wc-blobs{position:absolute;inset:0;overflow:hidden;opacity:.12}
+.wc{position:absolute;border-radius:50%;filter:blur(60px)}
+.wc1{width:400px;height:400px;top:-5%;left:-5%;background:#5a8a9a}.wc2{width:350px;height:350px;bottom:10%;right:-5%;background:#c0866a}.wc3{width:300px;height:300px;top:40%;left:50%;background:#8a6aa0}.wc4{width:250px;height:250px;top:10%;right:30%;background:#6a9a6a}
+.content{position:relative;z-index:1;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:40px}
+.logo{text-align:center;margin-bottom:56px}.logo h1{font-family:'Playfair Display',serif;font-size:64px;font-weight:400;color:#3a3028;letter-spacing:6px}.logo .dots{display:flex;gap:5px;justify-content:center;margin-top:8px}.logo .dots span{width:5px;height:5px;border-radius:50%}.logo p{font-size:12px;color:#a09080;margin-top:12px;font-style:italic}
+.missions{display:flex;gap:24px}
+.mc{width:200px;padding:24px;background:rgba(255,255,255,.6);backdrop-filter:blur(10px);border-radius:16px;cursor:pointer;transition:all .3s;text-align:center;border:1px solid rgba(0,0,0,.03)}.mc:hover{transform:translateY(-4px);box-shadow:0 8px 24px rgba(0,0,0,.04)}
+.mc .swatch{width:48px;height:48px;border-radius:12px;margin:0 auto 12px}
+.s1{background:#5a8a9a}.s2{background:#c0866a}.s3{background:#8a6aa0}.s4{background:#a0a0a0}
+.mc h3{font-family:'Playfair Display',serif;font-size:16px;font-weight:500;color:#3a3028;margin-bottom:4px}.mc p{font-size:11px;color:#a09080}
+.bot{position:absolute;bottom:20px;font-size:10px;color:#c0b0a0}
+</style></head><body>
+<div class="wc-blobs"><div class="wc wc1"></div><div class="wc wc2"></div><div class="wc wc3"></div><div class="wc wc4"></div></div>
+<div class="content">
+<div class="logo"><h1>MMGIS</h1><div class="dots"><span style="background:#fff156"></span><span style="background:#c0822f"></span><span style="background:#ffeaaf"></span><span style="background:#8ab645"></span><span style="background:#ea3a00"></span><span style="background:#edd49e"></span><span style="background:#e7bdcb"></span><span style="background:#72d1cb"></span><span style="background:#08aeea"></span></div><p>Mapping the worlds we explore</p></div>
+<div class="missions">
+<div class="mc"><div class="swatch s1"></div><h3>Reference</h3><p>22 layers &middot; Earth</p></div>
+<div class="mc"><div class="swatch s2"></div><h3>Mars-2020</h3><p>18 layers &middot; Mars</p></div>
+<div class="mc"><div class="swatch s3"></div><h3>Europa</h3><p>12 layers &middot; Jupiter</p></div>
+<div class="mc"><div class="swatch s4"></div><h3>Lunar-Recon</h3><p>15 layers &middot; Moon</p></div>
+</div>
+</div>
+<div class="bot">NASA/JPL-Caltech</div>
+</body></html>

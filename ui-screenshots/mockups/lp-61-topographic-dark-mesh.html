@@ -1,0 +1,28 @@
+<!DOCTYPE html><html><head><meta charset="utf-8"/><title>LP-61 Topographic Dark Mesh</title>
+<style>@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');*{margin:0;padding:0;box-sizing:border-box}
+html,body{width:100%;height:100%;overflow:hidden;font-family:'Inter',sans-serif;background:#0a1a0a}
+.topo{position:absolute;inset:0;overflow:hidden;opacity:.08}
+.topo-circle{position:absolute;border-radius:50%;border:1px solid #4a8a4a}
+.tc1{width:800px;height:800px;top:20%;left:30%}.tc2{width:600px;height:600px;top:25%;left:35%}.tc3{width:400px;height:400px;top:30%;left:40%}.tc4{width:200px;height:200px;top:35%;left:45%}
+.mesh{position:absolute;inset:0;background-image:linear-gradient(rgba(74,138,74,.04) 1px,transparent 1px),linear-gradient(90deg,rgba(74,138,74,.04) 1px,transparent 1px);background-size:40px 40px}
+.content{position:relative;z-index:1;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center}
+.logo{text-align:center;margin-bottom:48px}.logo h1{font-size:56px;font-weight:700;color:#4aff4a;letter-spacing:6px;text-shadow:0 0 20px rgba(74,255,74,.1);opacity:.8}.logo .dots{display:flex;gap:5px;justify-content:center;margin-top:8px}.logo .dots span{width:5px;height:5px;border-radius:50%}.logo p{font-size:11px;color:rgba(74,255,74,.15);letter-spacing:3px;margin-top:12px}
+.cards{display:flex;gap:16px}
+.card{width:200px;padding:20px;border-radius:12px;border:1px solid rgba(74,138,74,.15);background:rgba(10,26,10,.6);backdrop-filter:blur(10px);cursor:pointer;transition:all .2s}.card:hover{border-color:rgba(74,138,74,.3);transform:translateY(-4px)}
+.card .em{font-size:28px;margin-bottom:10px}.card h3{font-size:14px;font-weight:600;color:rgba(74,255,74,.6)}.card p{font-size:11px;color:rgba(74,255,74,.15);margin-top:4px}
+.card .elev{display:flex;gap:2px;align-items:flex-end;height:24px;margin-top:12px}.card .elev div{flex:1;border-radius:1px 1px 0 0;background:rgba(74,138,74,.2)}
+.bot{position:absolute;bottom:20px;font-size:10px;color:rgba(74,255,74,.08)}
+</style></head><body>
+<div class="topo"><div class="topo-circle tc1"></div><div class="topo-circle tc2"></div><div class="topo-circle tc3"></div><div class="topo-circle tc4"></div></div>
+<div class="mesh"></div>
+<div class="content">
+<div class="logo"><h1>MMGIS</h1><div class="dots"><span style="background:#fff156"></span><span style="background:#c0822f"></span><span style="background:#ffeaaf"></span><span style="background:#8ab645"></span><span style="background:#ea3a00"></span><span style="background:#edd49e"></span><span style="background:#e7bdcb"></span><span style="background:#72d1cb"></span><span style="background:#08aeea"></span></div><p>ELEVATION DATA &middot; TERRAIN MAPPING</p></div>
+<div class="cards">
+<div class="card"><div class="em">&#127758;</div><h3>Reference-Mission</h3><p>22 layers &middot; SF Bay</p><div class="elev"><div style="height:40%"></div><div style="height:65%"></div><div style="height:80%"></div><div style="height:55%"></div><div style="height:90%"></div><div style="height:70%"></div><div style="height:45%"></div><div style="height:85%"></div></div></div>
+<div class="card"><div class="em">&#127756;</div><h3>Mars-2020</h3><p>18 layers &middot; Jezero</p><div class="elev"><div style="height:70%"></div><div style="height:45%"></div><div style="height:55%"></div><div style="height:80%"></div><div style="height:35%"></div><div style="height:60%"></div><div style="height:75%"></div><div style="height:50%"></div></div></div>
+<div class="card"><div class="em">&#10052;</div><h3>Europa-Survey</h3><p>12 layers &middot; Pwyll</p><div class="elev"><div style="height:30%"></div><div style="height:50%"></div><div style="height:40%"></div><div style="height:60%"></div><div style="height:45%"></div><div style="height:55%"></div><div style="height:35%"></div><div style="height:65%"></div></div></div>
+<div class="card"><div class="em">&#127769;</div><h3>Lunar-Recon</h3><p>15 layers &middot; S. Pole</p><div class="elev"><div style="height:60%"></div><div style="height:85%"></div><div style="height:50%"></div><div style="height:70%"></div><div style="height:95%"></div><div style="height:40%"></div><div style="height:80%"></div><div style="height:55%"></div></div></div>
+</div>
+</div>
+<div class="bot">NASA/JPL-Caltech &middot; v4.3.27</div>
+</body></html>

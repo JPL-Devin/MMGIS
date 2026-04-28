@@ -1,0 +1,31 @@
+<!DOCTYPE html><html><head><meta charset="utf-8"/><title>LP-25 Frosted Glass macOS</title>
+<style>@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap');*{margin:0;padding:0;box-sizing:border-box}
+html,body{width:100%;height:100%;overflow:hidden;font-family:'Inter',sans-serif;background:#2a1a4a}
+.bg-orbs{position:absolute;inset:0;overflow:hidden}
+.orb{position:absolute;border-radius:50%;filter:blur(80px)}
+.o1{width:600px;height:600px;top:-10%;left:-10%;background:rgba(200,100,255,.2)}.o2{width:500px;height:500px;bottom:-10%;right:-5%;background:rgba(100,100,255,.15)}.o3{width:400px;height:400px;top:30%;left:40%;background:rgba(255,150,100,.1)}
+.content{position:relative;z-index:1;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:32px}
+.glass{background:rgba(255,255,255,.08);backdrop-filter:blur(40px);border:1px solid rgba(255,255,255,.1);border-radius:24px}
+.header{padding:32px 48px;text-align:center}
+.header h1{font-size:44px;font-weight:600;color:#fff;letter-spacing:4px}.header .dots{display:flex;gap:5px;justify-content:center;margin-top:8px}.header .dots span{width:5px;height:5px;border-radius:50%}.header p{font-size:13px;color:rgba(255,255,255,.35);margin-top:12px}
+.search-box{width:500px;padding:12px 20px;display:flex;align-items:center;gap:12px}
+.search-box .icon{color:rgba(255,255,255,.3);font-size:16px}.search-box input{flex:1;background:transparent;border:none;outline:none;font-size:14px;color:#fff;font-family:'Inter',sans-serif}.search-box input::placeholder{color:rgba(255,255,255,.2)}
+.missions{display:grid;grid-template-columns:repeat(4,200px);gap:12px}
+.mc{padding:20px;cursor:pointer;transition:all .2s}
+.mc:hover{background:rgba(255,255,255,.12)}
+.mc .icon{font-size:28px;margin-bottom:10px}.mc h3{font-size:14px;font-weight:600;color:#fff;margin-bottom:4px}.mc p{font-size:11px;color:rgba(255,255,255,.3)}.mc .tags{display:flex;gap:4px;margin-top:8px;flex-wrap:wrap}.mc .tag{padding:2px 8px;border-radius:6px;font-size:9px;background:rgba(255,255,255,.06);color:rgba(255,255,255,.4)}
+.foot{position:absolute;bottom:20px;font-size:10px;color:rgba(255,255,255,.15)}
+</style></head><body>
+<div class="bg-orbs"><div class="orb o1"></div><div class="orb o2"></div><div class="orb o3"></div></div>
+<div class="content">
+<div class="glass header"><h1>MMGIS</h1><div class="dots"><span style="background:#fff156"></span><span style="background:#c0822f"></span><span style="background:#ffeaaf"></span><span style="background:#8ab645"></span><span style="background:#ea3a00"></span><span style="background:#edd49e"></span><span style="background:#e7bdcb"></span><span style="background:#72d1cb"></span><span style="background:#08aeea"></span></div><p>Multi-Mission Geographic Information System</p></div>
+<div class="glass search-box"><span class="icon">&#128269;</span><input type="text" placeholder="Search missions, layers, or coordinates..." /></div>
+<div class="missions">
+<div class="glass mc"><div class="icon">&#127758;</div><h3>Reference-Mission</h3><p>San Francisco Bay Area</p><div class="tags"><span class="tag">22 layers</span><span class="tag">14 tools</span></div></div>
+<div class="glass mc"><div class="icon">&#127756;</div><h3>Mars-2020</h3><p>Jezero Crater</p><div class="tags"><span class="tag">18 layers</span><span class="tag">12 tools</span></div></div>
+<div class="glass mc"><div class="icon">&#10052;</div><h3>Europa-Survey</h3><p>Pwyll Crater</p><div class="tags"><span class="tag">12 layers</span><span class="tag">8 tools</span></div></div>
+<div class="glass mc"><div class="icon">&#127769;</div><h3>Lunar-Recon</h3><p>South Pole</p><div class="tags"><span class="tag">15 layers</span><span class="tag">10 tools</span></div></div>
+</div>
+</div>
+<div class="foot">NASA/JPL-Caltech &middot; v4.3.27</div>
+</body></html>

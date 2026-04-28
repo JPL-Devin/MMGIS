@@ -1,0 +1,29 @@
+<!DOCTYPE html><html><head><meta charset="utf-8"/><title>LP-29 Retro Pixel</title>
+<style>@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');*{margin:0;padding:0;box-sizing:border-box}
+html,body{width:100%;height:100%;overflow:hidden;font-family:'Press Start 2P',monospace;background:#1a1a2e;image-rendering:pixelated}
+.stars{position:absolute;inset:0}.star{position:absolute;background:#fff}
+.content{position:relative;z-index:1;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center}
+.logo{text-align:center;margin-bottom:48px}
+.logo h1{font-size:40px;color:#0ff;text-shadow:4px 4px 0 #006,0 0 10px rgba(0,255,255,.3);letter-spacing:4px}.logo .dots{display:flex;gap:6px;justify-content:center;margin-top:12px}.logo .dots span{width:6px;height:6px;border-radius:0}.logo p{font-size:8px;color:#888;margin-top:12px;letter-spacing:1px}
+.menu{display:flex;flex-direction:column;gap:8px;text-align:left}
+.mi{display:flex;align-items:center;gap:12px;padding:12px 24px;cursor:pointer;transition:all .15s;border:2px solid transparent}
+.mi:hover{border-color:#0ff;background:rgba(0,255,255,.05)}
+.mi .arrow{color:#0ff;font-size:10px;opacity:0;transition:opacity .15s}.mi:hover .arrow{opacity:1}
+.mi h3{font-size:10px;color:#fff}.mi p{font-size:7px;color:#888;margin-top:4px}
+.bot{position:absolute;bottom:24px;font-size:7px;color:#444;text-align:center}
+.bot div{margin-top:4px}
+.health-bar{display:inline-flex;gap:2px;margin-left:8px}.hb{width:8px;height:8px;background:#0f0}.hb.off{background:#333}
+</style></head><body>
+<div class="stars">
+<div class="star" style="width:2px;height:2px;top:10%;left:20%"></div><div class="star" style="width:2px;height:2px;top:25%;left:55%"></div><div class="star" style="width:2px;height:2px;top:40%;left:80%"></div><div class="star" style="width:2px;height:2px;top:60%;left:15%"></div><div class="star" style="width:2px;height:2px;top:75%;left:70%"></div><div class="star" style="width:2px;height:2px;top:15%;left:90%"></div><div class="star" style="width:2px;height:2px;top:85%;left:40%"></div>
+</div>
+<div class="content">
+<div class="logo"><h1>MMGIS</h1><div class="dots"><span style="background:#fff156"></span><span style="background:#c0822f"></span><span style="background:#ffeaaf"></span><span style="background:#8ab645"></span><span style="background:#ea3a00"></span><span style="background:#edd49e"></span><span style="background:#e7bdcb"></span><span style="background:#72d1cb"></span><span style="background:#08aeea"></span></div><p>MULTI-MISSION GEOGRAPHIC INFORMATION SYSTEM</p></div>
+<div class="menu">
+<div class="mi"><span class="arrow">&gt;</span><div><h3>REFERENCE-MISSION</h3><p>22 LAYERS &middot; SF BAY AREA</p></div></div>
+<div class="mi"><span class="arrow">&gt;</span><div><h3>MARS-2020</h3><p>18 LAYERS &middot; JEZERO CRATER</p></div></div>
+<div class="mi"><span class="arrow">&gt;</span><div><h3>EUROPA-SURVEY</h3><p>12 LAYERS &middot; PWYLL CRATER</p></div></div>
+<div class="mi"><span class="arrow">&gt;</span><div><h3>LUNAR-RECON</h3><p>15 LAYERS &middot; SOUTH POLE</p></div></div>
+</div>
+<div class="bot">INSERT COIN TO CONTINUE<div>NASA/JPL-CALTECH &middot; V4.3.27</div></div>
+</div></body></html>

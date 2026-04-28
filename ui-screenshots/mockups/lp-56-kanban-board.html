@@ -1,0 +1,35 @@
+<!DOCTYPE html><html><head><meta charset="utf-8"/><title>LP-56 Kanban Board</title>
+<style>@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');*{margin:0;padding:0;box-sizing:border-box}
+html,body{width:100%;height:100%;overflow:hidden;font-family:'Inter',sans-serif;background:#f4f5f7}
+.pg{height:100%;display:flex;flex-direction:column}
+.nav{height:52px;display:flex;align-items:center;padding:0 24px;gap:16px;background:#fff;border-bottom:1px solid #e0e0e0}.nav h2{font-size:16px;font-weight:700;color:#172b4d;letter-spacing:1px}.nav .dots{display:flex;gap:3px}.nav .dots span{width:4px;height:4px;border-radius:50%}.nav p{font-size:12px;color:#6b778c}.nav .right{margin-left:auto;display:flex;align-items:center;gap:8px}.nav .avatar{width:28px;height:28px;border-radius:50%;background:#0052cc;display:flex;align-items:center;justify-content:center;font-size:11px;color:#fff;font-weight:600}
+.board{flex:1;display:flex;gap:12px;padding:16px 24px;overflow-x:auto}
+.column{width:280px;flex-shrink:0;display:flex;flex-direction:column;background:#ebecf0;border-radius:8px;padding:8px}
+.col-header{display:flex;align-items:center;gap:8px;padding:8px;margin-bottom:8px}.col-header h3{font-size:13px;font-weight:600;color:#172b4d}.col-header .count{font-size:11px;color:#6b778c;background:#fff;padding:1px 6px;border-radius:10px;font-weight:500}
+.card-item{background:#fff;border-radius:6px;padding:12px;margin-bottom:6px;box-shadow:0 1px 2px rgba(0,0,0,.08);cursor:pointer;transition:background .1s}.card-item:hover{background:#fafafa}
+.card-item .labels{display:flex;gap:4px;margin-bottom:8px}.card-item .label{height:6px;width:32px;border-radius:3px}
+.l-green{background:#61bd4f}.l-orange{background:#f2d600}.l-blue{background:#0079bf}.l-purple{background:#c377e0}
+.card-item h4{font-size:13px;font-weight:500;color:#172b4d;margin-bottom:6px}.card-item p{font-size:11px;color:#6b778c;line-height:1.4}.card-item .meta{display:flex;gap:8px;margin-top:8px;font-size:10px;color:#a5adba}
+.card-item .tag{font-size:10px;padding:2px 6px;border-radius:4px;background:#e4f0f6;color:#0079bf}
+</style></head><body>
+<div class="pg">
+<div class="nav"><h2>MMGIS</h2><div class="dots"><span style="background:#fff156"></span><span style="background:#c0822f"></span><span style="background:#ffeaaf"></span><span style="background:#8ab645"></span><span style="background:#ea3a00"></span><span style="background:#edd49e"></span><span style="background:#e7bdcb"></span><span style="background:#72d1cb"></span><span style="background:#08aeea"></span></div><p>Mission Board</p><div class="right"><div class="avatar">TK</div></div></div>
+<div class="board">
+<div class="column">
+<div class="col-header"><h3>&#127758; Earth Missions</h3><span class="count">1</span></div>
+<div class="card-item"><div class="labels"><div class="label l-green"></div><div class="label l-blue"></div></div><h4>Reference-Mission</h4><p>San Francisco Bay Area reference dataset</p><div class="meta"><span class="tag">22 layers</span><span class="tag">14 tools</span><span>&#128337; Active</span></div></div>
+</div>
+<div class="column">
+<div class="col-header"><h3>&#127756; Mars Missions</h3><span class="count">1</span></div>
+<div class="card-item"><div class="labels"><div class="label l-orange"></div></div><h4>Mars-2020</h4><p>Jezero Crater operations map for Perseverance</p><div class="meta"><span class="tag">18 layers</span><span class="tag">12 tools</span><span>&#128337; Active</span></div></div>
+</div>
+<div class="column">
+<div class="col-header"><h3>&#10052; Outer Planets</h3><span class="count">1</span></div>
+<div class="card-item"><div class="labels"><div class="label l-purple"></div></div><h4>Europa-Survey</h4><p>Europa ice shell survey and geological mapping</p><div class="meta"><span class="tag">12 layers</span><span class="tag">8 tools</span><span>&#128337; Active</span></div></div>
+</div>
+<div class="column">
+<div class="col-header"><h3>&#127769; Lunar Missions</h3><span class="count">1</span></div>
+<div class="card-item"><div class="labels"><div class="label l-blue"></div></div><h4>Lunar-Recon</h4><p>Lunar south pole reconnaissance datasets</p><div class="meta"><span class="tag">15 layers</span><span class="tag">10 tools</span><span>&#128337; Active</span></div></div>
+</div>
+</div>
+</div></body></html>

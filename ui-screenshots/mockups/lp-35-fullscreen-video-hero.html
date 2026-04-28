@@ -1,0 +1,34 @@
+<!DOCTYPE html><html><head><meta charset="utf-8"/><title>LP-35 Fullscreen Video Hero</title>
+<style>@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap');*{margin:0;padding:0;box-sizing:border-box}
+html,body{width:100%;height:100%;overflow:hidden;font-family:'Inter',sans-serif}
+.video-bg{position:absolute;inset:0;background:linear-gradient(135deg,#0a2a4a,#0a1a3a,#1a0a2a,#0a2a2a);background-size:400% 400%;animation:shift 10s ease infinite}
+@keyframes shift{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
+.video-bg::after{content:'';position:absolute;inset:0;background:rgba(0,0,0,.4)}
+.overlay{position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.01) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.01) 1px,transparent 1px);background-size:60px 60px}
+.content{position:relative;z-index:2;height:100%;display:flex;flex-direction:column}
+.nav{height:60px;display:flex;align-items:center;padding:0 48px;gap:32px}.nav .logo{font-size:18px;font-weight:700;color:#fff;letter-spacing:3px}.nav .dots{display:flex;gap:3px}.nav .dots span{width:4px;height:4px;border-radius:50%}.nav a{font-size:12px;color:rgba(255,255,255,.5);text-decoration:none;transition:color .15s}.nav a:hover{color:#fff}.nav .signin{margin-left:auto;padding:6px 16px;border-radius:20px;border:1px solid rgba(255,255,255,.2);font-size:12px;color:#fff;background:transparent;cursor:pointer}
+.hero{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center}
+.hero h1{font-size:80px;font-weight:800;color:#fff;line-height:1;letter-spacing:-2px;margin-bottom:16px}
+.hero p{font-size:18px;color:rgba(255,255,255,.4);max-width:500px;line-height:1.6}
+.cta-group{display:flex;gap:16px;margin-top:32px}
+.cta-main{padding:14px 32px;border-radius:28px;background:#fff;color:#000;font-size:14px;font-weight:600;border:none;cursor:pointer;transition:transform .15s}.cta-main:hover{transform:scale(1.03)}
+.cta-ghost{padding:14px 32px;border-radius:28px;background:transparent;color:#fff;font-size:14px;font-weight:500;border:1px solid rgba(255,255,255,.2);cursor:pointer}
+.missions-bar{display:flex;justify-content:center;gap:32px;padding:24px;background:rgba(0,0,0,.3);backdrop-filter:blur(20px);border-top:1px solid rgba(255,255,255,.05)}
+.mb-item{text-align:center;cursor:pointer;transition:all .15s;padding:8px 16px;border-radius:8px}.mb-item:hover{background:rgba(255,255,255,.05)}
+.mb-item h3{font-size:14px;color:#fff;font-weight:500}.mb-item p{font-size:10px;color:rgba(255,255,255,.3);margin-top:2px}
+</style></head><body>
+<div class="video-bg"></div><div class="overlay"></div>
+<div class="content">
+<div class="nav"><span class="logo">MMGIS</span><div class="dots"><span style="background:#fff156"></span><span style="background:#c0822f"></span><span style="background:#ffeaaf"></span><span style="background:#8ab645"></span><span style="background:#ea3a00"></span><span style="background:#edd49e"></span><span style="background:#e7bdcb"></span><span style="background:#72d1cb"></span><span style="background:#08aeea"></span></div><a href="#">Missions</a><a href="#">Docs</a><a href="#">About</a><button class="signin">Sign In</button></div>
+<div class="hero">
+<h1>Explore Every World</h1>
+<p>The Multi-Mission Geographic Information System brings planetary mapping data to your browser.</p>
+<div class="cta-group"><button class="cta-main">Browse Missions</button><button class="cta-ghost">Watch Demo</button></div>
+</div>
+<div class="missions-bar">
+<div class="mb-item"><h3>&#127758; Reference-Mission</h3><p>22 layers &middot; SF Bay Area</p></div>
+<div class="mb-item"><h3>&#127756; Mars-2020</h3><p>18 layers &middot; Jezero Crater</p></div>
+<div class="mb-item"><h3>&#10052; Europa-Survey</h3><p>12 layers &middot; Pwyll Crater</p></div>
+<div class="mb-item"><h3>&#127769; Lunar-Recon</h3><p>15 layers &middot; South Pole</p></div>
+</div>
+</div></body></html>

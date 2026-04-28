@@ -1,0 +1,36 @@
+<!DOCTYPE html><html><head><meta charset="utf-8"/><title>LP-16 Orbital Rings</title>
+<style>@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');*{margin:0;padding:0;box-sizing:border-box}
+html,body{width:100%;height:100%;overflow:hidden;font-family:'Inter',sans-serif;background:#08080f}
+.rings{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%)}
+.ring{position:absolute;border-radius:50%;border:1px solid rgba(255,255,255,.03);top:50%;left:50%;transform:translate(-50%,-50%)}
+.r1{width:300px;height:300px;animation:spin 20s linear infinite}.r2{width:500px;height:500px;animation:spin 30s linear infinite reverse}.r3{width:700px;height:700px;animation:spin 40s linear infinite}.r4{width:900px;height:900px;border-color:rgba(255,255,255,.015)}
+@keyframes spin{0%{transform:translate(-50%,-50%) rotate(0deg)}100%{transform:translate(-50%,-50%) rotate(360deg)}}
+.dot{position:absolute;width:6px;height:6px;border-radius:50%;top:-3px;left:50%;transform:translateX(-50%)}
+.content{position:relative;z-index:2;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center}
+.logo{margin-bottom:48px;text-align:center}
+.logo h1{font-size:80px;font-weight:200;color:#fff;letter-spacing:16px}.logo .dots{display:flex;gap:6px;justify-content:center;margin-top:8px}.logo .dots span{width:6px;height:6px;border-radius:50%}
+.logo .tag{font-size:12px;color:rgba(255,255,255,.2);letter-spacing:5px;text-transform:uppercase;margin-top:16px}
+.ms{display:flex;gap:48px;align-items:center}
+.mi{text-align:center;cursor:pointer;transition:all .3s;padding:20px;border-radius:12px}
+.mi:hover{background:rgba(255,255,255,.02)}
+.mi .orb{width:56px;height:56px;border-radius:50%;margin:0 auto 12px;display:flex;align-items:center;justify-content:center;font-size:24px;transition:all .3s}
+.mi:hover .orb{transform:scale(1.1)}
+.mi h3{font-size:14px;font-weight:500;color:rgba(255,255,255,.7);margin-bottom:2px}.mi p{font-size:10px;color:rgba(255,255,255,.2)}
+.bot{position:absolute;bottom:24px;display:flex;gap:24px}.bot span{font-size:10px;color:rgba(255,255,255,.12)}
+</style></head><body>
+<div class="rings">
+<div class="ring r1"><div class="dot" style="background:#3fb950"></div></div>
+<div class="ring r2"><div class="dot" style="background:#f0883e"></div></div>
+<div class="ring r3"><div class="dot" style="background:#a371f7"></div></div>
+<div class="ring r4"></div>
+</div>
+<div class="content">
+<div class="logo"><h1>MMGIS</h1><div class="dots"><span style="background:#fff156"></span><span style="background:#c0822f"></span><span style="background:#ffeaaf"></span><span style="background:#8ab645"></span><span style="background:#ea3a00"></span><span style="background:#edd49e"></span><span style="background:#e7bdcb"></span><span style="background:#72d1cb"></span><span style="background:#08aeea"></span></div><div class="tag">Multi-Mission Geographic Information System</div></div>
+<div class="ms">
+<div class="mi"><div class="orb" style="background:rgba(63,185,80,.08);border:1px solid rgba(63,185,80,.15)">&#127758;</div><h3>Reference-Mission</h3><p>22 layers</p></div>
+<div class="mi"><div class="orb" style="background:rgba(240,136,62,.08);border:1px solid rgba(240,136,62,.15)">&#127756;</div><h3>Mars-2020</h3><p>18 layers</p></div>
+<div class="mi"><div class="orb" style="background:rgba(163,113,247,.08);border:1px solid rgba(163,113,247,.15)">&#10052;</div><h3>Europa-Survey</h3><p>12 layers</p></div>
+<div class="mi"><div class="orb" style="background:rgba(88,166,255,.08);border:1px solid rgba(88,166,255,.15)">&#127769;</div><h3>Lunar-Recon</h3><p>15 layers</p></div>
+</div>
+<div class="bot"><span>v4.3.27</span><span>NASA/JPL-Caltech</span></div>
+</div></body></html>
