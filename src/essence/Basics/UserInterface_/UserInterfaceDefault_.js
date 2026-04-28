@@ -444,7 +444,7 @@ var UserInterface = {
             .css({
                 position: 'absolute',
                 bottom: '12px',
-                left: (this.topSize + 12) + 'px',
+                left: '12px',
                 right: '12px',
                 'z-index': '1003',
                 'border-radius': '10px',
