@@ -820,6 +820,8 @@ var UserInterface = {
         $('#mmgis-map-compass').css({ bottom: (offset + 38) + 'px', left: (12 + tpShift) + 'px', transition: 'bottom 0.2s ease-out, left 0.2s ease-out' })
         $('.leaflet-bottom.leaflet-right').css({ bottom: offset + 'px' })
         $('#CoordinatesDiv').css({ bottom: offset + 'px' })
+        $('#photosphereAzIndicator').css({ bottom: offset + 'px', transition: 'bottom 0.2s ease-out' })
+        $('#_lithosphere_controls_bottomleft').css({ bottom: (offset + 10) + 'px', transition: 'bottom 0.2s ease-out' })
 
         // Adjust vertical tool panel height so it doesn't overlap the bottom bar
         if (UserInterface.toolPanel) {
