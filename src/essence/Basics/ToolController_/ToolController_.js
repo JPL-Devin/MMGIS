@@ -65,6 +65,7 @@ let ToolController_ = {
             .css({
                 'width': '26px',
                 'height': '1px',
+                'background': '#2a3444',
                 'margin': '4px auto',
             })
         this.sepToolbarDiv.append(sepDivider)

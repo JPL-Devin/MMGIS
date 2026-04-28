@@ -10,7 +10,6 @@ import UserInterfaceBridge from './UserInterfaceBridge'
 import { refreshThemeDOM } from '../../../design-system/themeApplier'
 import { getCurrentTheme } from '../../../design-system/useTheme'
 
-import uiStore from './store/uiStore'
 import './UserInterfaceDefault_.css'
 
 var Viewer_ = null
@@ -1141,7 +1140,6 @@ function mainContainerOnMouseUp(e) {
     $('#main-container').off('touchmove', mapSplitOnMouseMove)
     $('#main-container').off('touchmove', globeSplitOnMouseMove)
     $('#main-container').off('touchmove', toolsSplitOnMouseMove)
-    syncPanelStoreFromPixels()
     return false
 }
 function mainContainerOnMouseOut(e) {
@@ -1159,19 +1157,7 @@ function mainContainerOnMouseOut(e) {
     $('#main-container').off('touchmove', mapSplitOnMouseMove)
     $('#main-container').off('touchmove', globeSplitOnMouseMove)
     $('#main-container').off('touchmove', toolsSplitOnMouseMove)
-    syncPanelStoreFromPixels()
     return false
-}
-
-function syncPanelStoreFromPixels() {
-    const threshold = 5
-    const viewerOpen = UserInterface.pxIsViewer > threshold
-    const mapOpen = UserInterface.pxIsMap > threshold
-    const globeOpen = UserInterface.pxIsGlobe > threshold
-    const state = uiStore.getState()
-    if (state.viewerPanelOpen !== viewerOpen) state.setViewerPanelOpen(viewerOpen)
-    if (state.mapPanelOpen !== mapOpen) state.setMapPanelOpen(mapOpen)
-    if (state.globePanelOpen !== globeOpen) state.setGlobePanelOpen(globeOpen)
 }
 
 //The splitter between viewer and map
