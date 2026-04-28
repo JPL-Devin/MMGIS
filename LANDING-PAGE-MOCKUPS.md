@@ -2,41 +2,41 @@
 
 62 landing page design explorations.
 
-### LP-01: Dark Glass Grid
-![Dark Glass Grid](ui-screenshots/mockups/lp-01-dark-glass-grid.png)
+### LP-01: Hero Map Preview
+![Hero Map Preview](ui-screenshots/mockups/lp-01-hero-map-preview.png)
 
-### LP-02: Gradient Wave
-![Gradient Wave](ui-screenshots/mockups/lp-02-gradient-wave.png)
+### LP-02: Split Globe
+![Split Globe](ui-screenshots/mockups/lp-02-split-globe.png)
 
-### LP-03: Dark Minimal List
-![Dark Minimal List](ui-screenshots/mockups/lp-03-dark-minimal-list.png)
+### LP-03: Minimal Dark
+![Minimal Dark](ui-screenshots/mockups/lp-03-minimal-dark.png)
 
-### LP-04: Light Card Grid
-![Light Card Grid](ui-screenshots/mockups/lp-04-light-card-grid.png)
+### LP-04: Light Modern Cards
+![Light Modern Cards](ui-screenshots/mockups/lp-04-light-modern-cards.png)
 
-### LP-05: Split Screen Hero
-![Split Screen Hero](ui-screenshots/mockups/lp-05-split-screen-hero.png)
+### LP-05: Full-Bleed Satellite
+![Full-Bleed Satellite](ui-screenshots/mockups/lp-05-fullbleed-satellite.png)
 
-### LP-06: Top Nav + Search
-![Top Nav + Search](ui-screenshots/mockups/lp-06-top-nav-search.png)
+### LP-06: Command Center
+![Command Center](ui-screenshots/mockups/lp-06-command-center.png)
 
-### LP-07: Dark Carousel
-![Dark Carousel](ui-screenshots/mockups/lp-07-dark-carousel.png)
+### LP-07: Cinematic Widescreen
+![Cinematic Widescreen](ui-screenshots/mockups/lp-07-cinematic-widescreen.png)
 
-### LP-08: Parchment Atlas
-![Parchment Atlas](ui-screenshots/mockups/lp-08-parchment-atlas.png)
+### LP-08: Atlas / Cartography
+![Atlas / Cartography](ui-screenshots/mockups/lp-08-atlas-cartography.png)
 
-### LP-09: Neon HUD
-![Neon HUD](ui-screenshots/mockups/lp-09-neon-hud.png)
+### LP-09: Search-First
+![Search-First](ui-screenshots/mockups/lp-09-search-first.png)
 
-### LP-10: Earth From Space
-![Earth From Space](ui-screenshots/mockups/lp-10-earth-from-space.png)
+### LP-10: Right Sidebar with Map Preview
+![Right Sidebar with Map Preview](ui-screenshots/mockups/lp-10-right-sidebar-map.png)
 
-### LP-11: Mission Timeline
-![Mission Timeline](ui-screenshots/mockups/lp-11-mission-timeline.png)
+### LP-11: Warm Earth Tones
+![Warm Earth Tones](ui-screenshots/mockups/lp-11-warm-earth-tones.png)
 
-### LP-12: Material Dashboard
-![Material Dashboard](ui-screenshots/mockups/lp-12-material-dashboard.png)
+### LP-12: Glass Dashboard
+![Glass Dashboard](ui-screenshots/mockups/lp-12-glass-dashboard.png)
 
 ### LP-13: Gradient Mesh Aurora
 ![Gradient Mesh Aurora](ui-screenshots/mockups/lp-13-gradient-mesh-aurora.png)
