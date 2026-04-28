@@ -108,11 +108,10 @@ function applyThemeToDOM(themeName) {
         el.style.color = t['--color-a3']
     })
 
-    // --- ToolsWrapper border ---
+    // --- ToolsWrapper border (removed per task 36) ---
     const toolsWrapper = document.getElementById('toolsWrapper')
     if (toolsWrapper) {
-        const h = parseInt(toolsWrapper.style.height) || 0
-        toolsWrapper.style.borderBottom = h > 0 ? `1px solid ${t['--color-a1']}` : '1px solid transparent'
+        toolsWrapper.style.borderBottom = 'none'
     }
 
     // --- TopBar title ---
