@@ -290,7 +290,6 @@ let ToolController_ = {
                     .css('cursor', 'pointer')
                     .attr('tabindex', i + 1)
                     .css('transition', 'all 0.2s ease-in')
-                    .css('color', ToolController_.defaultColor)
                     .on(
                         'click',
                         (function (i) {
@@ -302,25 +301,16 @@ let ToolController_ = {
                                 var prevActive = $(
                                     '#toolcontroller_incdiv .active'
                                 )
-                                prevActive.removeClass('active').css({
-                                    color: ToolController_.defaultColor,
-                                    background: 'none',
-                                })
-                                prevActive.parent().css({
-                                    background: 'none',
-                                })
+                                prevActive.removeClass('active')
+                                prevActive.parent().removeClass('toolButtonActive')
                                 if (!hasActive) {
                                     var newActive = $(
                                         '#toolcontroller_incdiv #' +
                                             ToolController_.tools[i].name +
                                             'Tool'
                                     )
-                                    newActive.addClass('active').css({
-                                        color: ToolController_.activeColor,
-                                    })
-                                    newActive.parent().css({
-                                        background: ToolController_.activeBG,
-                                    })
+                                    newActive.addClass('active')
+                                    newActive.parent().addClass('toolButtonActive')
                                 }
 
                                 ToolController_.makeTool(
@@ -385,7 +375,6 @@ let ToolController_ = {
                     'vertical-align': 'middle',
                     'cursor': 'pointer',
                     'transition': 'all 0.2s ease-in',
-                    'color': ToolController_.defaultColor
                 })
                 .on(
                     'click',
@@ -396,20 +385,14 @@ let ToolController_ = {
                                 hasActive = true
                             }
                             var prevActive = $('#toolcontroller_incdiv .active')
-                            prevActive.removeClass('active').css({
-                                color: ToolController_.defaultColor,
-                                background: 'none',
-                            })
-                            prevActive.parent().css({
-                                background: 'none',
-                            })
+                            prevActive.removeClass('active')
+                            prevActive.parent().removeClass('toolButtonActive')
                             if (!hasActive) {
                                 var newActive = $(
                                     '#toolcontroller_incdiv #toggleTimeUI'
                                 )
-                                newActive.addClass('active').css({
-                                    color: ToolController_.activeColor,
-                                })
+                                newActive.addClass('active')
+                                newActive.addClass('toolButtonActive')
 
                                 TimeUI.initialize()
                                 ToolController_.setToolHeight(TimeUI.height)
@@ -461,7 +444,6 @@ let ToolController_ = {
                     'vertical-align': 'middle',
                     'cursor': 'pointer',
                     'transition': 'all 0.2s ease-in',
-                    'color': ToolController_.defaultColor
                 })
                 .on(
                     'click',
@@ -472,20 +454,14 @@ let ToolController_ = {
                                 hasActive = true
                             }
                             var prevActive = $('#toolcontroller_incdiv .active')
-                            prevActive.removeClass('active').css({
-                                color: ToolController_.defaultColor,
-                                background: 'none',
-                            })
-                            prevActive.parent().css({
-                                background: 'none',
-                            })
+                            prevActive.removeClass('active')
+                            prevActive.parent().removeClass('toolButtonActive')
                             if (!hasActive) {
                                 var newActive = $(
                                     '#toolcontroller_incdiv #coordinatesDiv'
                                 )
-                                newActive.addClass('active').css({
-                                    color: ToolController_.activeColor,
-                                })
+                                newActive.addClass('active')
+                                newActive.addClass('toolButtonActive')
 
                                 L_.Coordinates.initialize()
                                 L_.Coordinates.init()
@@ -629,11 +605,8 @@ let ToolController_ = {
     },
     closeActiveTool: function () {
         var prevActive = $('#toolcontroller_incdiv .active')
-        prevActive.removeClass('active').css({
-            color: ToolController_.defaultColor,
-            background: 'none',
-        })
-        prevActive.parent().css({ background: 'none' })
+        prevActive.removeClass('active')
+        prevActive.parent().removeClass('toolButtonActive')
 
         if (this.activeTool != null) {
             try {

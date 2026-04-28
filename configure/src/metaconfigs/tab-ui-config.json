@@ -477,18 +477,11 @@
           "width": 10
         },
         {
-          "field": "look.infoModalTitle",
-          "name": "Info Modal Title",
-          "description": "Custom title for the Info modal (default: About MMGIS).",
-          "type": "text",
-          "width": 10
-        },
-        {
           "field": "look.infoModalContent",
           "name": "Info Modal Content",
-          "description": "Custom HTML/text content to display in the Info modal.",
-          "type": "text",
-          "width": 10
+          "description": "Custom markdown content displayed in the Info modal.",
+          "type": "markdown",
+          "width": 12
         }
       ]
     }

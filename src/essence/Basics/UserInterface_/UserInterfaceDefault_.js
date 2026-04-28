@@ -590,9 +590,7 @@ var UserInterface = {
                         // Watch for TimeUI class changes (active/expanded)
                         const timeUIObserver = new MutationObserver(function () {
                             UserInterface._updateBottomBarVisibility()
-                            setTimeout(function () {
-                                UserInterface._updateBottomBarDependents()
-                            }, 350)
+                            UserInterface._updateBottomBarDependents()
                         })
                         timeUIObserver.observe(timeUI, { attributes: true, attributeFilter: ['class'] })
                         return
@@ -725,6 +723,7 @@ var UserInterface = {
             display: 'block',
         })
         UserInterface._repositionSeparatedContent(width)
+        UserInterface._updateBottomBarVisibility()
         UserInterface._updateBottomBarDependents()
         refreshThemeDOM()
     },
@@ -752,6 +751,7 @@ var UserInterface = {
         })
         UserInterface.toolPanelDrag.css('display', 'none')
         UserInterface._repositionSeparatedContent(0)
+        UserInterface._updateBottomBarVisibility()
         UserInterface._updateBottomBarDependents()
         refreshThemeDOM()
     },
@@ -803,13 +803,6 @@ var UserInterface = {
         // Also update the floating bar visibility
         UserInterface._updateBottomBarVisibility()
         UserInterface._updateBottomBarDependents()
-
-        // Update dependents again after transition completes
-        if (!shouldntAnimate) {
-            setTimeout(function () {
-                UserInterface._updateBottomBarDependents()
-            }, 350)
-        }
     },
     setToolWidth(newWidth, alignment) {
         // In the floating bottom bar, toolsWrapper always spans 100% of the bar
@@ -852,7 +845,10 @@ var UserInterface = {
         const bar = $('#bottomFloatingBar')
         if (!bar.length) return
 
-        const twH = $('#toolsWrapper').outerHeight() || 0
+        // Use the known target pxIsTools rather than reading the DOM value
+        // (toolsWrapper has a CSS transition, so outerHeight() returns the
+        // current animated value, not the final target)
+        const twH = UserInterface.pxIsTools || 0
         const tdH = $('#timeUIDock').outerHeight() || 0
         bar.css('height', (twH + tdH) + 'px')
     },
@@ -860,31 +856,31 @@ var UserInterface = {
         const bar = $('#bottomFloatingBar')
         if (!bar.length) return
 
-        UserInterface._syncBottomBarHeight()
+        // Calculate the TARGET bar height directly from known values
+        // instead of reading bar.outerHeight() which may be mid-transition
+        const toolsH = UserInterface.pxIsTools || 0
+        const timeUIDockH = $('#timeUIDock').outerHeight() || 0
+        const targetBarHeight = toolsH + timeUIDockH
 
-        // Total height of the floating bar from bottom edge of viewport
-        const barHeight = bar.outerHeight() || 0
-        const barBottom = 12 // matches the bar's bottom offset
-        const totalOffset = barHeight + barBottom
+        // Sync bar to target height immediately
+        bar.css('height', targetBarHeight + 'px')
 
-        // Only offset map controls if the bar is visible
+        const barBottom = 12
+        const totalOffset = targetBarHeight + barBottom
+
         const isVisible = bar.css('display') !== 'none'
         const offset = isVisible ? totalOffset : 0
 
-        // Get current tool panel width for left offset of map controls
-        const toolPanelWidth = parseInt(UserInterface.toolPanel?.css('width')) || 0
-        const leftBase = toolPanelWidth > 0 ? (toolPanelWidth + UserInterface.topSize + 24) : 0
-
-        $('#mapToolBar').css({ bottom: offset + 'px', left: leftBase + 'px', transition: 'bottom 0.2s ease-out, left 0.2s ease-out' })
-        $('.leaflet-control-scalefactor').css({ bottom: (offset + 28) + 'px', left: leftBase + 'px', transition: 'bottom 0.2s ease-out, left 0.2s ease-out' })
+        $('#mapToolBar').css({ bottom: offset + 'px', transition: 'bottom 0.2s ease-out' })
+        $('.leaflet-control-scalefactor').css({ bottom: (offset + 28) + 'px', transition: 'bottom 0.2s ease-out' })
         $('#mmgis-attributions').css({ bottom: offset + 'px' })
         if (
             $('#mmgis-attributions').length === 0 ||
             $('#mmgis-attributions').text().trim().length === 0
         ) {
-            $('#mmgis-map-compass').css({ bottom: (offset + 38) + 'px', left: (leftBase + 8) + 'px', transition: 'bottom 0.2s ease-out, left 0.2s ease-out' })
+            $('#mmgis-map-compass').css({ bottom: (offset + 38) + 'px', transition: 'bottom 0.2s ease-out' })
         } else {
-            $('#mmgis-map-compass').css({ bottom: (offset + 58) + 'px', left: (leftBase + 8) + 'px', transition: 'bottom 0.2s ease-out, left 0.2s ease-out' })
+            $('#mmgis-map-compass').css({ bottom: (offset + 58) + 'px', transition: 'bottom 0.2s ease-out' })
         }
         $('.leaflet-bottom.leaflet-right').css({ bottom: offset + 'px' })
         $('#CoordinatesDiv').css({ bottom: offset + 'px' })
@@ -1237,8 +1233,6 @@ function mapSplitOnMouseMove(e) {
 
         e.clientX -= 40 //Left toolbar
 
-        e.clientX -= $('#toolPanel').width()
-
         if (e.clientX >= UserInterface.mainWidth - 5) {
             e.clientX = UserInterface.mainWidth
         } else if (e.clientX <= 5) {
@@ -1329,8 +1323,6 @@ function globeSplitOnMouseMove(e) {
             e.clientX = e.originalEvent.touches[0].clientX
 
         e.clientX -= 40 //Left toolbar
-
-        e.clientX -= $('#toolPanel').width()
 
         if (UserInterface.hasViewer !== false) {
             e.clientX -= UserInterface.splitterSize

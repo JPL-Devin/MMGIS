@@ -1,5 +1,6 @@
 import $ from 'jquery'
 import hotkeys from 'hotkeys-js'
+import showdown from 'showdown'
 
 import F_ from '../Formulae_/Formulae_'
 import L_ from '../Layers_/Layers_'
@@ -11,7 +12,10 @@ import tippy from 'tippy.js'
 
 import './BottomBar.css'
 
+showdown.setFlavor('github')
+
 let BottomBar = {
+    mdConverter: new showdown.Converter(),
     UI_: null,
     settings: {},
     init: function (containerId, UI) {
@@ -82,22 +86,44 @@ let BottomBar = {
     showInfoModal: function () {
         const version = window.mmgisglobal?.version || L_.configData?.version || ''
         const mission = L_.configData?.msv?.mission || ''
-        const title = L_.configData?.look?.infoModalTitle || 'About MMGIS'
         const helpUrl = L_.configData?.look?.helpurl || ''
         const infoContent = L_.configData?.look?.infoModalContent || ''
+        const logoUrl = L_.configData?.look?.logourl || ''
 
-        let body = '<div style="padding:16px;color:var(--color-l);font-size:14px;">'
-        if (mission) body += '<div style="margin-bottom:12px;"><b>Mission:</b> ' + mission + '</div>'
-        if (version) body += '<div style="margin-bottom:12px;"><b>Version:</b> ' + version + '</div>'
-        if (helpUrl) {
-            body += '<div style="margin-bottom:12px;"><b>Help:</b> <a href="' + helpUrl + '" target="_blank" rel="noopener" style="color:var(--color-c);">' + helpUrl + '</a></div>'
-        }
-        if (infoContent) {
-            body += '<div style="margin-bottom:12px;">' + infoContent + '</div>'
-        }
-        body += '</div>'
+        const mmgisLogoSvg = `<svg width="48" height="48" viewBox="0 0 231 137" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0.222266 9.21339C-0.277832 14.7126 0.222266 133.713 0.222266 133.713H26.2223V45.7134C26.2223 45.7134 100.722 127.712 106.222 132.713C109.171 135.395 112.12 136.782 115.222 136.645C118.325 136.782 121.274 135.395 124.222 132.713C129.722 127.712 204.222 45.7134 204.222 45.7134V133.713H230.222C230.222 133.713 230.722 14.7126 230.222 9.21339C229.722 3.71413 218.222 -3.28766 210.222 1.71339C202.222 6.71444 115.222 104.713 115.222 104.713C115.222 104.713 28.2224 6.71444 20.2223 1.71339C12.2222 -3.28766 0.722363 3.71413 0.222266 9.21339Z" fill="var(--color-mmgis)"></path></svg>`
 
-        Modal.set(title, body, null, Modal.defaultColor)
+        // prettier-ignore
+        const modalContent = [
+            `<div id='mainInfoModal'>`,
+                `<div id='mainInfoModalTitle'>`,
+                    `<div><i class='mdi mdi-information-outline mdi-18px'></i><div>About</div></div>`,
+                    `<div id='mainInfoModalClose'><i class='mmgisHoverBlue mdi mdi-close mdi-18px'></i></div>`,
+                `</div>`,
+                `<div id='mainInfoModalContent'>`,
+                    `<div class='mainInfoModalLogos'>`,
+                        `<div class='mainInfoModalMmgisLogo'>${mmgisLogoSvg}</div>`,
+                        logoUrl ? `<img class='mainInfoModalMapLogo' src='${logoUrl}' alt='Logo' />` : '',
+                    `</div>`,
+                    `<div class='mainInfoModalDetails'>`,
+                        mission ? `<div class='mainInfoModalRow'><span class='mainInfoModalLabel'>Mission</span><span>${mission}</span></div>` : '',
+                        version ? `<div class='mainInfoModalRow'><span class='mainInfoModalLabel'>Version</span><span>${version}</span></div>` : '',
+                        helpUrl ? `<div class='mainInfoModalRow'><span class='mainInfoModalLabel'>Help</span><a href='${helpUrl}' target='_blank' rel='noopener' style='color:var(--color-c);'>${helpUrl}</a></div>` : '',
+                    `</div>`,
+                    `<div class='mainInfoModalDescription'>Multi-Mission Geographic Information System</div>`,
+                    infoContent ? `<div class='mainInfoModalCustom'>${BottomBar.mdConverter.makeHtml(infoContent)}</div>` : '',
+                `</div>`,
+            `</div>`
+        ].join('\n')
+
+        Modal.set(
+            modalContent,
+            function () {
+                $('#mainInfoModalClose').on('click', function () {
+                    Modal.remove()
+                })
+            },
+            function () {}
+        )
     },
     takeScreenshot: function () {
         let zIndices = []
