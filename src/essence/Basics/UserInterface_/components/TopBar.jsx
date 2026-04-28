@@ -26,14 +26,15 @@ function TopBar({ UserInterface }) {
     const handleToggleViewer = useCallback(() => {
         if (UserInterface && UserInterface.hasViewer === false) return
         const newState = !uiStore.getState().viewerPanelOpen
-        uiStore.getState().setViewerPanelOpen(newState)
         if (UserInterface && UserInterface.setPanelPercents) {
             const pp = UserInterface.getPanelPercents()
             if (newState) {
+                uiStore.getState().setViewerPanelOpen(true)
                 const globeAmt = pp.globe > 0 ? 33 : 0
                 const mapAmt = 100 - 33 - globeAmt
                 UserInterface.setPanelPercents(33, mapAmt, globeAmt)
             } else {
+                uiStore.getState().setViewerPanelOpen(false)
                 if (pp.map > 0 && pp.globe > 0) {
                     UserInterface.setPanelPercents(0, pp.map + pp.viewer / 2, pp.globe + pp.viewer / 2)
                 } else if (pp.map > 0) {
@@ -94,14 +95,15 @@ function TopBar({ UserInterface }) {
             // continue with the close logic. If opening, re-check state after async init.
             if (newState && uiStore.getState().globePanelOpen === newState) return
         }
-        uiStore.getState().setGlobePanelOpen(newState)
         if (UserInterface && UserInterface.setPanelPercents) {
             const pp = UserInterface.getPanelPercents()
             if (newState) {
+                uiStore.getState().setGlobePanelOpen(true)
                 const viewerAmt = pp.viewer > 0 ? 33 : 0
                 const mapAmt = 100 - 33 - viewerAmt
                 UserInterface.setPanelPercents(viewerAmt, mapAmt, 33)
             } else {
+                uiStore.getState().setGlobePanelOpen(false)
                 if (pp.map > 0 && pp.viewer > 0) {
                     UserInterface.setPanelPercents(pp.viewer + pp.globe / 2, pp.map + pp.globe / 2, 0)
                 } else if (pp.map > 0) {
