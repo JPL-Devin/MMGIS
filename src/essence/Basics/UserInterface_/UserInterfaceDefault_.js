@@ -655,6 +655,7 @@ var UserInterface = {
     openToolPanel: function (width) {
         UserInterface.toolPanel.empty()
         $('#tools').empty()
+        UserInterface._toolPanelWidth = width
         UserInterface.toolPanel.css({
             width: width + 'px',
             opacity: '1',
@@ -676,6 +677,7 @@ var UserInterface = {
             ToolController_.getTool(ToolController_.activeToolName)?.width ||
                 300
         )
+        UserInterface._toolPanelWidth = width
         UserInterface.toolPanel.css('width', width + 'px')
         UserInterface.toolPanelDrag.css({
             left: (width + UserInterface.topSize + 12) + 'px',
@@ -686,6 +688,7 @@ var UserInterface = {
     },
     closeToolPanel: function () {
         UserInterface.toolPanel.empty()
+        UserInterface._toolPanelWidth = 0
         UserInterface.toolPanel.css({
             width: '0',
             opacity: '0',
@@ -808,22 +811,13 @@ var UserInterface = {
         const isVisible = bar[0].style.display !== 'none'
         const offset = isVisible ? totalOffset : 0
 
-        // Calculate left offset from vertical tool panel
-        const toolPanelW = UserInterface.toolPanel ? (parseInt(UserInterface.toolPanel.css('width')) || 0) : 0
-        const tpShift = toolPanelW > 0 ? toolPanelW : 0
+        // Calculate left offset from vertical tool panel (use stored value, not DOM read)
+        const tpShift = UserInterface._toolPanelWidth || 0
 
         $('#mapToolBar').css({ bottom: offset + 'px', transition: 'bottom 0.2s ease-out' })
-        // Base left positions: scalefactor=44px, compass=12px, attributions=12px (from CSS)
+        // Base left positions: scalefactor=44px, compass=12px (from CSS)
         $('.leaflet-control-scalefactor').css({ bottom: (offset + 28) + 'px', left: (44 + tpShift) + 'px', transition: 'bottom 0.2s ease-out, left 0.2s ease-out' })
-        $('#mmgis-attributions').css({ bottom: offset + 'px', left: (12 + tpShift) + 'px' })
-        if (
-            $('#mmgis-attributions').length === 0 ||
-            $('#mmgis-attributions').text().trim().length === 0
-        ) {
-            $('#mmgis-map-compass').css({ bottom: (offset + 38) + 'px', left: (12 + tpShift) + 'px', transition: 'bottom 0.2s ease-out, left 0.2s ease-out' })
-        } else {
-            $('#mmgis-map-compass').css({ bottom: (offset + 58) + 'px', left: (12 + tpShift) + 'px', transition: 'bottom 0.2s ease-out, left 0.2s ease-out' })
-        }
+        $('#mmgis-map-compass').css({ bottom: (offset + 38) + 'px', left: (12 + tpShift) + 'px', transition: 'bottom 0.2s ease-out, left 0.2s ease-out' })
         $('.leaflet-bottom.leaflet-right').css({ bottom: offset + 'px' })
         $('#CoordinatesDiv').css({ bottom: offset + 'px' })
 

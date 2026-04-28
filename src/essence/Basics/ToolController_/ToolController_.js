@@ -302,6 +302,7 @@ let ToolController_ = {
                                     '#toolcontroller_incdiv .active'
                                 )
                                 prevActive.removeClass('active')
+                                prevActive.removeClass('toolButtonActive')
                                 prevActive.parent().removeClass('toolButtonActive')
                                 if (!hasActive) {
                                     var newActive = $(

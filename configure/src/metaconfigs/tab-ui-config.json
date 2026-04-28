@@ -477,9 +477,9 @@
           "width": 10
         },
         {
-          "field": "look.infoModalContent",
-          "name": "Info Modal Content",
-          "description": "Custom markdown content displayed in the Info modal.",
+          "field": "look.aboutModalContent",
+          "name": "About Modal Content",
+          "description": "Custom markdown content displayed in the About modal.",
           "type": "markdown",
           "width": 12
         }
