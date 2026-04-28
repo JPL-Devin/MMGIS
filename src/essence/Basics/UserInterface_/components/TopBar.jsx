@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useEffect } from 'react'
+import React, { useState, useCallback, useEffect, useRef } from 'react'
 import { Button, Input } from '../../../../design-system'
 import uiStore from '../store/uiStore'
 import Globe_ from '../../Globe_/Globe_'
@@ -13,6 +13,10 @@ function TopBar({ UserInterface }) {
     const [globeOpen, setGlobeOpen] = useState(
         uiStore.getState().globePanelOpen
     )
+    const [username, setUsername] = useState(null)
+    const [showUserCard, setShowUserCard] = useState(false)
+    const userCardRef = useRef(null)
+    const userBtnRef = useRef(null)
 
     useEffect(() => {
         const unsub = uiStore.subscribe((state) => {
@@ -21,6 +25,42 @@ function TopBar({ UserInterface }) {
             setGlobeOpen(state.globePanelOpen)
         })
         return unsub
+    }, [])
+
+    useEffect(() => {
+        function syncUser() {
+            if (window.mmgisglobal && window.mmgisglobal.user && window.mmgisglobal.user !== 'guest') {
+                setUsername(window.mmgisglobal.user)
+            } else {
+                setUsername(null)
+            }
+        }
+        syncUser()
+        const interval = setInterval(syncUser, 2000)
+        return () => clearInterval(interval)
+    }, [])
+
+    // Hide the jQuery #loginDiv since we handle user UI in React now
+    useEffect(() => {
+        const loginDiv = document.getElementById('loginDiv')
+        if (loginDiv) loginDiv.style.display = 'none'
+        return () => {
+            if (loginDiv) loginDiv.style.display = ''
+        }
+    }, [])
+
+    // Close user card when clicking outside
+    useEffect(() => {
+        function handleClickOutside(e) {
+            if (
+                userCardRef.current && !userCardRef.current.contains(e.target) &&
+                userBtnRef.current && !userBtnRef.current.contains(e.target)
+            ) {
+                setShowUserCard(false)
+            }
+        }
+        document.addEventListener('mousedown', handleClickOutside)
+        return () => document.removeEventListener('mousedown', handleClickOutside)
     }, [])
 
     const handleToggleViewer = useCallback(() => {
@@ -74,7 +114,6 @@ function TopBar({ UserInterface }) {
                         UserInterface.setPanelPercents(0, 0, pp.globe + pp.map)
                     }
                 }
-                // If no other panels open, do nothing (can't close the only panel)
             }
         }
     }, [UserInterface])
@@ -83,7 +122,6 @@ function TopBar({ UserInterface }) {
         if (UserInterface && UserInterface.hasGlobe === false) return
         if (Globe_._isInitializing) return
         const newState = !uiStore.getState().globePanelOpen
-        // Lazy-init Globe if not yet initialized (whether opening or already "open" via config)
         if (!Globe_._initialized) {
             Globe_._isInitializing = true
             try {
@@ -91,8 +129,6 @@ function TopBar({ UserInterface }) {
             } finally {
                 Globe_._isInitializing = false
             }
-            // If Globe was already shown (config default) and user clicked to close,
-            // continue with the close logic. If opening, re-check state after async init.
             if (newState && uiStore.getState().globePanelOpen === newState) return
         }
         if (UserInterface && UserInterface.setPanelPercents) {
@@ -116,6 +152,17 @@ function TopBar({ UserInterface }) {
             }
         }
     }, [UserInterface])
+
+    const handleLogout = useCallback(() => {
+        setShowUserCard(false)
+        const loginoutBtn = document.getElementById('loginoutButton')
+        if (loginoutBtn) loginoutBtn.click()
+    }, [])
+
+    const handleSignIn = useCallback(() => {
+        const loginoutBtn = document.getElementById('loginoutButton')
+        if (loginoutBtn) loginoutBtn.click()
+    }, [])
 
     return (
         <div className="topbar-react-overlay">
@@ -150,6 +197,40 @@ function TopBar({ UserInterface }) {
                 >
                     Globe
                 </Button>
+            </div>
+
+            {/* User account area */}
+            <div className="topbar-user-area">
+                {username ? (
+                    <div className="topbar-user-wrapper">
+                        <div
+                            ref={userBtnRef}
+                            className="topbar-user-avatar"
+                            onClick={() => setShowUserCard(!showUserCard)}
+                            title={username}
+                        >
+                            {username[0].toUpperCase()}
+                        </div>
+                        {showUserCard && (
+                            <div ref={userCardRef} className="topbar-user-card">
+                                <div className="topbar-user-card-name">{username}</div>
+                                <div className="topbar-user-card-divider" />
+                                <div className="topbar-user-card-action" onClick={handleLogout}>
+                                    <i className="mdi mdi-logout" style={{ marginRight: 6, fontSize: 14 }} />
+                                    Logout
+                                </div>
+                            </div>
+                        )}
+                    </div>
+                ) : (
+                    <div
+                        className="topbar-signin-btn"
+                        onClick={handleSignIn}
+                        title="Sign In"
+                    >
+                        <i className="mdi mdi-login" style={{ fontSize: 16 }} />
+                    </div>
+                )}
             </div>
         </div>
     )

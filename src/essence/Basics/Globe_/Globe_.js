@@ -284,6 +284,9 @@ let Globe_ = {
             getCenter: function () {},
             setCenter: function () {},
             getCameras: function () {},
+            getContainer: function () {
+                return document.getElementById('globe') || document.createElement('div')
+            },
             setLayerOpacity: bufferOp('setLayerOpacity'),
             setLayerFilterEffect: bufferOp('setLayerFilterEffect'),
             orderLayers: bufferOp('orderLayers'),

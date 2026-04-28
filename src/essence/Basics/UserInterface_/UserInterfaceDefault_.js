@@ -453,6 +453,7 @@ var UserInterface = {
                 overflow: 'hidden',
                 'pointer-events': 'auto',
                 'max-height': 'calc(100% - 24px)',
+                transition: 'height 0.3s ease-out',
             })
         this.splitscreens.append(this.bottomFloatingBar)
 
@@ -466,6 +467,7 @@ var UserInterface = {
                 background: 'rgba(26, 26, 27, 0.95)',
                 overflow: 'hidden',
                 'border-bottom': '1px solid transparent',
+                transition: 'height 0.3s ease-out',
             })
         this.bottomFloatingBar.append(this.toolsScreen)
 
@@ -656,6 +658,7 @@ var UserInterface = {
             display: 'block',
         })
         UserInterface._repositionSeparatedContent(width)
+        UserInterface._updateBottomBarDependents()
     },
     resizeToolPanel: function (width) {
         width = Math.max(
@@ -669,6 +672,7 @@ var UserInterface = {
             display: 'block',
         })
         UserInterface._repositionSeparatedContent(width)
+        UserInterface._updateBottomBarDependents()
     },
     closeToolPanel: function () {
         UserInterface.toolPanel.empty()
@@ -680,6 +684,7 @@ var UserInterface = {
         })
         UserInterface.toolPanelDrag.css('display', 'none')
         UserInterface._repositionSeparatedContent(0)
+        UserInterface._updateBottomBarDependents()
     },
     // can also be 'full'
     setToolHeight: function (pxHeight, shouldntAnimate) {
@@ -713,34 +718,29 @@ var UserInterface = {
             UserInterface.pxIsTools = 0
         }
 
-        var duration = 400
-        if (shouldntAnimate) duration = 0
+        // Use CSS transition for smooth animation (set on toolsWrapper init)
+        if (shouldntAnimate) {
+            $('#toolsWrapper').css('transition', 'none')
+        } else {
+            $('#toolsWrapper').css('transition', 'height 0.3s ease-out')
+        }
 
-        // Animate toolsWrapper height inside the floating bottom bar
-        $('#toolsWrapper').animate(
-            {
-                height: UserInterface.pxIsTools + 'px',
-            },
-            {
-                duration: duration,
-                step: function () {
-                    UserInterface._updateBottomBarDependents()
-                },
-                complete: function () {
-                    // Show/hide border between tools and timeUI
-                    if (UserInterface.pxIsTools > 0) {
-                        $('#toolsWrapper').css('border-bottom', '1px solid #1f2937')
-                    } else {
-                        $('#toolsWrapper').css('border-bottom', '1px solid transparent')
-                    }
-                    UserInterface._updateBottomBarDependents()
-                },
-            }
-        )
+        // Set height — CSS transition handles smooth animation
+        $('#toolsWrapper').css({
+            height: UserInterface.pxIsTools + 'px',
+            'border-bottom': UserInterface.pxIsTools > 0 ? '1px solid #1f2937' : '1px solid transparent',
+        })
 
         // Also update the floating bar visibility
         UserInterface._updateBottomBarVisibility()
         UserInterface._updateBottomBarDependents()
+
+        // Update dependents again after transition completes
+        if (!shouldntAnimate) {
+            setTimeout(function () {
+                UserInterface._updateBottomBarDependents()
+            }, 350)
+        }
     },
     setToolWidth(newWidth, alignment) {
         // In the floating bottom bar, toolsWrapper always spans 100% of the bar
@@ -802,19 +802,30 @@ var UserInterface = {
         const isVisible = bar.css('display') !== 'none'
         const offset = isVisible ? totalOffset : 0
 
-        $('#mapToolBar').css({ bottom: offset + 'px' })
-        $('.leaflet-control-scalefactor').css({ bottom: (offset + 28) + 'px' })
+        // Get current tool panel width for left offset of map controls
+        const toolPanelWidth = parseInt(UserInterface.toolPanel?.css('width')) || 0
+        const leftBase = toolPanelWidth > 0 ? (toolPanelWidth + UserInterface.topSize + 24) : 0
+
+        $('#mapToolBar').css({ bottom: offset + 'px', left: leftBase + 'px', transition: 'bottom 0.2s ease-out, left 0.2s ease-out' })
+        $('.leaflet-control-scalefactor').css({ bottom: (offset + 28) + 'px', left: leftBase + 'px', transition: 'bottom 0.2s ease-out, left 0.2s ease-out' })
         $('#mmgis-attributions').css({ bottom: offset + 'px' })
         if (
             $('#mmgis-attributions').length === 0 ||
             $('#mmgis-attributions').text().trim().length === 0
         ) {
-            $('#mmgis-map-compass').css({ bottom: (offset + 38) + 'px' })
+            $('#mmgis-map-compass').css({ bottom: (offset + 38) + 'px', left: (leftBase + 8) + 'px', transition: 'bottom 0.2s ease-out, left 0.2s ease-out' })
         } else {
-            $('#mmgis-map-compass').css({ bottom: (offset + 58) + 'px' })
+            $('#mmgis-map-compass').css({ bottom: (offset + 58) + 'px', left: (leftBase + 8) + 'px', transition: 'bottom 0.2s ease-out, left 0.2s ease-out' })
         }
         $('.leaflet-bottom.leaflet-right').css({ bottom: offset + 'px' })
         $('#CoordinatesDiv').css({ bottom: offset + 'px' })
+
+        // Adjust vertical tool panel height so it doesn't overlap the bottom bar
+        if (UserInterface.toolPanel) {
+            const panelBottom = offset > 0 ? (offset + 12) : 12
+            UserInterface.toolPanel.css('height', 'calc(100% - ' + (UserInterface.topSize + 12 + panelBottom) + 'px)')
+            UserInterface.toolPanelDrag.css('height', 'calc(100% - ' + (UserInterface.topSize + 12 + panelBottom) + 'px)')
+        }
     },
     getPanelPercents: function () {
         // Account for the splitterSize that was subtracted when setting pxIsViewer

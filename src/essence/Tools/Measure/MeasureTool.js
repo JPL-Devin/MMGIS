@@ -10,7 +10,7 @@ import calls from '../../../pre/calls'
 
 import metricsGraphics from '../../../external/MetricsGraphics/metricsgraphics.min'
 
-import { render, unmountComponentAtNode } from 'react-dom'
+import { createRoot } from 'react-dom/client'
 import React, { useState, useEffect, useRef } from 'react'
 
 import { Chart } from 'chart.js'
@@ -799,10 +799,16 @@ let MeasureTool = {
         this.dems = MeasureTool.getDems()
         this.activeDemIdx = 0
 
-        render(<Measure />, document.getElementById('tools'))
+        if (!MeasureTool._reactRoot) {
+            MeasureTool._reactRoot = createRoot(document.getElementById('tools'))
+        }
+        MeasureTool._reactRoot.render(<Measure />)
     },
     destroy: function () {
-        unmountComponentAtNode(document.getElementById('tools'))
+        if (MeasureTool._reactRoot) {
+            MeasureTool._reactRoot.unmount()
+            MeasureTool._reactRoot = null
+        }
 
         Map_.map
             .off('click', MeasureTool.clickMap)
