@@ -456,6 +456,7 @@ var UserInterface = {
                 'pointer-events': 'auto',
                 'max-height': 'calc(100% - 24px)',
                 transition: 'height 0.3s ease-out',
+                'box-shadow': '0 -4px 20px rgba(0,0,0,0.3)',
             })
         this.splitscreens.append(this.bottomFloatingBar)
 
