@@ -554,7 +554,10 @@ var essence = {
             if (L_.hasGlobe && !Globe_._initialized) {
                 const pp = UserInterface_.getPanelPercents()
                 if (pp && pp.globe > 0) {
-                    Globe_.lazyInit()
+                    Globe_._isInitializing = true
+                    Globe_.lazyInit().finally(() => {
+                        Globe_._isInitializing = false
+                    })
                 }
             }
         }
