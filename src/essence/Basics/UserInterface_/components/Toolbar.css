@@ -1,7 +1,7 @@
 /* Toolbar — layout and structure only. Colors come from themeApplier.js */
 
 #toolbar {
-    box-shadow: 4px 0 12px rgba(0, 0, 0, 0.3) !important;
+    box-shadow: 4px 8px 12px rgba(0, 0, 0, 0.3) !important;
     z-index: 101 !important;
     padding: 6px 0 !important;
     display: flex !important;

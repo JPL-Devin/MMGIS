@@ -363,6 +363,13 @@ let Map_ = {
         }
         return false
     },
+    // Toggle Leaflet tile fade animation at runtime.
+    // Only Viewshed and Shade tools should disable it while active.
+    setFadeAnimation: function (enabled) {
+        if (this.map) {
+            this.map._fadeAnimated = enabled
+        }
+    },
     //adds a temp tile layer to the map
     tempTileLayer: null,
     changeTempTileLayer: function (url) {

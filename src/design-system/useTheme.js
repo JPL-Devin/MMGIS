@@ -32,10 +32,11 @@ export function useTheme() {
     const themeName = useSyncExternalStore(subscribe, getSnapshot)
     const themeObj = getTheme(themeName)
 
-    // Attach alpha helper
-    themeObj.alpha = (varName, a) => hexToRgba(themeObj[varName], a)
+    // Return a shallow copy with alpha helper to avoid mutating the shared themes object
+    const result = { ...themeObj }
+    result.alpha = (varName, a) => hexToRgba(result[varName], a)
 
-    return themeObj
+    return result
 }
 
 /**
@@ -44,8 +45,9 @@ export function useTheme() {
  */
 export function getCurrentTheme() {
     const themeObj = getTheme(uiStore.getState().themeName)
-    themeObj.alpha = (varName, a) => hexToRgba(themeObj[varName], a)
-    return themeObj
+    const result = { ...themeObj }
+    result.alpha = (varName, a) => hexToRgba(result[varName], a)
+    return result
 }
 
 export default useTheme

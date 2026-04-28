@@ -131,6 +131,12 @@ function applyThemeToDOM(themeName) {
         el.style.borderBottom = `1px solid ${t['--color-a1']}`
         el.style.color = t['--color-a4']
     })
+
+    // --- MMGIS logo SVG fill ---
+    const logoPath = document.querySelector('#mmgislogo svg path')
+    if (logoPath) {
+        logoPath.setAttribute('fill', t['--color-mmgis'])
+    }
 }
 
 /**

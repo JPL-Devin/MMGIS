@@ -101,6 +101,7 @@ let ShadeTool = {
     },
     make: function () {
         this.MMGISInterface = new interfaceWithMMGIS()
+        Map_.setFadeAnimation(false)
 
         ShadeTool.indicatorLastDragPoint = null
 
@@ -151,6 +152,7 @@ let ShadeTool = {
     },
     destroy: function () {
         this.MMGISInterface.separateFromMMGIS()
+        Map_.setFadeAnimation(true)
         if (this.tempSheet) this.tempSheet.remove()
     },
     getUrlString: function () {

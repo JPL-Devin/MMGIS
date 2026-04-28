@@ -128,6 +128,7 @@ let ViewshedTool = {
     },
     make: function () {
         this.MMGISInterface = new interfaceWithMMGIS()
+        Map_.setFadeAnimation(false)
 
         if (this.firstOpen) {
             // Turn on files from url if any
@@ -179,6 +180,7 @@ let ViewshedTool = {
     },
     destroy: function () {
         this.MMGISInterface.separateFromMMGIS()
+        Map_.setFadeAnimation(true)
         if (this.tempSheet) this.tempSheet.remove()
     },
     getUrlString: function () {
