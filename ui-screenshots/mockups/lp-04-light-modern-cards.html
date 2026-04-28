@@ -1,0 +1,39 @@
+<!DOCTYPE html><html><head><meta charset="utf-8"/><title>LP-04 Light Modern Cards</title>
+<style>@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');*{margin:0;padding:0;box-sizing:border-box}
+html,body{width:100%;height:100%;overflow:hidden;font-family:'Inter',sans-serif;background:#f5f6f8}
+.pg{height:100%;display:flex;flex-direction:column}
+.nav{height:64px;background:#fff;border-bottom:1px solid #e5e7eb;display:flex;align-items:center;padding:0 32px;flex-shrink:0;box-shadow:0 1px 3px rgba(0,0,0,.04)}
+.lt{font-size:22px;font-weight:700;color:#1a1a2e;letter-spacing:3px}.dd{display:flex;gap:3px;margin-top:1px}.dd span{width:4px;height:4px;border-radius:50%}
+.nl{margin-left:auto;display:flex;align-items:center;gap:24px}.nl a{font-size:13px;color:#6b7280;text-decoration:none;font-weight:500}
+.av{width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,#667eea,#764ba2);display:flex;align-items:center;justify-content:center;color:#fff;font-size:12px;font-weight:600}
+.main{flex:1;display:flex;flex-direction:column;align-items:center;padding:48px 32px;overflow-y:auto}
+.main h1{font-size:32px;font-weight:700;color:#1a1a2e;margin-bottom:6px}
+.main .sub{font-size:14px;color:#9ca3af;margin-bottom:32px}
+.sb{width:100%;max-width:480px;height:44px;border-radius:10px;border:1px solid #e5e7eb;background:#fff;padding:0 16px;font-size:14px;color:#1a1a2e;font-family:'Inter',sans-serif;outline:none;box-shadow:0 1px 3px rgba(0,0,0,.04);margin-bottom:36px}
+.sb::placeholder{color:#d1d5db}
+.grid{display:grid;grid-template-columns:repeat(3,300px);gap:20px;max-width:960px}
+.card{background:#fff;border-radius:14px;overflow:hidden;border:1px solid #e5e7eb;transition:all .2s;cursor:pointer;box-shadow:0 1px 3px rgba(0,0,0,.04)}
+.card:hover{box-shadow:0 8px 24px rgba(0,0,0,.08);transform:translateY(-2px)}
+.cp{height:140px;position:relative;overflow:hidden}
+.cp.e{background:linear-gradient(135deg,#4a8c5c,#2a6a8c,#1a3a5a)}
+.cp.m{background:linear-gradient(135deg,#8c5a3a,#6a3a2a,#3a1a0a)}
+.cp.l{background:linear-gradient(135deg,#6a6a6a,#4a4a4a,#2a2a2a)}
+.cp::after{content:'';position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.06) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.06) 1px,transparent 1px);background-size:40px 40px}
+.badge{position:absolute;top:10px;right:10px;padding:3px 8px;border-radius:4px;background:rgba(255,255,255,.2);backdrop-filter:blur(8px);font-size:10px;color:#fff;font-weight:500;text-transform:uppercase;letter-spacing:1px}
+.cb{padding:16px 18px}.cb h3{font-size:16px;font-weight:600;color:#1a1a2e;margin-bottom:6px}.cb p{font-size:12px;color:#9ca3af;line-height:1.5;margin-bottom:10px}
+.cs{display:flex;gap:16px}.cs span{font-size:11px;color:#6b7280;font-weight:500}.cs .n{color:#1a1a2e;font-weight:600}
+.ft{height:48px;display:flex;align-items:center;justify-content:center;gap:24px;border-top:1px solid #e5e7eb;flex-shrink:0;background:#fff}
+.ft span,.ft a{font-size:11px;color:#9ca3af;text-decoration:none}
+</style></head><body>
+<div class="pg">
+<div class="nav"><div><div class="lt">MMGIS</div><div class="dd"><span style="background:#fff156"></span><span style="background:#c0822f"></span><span style="background:#ffeaaf"></span><span style="background:#8ab645"></span><span style="background:#ea3a00"></span><span style="background:#edd49e"></span><span style="background:#e7bdcb"></span><span style="background:#72d1cb"></span><span style="background:#08aeea"></span></div></div><div class="nl"><a href="#">Documentation</a><a href="#">About</a><div class="av">A</div></div></div>
+<div class="main">
+<h1>Choose a Mission</h1><div class="sub">Browse and analyze geospatial data across planetary missions</div>
+<input class="sb" type="text" placeholder="Search missions..." />
+<div class="grid">
+<div class="card"><div class="cp e"><div class="badge">Active</div></div><div class="cb"><h3>Reference-Mission</h3><p>San Francisco Bay Area with comprehensive sample data and 14 interactive tools</p><div class="cs"><span><span class="n">22</span> layers</span><span><span class="n">14</span> tools</span></div></div></div>
+<div class="card"><div class="cp m"><div class="badge">Active</div></div><div class="cb"><h3>Mars-2020</h3><p>Jezero Crater &mdash; Perseverance rover traverse and science operations</p><div class="cs"><span><span class="n">18</span> layers</span><span><span class="n">12</span> tools</span></div></div></div>
+<div class="card"><div class="cp l"><div class="badge">Archived</div></div><div class="cb"><h3>Lunar-Recon</h3><p>South Pole survey data from the Lunar Reconnaissance Orbiter</p><div class="cs"><span><span class="n">15</span> layers</span><span><span class="n">8</span> tools</span></div></div></div>
+</div></div>
+<div class="ft"><span>v4.3.27</span><a href="#">Attributions</a><span>NASA/JPL-Caltech</span></div>
+</div></body></html>

@@ -374,3 +374,45 @@ Corner minimap showing viewport extent on zoomed-out overview.
 ### 99 — AI Assistant Panel
 Chat-based assistant for querying map data, finding features, generating analysis.
 ![](ui-screenshots/mockups/99-ai-assistant-panel.png)
+
+---
+
+## Landing Page Mockups
+
+12 landing page redesign concepts. See [LANDING-PAGE-MOCKUPS.md](LANDING-PAGE-MOCKUPS.md) for the dedicated gallery.
+
+### LP-01 — Hero Map Preview
+![](ui-screenshots/mockups/lp-01-hero-map-preview.png)
+
+### LP-02 — Split Globe
+![](ui-screenshots/mockups/lp-02-split-globe.png)
+
+### LP-03 — Minimal Dark
+![](ui-screenshots/mockups/lp-03-minimal-dark.png)
+
+### LP-04 — Light Modern Cards
+![](ui-screenshots/mockups/lp-04-light-modern-cards.png)
+
+### LP-05 — Full-Bleed Satellite
+![](ui-screenshots/mockups/lp-05-fullbleed-satellite.png)
+
+### LP-06 — Command Center
+![](ui-screenshots/mockups/lp-06-command-center.png)
+
+### LP-07 — Cinematic Widescreen
+![](ui-screenshots/mockups/lp-07-cinematic-widescreen.png)
+
+### LP-08 — Atlas / Cartography
+![](ui-screenshots/mockups/lp-08-atlas-cartography.png)
+
+### LP-09 — Search-First
+![](ui-screenshots/mockups/lp-09-search-first.png)
+
+### LP-10 — Right Sidebar with Map Preview
+![](ui-screenshots/mockups/lp-10-right-sidebar-map.png)
+
+### LP-11 — Warm Earth Tones
+![](ui-screenshots/mockups/lp-11-warm-earth-tones.png)
+
+### LP-12 — Glass Dashboard
+![](ui-screenshots/mockups/lp-12-glass-dashboard.png)

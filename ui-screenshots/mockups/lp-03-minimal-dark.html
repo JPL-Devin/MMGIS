@@ -1,0 +1,28 @@
+<!DOCTYPE html><html><head><meta charset="utf-8"/><title>LP-03 Minimal Dark</title>
+<style>@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');*{margin:0;padding:0;box-sizing:border-box}
+html,body{width:100%;height:100%;overflow:hidden;font-family:'Inter',sans-serif;background:#111}
+.pg{height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;position:relative}
+.pg::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 50% 0%,rgba(88,166,255,.04),transparent 70%)}
+.logo{position:absolute;top:40px;left:45px}.lt{font-size:26px;font-weight:700;color:#fff;letter-spacing:4px}.dd{display:flex;gap:4px;margin-top:3px}.dd span{width:5px;height:5px;border-radius:50%}
+.rule{position:absolute;top:85px;left:45px;right:45px;height:1px;background:rgba(255,255,255,.06)}
+.ctr{text-align:center;z-index:1;margin-top:-40px}
+.sub{font-size:13px;color:rgba(255,255,255,.25);letter-spacing:6px;text-transform:uppercase;margin-bottom:48px;font-weight:300}
+.ml{display:flex;flex-direction:column;gap:2px;align-items:center}
+.mi{font-size:28px;font-weight:300;color:rgba(255,255,255,.5);padding:12px 32px;cursor:pointer;transition:all .3s;letter-spacing:1px;border-radius:4px}
+.mi:hover{color:#fff;background:rgba(255,255,255,.03);letter-spacing:2px}
+.mi .ar{display:inline-block;opacity:0;transition:all .3s;margin-left:8px;color:rgba(88,166,255,.6)}
+.mi:hover .ar{opacity:1;transform:translateX(4px)}
+.bot{position:absolute;bottom:30px;left:0;right:0;display:flex;justify-content:center;gap:32px}
+.bot span,.bot a{font-size:11px;color:rgba(255,255,255,.15);text-decoration:none}
+</style></head><body>
+<div class="pg">
+<div class="logo"><div class="lt">MMGIS</div><div class="dd"><span style="background:#fff156"></span><span style="background:#c0822f"></span><span style="background:#ffeaaf"></span><span style="background:#8ab645"></span><span style="background:#ea3a00"></span><span style="background:#edd49e"></span><span style="background:#e7bdcb"></span><span style="background:#72d1cb"></span><span style="background:#08aeea"></span></div></div>
+<div class="rule"></div>
+<div class="ctr"><div class="sub">Select a Mission</div><div class="ml">
+<div class="mi">Reference-Mission <span class="ar">&rarr;</span></div>
+<div class="mi">Mars-2020 <span class="ar">&rarr;</span></div>
+<div class="mi">Europa-Survey <span class="ar">&rarr;</span></div>
+<div class="mi">Lunar-Recon <span class="ar">&rarr;</span></div>
+</div></div>
+<div class="bot"><span>v4.3.27</span><a href="#">Documentation</a><a href="#">Attributions</a><span>NASA/JPL-Caltech</span></div>
+</div></body></html>

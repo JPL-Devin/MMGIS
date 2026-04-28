@@ -1,0 +1,41 @@
+<!DOCTYPE html><html><head><meta charset="utf-8"/><title>LP-07 Cinematic Widescreen</title>
+<style>@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');*{margin:0;padding:0;box-sizing:border-box}
+html,body{width:100%;height:100%;overflow:hidden;font-family:'Inter',sans-serif;background:#000}
+.letterbox-top,.letterbox-bot{position:absolute;left:0;right:0;background:#000;z-index:5}
+.letterbox-top{top:0;height:12%}.letterbox-bot{bottom:0;height:12%}
+.bg{position:absolute;inset:0;background:radial-gradient(ellipse at 50% 40%,#1a2a3a,#0a0a0a);overflow:hidden}
+.bg::before{content:'';position:absolute;inset:0;background:radial-gradient(circle at 30% 50%,rgba(100,150,200,.06),transparent 40%),radial-gradient(circle at 70% 40%,rgba(200,150,100,.04),transparent 40%)}
+.nebula{position:absolute;width:600px;height:300px;top:20%;left:20%;background:radial-gradient(ellipse,rgba(100,120,200,.06),transparent 70%);transform:rotate(-15deg)}
+.star{position:absolute;width:1px;height:1px;border-radius:50%;background:#fff}
+.logo{position:absolute;top:45px;left:45px;z-index:10}.lt{font-size:26px;font-weight:700;color:#fff;letter-spacing:4px}.dd{display:flex;gap:4px;margin-top:3px}.dd span{width:5px;height:5px;border-radius:50%}
+.ctr{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);z-index:3;text-align:center;width:700px}
+.ctr h1{font-size:64px;font-weight:100;color:rgba(255,255,255,.9);letter-spacing:12px;text-transform:uppercase;margin-bottom:4px}
+.ctr .line{width:120px;height:1px;background:rgba(255,255,255,.15);margin:16px auto}
+.ctr p{font-size:13px;color:rgba(255,255,255,.3);letter-spacing:3px;font-weight:300;margin-bottom:40px}
+.missions{display:flex;gap:32px;justify-content:center}
+.mitem{text-align:center;cursor:pointer;transition:all .3s;padding:16px 24px;border-radius:8px}
+.mitem:hover{background:rgba(255,255,255,.03)}
+.mitem .name{font-size:16px;font-weight:500;color:rgba(255,255,255,.7);margin-bottom:4px}
+.mitem .loc{font-size:11px;color:rgba(255,255,255,.2);letter-spacing:1px}
+.bot-bar{position:absolute;bottom:14%;left:0;right:0;z-index:6;display:flex;justify-content:center;gap:40px;padding:0 60px}
+.bot-bar span,.bot-bar a{font-size:10px;color:rgba(255,255,255,.2);text-decoration:none;letter-spacing:2px}
+</style></head><body>
+<div class="bg">
+<div class="nebula"></div>
+<div class="star" style="top:15%;left:10%;opacity:.6"></div><div class="star" style="top:30%;left:50%;opacity:.4"></div><div class="star" style="top:60%;left:80%;opacity:.5"></div><div class="star" style="top:45%;left:25%;opacity:.3"></div><div class="star" style="top:75%;left:60%;opacity:.4"></div><div class="star" style="top:20%;left:75%;opacity:.6"></div><div class="star" style="top:85%;left:35%;opacity:.3"></div><div class="star" style="top:10%;left:90%;opacity:.5"></div>
+</div>
+<div class="letterbox-top"></div><div class="letterbox-bot"></div>
+<div class="logo"><div class="lt">MMGIS</div><div class="dd"><span style="background:#fff156"></span><span style="background:#c0822f"></span><span style="background:#ffeaaf"></span><span style="background:#8ab645"></span><span style="background:#ea3a00"></span><span style="background:#edd49e"></span><span style="background:#e7bdcb"></span><span style="background:#72d1cb"></span><span style="background:#08aeea"></span></div></div>
+<div class="ctr">
+<h1>MMGIS</h1>
+<div class="line"></div>
+<p>Multi-Mission Geographic Information System</p>
+<div class="missions">
+<div class="mitem"><div class="name">Reference-Mission</div><div class="loc">San Francisco Bay Area</div></div>
+<div class="mitem"><div class="name">Mars-2020</div><div class="loc">Jezero Crater</div></div>
+<div class="mitem"><div class="name">Europa-Survey</div><div class="loc">Pwyll Crater</div></div>
+<div class="mitem"><div class="name">Lunar-Recon</div><div class="loc">South Pole</div></div>
+</div>
+</div>
+<div class="bot-bar"><span>v4.3.27</span><a href="#">DOCS</a><a href="#">ATTRIBUTIONS</a><span>NASA/JPL-CALTECH</span></div>
+</body></html>

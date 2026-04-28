@@ -1,0 +1,49 @@
+<!DOCTYPE html><html><head><meta charset="utf-8"/><title>LP-08 Atlas Cartography</title>
+<style>@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500&display=swap');*{margin:0;padding:0;box-sizing:border-box}
+html,body{width:100%;height:100%;overflow:hidden;font-family:'Inter',sans-serif;background:#f4f0e8}
+.pg{height:100%;position:relative}
+/* Parchment texture */
+.pg::before{content:'';position:absolute;inset:0;background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,0,0,.01) 2px,rgba(0,0,0,.01) 4px)}
+.pg::after{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at center,transparent 50%,rgba(180,160,130,.2))}
+/* Grid lines like old maps */
+.grid{position:absolute;inset:60px;background-image:linear-gradient(rgba(150,130,100,.08) 1px,transparent 1px),linear-gradient(90deg,rgba(150,130,100,.08) 1px,transparent 1px);background-size:100px 100px;z-index:0}
+/* Compass rose */
+.compass{position:absolute;bottom:80px;right:80px;width:120px;height:120px;z-index:2}
+.compass::before{content:'';position:absolute;inset:0;border:1px solid rgba(150,130,100,.2);border-radius:50%}
+.compass::after{content:'N';position:absolute;top:8px;left:50%;transform:translateX(-50%);font-size:14px;color:#8a7a60;font-weight:600;font-family:'Playfair Display',serif}
+.compass-inner{position:absolute;top:50%;left:50%;width:40px;height:40px;transform:translate(-50%,-50%) rotate(45deg);border:1px solid rgba(150,130,100,.3)}
+/* Logo */
+.logo{position:absolute;top:40px;left:45px;z-index:3}.lt{font-size:26px;font-weight:700;color:#4a3a2a;letter-spacing:4px;font-family:'Playfair Display',serif}.dd{display:flex;gap:4px;margin-top:3px}.dd span{width:5px;height:5px;border-radius:50%}
+/* Ornamental line */
+.orn{position:absolute;top:90px;left:45px;right:45px;height:2px;background:linear-gradient(90deg,#c0a878,#8a7a60,#c0a878);z-index:2;opacity:.3}
+/* Center */
+.ctr{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);text-align:center;z-index:2;width:600px}
+.ctr h1{font-family:'Playfair Display',serif;font-size:48px;font-weight:400;color:#3a2a1a;margin-bottom:4px;letter-spacing:3px}
+.ctr .sub{font-size:12px;color:#8a7a60;letter-spacing:4px;text-transform:uppercase;margin-bottom:48px;font-weight:400}
+.ctr .sep{width:60px;height:1px;background:#c0a878;margin:16px auto}
+.missions{display:flex;flex-direction:column;gap:8px;align-items:center}
+.mi{font-family:'Playfair Display',serif;font-size:22px;color:#5a4a3a;padding:10px 28px;cursor:pointer;transition:all .3s;border-bottom:1px solid transparent;letter-spacing:1px}
+.mi:hover{border-bottom-color:#c0a878;color:#3a2a1a}
+.mi .coord{font-family:'Inter',sans-serif;font-size:10px;color:#a09080;margin-left:12px;letter-spacing:2px}
+/* Bottom */
+.bot{position:absolute;bottom:30px;left:0;right:0;display:flex;justify-content:center;gap:32px;z-index:2}
+.bot span,.bot a{font-size:11px;color:#a09080;text-decoration:none;letter-spacing:1px}
+</style></head><body>
+<div class="pg">
+<div class="grid"></div>
+<div class="logo"><div class="lt">MMGIS</div><div class="dd"><span style="background:#fff156"></span><span style="background:#c0822f"></span><span style="background:#ffeaaf"></span><span style="background:#8ab645"></span><span style="background:#ea3a00"></span><span style="background:#edd49e"></span><span style="background:#e7bdcb"></span><span style="background:#72d1cb"></span><span style="background:#08aeea"></span></div></div>
+<div class="orn"></div>
+<div class="ctr">
+<h1>Atlas of Worlds</h1>
+<div class="sep"></div>
+<div class="sub">Multi-Mission Geographic Information System</div>
+<div class="missions">
+<div class="mi">Reference-Mission <span class="coord">37.8&deg;N 122.4&deg;W</span></div>
+<div class="mi">Mars-2020 <span class="coord">18.4&deg;N 77.5&deg;E</span></div>
+<div class="mi">Europa-Survey <span class="coord">24.3&deg;S 87.0&deg;W</span></div>
+<div class="mi">Lunar-Recon <span class="coord">89.9&deg;S 0.0&deg;E</span></div>
+</div>
+</div>
+<div class="compass"><div class="compass-inner"></div></div>
+<div class="bot"><span>v4.3.27</span><a href="#">Attributions</a><span>NASA/JPL-Caltech</span></div>
+</div></body></html>

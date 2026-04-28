@@ -1,0 +1,30 @@
+<!DOCTYPE html><html><head><meta charset="utf-8"/><title>LP-05 Full-Bleed Satellite</title>
+<style>@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');*{margin:0;padding:0;box-sizing:border-box}
+html,body{width:100%;height:100%;overflow:hidden;font-family:'Inter',sans-serif}
+.bg{position:absolute;inset:0;background:radial-gradient(ellipse at 40% 50%,#3a2818,transparent 40%),radial-gradient(ellipse at 65% 35%,#1a2838,transparent 40%),radial-gradient(ellipse at 30% 70%,#2a1808,transparent 30%),#0a0a0a}
+.bg::before{content:'';position:absolute;inset:0;background-image:radial-gradient(circle at 25% 30%,rgba(200,150,80,.08),transparent 20%),radial-gradient(circle at 60% 45%,rgba(100,120,180,.06),transparent 25%),radial-gradient(circle at 45% 65%,rgba(180,120,60,.05),transparent 15%)}
+.cr{position:absolute;border-radius:50%;border:1px solid rgba(255,255,255,.04);background:radial-gradient(circle,rgba(0,0,0,.1) 60%,transparent)}
+.vig{position:absolute;inset:0;background:radial-gradient(ellipse,transparent 30%,rgba(0,0,0,.7));z-index:1}
+.logo{position:absolute;top:40px;left:45px;z-index:10}.lt{font-size:26px;font-weight:700;color:#fff;letter-spacing:4px}.dd{display:flex;gap:4px;margin-top:3px}.dd span{width:5px;height:5px;border-radius:50%}
+.coords{position:absolute;top:40px;right:30px;z-index:10;text-align:right}.coords div{font-size:11px;color:rgba(255,255,255,.2);font-family:monospace;line-height:1.8}
+.ct{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);z-index:10;text-align:center}
+.ct h1{font-size:56px;font-weight:200;color:rgba(255,255,255,.85);letter-spacing:8px;text-transform:uppercase;margin-bottom:8px}
+.ct p{font-size:14px;color:rgba(255,255,255,.3);letter-spacing:2px;font-weight:300}
+.sel{position:absolute;bottom:60px;left:50%;transform:translateX(-50%);z-index:10;display:flex;flex-direction:column;align-items:center}
+.sel-l{font-size:11px;letter-spacing:4px;text-transform:uppercase;color:rgba(255,255,255,.3);margin-bottom:16px}
+.pills{display:flex;gap:8px}
+.pill{padding:10px 24px;border-radius:100px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);backdrop-filter:blur(20px);color:rgba(255,255,255,.7);font-size:14px;font-weight:500;cursor:pointer;transition:all .3s;white-space:nowrap}
+.pill:hover{background:rgba(255,255,255,.12);color:#fff}
+.pill.a{background:rgba(88,166,255,.15);border-color:rgba(88,166,255,.3);color:#fff}
+.bi{position:absolute;bottom:20px;left:45px;z-index:10;display:flex;gap:16px}.bi span{font-size:11px;color:rgba(255,255,255,.2)}
+.crd{position:absolute;bottom:20px;right:30px;z-index:10;font-size:10px;color:rgba(255,255,255,.15)}
+</style></head><body>
+<div class="bg"><div class="cr" style="width:180px;height:180px;top:20%;left:30%"></div><div class="cr" style="width:80px;height:80px;top:60%;left:55%"></div><div class="cr" style="width:120px;height:120px;top:40%;left:70%"></div></div>
+<div class="vig"></div>
+<div class="logo"><div class="lt">MMGIS</div><div class="dd"><span style="background:#fff156"></span><span style="background:#c0822f"></span><span style="background:#ffeaaf"></span><span style="background:#8ab645"></span><span style="background:#ea3a00"></span><span style="background:#edd49e"></span><span style="background:#e7bdcb"></span><span style="background:#72d1cb"></span><span style="background:#08aeea"></span></div></div>
+<div class="coords"><div>LAT 37.7749&deg; N</div><div>LON 122.4194&deg; W</div><div>ALT 0.0 m</div></div>
+<div class="ct"><h1>Explore</h1><p>Multi-Mission Geographic Information System</p></div>
+<div class="sel"><div class="sel-l">Select Mission</div><div class="pills"><div class="pill a">Reference-Mission</div><div class="pill">Mars-2020</div><div class="pill">Europa-Survey</div><div class="pill">Lunar-Recon</div></div></div>
+<div class="bi"><span>v4.3.27</span><span>Docs</span><span>Attributions</span></div>
+<div class="crd">NASA/JPL-Caltech &middot; PIA20461</div>
+</body></html>

@@ -1,0 +1,52 @@
+<!DOCTYPE html><html><head><meta charset="utf-8"/><title>LP-09 Search-First</title>
+<style>@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');*{margin:0;padding:0;box-sizing:border-box}
+html,body{width:100%;height:100%;overflow:hidden;font-family:'Inter',sans-serif;background:#0d1117}
+.pg{height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;position:relative}
+.pg::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 50% 30%,rgba(88,166,255,.03),transparent 60%)}
+.logo{position:absolute;top:40px;left:45px}.lt{font-size:26px;font-weight:700;color:#fff;letter-spacing:4px}.dd{display:flex;gap:4px;margin-top:3px}.dd span{width:5px;height:5px;border-radius:50%}
+.ctr{text-align:center;z-index:1;width:640px;max-width:90vw;margin-top:-60px}
+.big-logo{font-size:72px;font-weight:700;color:#fff;letter-spacing:8px;margin-bottom:6px}
+.big-dots{display:flex;gap:6px;justify-content:center;margin-bottom:8px}
+.big-dots span{width:7px;height:7px;border-radius:50%}
+.tagline{font-size:13px;color:rgba(255,255,255,.3);letter-spacing:3px;margin-bottom:40px;font-weight:300}
+.search{position:relative;width:100%;max-width:560px;margin:0 auto 40px}
+.search input{width:100%;height:52px;border-radius:26px;border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.04);backdrop-filter:blur(10px);padding:0 24px 0 48px;font-size:15px;color:#fff;font-family:'Inter',sans-serif;outline:none;transition:all .2s}
+.search input::placeholder{color:rgba(255,255,255,.2)}
+.search input:focus{border-color:rgba(88,166,255,.4);box-shadow:0 0 0 4px rgba(88,166,255,.08)}
+.search-icon{position:absolute;left:18px;top:50%;transform:translateY(-50%);font-size:18px;color:rgba(255,255,255,.25)}
+.quick{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+.quick-btn{padding:8px 20px;border-radius:20px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);color:rgba(255,255,255,.6);font-size:13px;cursor:pointer;transition:all .2s;white-space:nowrap}
+.quick-btn:hover{background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.15);color:#fff}
+.recent{margin-top:48px;text-align:left;width:100%;max-width:560px;margin-left:auto;margin-right:auto}
+.recent-h{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,.2);margin-bottom:12px;font-weight:500}
+.recent-item{padding:8px 12px;border-radius:6px;display:flex;align-items:center;gap:10px;cursor:pointer;transition:background .15s}
+.recent-item:hover{background:rgba(255,255,255,.03)}
+.recent-item .ri-icon{width:24px;height:24px;border-radius:6px;background:rgba(88,166,255,.1);display:flex;align-items:center;justify-content:center;font-size:11px;color:#58a6ff}
+.recent-item .ri-name{font-size:14px;color:rgba(255,255,255,.6)}.recent-item .ri-meta{margin-left:auto;font-size:11px;color:rgba(255,255,255,.15)}
+.bot{position:absolute;bottom:30px;display:flex;gap:24px}
+.bot span,.bot a{font-size:11px;color:rgba(255,255,255,.15);text-decoration:none}
+</style></head><body>
+<div class="pg">
+<div class="logo"><div class="lt">MMGIS</div><div class="dd"><span style="background:#fff156"></span><span style="background:#c0822f"></span><span style="background:#ffeaaf"></span><span style="background:#8ab645"></span><span style="background:#ea3a00"></span><span style="background:#edd49e"></span><span style="background:#e7bdcb"></span><span style="background:#72d1cb"></span><span style="background:#08aeea"></span></div></div>
+<div class="ctr">
+<div class="big-logo">MMGIS</div>
+<div class="big-dots"><span style="background:#fff156"></span><span style="background:#c0822f"></span><span style="background:#ffeaaf"></span><span style="background:#8ab645"></span><span style="background:#ea3a00"></span><span style="background:#edd49e"></span><span style="background:#e7bdcb"></span><span style="background:#72d1cb"></span><span style="background:#08aeea"></span></div>
+<div class="tagline">Multi-Mission Geographic Information System</div>
+<div class="search">
+<span class="search-icon">&#x1F50D;</span>
+<input type="text" placeholder="Search missions, layers, coordinates..." />
+</div>
+<div class="quick">
+<div class="quick-btn">Reference-Mission</div>
+<div class="quick-btn">Mars-2020</div>
+<div class="quick-btn">Europa-Survey</div>
+<div class="quick-btn">Lunar-Recon</div>
+</div>
+<div class="recent">
+<div class="recent-h">Recent</div>
+<div class="recent-item"><div class="ri-icon">R</div><div class="ri-name">Reference-Mission</div><div class="ri-meta">2 hours ago</div></div>
+<div class="recent-item"><div class="ri-icon">M</div><div class="ri-name">Mars-2020</div><div class="ri-meta">Yesterday</div></div>
+</div>
+</div>
+<div class="bot"><span>v4.3.27</span><a href="#">Docs</a><a href="#">Attributions</a><span>NASA/JPL-Caltech</span></div>
+</div></body></html>

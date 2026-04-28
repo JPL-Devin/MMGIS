@@ -1,0 +1,71 @@
+<!DOCTYPE html><html><head><meta charset="utf-8"/><title>LP-12 Glass Dashboard</title>
+<style>@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');*{margin:0;padding:0;box-sizing:border-box}
+html,body{width:100%;height:100%;overflow:hidden;font-family:'Inter',sans-serif;background:#0a0a1a}
+.pg{height:100%;position:relative;padding:24px}
+.pg::before{content:'';position:absolute;inset:0;background:radial-gradient(circle at 20% 20%,rgba(88,166,255,.08),transparent 40%),radial-gradient(circle at 80% 80%,rgba(163,113,247,.06),transparent 40%),radial-gradient(circle at 50% 50%,rgba(63,185,80,.04),transparent 30%)}
+.logo{position:absolute;top:40px;left:45px;z-index:2}.lt{font-size:26px;font-weight:700;color:#fff;letter-spacing:4px}.dd{display:flex;gap:4px;margin-top:3px}.dd span{width:5px;height:5px;border-radius:50%}
+/* Top bar */
+.topbar{display:flex;align-items:center;margin-bottom:24px;padding:0 20px;position:relative;z-index:1}
+.topbar .title{font-size:18px;font-weight:600;color:#fff;margin-left:120px}
+.topbar .right{margin-left:auto;display:flex;gap:16px;align-items:center}
+.topbar .right a{font-size:12px;color:rgba(255,255,255,.4);text-decoration:none}
+.topbar .right .btn{padding:6px 14px;border-radius:6px;background:rgba(88,166,255,.1);border:1px solid rgba(88,166,255,.2);color:#58a6ff;font-size:12px;cursor:pointer}
+/* Grid */
+.grid{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;grid-template-rows:1fr 1fr;gap:16px;height:calc(100% - 80px);position:relative;z-index:1}
+.glass{border-radius:16px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);padding:20px;overflow:hidden;display:flex;flex-direction:column}
+.glass h3{font-size:12px;font-weight:600;color:rgba(255,255,255,.5);letter-spacing:1px;text-transform:uppercase;margin-bottom:12px}
+/* Mission card inside glass */
+.mcard{padding:10px 12px;border-radius:8px;cursor:pointer;transition:all .15s;margin-bottom:4px;border:1px solid transparent}
+.mcard:hover{background:rgba(255,255,255,.03);border-color:rgba(255,255,255,.06)}
+.mcard .mn{font-size:14px;font-weight:500;color:rgba(255,255,255,.7);margin-bottom:2px}.mcard .md{font-size:11px;color:rgba(255,255,255,.25)}
+/* Map preview */
+.map-preview{flex:1;border-radius:10px;background:radial-gradient(ellipse at 40% 40%,#1a3a2a,transparent 50%),radial-gradient(ellipse at 60% 60%,#1a2a3a,transparent 50%),#0a0e14;position:relative;overflow:hidden;margin-top:8px}
+.map-preview::before{content:'';position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.02) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.02) 1px,transparent 1px);background-size:50px 50px}
+/* Stats */
+.stat{text-align:center;margin-bottom:16px}.stat .val{font-size:28px;font-weight:700;color:#fff}.stat .lbl{font-size:10px;color:rgba(255,255,255,.3);text-transform:uppercase;letter-spacing:1px;margin-top:2px}
+/* Activity */
+.act-item{padding:6px 0;display:flex;align-items:center;gap:8px;font-size:11px;color:rgba(255,255,255,.4)}.act-item .adot{width:4px;height:4px;border-radius:50%;flex-shrink:0}
+/* Bottom */
+.bot{position:absolute;bottom:10px;left:0;right:0;display:flex;justify-content:center;gap:24px;z-index:2}
+.bot span{font-size:10px;color:rgba(255,255,255,.15)}
+</style></head><body>
+<div class="pg">
+<div class="logo"><div class="lt">MMGIS</div><div class="dd"><span style="background:#fff156"></span><span style="background:#c0822f"></span><span style="background:#ffeaaf"></span><span style="background:#8ab645"></span><span style="background:#ea3a00"></span><span style="background:#edd49e"></span><span style="background:#e7bdcb"></span><span style="background:#72d1cb"></span><span style="background:#08aeea"></span></div></div>
+<div class="topbar">
+<div class="title" style="visibility:hidden">_</div>
+<div class="right"><a href="#">Docs</a><a href="#">About</a><div class="btn">Sign In</div></div>
+</div>
+<div class="grid">
+<!-- Missions panel (span 1 col, 2 rows) -->
+<div class="glass" style="grid-row:1/3">
+<h3>Missions</h3>
+<div class="mcard"><div class="mn">Reference-Mission</div><div class="md">22 layers &middot; SF Bay Area</div></div>
+<div class="mcard"><div class="mn">Mars-2020</div><div class="md">18 layers &middot; Jezero Crater</div></div>
+<div class="mcard"><div class="mn">Europa-Survey</div><div class="md">12 layers &middot; Pwyll Crater</div></div>
+<div class="mcard"><div class="mn">Lunar-Recon</div><div class="md">15 layers &middot; South Pole</div></div>
+</div>
+<!-- Map preview (span 2 cols, 2 rows) -->
+<div class="glass" style="grid-column:2/4;grid-row:1/3">
+<h3>Map Preview</h3>
+<div class="map-preview"></div>
+</div>
+<!-- Stats -->
+<div class="glass">
+<h3>Statistics</h3>
+<div class="stat"><div class="val">4</div><div class="lbl">Missions</div></div>
+<div class="stat"><div class="val">67</div><div class="lbl">Total Layers</div></div>
+<div class="stat"><div class="val">44</div><div class="lbl">Tools Available</div></div>
+</div>
+<!-- Activity -->
+<div class="glass">
+<h3>Recent Activity</h3>
+<div class="act-item"><span class="adot" style="background:#3fb950"></span>Layer "Roads" updated</div>
+<div class="act-item"><span class="adot" style="background:#58a6ff"></span>New annotation added</div>
+<div class="act-item"><span class="adot" style="background:#f0883e"></span>Measurement exported</div>
+<div class="act-item"><span class="adot" style="background:#a371f7"></span>Europa layer imported</div>
+<div class="act-item"><span class="adot" style="background:#3fb950"></span>Mars traverse updated</div>
+</div>
+</div>
+</div>
+<div class="bot"><span>v4.3.27</span><span>NASA/JPL-Caltech</span></div>
+</body></html>
