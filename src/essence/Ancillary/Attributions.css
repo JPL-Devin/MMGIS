@@ -2,7 +2,7 @@
 #mmgis-attributions {
     position: absolute;
     bottom: 0px;
-    left: 0px;
+    left: 12px;
     pointer-events: auto;
     z-index: 1000;
     font-size: 12px;

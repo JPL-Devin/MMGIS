@@ -6,16 +6,10 @@
     color: var(--color-f);
     box-shadow: inset 2px 0px 10px 0px rgba(0, 0, 0, 0.2);
 }
-.MeasureTool #measureTop,
 .MeasureTool #measureIcons {
     display: flex;
-    justify-content: space-between;
-}
-.MeasureTool #measureTop {
-    border-bottom: 1px solid var(--color-a1);
-}
-.MeasureTool #measureIcons {
-    margin-right: 7px;
+    align-items: center;
+    margin-right: 4px;
 }
 .MeasureTool #measureIcons > div {
     width: 30px;

@@ -192,18 +192,6 @@ var UserInterface = {
                 .on('mousemove', UserInterface.handleToolDragDragging)
         }
         $('#toolPanelDrag').on('mousedown', this.handleToolDragMousedown)
-        // Thin line indicator for tool panel splitter
-        this.toolPanelDrag.append(
-            $('<div>').css({
-                position: 'absolute',
-                left: '50%',
-                top: 0,
-                width: '1px',
-                height: '100%',
-                background: 'rgba(255,255,255,0.15)',
-                'pointer-events': 'none',
-            })
-        )
 
         // Top-edge resize strip for the floating bottom bar (horizontal tools)
         this.bottomBarDrag = $('<div>').attr('id', 'bottomBarDrag').css({
@@ -258,18 +246,6 @@ var UserInterface = {
                 .on('mousemove', UserInterface.handleBottomDragDragging)
         }
         this.bottomBarDrag.on('mousedown', UserInterface.handleBottomDragMousedown)
-        // Thin horizontal line indicator for bottom bar splitter
-        this.bottomBarDrag.append(
-            $('<div>').css({
-                position: 'absolute',
-                top: '50%',
-                left: 0,
-                height: '1px',
-                width: '100%',
-                background: 'rgba(255,255,255,0.15)',
-                'pointer-events': 'none',
-            })
-        )
 
         //Main container div
         this.splitscreens = $('<div>')
@@ -346,18 +322,6 @@ var UserInterface = {
                 cursor: 'default',
             })
         this.vmgScreen.append(this.viewerSplit)
-        // Thin line indicator for viewer splitter
-        this.viewerSplit.append(
-            $('<div>').css({
-                position: 'absolute',
-                left: '50%',
-                top: 0,
-                width: '1px',
-                height: '100%',
-                background: 'rgba(255,255,255,0.15)',
-                'pointer-events': 'none',
-            })
-        )
 
         //The map screen
         this.mapScreen = $('<div>')
@@ -419,18 +383,6 @@ var UserInterface = {
                 left: this.pxIsViewer - this.splitterSizeHidden / 2 + 'px',
             })
         this.vmgScreen.append(this.mapSplit)
-        // Thin line indicator for map splitter
-        this.mapSplit.append(
-            $('<div>').css({
-                position: 'absolute',
-                left: '50%',
-                top: 0,
-                width: '1px',
-                height: '100%',
-                background: 'rgba(255,255,255,0.15)',
-                'pointer-events': 'none',
-            })
-        )
 
         // Splitter arrow buttons removed — panel selection is via TopBar toggles
 
@@ -483,18 +435,6 @@ var UserInterface = {
                     'px',
             })
         this.vmgScreen.append(this.globeSplit)
-        // Thin line indicator for globe splitter
-        this.globeSplit.append(
-            $('<div>').css({
-                position: 'absolute',
-                left: '50%',
-                top: 0,
-                width: '1px',
-                height: '100%',
-                background: 'rgba(255,255,255,0.15)',
-                'pointer-events': 'none',
-            })
-        )
 
         // Globe splitter arrow buttons removed — panel selection is via TopBar toggles
 
@@ -852,10 +792,15 @@ var UserInterface = {
         const bar = $('#bottomFloatingBar')
         if (!bar.length) return
 
-        // Calculate the TARGET bar height directly from known values
+        // Calculate target bar height from known state (not DOM reads that lag during transitions)
         const toolsH = UserInterface.pxIsTools || 0
-        const timeUIDockH = $('#timeUIDock').outerHeight() || 0
-        const targetBarHeight = toolsH + timeUIDockH
+        const timeUIEl = document.querySelector('#timeUI')
+        const timeUIActive = timeUIEl && timeUIEl.classList.contains('active')
+        const timeUIExpanded = timeUIEl && timeUIEl.classList.contains('expanded')
+        const timeUIDockH = timeUIActive ? (timeUIExpanded ? 177 : 40) : 0
+        // Account for bar border (1px top + 1px bottom) and toolsWrapper border-bottom (1px)
+        const barBorderH = (toolsH > 0 || timeUIDockH > 0) ? 3 : 0
+        const targetBarHeight = toolsH + timeUIDockH + barBorderH
 
         const barBottom = 12
         const totalOffset = targetBarHeight + barBottom
@@ -863,16 +808,21 @@ var UserInterface = {
         const isVisible = bar[0].style.display !== 'none'
         const offset = isVisible ? totalOffset : 0
 
+        // Calculate left offset from vertical tool panel
+        const toolPanelW = UserInterface.toolPanel ? (parseInt(UserInterface.toolPanel.css('width')) || 0) : 0
+        const tpShift = toolPanelW > 0 ? toolPanelW : 0
+
         $('#mapToolBar').css({ bottom: offset + 'px', transition: 'bottom 0.2s ease-out' })
-        $('.leaflet-control-scalefactor').css({ bottom: (offset + 28) + 'px', transition: 'bottom 0.2s ease-out' })
-        $('#mmgis-attributions').css({ bottom: offset + 'px' })
+        // Base left positions: scalefactor=44px, compass=12px, attributions=12px (from CSS)
+        $('.leaflet-control-scalefactor').css({ bottom: (offset + 28) + 'px', left: (44 + tpShift) + 'px', transition: 'bottom 0.2s ease-out, left 0.2s ease-out' })
+        $('#mmgis-attributions').css({ bottom: offset + 'px', left: (12 + tpShift) + 'px' })
         if (
             $('#mmgis-attributions').length === 0 ||
             $('#mmgis-attributions').text().trim().length === 0
         ) {
-            $('#mmgis-map-compass').css({ bottom: (offset + 38) + 'px', transition: 'bottom 0.2s ease-out' })
+            $('#mmgis-map-compass').css({ bottom: (offset + 38) + 'px', left: (12 + tpShift) + 'px', transition: 'bottom 0.2s ease-out, left 0.2s ease-out' })
         } else {
-            $('#mmgis-map-compass').css({ bottom: (offset + 58) + 'px', transition: 'bottom 0.2s ease-out' })
+            $('#mmgis-map-compass').css({ bottom: (offset + 58) + 'px', left: (12 + tpShift) + 'px', transition: 'bottom 0.2s ease-out, left 0.2s ease-out' })
         }
         $('.leaflet-bottom.leaflet-right').css({ bottom: offset + 'px' })
         $('#CoordinatesDiv').css({ bottom: offset + 'px' })

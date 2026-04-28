@@ -29,6 +29,11 @@ const Modal = {
 
         if (typeof onAddCallback === 'function') onAddCallback(id)
 
+        $(`#${id} #mmgisModalClose`).on('click', function (e) {
+            e.stopPropagation()
+            Modal.remove(false, modalId)
+        })
+
         $(elmId).on('click', (e) => {
             if (!$(e.target).parents().hasClass('dontCloseWhenClicked'))
                 Modal.remove(false, modalId)

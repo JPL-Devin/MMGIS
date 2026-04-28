@@ -20,6 +20,7 @@ import * as moment from 'moment'
 
 import './MeasureTool.css'
 import Help from '../../Ancillary/Help'
+import ToolController_ from '../../Basics/ToolController_/ToolController_'
 
 // Zoom isn't working nicely. Keep off
 //Chart.register(zoomPlugin)
@@ -142,24 +143,21 @@ const Measure = () => {
                             <div className='mmgisToolTitle'>Measure</div>
                             <div dangerouslySetInnerHTML={{ __html: Help.getComponent(helpKey) }} />
                         </div>
-                    </div>
-                </div>
-                <div id='measureTop'>
-                    <div id='measureTitle' style={{ display: 'none' }}>Measure</div>
-                    <div id='measureIcons'>
-                        <div
-                            id='measureUndo'
-                            title='Undo'
-                            onClick={MeasureTool.undo}
-                        >
-                            <i className='mdi mdi-undo mdi-18px'></i>
-                        </div>
-                        <div
-                            id='measureReset'
-                            title='Reset'
-                            onClick={MeasureTool.reset}
-                        >
-                            <i className='mdi mdi-refresh mdi-18px'></i>
+                        <div id='measureIcons'>
+                            <div
+                                id='measureUndo'
+                                title='Undo'
+                                onClick={MeasureTool.undo}
+                            >
+                                <i className='mdi mdi-undo mdi-18px'></i>
+                            </div>
+                            <div
+                                id='measureReset'
+                                title='Reset'
+                                onClick={MeasureTool.reset}
+                            >
+                                <i className='mdi mdi-refresh mdi-18px'></i>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -678,7 +676,15 @@ const Measure = () => {
             </div>
             <div id='measureToolBar'>
                 <div
-                    id='measureReset'
+                    id='measureClose'
+                    title='Close'
+                    onClick={() => { ToolController_.closeActiveTool() }}
+                >
+                    <i className='mdi mdi-close mdi-18px'></i>
+                </div>
+                <div style={{ flex: 1 }} />
+                <div
+                    id='measureResetGraph'
                     title='Reset Graph'
                     onClick={() => {
                         // Zooming not working nicely, see register above

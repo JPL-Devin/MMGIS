@@ -259,6 +259,42 @@ function TopBar({ UserInterface }) {
                 </Button>
             </div>
 
+            {/* User account area */}
+            <div className="topbar-user-area">
+                {username ? (
+                    <div className="topbar-user-wrapper">
+                        <div
+                            ref={userBtnRef}
+                            className="topbar-user-avatar"
+                            onClick={() => setShowUserCard(!showUserCard)}
+                            title={username}
+                            style={s.avatar}
+                        >
+                            {username[0].toUpperCase()}
+                        </div>
+                        {showUserCard && (
+                            <div ref={userCardRef} className="topbar-user-card" style={s.userCard}>
+                                <div className="topbar-user-card-name" style={s.userCardName}>{username}</div>
+                                <div className="topbar-user-card-divider" style={s.userCardDivider} />
+                                <div className="topbar-user-card-action" onClick={handleLogout} style={s.userCardAction}>
+                                    <i className="mdi mdi-logout" style={{ marginRight: 6, fontSize: 14 }} />
+                                    Logout
+                                </div>
+                            </div>
+                        )}
+                    </div>
+                ) : (
+                    <div
+                        className="topbar-signin-btn"
+                        onClick={handleSignIn}
+                        title="Sign In"
+                        style={s.signIn}
+                    >
+                        <i className="mdi mdi-login" style={{ fontSize: 16 }} />
+                    </div>
+                )}
+            </div>
+
             {/* Right menu (kebab) */}
             <div className="topbar-menu-wrapper">
                 <div
@@ -300,42 +336,6 @@ function TopBar({ UserInterface }) {
                             <i className="mdi mdi-cog" style={{ marginRight: 8, fontSize: 14 }} />
                             Settings
                         </div>
-                    </div>
-                )}
-            </div>
-
-            {/* User account area */}
-            <div className="topbar-user-area">
-                {username ? (
-                    <div className="topbar-user-wrapper">
-                        <div
-                            ref={userBtnRef}
-                            className="topbar-user-avatar"
-                            onClick={() => setShowUserCard(!showUserCard)}
-                            title={username}
-                            style={s.avatar}
-                        >
-                            {username[0].toUpperCase()}
-                        </div>
-                        {showUserCard && (
-                            <div ref={userCardRef} className="topbar-user-card" style={s.userCard}>
-                                <div className="topbar-user-card-name" style={s.userCardName}>{username}</div>
-                                <div className="topbar-user-card-divider" style={s.userCardDivider} />
-                                <div className="topbar-user-card-action" onClick={handleLogout} style={s.userCardAction}>
-                                    <i className="mdi mdi-logout" style={{ marginRight: 6, fontSize: 14 }} />
-                                    Logout
-                                </div>
-                            </div>
-                        )}
-                    </div>
-                ) : (
-                    <div
-                        className="topbar-signin-btn"
-                        onClick={handleSignIn}
-                        title="Sign In"
-                        style={s.signIn}
-                    >
-                        <i className="mdi mdi-login" style={{ fontSize: 16 }} />
                     </div>
                 )}
             </div>
