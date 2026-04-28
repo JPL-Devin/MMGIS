@@ -317,7 +317,18 @@ let Globe_ = {
             })
         }
     },
-    reset: function () {},
+    reset: function () {
+        // Tear down existing renderer if available
+        if (this.litho && typeof this.litho.destroy === 'function') {
+            this.litho.destroy()
+        }
+        this._initialized = false
+        this._finalized = false
+        this._isInitializing = false
+        this._pendingFinaCoordinates = null
+        this.hasBeenOpened = false
+        this.litho = this.getMockLitho()
+    },
     setLink: function () {},
     syncToMapCenter: function () {
         // Sync Globe center to Map's current center on first open
