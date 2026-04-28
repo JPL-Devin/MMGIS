@@ -39,7 +39,7 @@ function applyThemeToDOM(themeName) {
         btn.style.color = t['--color-c']
     })
     document.querySelectorAll('.toolSepDivider').forEach((el) => {
-        el.style.background = t['--color-a1-5']
+        el.style.background = t['--color-a2']
     })
 
     // --- Floating bottom bar ---
@@ -108,11 +108,10 @@ function applyThemeToDOM(themeName) {
         el.style.color = t['--color-a3']
     })
 
-    // --- ToolsWrapper border ---
+    // --- ToolsWrapper (no border) ---
     const toolsWrapper = document.getElementById('toolsWrapper')
     if (toolsWrapper) {
-        const h = parseInt(toolsWrapper.style.height) || 0
-        toolsWrapper.style.borderBottom = h > 0 ? `1px solid ${t['--color-a1']}` : '1px solid transparent'
+        toolsWrapper.style.borderBottom = 'none'
     }
 
     // --- TopBar title ---

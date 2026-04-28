@@ -2,18 +2,19 @@
     position: absolute;
     bottom: 0px;
     right: 0px;
-    padding: 5px;
+    padding: 0px;
     margin: 0;
     margin-right: 41px;
     z-index: 20;
     display: flex;
     transition: bottom 0.2s ease-in;
+    background: var(--color-a);
+    border-radius: 3px;
 }
 
 #CoordinatesDiv .mouseLngLat {
     line-height: 30px;
-    padding: 0px 8px;
-    background: var(--color-a);
+    padding: 0px 0px;
     border-radius: 3px;
     display: flex;
 }
@@ -30,6 +31,7 @@
     line-height: 30px;
     color: white;
     text-align: center;
+    padding: 0px 8px;
 }
 #CoordinatesDiv #mouseElev {
     font-size: 15px;
@@ -135,8 +137,10 @@
     font-size: 13px;
 }
 
+#CoordinatesDiv #buttonsLngLat {
+    border-left: 1px solid var(--color-a1);
+}
 #CoordinatesDiv #pickLngLat {
-    background: var(--color-a);
     color: var(--color-f);
     text-align: center;
     cursor: pointer;

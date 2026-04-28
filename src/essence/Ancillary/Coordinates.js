@@ -36,12 +36,13 @@ const markup = [
             "<i class='mdi mdi-target mdi-18px'></i>",
         "</div>",
     "</div>",
-    "<div id='toggleTimeUI'>",
+    "<div id='toggleTimeUI' style='display:none;'>",
         "<i class='mdi mdi-clock mdi-18px'></i>",
     "</div>"
 ].join('\n');
 
 const Coordinates = {
+    toggleTimeUI: function (forceState) { toggleTimeUI(forceState) },
     //[ lng, lat ]
     mouseLngLat: [0, 0],
     state: 0,
@@ -859,19 +860,27 @@ function urlClick(e) {
     //QueryURL.writeCoordinateURL( e.latlng.lng, e.latlng.lat, Map_.map.getZoom() );
 }
 
-function toggleTimeUI() {
-    const active = $('#toggleTimeUI').hasClass('active')
-    $('#toggleTimeUI').toggleClass('active')
-    $('#timeUI').toggleClass('active')
+function toggleTimeUI(forceState) {
+    const wasActive = $('#toggleTimeUI').hasClass('active')
+    const shouldBeActive = forceState !== undefined ? forceState : !wasActive
 
-    Map_.map._fadeAnimated = active
+    if (shouldBeActive === wasActive) return
 
-    // Let the centralized positioning in UserInterfaceDefault_ handle all element positions
+    if (shouldBeActive) {
+        $('#toggleTimeUI').addClass('active')
+        $('#timeUI').addClass('active')
+    } else {
+        $('#toggleTimeUI').removeClass('active')
+        $('#timeUI').removeClass('active')
+    }
+
+    Map_.map._fadeAnimated = !shouldBeActive
+
     if (typeof UserInterface._updateBottomBarVisibility === 'function') UserInterface._updateBottomBarVisibility()
     if (typeof UserInterface._updateBottomBarDependents === 'function') UserInterface._updateBottomBarDependents()
 
     Object.keys(L_._onTimeUIToggleSubscriptions).forEach((k) => {
-        L_._onTimeUIToggleSubscriptions[k](!active)
+        L_._onTimeUIToggleSubscriptions[k](shouldBeActive)
     })
 }
 

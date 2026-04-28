@@ -193,7 +193,8 @@ function TopBar({ UserInterface }) {
             border: `1px solid ${theme['--color-a1']}`,
         },
         toggleBtn: (active) => ({
-            color: active ? theme['--color-c'] : theme['--color-a3'],
+            color: active ? theme['--color-mmgis'] : theme['--color-a3'],
+            fontWeight: active ? 600 : 400,
             background: active ? theme['--color-accent-active'] : 'transparent',
             borderRight: `1px solid ${theme['--color-a1']}`,
         }),

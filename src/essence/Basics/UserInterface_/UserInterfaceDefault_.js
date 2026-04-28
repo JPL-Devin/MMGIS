@@ -9,6 +9,7 @@ import LayerUpdatedControl from './LayerUpdatedControl'
 import UserInterfaceBridge from './UserInterfaceBridge'
 import { refreshThemeDOM } from '../../../design-system/themeApplier'
 import { getCurrentTheme } from '../../../design-system/useTheme'
+import uiStore from './store/uiStore'
 
 import './UserInterfaceDefault_.css'
 
@@ -108,17 +109,11 @@ var UserInterface = {
         Login.init()
 
         this.barBottom = $('<div>').attr('id', 'barBottom').css({
-            position: 'absolute',
             width: '40px',
-            bottom: '0px',
-            left: '0px',
             display: 'flex',
             'flex-flow': 'column',
-            'z-index': '1005',
+            'margin-top': 'auto',
         })
-        $('#main-container').append(this.barBottom)
-
-        BottomBar.init('barBottom', this)
 
         this.toolPanel = $('<div>')
             .attr('id', 'toolPanel')
@@ -450,7 +445,7 @@ var UserInterface = {
                 bottom: '12px',
                 left: '12px',
                 right: '12px',
-                'z-index': '1003',
+                'z-index': '1401',
                 'border-radius': '10px',
                 border: `1px solid ${getCurrentTheme()['--color-a1']}`,
                 background: getCurrentTheme().alpha('--color-a', 0.92),
@@ -474,7 +469,6 @@ var UserInterface = {
                 margin: '0',
                 background: getCurrentTheme().alpha('--color-a', 0.95),
                 overflow: 'hidden',
-                'border-bottom': '1px solid transparent',
                 transition: 'height 0.3s ease-out',
                 'flex-shrink': '0',
             })
@@ -551,6 +545,8 @@ var UserInterface = {
                 height: 'calc(100% - ' + this.topSize + 'px)',
             })
         $('#main-container').append(this.toolbar)
+        this.toolbar.append(this.barBottom)
+        BottomBar.init('barBottom', this)
 
         this.toolbarLogo = $('<div>')
             .attr('id', 'mmgislogo')
@@ -801,8 +797,8 @@ var UserInterface = {
         const timeUIActive = timeUIEl && timeUIEl.classList.contains('active')
         const timeUIExpanded = timeUIEl && timeUIEl.classList.contains('expanded')
         const timeUIDockH = timeUIActive ? (timeUIExpanded ? 177 : 40) : 0
-        // Account for bar border (1px top + 1px bottom) and toolsWrapper border-bottom (1px)
-        const barBorderH = (toolsH > 0 || timeUIDockH > 0) ? 3 : 0
+        // Account for bar border (1px top + 1px bottom)
+        const barBorderH = (toolsH > 0 || timeUIDockH > 0) ? 2 : 0
         const targetBarHeight = toolsH + timeUIDockH + barBorderH
 
         const barBottom = 12
@@ -1125,6 +1121,13 @@ function toolsSplitOnMouseDown(e) {
     mouseIsDown = true
     return false
 }
+function syncPanelToggleStates() {
+    uiStore.setState({
+        viewerPanelOpen: UserInterface.pxIsViewer > 0,
+        mapPanelOpen: UserInterface.pxIsMap > 0,
+        globePanelOpen: UserInterface.pxIsGlobe > 0,
+    })
+}
 function mainContainerOnMouseUp(e) {
     dragThreshold = 0
     mouseIsDown = false
@@ -1140,6 +1143,7 @@ function mainContainerOnMouseUp(e) {
     $('#main-container').off('touchmove', mapSplitOnMouseMove)
     $('#main-container').off('touchmove', globeSplitOnMouseMove)
     $('#main-container').off('touchmove', toolsSplitOnMouseMove)
+    syncPanelToggleStates()
     return false
 }
 function mainContainerOnMouseOut(e) {
@@ -1157,6 +1161,7 @@ function mainContainerOnMouseOut(e) {
     $('#main-container').off('touchmove', mapSplitOnMouseMove)
     $('#main-container').off('touchmove', globeSplitOnMouseMove)
     $('#main-container').off('touchmove', toolsSplitOnMouseMove)
+    syncPanelToggleStates()
     return false
 }
 
