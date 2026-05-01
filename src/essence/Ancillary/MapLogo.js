@@ -65,8 +65,13 @@ var MapLogo = {
             `</div>`
         ].join('\n')
 
-        // Append to the leaflet bottom-right container
-        $('.leaflet-bottom.leaflet-right').append(logoHtml)
+        // Append to the main container (screen-level) so logo stays fixed to viewport
+        const mainContainer = $('#main-container')
+        if (mainContainer.length > 0) {
+            mainContainer.append(logoHtml)
+        } else {
+            $('body').append(logoHtml)
+        }
     },
 }
 

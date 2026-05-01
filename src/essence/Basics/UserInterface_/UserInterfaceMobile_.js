@@ -914,6 +914,10 @@ var UserInterface = {
         $('#toolbar').css({
             bottom: UserInterface.pxIsTools + 'px',
         })
+        $('#mmgis-map-logo').css({
+            transition: 'bottom 0.3s ease-out',
+            bottom: UserInterface.pxIsTools + 45 + 'px',
+        })
 
         //The tools slider
         $('#toolsSplit').animate(

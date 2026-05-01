@@ -922,6 +922,10 @@ var UserInterface = {
         $('.leaflet-bottom.leaflet-right').css({
             bottom: UserInterface.pxIsTools + timeUIHeight + 'px',
         })
+        $('#mmgis-map-logo').css({
+            transition: 'bottom 0.3s ease-out',
+            bottom: UserInterface.pxIsTools + timeUIHeight + 45 + 'px',
+        })
         $('#CoordinatesDiv').css({
             bottom: UserInterface.pxIsTools + timeUIHeight + 'px',
         })
