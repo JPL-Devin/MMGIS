@@ -1,0 +1,88 @@
+@startuml
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Container.puml
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Component.puml
+
+title MMGIS - Getting Started View
+
+Person(operator, "New Operator", "Setting up MMGIS\nfor the first time")
+
+System_Boundary(prereqs, "Prerequisites") {
+    Component(nodejs, "Node.js 22+", "Runtime", "Required for bare-metal install")
+    Component(postgresql, "PostgreSQL 16+", "Database", "With PostGIS extension installed")
+    Component(python_env, "Python 3 + GDAL", "Optional", "For elevation profiles and\nspatial processing scripts")
+    Component(docker_engine, "Docker + Docker Compose", "Container Runtime", "Recommended deployment method")
+}
+
+System_Boundary(docker_deploy, "Option A: Docker Deployment (Recommended)") {
+
+    Container_Boundary(docker_setup, "Setup Steps") {
+        Component(clone_repo, "1. Clone Repository", "git clone", "git clone https://github.com/\nNASA-AMMOS/MMGIS.git")
+        Component(copy_env, "2. Configure Environment", ".env", "cp sample.env .env\nSet DB_NAME, DB_USER, DB_PASS, SECRET")
+        Component(copy_compose, "3. Configure Compose", "docker-compose.yml", "cp docker-compose.sample.yml\ndocker-compose.yml\nSet POSTGRES_PASSWORD")
+        Component(docker_up, "4. Launch", "docker-compose up -d", "Starts all services:\nMMGIS, DB, and adjacent servers")
+    }
+
+    Container_Boundary(docker_services, "Running Services") {
+        Component(mmgis_container, "MMGIS", "Port 8888", "Main application server\n(auto-runs init-db.js + server.js)")
+        Component(db_container, "PostGIS DB", "Port 5432", "postgis/postgis:18-3.6-alpine\nPersistent volume: mmgis-db")
+        Component(stac_container, "STAC FastAPI", "Port 8881", "Optional: Spatiotemporal\nAsset Catalog")
+        Component(titiler_container, "TiTiler", "Port 8883", "Optional: Dynamic COG\ntile rendering")
+        Component(titiler_pgstac_container, "TiTiler-pgSTAC", "Port 8884", "Optional: STAC mosaic\ntile rendering")
+        Component(tipg_container, "TiPG", "Port 8882", "Optional: OGC vector\ntile serving")
+        Component(velo_container, "Veloserver", "Port 8104", "Optional: Wind/velocity\ndata visualization")
+    }
+}
+
+System_Boundary(bare_metal, "Option B: Bare-Metal / Local Development") {
+
+    Container_Boundary(bare_setup, "Setup Steps") {
+        Component(install_deps, "1. Install Dependencies", "npm install", "Installs Node.js dependencies\nfor main app")
+        Component(setup_db, "2. Setup Database", "PostgreSQL + PostGIS", "Install PostgreSQL 16+,\ncreate PostGIS database")
+        Component(config_env, "3. Configure .env", "Environment", "cp sample.env .env\nSet DB_HOST=localhost,\nDB_PORT=5432, DB_NAME, etc.")
+        Component(build_main, "4. Build Main App", "npm run build", "Webpack 5 production bundle\nOutputs to /build")
+        Component(build_configure, "5. Build Configure App", "cd configure && npm install\n&& npm run build", "Separate React build\nfor admin CMS page")
+        Component(start_server, "6. Start Server", "npm start", "Runs init-db.js then server.js\nDev: PORT+1 for hot-reload")
+    }
+}
+
+System_Boundary(env_config, "Key Environment Variables") {
+    Component(env_required, "Required ENVs", ".env", "DB_NAME, DB_USER, DB_PASS\nSECRET (min 24 chars)\nPORT (default 8888)")
+    Component(env_auth, "Auth ENVs", ".env", "AUTH: off | none | local | csso\nAUTH_LOCAL_ALLOW_SIGNUP\nCSSO_GROUPS, CSSO_LEAD_GROUP")
+    Component(env_adjacent, "Adjacent Server ENVs", ".env", "WITH_STAC, WITH_TITILER\nWITH_TIPG, WITH_VELOSERVER\nSTAC_PORT, TITILER_PORT, etc.")
+    Component(env_optional, "Optional ENVs", ".env", "ROOT_PATH, MAIN_MISSION\nENABLE_MMGIS_WEBSOCKETS\nHIDE_CONFIG, HTTPS")
+}
+
+System_Boundary(first_launch, "First-Time UI Setup") {
+    Component(navigate_config, "1. Open Configure", "Browser", "Navigate to\nhttps://{domain}/configure")
+    Component(create_admin, "2. Create Admin", "First Signup", "First user becomes\nSuperAdmin (permission 111)")
+    Component(create_mission, "3. Create Mission", "NEW MISSION", "Name the mission and\nclick MAKE MISSION")
+    Component(open_app, "4. Open Application", "Browser", "Navigate to\nhttps://{domain}/")
+}
+
+' Setup flows
+Rel_D(operator, clone_repo, "Clones repo")
+Rel(clone_repo, copy_env, "Then configures")
+Rel(copy_env, copy_compose, "Then sets up compose")
+Rel(copy_compose, docker_up, "Then launches")
+
+Rel(docker_up, mmgis_container, "Creates")
+Rel(docker_up, db_container, "Creates")
+Rel(docker_up, stac_container, "Creates (optional)")
+Rel(docker_up, titiler_container, "Creates (optional)")
+Rel(mmgis_container, db_container, "Connects via DB_HOST=db")
+
+Rel_D(operator, install_deps, "Alternative: local install")
+Rel(install_deps, setup_db, "Then sets up DB")
+Rel(setup_db, config_env, "Then configures")
+Rel(config_env, build_main, "Then builds")
+Rel(build_main, build_configure, "Then builds configure")
+Rel(build_configure, start_server, "Then starts")
+
+Rel(env_config, copy_env, "Documented in sample.env\nand docs/pages/Setup/ENVs/")
+
+Rel(operator, navigate_config, "After server is running")
+Rel(navigate_config, create_admin, "First visit prompts signup")
+Rel(create_admin, create_mission, "Then creates mission")
+Rel(create_mission, open_app, "Then opens app")
+
+@enduml

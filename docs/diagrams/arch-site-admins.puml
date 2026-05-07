@@ -1,0 +1,115 @@
+@startuml
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Container.puml
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Component.puml
+
+title MMGIS - Site Administrator View
+
+Person(superadmin, "SuperAdmin", "Full system access (permission 111)\nFirst registered user")
+Person(admin, "Mission Admin", "Manages specific missions (permission 110)")
+
+System_Boundary(admin_interfaces, "Administration Interfaces") {
+
+    Container_Boundary(configure_cms, "Configure Page (/configure)") {
+        Component(mission_mgmt, "Mission Management", "CRUD", "Create, rename, duplicate,\ndelete missions")
+        Component(layer_editor, "Layer Editor", "Configuration", "Add/edit/remove layers,\nset layer types, styling,\ndata sources, grouping")
+        Component(tool_config, "Tool Configuration", "Settings", "Enable/disable tools per mission,\nconfigure tool-specific options")
+        Component(panel_config, "Panel Layout", "UI Config", "Configure panel arrangement:\nviewer, map, globe positions")
+        Component(projection_config, "Projection Settings", "Coordinate System", "Set map projection, bounds,\nzoom levels, planetary body")
+        Component(general_options, "General Options", "Mission Settings", "Mission name, description,\nradiuses, look and feel")
+    }
+
+    Container_Boundary(user_admin, "User & Access Management") {
+        Component(user_roles, "Role Management", "Permissions", "SuperAdmin (111): Full access\nAdmin (110): Mission management\nUser (001): Read/draw access")
+        Component(user_accounts, "Account Management", "CRUD", "Create, view, update,\ndeactivate user accounts")
+        Component(mission_access, "Mission Access Control", "Per-mission", "Assign users to specific\nmissions they can access")
+        Component(lead_config, "Lead Users", "LEADS env", "Elevated permissions for\nspecific users (non-CSSO)")
+        Component(group_config, "Group Management", "CSSO_GROUPS", "LDAP/SSO group-to-role\nmapping for CSSO auth")
+    }
+
+    Container_Boundary(token_admin, "API Token Management") {
+        Component(ltt_create, "Generate Tokens", "Long-Term Tokens", "Create Bearer tokens for\nprogrammatic API access")
+        Component(ltt_manage, "Manage Tokens", "CRUD", "View, revoke tokens\nSet expiration periods:\nnever, 1h, 1d, 1w, 1m, 1y")
+    }
+
+    Container_Boundary(webhook_admin, "Webhook Management") {
+        Component(webhook_config, "Configure Webhooks", "CRUD", "Create webhooks to notify\nexternal systems on events")
+    }
+
+    Container_Boundary(geodata_admin, "Geodataset Administration") {
+        Component(geodataset_upload, "Upload Geodatasets", "PostGIS Import", "Upload GeoJSON/Shapefile\nto PostGIS-backed datasets")
+        Component(geodataset_manage, "Manage Geodatasets", "CRUD", "View, update, delete\ngeodata collections")
+    }
+}
+
+System_Boundary(auth_config, "Authentication Configuration") {
+    Component(auth_off, "AUTH=off", "Open Access", "No login required\nAll users are guests\nAdmin endpoints still protected")
+    Component(auth_none, "AUTH=none", "Optional Login", "Open access + optional\nuser registration and login")
+    Component(auth_local, "AUTH=local", "Local Auth", "Required login, admin creates\naccounts or allows self-signup\n(AUTH_LOCAL_ALLOW_SIGNUP)")
+    Component(auth_csso, "AUTH=csso", "SSO", "Cloud Single Sign-On\nvia reverse proxy headers\n(X-Sub, X-Groups)")
+}
+
+System_Boundary(operational, "Operational Controls") {
+
+    Container_Boundary(env_controls, "Environment Configuration") {
+        Component(hide_config, "HIDE_CONFIG", "Security", "Disable /configure page\nin production")
+        Component(force_config, "FORCE_CONFIG_PATH", "Single Mission", "Lock to one mission config")
+        Component(main_mission, "MAIN_MISSION", "UX", "Skip landing page,\ngo straight to mission")
+        Component(root_path, "ROOT_PATH", "Deployment", "Deploy under a subpath\ne.g. /maps/mmgis")
+        Component(frame_ancestors, "FRAME_ANCESTORS", "Security", "CSP frame-ancestors for\niframe embedding")
+        Component(https_config, "HTTPS", "Security", "Enable HTTPS with\nSSL key and certificate")
+    }
+
+    Container_Boundary(realtime_controls, "Real-time & Collaboration") {
+        Component(ws_enable, "ENABLE_MMGIS_WEBSOCKETS", "Toggle", "Enable backend WebSocket\nfor live layer updates")
+        Component(config_ws, "ENABLE_CONFIG_WEBSOCKETS", "Toggle", "Notify /configure users\nof concurrent changes")
+        Component(config_override, "ENABLE_CONFIG_OVERRIDE", "Toggle", "Allow overriding concurrent\nconfig changes")
+    }
+
+    Container_Boundary(adjacent_controls, "Adjacent Server Management") {
+        Component(toggle_stac, "WITH_STAC", "Toggle", "Enable/disable STAC catalog")
+        Component(toggle_titiler, "WITH_TITILER", "Toggle", "Enable/disable COG tile serving")
+        Component(toggle_tipg, "WITH_TIPG", "Toggle", "Enable/disable vector tile serving")
+        Component(toggle_velo, "WITH_VELOSERVER", "Toggle", "Enable/disable velocity server")
+        Component(custom_adjacent, "ADJACENT_SERVER_CUSTOM_*", "Custom", "Add custom adjacent servers\nwithout modifying code")
+    }
+
+    Container_Boundary(monitoring, "Monitoring & Logging") {
+        Component(healthcheck, "Health Check", "GET /api/utils/healthcheck", "Server health endpoint\nfor load balancers/monitoring")
+        Component(logging, "Winston Logger", "Structured Logs", "Levels: info, warn, error,\ninfrastructure_error, success")
+        Component(verbose, "VERBOSE_LOGGING", "Toggle", "Enable detailed request\nand operation logging")
+        Component(swagger_docs, "Swagger UI", "GET /api/docs", "Interactive API documentation\nfor debugging and testing")
+    }
+
+    Container_Boundary(data_management, "Data & Backup") {
+        Component(missions_dir, "Missions Directory", "File Storage", "Mission configs, tiles,\ndata files, uploads")
+        Component(spice_kernels, "SPICE Kernels", "Scheduled", "Auto-download SPICE kernels\non schedule (cron expr)")
+        Component(blueprints, "Mission Blueprints", "Templates", "Reference-Mission template\nfor new mission creation")
+    }
+}
+
+ContainerDb(postgres, "PostgreSQL / PostGIS", "Database", "Users, sessions, configs,\ngeodata, tokens, webhooks")
+
+' Admin relationships
+Rel_D(superadmin, configure_cms, "Manages all missions")
+Rel_D(superadmin, user_admin, "Manages all users")
+Rel_D(superadmin, token_admin, "Manages API tokens")
+Rel_D(superadmin, webhook_admin, "Configures webhooks")
+Rel_D(superadmin, geodata_admin, "Manages geodatasets")
+
+Rel(admin, mission_mgmt, "Manages assigned missions")
+Rel(admin, layer_editor, "Configures layers")
+Rel(admin, user_accounts, "Views users")
+
+Rel(superadmin, auth_config, "Selects auth mode via ENV")
+Rel(superadmin, env_controls, "Configures via .env")
+Rel(superadmin, realtime_controls, "Configures via .env")
+Rel(superadmin, adjacent_controls, "Configures via .env")
+
+Rel(configure_cms, postgres, "Reads/writes mission config")
+Rel(user_admin, postgres, "Reads/writes user data")
+Rel(token_admin, postgres, "Reads/writes tokens")
+Rel(geodata_admin, postgres, "Reads/writes geodata")
+Rel(monitoring, postgres, "Queries health")
+Rel(missions_dir, configure_cms, "Stores mission data")
+
+@enduml

@@ -1,0 +1,134 @@
+@startuml
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Container.puml
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Component.puml
+
+title MMGIS - Developer Architecture View
+
+Person(dev, "Developer", "Contributes to or extends MMGIS")
+
+System_Boundary(mmgis, "MMGIS Application") {
+
+    Container_Boundary(frontend, "Frontend (React + jQuery + Webpack 5)") {
+        Component(essence, "essence.js", "Entry Point", "Bootstraps singletons, WebSocket, mission init")
+        Component(layers, "Layers_ (L_)", "Singleton", "Layer state, registry, configuration, add/remove/update")
+        Component(map, "Map_", "Singleton", "Leaflet 2D map controller")
+        Component(globe, "Globe_", "Singleton", "Cesium / LithoSphere 3D globe controller")
+        Component(viewer, "Viewer_", "Singleton", "OpenSeadragon, Photosphere, Model, PDF, Video panels")
+        Component(toolctrl, "ToolController_", "Singleton", "Tool lifecycle: make() / destroy()")
+        Component(compctrl, "ComponentController_", "Singleton", "Plugin component registration and init")
+        Component(ui, "UserInterface_", "Singleton", "Layout, panels, notifications, React UI shell")
+        Component(formulae, "Formulae_ (F_)", "Singleton", "Math/geo utilities, radius, coordinate transforms")
+        Component(timecontrol, "TimeControl_", "Singleton", "Temporal filtering and animation")
+        Component(mmgisapi, "mmgisAPI", "Client SDK", "Public JS API for embedding and extension")
+        Component(designsys, "Design System", "Theming", "Stylize, applyTheme, reusable UI components")
+        Component(tools, "16 Tools", "Tool Plugins", "Draw, Measure, Legend, Identifier, Layers,\nAnimation, Chemistry, Curtain, Isochrone,\nInfo, Kinds, Query, Shade, Sites, Viewshed, Segment")
+        Component(landing, "LandingPage", "React", "Mission selector splash page")
+        Component(services, "Services", "QueryURL", "URL state parsing and deep-link handling")
+    }
+
+    Container_Boundary(backend, "Backend (Express 5 / Node.js 22+)") {
+        Component(server, "server.js", "Entry Point", "Express app, middleware pipeline, static serving, dev server")
+        Component(initdb, "init-db.js", "DB Bootstrap", "CREATE DATABASE, PostGIS extensions, session table")
+        Component(middleware_comp, "Middleware", "Express", "cssoHandler, ensureUser, ensureAdmin,\nensureGroup, helmet, compression, rate-limit, CORS")
+        Component(config_api, "Config API", "Backend Module", "/api/configure/* - Mission CRUD, save, get, remove")
+        Component(users_api, "Users API", "Backend Module", "/api/users/* - Signup, login, session, permissions")
+        Component(draw_api, "Draw API", "Backend Module", "/api/draw/* - Collaborative vector features (files, publish)")
+        Component(geodatasets_api, "Geodatasets API", "Backend Module", "/api/geodatasets/* - PostGIS vector queries")
+        Component(datasets_api, "Datasets API", "Backend Module", "/api/datasets/* - Raster/tile dataset management")
+        Component(files_api, "Files API", "Backend Module", "/api/files/* - File serving from Missions/")
+        Component(webhooks_api, "Webhooks API", "Backend Module", "/api/webhooks/* - External event triggers")
+        Component(ltt_api, "LongTermToken API", "Backend Module", "/api/longtermtokens/* - API token management")
+        Component(shortener_api, "Shortener API", "Backend Module", "/api/shortener/* - URL shortening")
+        Component(stac_api, "STAC API", "Backend Module", "/api/stac/* - STAC catalog proxying")
+        Component(accounts_api, "Accounts API", "Backend Module", "/api/accounts/* - User account management")
+        Component(utils_api, "Utils API", "Backend Module", "/api/utils/* - Health check, general options")
+        Component(websocket_comp, "WebSocket Server", "ws", "Real-time layer updates, collaboration broadcast")
+        Component(setups_comp, "Setups Loader", "Dynamic", "Discovers and loads Backend modules + plugins")
+        Component(logger_comp, "Logger", "Winston", "Structured logging with levels")
+        Component(sequelize_comp, "Sequelize ORM", "Models", "users, user_files, configs, geodatasets,\nlong_term_tokens, shortener, webhooks, sessions")
+    }
+
+    Container_Boundary(configure_app, "Configure App (Separate React Build)") {
+        Component(configure, "Configure CMS", "React", "Mission management, layer editor,\nuser admin, webhook config")
+    }
+
+    Container_Boundary(private_api, "Private API (Python / GDAL)") {
+        Component(python_scripts, "Python Scripts", "GDAL/NumPy", "Elevation profiles, spatial processing,\ntile generation helpers")
+    }
+
+    Container_Boundary(plugins, "Plugin System") {
+        Component(tool_plugins, "Tool Plugins", "*Private-Tools* / *Plugin-Tools*", "Custom tools in src/essence/")
+        Component(backend_plugins, "Backend Plugins", "*Private-Backend* / *Plugin-Backend*", "Custom API modules in API/")
+        Component(component_plugins, "Component Plugins", "*Private-Components* / *Plugin-Components*", "Custom UI components in src/essence/")
+    }
+}
+
+Container_Boundary(adjacent, "Adjacent Servers (Microservices)") {
+    Component(titiler, "TiTiler", "COG Renderer", "Dynamic Cloud-Optimized GeoTIFF serving")
+    Component(titiler_pgstac, "TiTiler-pgSTAC", "Mosaic Renderer", "STAC-based mosaic tile serving")
+    Component(stac_fastapi, "STAC FastAPI", "Catalog", "SpatioTemporal Asset Catalog API")
+    Component(tipg, "TiPG", "Vector Tiles", "PostGIS-backed OGC vector tile serving")
+    Component(veloserver, "Veloserver", "Velocity Data", "Wind/velocity visualization server")
+}
+
+ContainerDb(postgres, "PostgreSQL 16+ / PostGIS", "Database", "Missions config, users, sessions,\ngeodata, draw features, tokens")
+
+Container_Boundary(testing, "Testing Infrastructure") {
+    Component(playwright_tests, "Playwright", "E2E + Unit", "tests/e2e/*, tests/unit/*")
+    Component(global_setup, "Global Setup", "Test DB", "Creates mmgis-test database")
+    Component(ci, "GitHub Actions CI", "Workflows", "playwright-tests, docker-build,\nsecrets-detection, bump-version")
+}
+
+Container_Boundary(build_tools, "Build Toolchain") {
+    Component(webpack, "Webpack 5", "Bundler", "Main app + Configure app builds")
+    Component(babel, "Babel", "Transpiler", "React preset, ES2020+")
+    Component(eslint, "ESLint", "Linter", "react-app config")
+    Component(build_script, "build.js", "Orchestrator", "Custom build script, tool/component discovery")
+}
+
+' Key relationships
+Rel_D(dev, essence, "Develops")
+Rel_D(dev, server, "Develops")
+Rel_D(dev, configure, "Develops")
+
+Rel(essence, layers, "Initializes")
+Rel(essence, map, "Creates 2D map")
+Rel(essence, globe, "Creates 3D globe")
+Rel(essence, viewer, "Creates viewer")
+Rel(essence, toolctrl, "Loads tools")
+Rel(essence, compctrl, "Loads components")
+Rel(layers, map, "Provides layer data")
+Rel(layers, globe, "Provides layer data")
+Rel(toolctrl, tools, "Manages lifecycle")
+Rel(compctrl, component_plugins, "Discovers plugins")
+Rel(ui, designsys, "Applies theming")
+Rel(mmgisapi, layers, "Exposes public API for")
+
+Rel(server, middleware_comp, "Applies middleware chain")
+Rel(server, setups_comp, "Discovers and loads modules")
+Rel(setups_comp, config_api, "Registers routes")
+Rel(setups_comp, users_api, "Registers routes")
+Rel(setups_comp, draw_api, "Registers routes")
+Rel(setups_comp, geodatasets_api, "Registers routes")
+Rel(setups_comp, backend_plugins, "Discovers plugins")
+Rel(server, websocket_comp, "Upgrades HTTP to WS")
+
+Rel(config_api, sequelize_comp, "Reads/writes config")
+Rel(users_api, sequelize_comp, "Reads/writes users")
+Rel(draw_api, sequelize_comp, "Reads/writes features")
+Rel(geodatasets_api, sequelize_comp, "Spatial queries")
+Rel(sequelize_comp, postgres, "SQL / PostGIS")
+
+Rel(server, titiler, "Proxies /titiler/*")
+Rel(server, stac_fastapi, "Proxies /stac/*")
+Rel(server, tipg, "Proxies /tipg/*")
+Rel(server, veloserver, "Proxies /veloserver/*")
+Rel(titiler_pgstac, postgres, "Reads STAC metadata")
+Rel(stac_fastapi, postgres, "Reads/writes catalogs")
+
+Rel(essence, websocket_comp, "Real-time layer updates")
+Rel(build_script, webpack, "Triggers build")
+Rel(playwright_tests, server, "Tests against")
+Rel(ci, playwright_tests, "Runs tests")
+
+@enduml

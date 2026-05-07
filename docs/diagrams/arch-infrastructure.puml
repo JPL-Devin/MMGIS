@@ -1,0 +1,101 @@
+@startuml
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Container.puml
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Component.puml
+
+title MMGIS - Infrastructure & Deployment View
+
+Person(devops, "DevOps / Platform Engineer", "Manages deployment, scaling,\nand monitoring")
+
+System_Boundary(docker_stack, "Docker Compose Deployment Stack") {
+
+    Container_Boundary(mmgis_service, "MMGIS Application Service") {
+        Component(mmgis_app, "MMGIS Container", "Node.js 22 / Express 5", "Port: 8888\nImage: ghcr.io/nasa-ammos/mmgis\nMulti-stage build (OracleLinux 8.9)\nHealth: /api/utils/healthcheck")
+        Component(mmgis_python, "Python Environment", "Micromamba / GDAL", "Bundled in container\nFor elevation profiles\nand spatial processing")
+        Component(mmgis_volumes, "Mounted Volumes", "Persistent", "./Missions:/usr/src/app/Missions\n./ssl:/usr/src/app/ssl")
+    }
+
+    Container_Boundary(db_service, "Database Service") {
+        Component(postgis, "PostgreSQL + PostGIS", "postgis/postgis:18-3.6-alpine", "Port: 5432 (internal)\nVolume: mmgis-db\nshm_size: 1g\nHealth: pg_isready")
+        Component(db_config, "DB Configuration", "Pool Settings", "DB_POOL_MAX (default 10)\nDB_POOL_TIMEOUT (30s)\nDB_POOL_IDLE (10s)\nOptional SSL (DB_SSL)")
+    }
+
+    Container_Boundary(stac_service, "STAC Service (Optional)") {
+        Component(stac_fastapi, "STAC FastAPI", "stac-fastapi-pgstac:6.2.2", "Port: 8881\nSpatiotemporal Asset Catalog\nTransaction extensions enabled\nDepends on: mmgis + db healthy")
+    }
+
+    Container_Boundary(titiler_service, "TiTiler Services (Optional)") {
+        Component(titiler, "TiTiler", "titiler:1.2.1", "Port: 8883 | platform: linux/amd64\nDynamic COG tile rendering\nMemory limit: 8G\nGDAL cache: 75%")
+        Component(titiler_pgstac, "TiTiler-pgSTAC", "titiler-pgstac:1.9.0", "Port: 8884 | platform: linux/amd64\nSTAC mosaic rendering\nMemory limit: 12G (reserve 8G)\nDepends on: mmgis + db healthy")
+    }
+
+    Container_Boundary(tipg_service, "TiPG Service (Optional)") {
+        Component(tipg, "TiPG", "tipg:1.3.0", "Port: 8882\nOGC vector tiles from PostGIS\nWEB_CONCURRENCY: 10\nDepends on: mmgis + db healthy")
+    }
+
+    Container_Boundary(velo_service, "Veloserver (Optional)") {
+        Component(veloserver, "Veloserver", "nasa-ammos/veloserver", "Port: 8104\nWind/velocity visualization")
+    }
+}
+
+System_Boundary(proxy_layer, "Reverse Proxy Architecture") {
+    Component(adjacent_proxy, "Adjacent Servers Proxy", "http-proxy-middleware", "MMGIS proxies requests to\nadjacent services internally:\n/titiler/* -> :8883\n/stac/* -> :8881\n/tipg/* -> :8882\n/veloserver/* -> :8104")
+    Component(custom_proxy, "Custom Adjacent Servers", "ADJACENT_SERVER_CUSTOM_*", "User-defined proxy routes\nvia ENV configuration\nFormat: [enabled, route, service, port]")
+    Component(external_proxy, "External Reverse Proxy", "Optional (nginx, Apache)", "HTTPS termination\nCSP headers\nCSS/SSO integration")
+}
+
+System_Boundary(security, "Security Configuration") {
+    Component(helmet_config, "Helmet.js", "Headers", "CSP, X-Frame-Options,\nCross-Origin policies")
+    Component(rate_limit, "Rate Limiter", "express-rate-limit", "20,000 requests per 5 minutes\non /api/* routes")
+    Component(ssl_config, "HTTPS Support", "Built-in", "HTTPS=true with KEY and CERT\nor external proxy termination")
+    Component(csp_config, "CSP Configuration", "Configurable", "FRAME_ANCESTORS: iframe embedding\nFRAME_SRC: embedded content\nTHIRD_PARTY_COOKIES: cross-origin")
+    Component(titiler_ssrf, "TiTiler URL Validation", "SSRF Prevention", "TITILER_ALLOWED_URL_PATTERNS\nRegex whitelist for proxied URLs")
+}
+
+System_Boundary(ci_cd, "CI/CD Pipeline (GitHub Actions)") {
+    Component(playwright_ci, "playwright-tests.yml", "Testing", "Playwright E2E + unit tests\nMatrix: auth modes (local, off)\nPostgreSQL service container")
+    Component(docker_build_ci, "docker-build.yml", "Build", "Multi-arch Docker builds\n(amd64 + arm64)\nPush to ghcr.io")
+    Component(secrets_ci, "secrets-detection.yaml", "Security", "Detect-secrets baseline scan\nBlocks commits with secrets")
+    Component(version_ci, "bump-version.yml", "Release", "Automated version bumping\nand tag management")
+    Component(security_scan_ci, "security-scan.yml", "Security", "CodeQL analysis for\nvulnerability detection")
+}
+
+System_Boundary(networking, "Networking & Ports") {
+    Component(port_map, "Port Map", "Reference", "8888: MMGIS (main)\n8889: Dev server (PORT+1)\n8881: STAC FastAPI\n8882: TiPG\n8883: TiTiler\n8884: TiTiler-pgSTAC\n8104: Veloserver\n5432: PostgreSQL")
+    Component(ws_config, "WebSocket", "ws/wss", "Upgrade path: {ROOT_PATH}/\nENABLE_MMGIS_WEBSOCKETS\nWEBSOCKET_ROOT_PATH override")
+    Component(subpath, "Subpath Deployment", "ROOT_PATH", "Deploy under subpath:\nROOT_PATH=/maps/mmgis\nEXTERNAL_ROOT_PATH for proxy")
+}
+
+System_Boundary(storage, "Storage & Persistence") {
+    Component(db_volume, "DB Volume", "Docker Volume", "mmgis-db: PostgreSQL data\nPersistent across restarts")
+    Component(missions_volume, "Missions Volume", "Bind Mount", "./Missions: mission configs,\ntiles, uploads, data files")
+    Component(ssl_volume, "SSL Volume", "Bind Mount", "./ssl: HTTPS certificates")
+    Component(spice_storage, "SPICE Kernels", "Scheduled", "Auto-download on schedule\nSPICE_SCHEDULED_KERNEL_CRON_EXPR")
+}
+
+' Relationships
+Rel_D(devops, docker_stack, "Deploys and manages")
+Rel_D(devops, ci_cd, "Monitors pipeline")
+Rel_D(devops, security, "Configures security")
+
+Rel(mmgis_app, postgis, "TCP :5432\nSequelize ORM")
+Rel(mmgis_app, adjacent_proxy, "Proxies requests")
+Rel(adjacent_proxy, stac_fastapi, "HTTP :8881")
+Rel(adjacent_proxy, titiler, "HTTP :8883")
+Rel(adjacent_proxy, titiler_pgstac, "HTTP :8884")
+Rel(adjacent_proxy, tipg, "HTTP :8882")
+Rel(adjacent_proxy, veloserver, "HTTP :8104")
+Rel(adjacent_proxy, custom_proxy, "Routes custom services")
+
+Rel(stac_fastapi, postgis, "SQL (mmgis-stac DB)")
+Rel(titiler_pgstac, postgis, "SQL (mmgis-stac DB)")
+Rel(tipg, postgis, "SQL (mmgis-stac DB)")
+
+Rel(external_proxy, mmgis_app, "HTTPS -> HTTP :8888")
+
+Rel(mmgis_app, mmgis_volumes, "Reads/writes")
+Rel(postgis, db_volume, "Persists data")
+
+Rel(docker_build_ci, mmgis_app, "Builds image")
+Rel(playwright_ci, mmgis_app, "Tests against")
+
+@enduml

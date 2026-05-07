@@ -1,0 +1,94 @@
+@startuml
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Container.puml
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Component.puml
+
+title MMGIS - UI User View
+
+Person(user, "Mission User", "Scientists, engineers, and analysts\nviewing and analyzing geospatial data")
+Person(admin, "Site Administrator", "Configures missions, manages\nusers and layers")
+
+System_Boundary(mmgis_ui, "MMGIS Web Application") {
+
+    Container_Boundary(entry, "Entry & Navigation") {
+        Component(landing, "Landing Page", "Mission Selector", "Browse available missions,\nselect a mission to open")
+        Component(login, "Login Page", "Authentication", "Sign up, sign in, or\naccess as guest (AUTH mode dependent)")
+    }
+
+    Container_Boundary(map_views, "Map Visualization Panels") {
+        Component(map2d, "2D Map", "Leaflet", "Pan, zoom, click features,\ntoggle layers, measure, draw")
+        Component(globe3d, "3D Globe", "Cesium / LithoSphere", "Rotate, tilt, zoom, terrain\nvisualization, 3D models")
+        Component(viewer_panel, "Viewer Panel", "Multi-format", "High-res imagery (OpenSeadragon),\nphotospheres, 3D models,\nPDFs, videos")
+    }
+
+    Container_Boundary(interactive_tools, "Interactive Tools") {
+        Component(draw_tool, "Draw", "Collaborative", "Create points, lines, polygons\nwith real-time sync across users")
+        Component(measure_tool, "Measure", "Analysis", "Distance, elevation profiles,\nline-of-sight analysis")
+        Component(identify_tool, "Identifier", "Query", "Click to query pixel values\nfrom rasters and point data")
+        Component(layers_tool, "Layers", "Management", "Toggle visibility, reorder,\nadjust opacity, filter by time")
+        Component(legend_tool, "Legend", "Reference", "Auto-generated legends from\nlayer styling and metadata")
+        Component(animation_tool, "Animation", "Export", "Create animated GIFs/MP4s\nfrom map sequences")
+        Component(chemistry_tool, "Chemistry", "Science", "Visualize chemical composition\ndata from planetary samples")
+        Component(curtain_tool, "Curtain", "Subsurface", "Ground-penetrating radar\nsubsurface imagery display")
+        Component(isochrone_tool, "Isochrone", "Traversability", "Terrain traversability analysis\nand reachability mapping")
+        Component(shade_tool, "Shade", "Illumination", "Solar/orbiter illumination\nand shadow visualization")
+        Component(viewshed_tool, "Viewshed", "Visibility", "Line-of-sight visibility\nanalysis between points")
+        Component(sites_tool, "Sites", "Navigation", "Quick navigation bookmarks\nand saved viewpoints")
+        Component(time_tool, "Time Control", "Temporal", "Filter data by time range,\nanimate through time steps")
+        Component(info_tool, "Info", "Details", "Display feature properties\nand metadata in panel")
+        Component(query_tool, "Query", "Search", "Spatial and attribute queries\nacross datasets")
+        Component(kinds_tool, "Kinds", "Behavior", "Layer-specific click behaviors\nand custom actions")
+    }
+
+    Container_Boundary(data_features, "Data & Layer Types") {
+        Component(vector_layers, "Vector Layers", "GeoJSON/Shapefile", "Points, lines, polygons\nwith property-based styling")
+        Component(tile_layers, "Tile Layers", "XYZ/WMTS", "Base maps, imagery mosaics,\nterrain tiles")
+        Component(cog_layers, "COG Layers", "TiTiler", "Cloud-Optimized GeoTIFF with\ndynamic band math and styling")
+        Component(model_layers, "3D Model Layers", "OBJ/GLTF", "3D models placed on\nplanetary surfaces")
+        Component(data_layers, "Data Layers", "CSV/JSON", "Tabular data overlay\nwith spatial coordinates")
+        Component(stac_layers, "STAC Layers", "Catalog", "Discover and mosaic assets\nfrom STAC catalogs")
+    }
+
+    Container_Boundary(collab, "Collaboration & Sharing") {
+        Component(realtime, "Real-time Sync", "WebSocket", "See teammate edits live,\nlayer change notifications")
+        Component(deeplinks, "Deep Links", "URL Sharing", "Share exact map state via\nURL with shortener")
+        Component(exports, "Data Export", "Download", "Export drawings as GeoJSON,\nShapefile, KML")
+    }
+}
+
+Container(app_server, "MMGIS Server", "Node.js / Express", "Serves map data, manages users,\nprocesses API requests")
+
+Container(configure_page, "Configure Page", "Admin CMS", "Mission setup, layer management,\nuser and webhook administration")
+
+System_Ext(planetary_data, "Planetary Data Sources", "NASA PDS, mission archives,\nremote tile servers, STAC catalogs")
+
+' User flows
+Rel_D(user, landing, "Selects mission")
+Rel_D(user, login, "Authenticates")
+Rel(landing, map2d, "Opens mission")
+
+Rel(user, map2d, "Pans, zooms, clicks")
+Rel(user, globe3d, "Rotates, tilts, explores 3D")
+Rel(user, viewer_panel, "Views high-res imagery")
+
+Rel(user, draw_tool, "Creates/edits features")
+Rel(user, measure_tool, "Measures distances/profiles")
+Rel(user, identify_tool, "Queries pixel values")
+Rel(user, layers_tool, "Manages layer visibility")
+Rel(user, time_tool, "Filters by time range")
+Rel(user, animation_tool, "Exports animations")
+Rel(user, deeplinks, "Shares map state")
+
+Rel(map2d, vector_layers, "Renders")
+Rel(map2d, tile_layers, "Renders")
+Rel(globe3d, model_layers, "Renders")
+Rel(map2d, cog_layers, "Renders via TiTiler")
+
+Rel(realtime, draw_tool, "Syncs edits")
+
+Rel(admin, configure_page, "Manages missions")
+
+Rel_D(app_server, planetary_data, "Fetches remote data")
+Rel(map_views, app_server, "Requests tiles, configs, features")
+Rel(interactive_tools, app_server, "API calls for data/operations")
+
+@enduml
