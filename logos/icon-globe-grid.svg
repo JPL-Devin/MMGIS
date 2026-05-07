@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" fill="none">
+  <g fill="none" stroke="#08AEEA" stroke-width="3">
+    <!-- Globe circle -->
+    <circle cx="100" cy="100" r="88" />
+    <!-- Latitude lines -->
+    <ellipse cx="100" cy="60" rx="78" ry="12" />
+    <ellipse cx="100" cy="100" rx="88" ry="0.5" />
+    <ellipse cx="100" cy="140" rx="78" ry="12" />
+    <!-- Longitude lines -->
+    <ellipse cx="100" cy="100" rx="30" ry="88" />
+    <ellipse cx="100" cy="100" rx="60" ry="88" />
+    <!-- M integrated into grid - two angled meridians forming M peaks -->
+    <path d="M52 188 C52 188, 58 140, 70 100 C78 72, 80 44, 76 20" stroke-width="4.5" />
+    <path d="M76 20 C82 52, 92 72, 100 88 C108 72, 118 52, 124 20" stroke-width="4.5" />
+    <path d="M124 20 C120 44, 122 72, 130 100 C142 140, 148 188, 148 188" stroke-width="4.5" />
+  </g>
+</svg>

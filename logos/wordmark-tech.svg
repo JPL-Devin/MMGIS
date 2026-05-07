@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 200" fill="none">
+  <!-- MMGIS in techy/digital HUD style with rounded terminals and uniform stroke -->
+  <g fill="none" stroke="#08AEEA" stroke-width="8" stroke-linecap="round" stroke-linejoin="round">
+    <!-- First M -->
+    <path d="M30 168 L30 38 L70 38 L105 100 L140 38 L180 38 L180 168" />
+    <line x1="30" y1="168" x2="56" y2="168" />
+    <line x1="154" y1="168" x2="180" y2="168" />
+    <!-- Second M -->
+    <path d="M210 168 L210 38 L250 38 L285 100 L320 38 L360 38 L360 168" />
+    <line x1="210" y1="168" x2="236" y2="168" />
+    <line x1="334" y1="168" x2="360" y2="168" />
+    <!-- G -->
+    <path d="M460 38 L410 38 C395 38 386 50 386 64 L386 136 C386 150 395 162 410 162 L450 162 C462 162 470 152 470 140 L470 108 L430 108" />
+    <!-- I -->
+    <line x1="500" y1="38" x2="540" y2="38" />
+    <line x1="520" y1="38" x2="520" y2="162" />
+    <line x1="500" y1="162" x2="540" y2="162" />
+    <!-- S -->
+    <path d="M620 38 L580 38 C567 38 558 48 558 62 L558 82 C558 96 567 104 580 104 L610 104 C623 104 634 114 634 128 L634 140 C634 154 623 162 610 162 L566 162" />
+  </g>
+</svg>

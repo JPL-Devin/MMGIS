@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 200" fill="none">
+  <!-- MMGIS in custom geometric sans-serif style -->
+  <!-- All letters constructed from basic geometric shapes -->
+  <g fill="#1A1A2E">
+    <!-- First M: angular peaks -->
+    <path d="M20 170 L20 30 L52 30 L90 90 L128 30 L160 30 L160 170 L132 170 L132 80 L98 134 L82 134 L48 80 L48 170 Z" />
+    <!-- Second M: angular peaks (matching) -->
+    <path d="M180 170 L180 30 L212 30 L250 90 L288 30 L320 30 L320 170 L292 170 L292 80 L258 134 L242 134 L208 80 L208 170 Z" />
+    <!-- G: geometric with squared inner -->
+    <path d="M380 30 L460 30 L460 58 L388 58 C374 58 364 68 364 82 L364 118 C364 132 374 142 388 142 L432 142 L432 108 L404 108 L404 82 L460 82 L460 142 C460 158 448 170 432 170 L388 170 C362 170 340 152 340 130 L340 70 C340 48 362 30 380 30 Z" />
+    <!-- I: simple rectangle -->
+    <path d="M488 30 L516 30 L516 170 L488 170 Z" />
+    <!-- S: geometric curves -->
+    <path d="M580 30 L650 30 L650 58 L580 58 C570 58 564 64 564 72 L564 82 C564 90 570 96 580 96 L630 96 C652 96 666 110 666 128 L666 142 C666 160 652 170 630 170 L548 170 L548 142 L630 142 C640 142 642 136 642 130 L642 124 C642 116 636 112 626 112 L580 112 C558 112 540 96 540 78 L540 64 C540 46 558 30 580 30 Z" />
+  </g>
+</svg>

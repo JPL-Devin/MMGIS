@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" fill="none">
+  <!-- Map pin -->
+  <path d="M100 180 C100 180, 55 118, 55 82 C55 57.2 75.2 37 100 37 C124.8 37 145 57.2 145 82 C145 118 100 180 100 180 Z" fill="#08AEEA" />
+  <!-- Pin inner circle -->
+  <circle cx="100" cy="80" r="20" fill="white" />
+  <!-- Orbital ring -->
+  <ellipse cx="100" cy="95" rx="90" ry="32" stroke="#6C63FF" stroke-width="4.5" fill="none" transform="rotate(-30 100 95)" />
+  <!-- Small orbital dot -->
+  <circle cx="172" cy="55" r="6" fill="#6C63FF" />
+</svg>
