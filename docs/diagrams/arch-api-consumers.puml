@@ -4,104 +4,84 @@
 
 title MMGIS - API Consumer View
 
-Person(api_dev, "API Consumer", "Developers integrating with\nMMGIS programmatically")
-Person(embed_dev, "Embed Developer", "Developers embedding MMGIS\nin other web applications")
+top to bottom direction
+LAYOUT_WITH_LEGEND()
+
+skinparam {
+    BackgroundColor white
+    Shadowing true
+    RoundCorner 15
+    DefaultFontName "Segoe UI"
+    DefaultFontSize 12
+    ArrowColor #555555
+    ArrowThickness 1.5
+    wrapWidth 200
+}
+
+AddElementTag("auth", $bgColor="#C62828", $fontColor="white", $borderColor="#B71C1C")
+AddElementTag("endpoint", $bgColor="#1565C0", $fontColor="white", $borderColor="#0D47A1")
+AddElementTag("sdk", $bgColor="#00695C", $fontColor="white", $borderColor="#004D40")
+AddElementTag("ws", $bgColor="#E65100", $fontColor="white", $borderColor="#BF360C")
+AddElementTag("docs", $bgColor="#6A1B9A", $fontColor="white", $borderColor="#4A148C")
+AddElementTag("server", $bgColor="#37474F", $fontColor="white", $borderColor="#263238")
+
+Person(api_dev, "API Consumer", "Developers integrating\nwith MMGIS programmatically")
+Person(embed_dev, "Embed Developer", "Developers embedding\nMMGIS in web apps")
 
 System_Boundary(mmgis_api, "MMGIS API Surface") {
 
-    Container_Boundary(auth_api, "Authentication") {
-        Component(auth_local, "Local Auth", "POST /api/users/signup\nPOST /api/users/login\nGET /api/users/logout", "Username/password authentication\nFirst signup creates admin")
-        Component(auth_token, "Long-Term Tokens", "POST /api/longtermtokens/generate\nGET /api/longtermtokens/tokens\nPOST /api/longtermtokens/delete", "Bearer token auth for API access\nConfigurable expiration periods")
-        Component(auth_csso, "CSSO (SSO)", "X-Sub, X-Groups headers", "Cloud Single Sign-On via\nreverse proxy headers")
-        Component(auth_session, "Session Cookie", "MMGISSession", "connect-pg-simple session store\nPermissions: 111 (admin), 110, 001")
+    Container_Boundary(auth_api, "Authentication Mechanisms") {
+        Component(auth_local, "Local Auth", "POST /api/users/signup\nPOST /api/users/login", "Username/password\nFirst signup = admin", $tags="auth")
+        Component(auth_token, "Long-Term Tokens", "Authorization: Bearer {token}", "Configurable expiration\ngenerate / list / delete", $tags="auth")
+        Component(auth_csso, "CSSO (SSO)", "X-Sub, X-Groups headers", "Reverse proxy header-based", $tags="auth")
+        Component(auth_session, "Session Cookie", "MMGISSession", "Permissions: 111 / 110 / 001", $tags="auth")
     }
 
-    Container_Boundary(config_endpoints, "Configuration API (Admin Only)") {
-        Component(config_get, "GET /api/configure/get", "Read", "Get mission configuration by name")
-        Component(config_missions, "GET /api/configure/missions", "List", "List all available missions")
-        Component(config_add, "POST /api/configure/add", "Create", "Create a new mission")
-        Component(config_save, "POST /api/configure/save", "Update", "Save mission configuration (layers, tools, etc.)")
-        Component(config_remove, "POST /api/configure/remove", "Delete", "Delete a mission and its data")
-    }
-
-    Container_Boundary(draw_endpoints, "Draw API") {
-        Component(draw_files, "Draw File Operations", "POST /api/draw/*, GET /api/draw/*", "Create, update, delete, merge\ndrawing files and features")
-        Component(draw_publish, "Publish Features", "POST /api/draw/*/publish", "Publish user drawings to\nshared mission layers")
-    }
-
-    Container_Boundary(geo_endpoints, "Geodatasets API") {
-        Component(geo_get, "GET /api/geodatasets/get", "List", "List available geodatasets")
-        Component(geo_search, "POST /api/geodatasets/search", "Spatial Query", "PostGIS spatial/attribute queries\nwith bbox, intersect, within filters")
-        Component(geo_manage, "Geodataset Management", "POST /api/geodatasets/*", "Upload, create, update, delete\ngeodatasets (admin)")
-    }
-
-    Container_Boundary(files_endpoints, "Files API") {
-        Component(files_get, "GET /api/files/getfile", "Download", "Serve files from Missions/ directory")
-        Component(files_upload, "POST /api/files/upload", "Upload", "Upload files to mission directories")
-    }
-
-    Container_Boundary(datasets_endpoints, "Datasets API") {
-        Component(datasets_get, "GET /api/datasets/get", "Read", "Get dataset metadata and info")
-    }
-
-    Container_Boundary(users_endpoints, "Users API") {
-        Component(users_signup, "POST /api/users/signup", "Create", "Register new user account")
-        Component(users_manage, "User Management", "POST /api/users/*", "Update roles, permissions,\nmission access (admin)")
-    }
-
-    Container_Boundary(webhook_endpoints, "Webhooks API") {
-        Component(webhooks_manage, "Webhook CRUD", "POST /api/webhooks/*", "Create, update, delete webhooks\nfor external integrations")
-    }
-
-    Container_Boundary(utils_endpoints, "Utility API") {
-        Component(utils_health, "GET /api/utils/healthcheck", "Health", "Server health check endpoint")
-        Component(shortener, "Shortener API", "POST /api/shortener/*", "Create/expand shortened\ndeep-link URLs")
+    Container_Boundary(rest_api, "REST API Endpoints") {
+        Component(config_ep, "Configuration", "/api/configure/*", "Mission CRUD (admin only)\nget, missions, add, save, remove", $tags="endpoint")
+        Component(draw_ep, "Draw", "/api/draw/*", "Feature CRUD, publish,\nmerge, undo", $tags="endpoint")
+        Component(geo_ep, "Geodatasets", "/api/geodatasets/*", "PostGIS spatial queries\nbbox, intersect, within", $tags="endpoint")
+        Component(files_ep, "Files", "/api/files/*", "Mission file serving\n& upload", $tags="endpoint")
+        Component(users_ep, "Users", "/api/users/*", "Account management\n& role assignment", $tags="endpoint")
+        Component(webhooks_ep, "Webhooks", "/api/webhooks/*", "External event notifications", $tags="endpoint")
+        Component(tokens_ep, "Tokens", "/api/longtermtokens/*", "Bearer token management", $tags="endpoint")
+        Component(utils_ep, "Utilities", "/api/utils/*", "Health check, URL shortening", $tags="endpoint")
     }
 
     Container_Boundary(ws_api, "WebSocket API") {
-        Component(ws_conn, "WebSocket Connection", "ws(s)://{host}{ROOT_PATH}/", "Upgrade HTTP to WebSocket\nfor real-time updates")
-        Component(ws_events, "WebSocket Events", "JSON Messages", "addLayer, updateLayer, removeLayer\nConfig change notifications\nDraw collaboration sync")
+        Component(ws_conn, "Connection", "ws(s)://{host}{ROOT_PATH}/", "Upgrade HTTP to WebSocket", $tags="ws")
+        Component(ws_events, "Events", "JSON Messages", "addLayer, updateLayer, removeLayer,\nconfig changes, draw sync", $tags="ws")
     }
 
     Container_Boundary(client_sdk, "Client-Side SDK (mmgisAPI)") {
-        Component(sdk_layers, "Layer Control", "mmgisAPI.layers.*", "Add, remove, toggle layers\nGet layer data and properties")
-        Component(sdk_map, "Map Control", "mmgisAPI.map.*", "Set view, zoom, get bounds\nAdd custom overlays")
-        Component(sdk_tools, "Tool Control", "mmgisAPI.tools.*", "Open/close tools, get tool state\nInteract with active tool")
-        Component(sdk_events, "Event System", "mmgisAPI.on(event)", "Subscribe to map clicks, layer changes,\ntool events, WebSocket messages")
-        Component(sdk_login, "Auth Control", "mmgisAPI.initialLogin()", "Trigger login flow programmatically")
+        Component(sdk_layers, "mmgisAPI.layers.*", "Layer Control", "Add, remove, toggle, get data", $tags="sdk")
+        Component(sdk_map, "mmgisAPI.map.*", "Map Control", "Set view, zoom, bounds", $tags="sdk")
+        Component(sdk_tools, "mmgisAPI.tools.*", "Tool Control", "Open/close, get state", $tags="sdk")
+        Component(sdk_events, "mmgisAPI.on(event)", "Events", "Map clicks, layer changes, WS", $tags="sdk")
     }
 
-    Container_Boundary(openapi, "API Documentation") {
-        Component(swagger, "Swagger UI", "GET /api/docs", "Interactive API documentation\nOpenAPI 3.0 spec at\ndocs/mmgis-openapi.json")
+    Container_Boundary(api_docs, "Documentation") {
+        Component(swagger, "Swagger UI", "GET /api/docs", "Interactive OpenAPI 3.0 docs", $tags="docs")
     }
 }
 
-Container(mmgis_server, "MMGIS Server", "Express 5", "Rate limited: 20,000 req / 5 min\nJSON body limit: 500MB\ngzip compression enabled")
+Container(mmgis_server, "MMGIS Server", "Express 5", "Rate limit: 20K req/5min\nJSON body: 500MB max\ngzip compression", $tags="server")
 
-' Auth flows
-Rel_D(api_dev, auth_local, "Login with credentials")
+Rel_D(api_dev, auth_local, "Authenticates")
 Rel_D(api_dev, auth_token, "Uses Bearer token")
 Rel(auth_local, auth_session, "Sets session cookie")
-Rel(auth_token, mmgis_server, "Validates token against DB")
 
-' API consumption
-Rel(api_dev, config_get, "Reads mission config")
-Rel(api_dev, geo_search, "Queries geospatial data")
-Rel(api_dev, draw_files, "Manages draw features")
-Rel(api_dev, files_get, "Downloads mission files")
-Rel(api_dev, ws_conn, "Subscribes to real-time events")
-Rel(api_dev, swagger, "Explores API docs")
-Rel(api_dev, utils_health, "Monitors health")
+Rel(api_dev, config_ep, "Reads config")
+Rel(api_dev, geo_ep, "Queries geodata")
+Rel(api_dev, draw_ep, "Manages features")
+Rel(api_dev, ws_conn, "Subscribes to events")
+Rel(api_dev, swagger, "Explores API")
 
-' Embed developer flows
 Rel(embed_dev, sdk_layers, "Controls layers")
-Rel(embed_dev, sdk_map, "Controls map view")
-Rel(embed_dev, sdk_events, "Subscribes to events")
-Rel(embed_dev, sdk_login, "Manages auth")
+Rel(embed_dev, sdk_map, "Controls map")
+Rel(embed_dev, sdk_events, "Subscribes")
 
-' Internal
 Rel(ws_conn, ws_events, "Sends/receives")
-Rel(config_endpoints, mmgis_server, "Admin auth required")
-Rel(webhook_endpoints, mmgis_server, "Admin auth required")
+Rel(rest_api, mmgis_server, "Served by")
 
 @enduml

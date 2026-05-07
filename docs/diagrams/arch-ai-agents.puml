@@ -4,79 +4,92 @@
 
 title MMGIS - AI Agent Operating Manual
 
-Person(agent, "AI Coding Agent", "Claude, Cursor, Devin, Copilot,\nor other AI development tools")
+top to bottom direction
+LAYOUT_WITH_LEGEND()
 
-System_Boundary(context_files, "AI Context Files") {
-    Component(agents_md, "AGENTS.md", "Primary Context", "Project overview, quick start,\ncritical rules, architecture summary,\nactive features, DB safety rules")
-    Component(claude_md, "CLAUDE.md", "Claude Redirect", "Points to AGENTS.md\nfor full project context")
-    Component(knowledge_dir, ".knowledge/", "Deep Context", "AI-GETTING-STARTED.md: setup, ports, key commands\nAI-DEVELOPMENT.md: spec-kit workflow\ncode-patterns.md: full tree, templates\nconventions-and-gotchas.md: style, gotchas\nknowledge-notes.md: auth, DB, error handling")
-    Component(specify_dir, ".specify/", "Spec-Kit System", "memory/constitution.md: 7 principles\nscripts/: spec-kit CLI tools\ntemplates/: spec, plan, task templates")
-    Component(specs_dir, "specs/", "Feature Specs", "NNN-feature-name/ directories\nwith spec, plan, and task documents")
+skinparam {
+    BackgroundColor white
+    Shadowing true
+    RoundCorner 15
+    DefaultFontName "Segoe UI"
+    DefaultFontSize 12
+    ArrowColor #555555
+    ArrowThickness 1.5
+    wrapWidth 200
+}
+
+AddElementTag("context", $bgColor="#1565C0", $fontColor="white", $borderColor="#0D47A1")
+AddElementTag("rule", $bgColor="#C62828", $fontColor="white", $borderColor="#B71C1C")
+AddElementTag("workflow", $bgColor="#00695C", $fontColor="white", $borderColor="#004D40")
+AddElementTag("api", $bgColor="#4527A0", $fontColor="white", $borderColor="#311B92")
+AddElementTag("extension", $bgColor="#6A1B9A", $fontColor="white", $borderColor="#4A148C")
+AddElementTag("test", $bgColor="#2E7D32", $fontColor="white", $borderColor="#1B5E20")
+AddElementTag("cmd", $bgColor="#E65100", $fontColor="white", $borderColor="#BF360C")
+
+Person(agent, "AI Coding Agent", "Claude, Cursor, Devin,\nCopilot, or similar")
+
+System_Boundary(context_files, "AI Context Files (Read First)") {
+    Component(agents_md, "AGENTS.md", "Primary Context", "Project overview, quick start,\ncritical rules, architecture", $tags="context")
+    Component(claude_md, "CLAUDE.md", "Redirect", "Points to AGENTS.md", $tags="context")
+    Component(knowledge_dir, ".knowledge/", "Deep Context", "AI-GETTING-STARTED.md\nAI-DEVELOPMENT.md\ncode-patterns.md\nconventions-and-gotchas.md", $tags="context")
+    Component(specify_dir, ".specify/", "Spec-Kit", "constitution.md (7 principles)\nscripts/ & templates/", $tags="context")
 }
 
 System_Boundary(critical_rules, "Critical Rules (Must Not Break)") {
-    Component(rule_hotreload, "Hot-Reload in Dev", "Rule", "Dev mode uses webpack-dev-server on PORT+1\nDo NOT run npm run build during dev")
-    Component(rule_configure, "Configure Build", "Rule", "Separate React app: cd configure &&\nnpm install && npm run build")
-    Component(rule_postgis, "PostGIS Required", "Rule", "PostgreSQL must have PostGIS\ninit-db.js creates extensions")
-    Component(rule_env_triple, "ENV Triple-Update", "Rule", "When modifying ENVs, update:\n.env + sample.env + docs/pages/Setup/ENVs/ENVs.md")
-    Component(rule_no_raw_sql, "No Raw SQL for Data", "Rule", "Use application APIs and UI\nNever bypass app layer")
-    Component(rule_admin_auth, "Admin Auth Always", "Rule", "CMS endpoints require admin\nsession even when AUTH=off")
-    Component(rule_db_safety, "Database Safety", "Rule", "Never DROP DATABASE in app code\nTest DBs only: mmgis-test, mmgis-stac-test")
-    Component(rule_design_system, "Design System", "Rule", "Generic UI -> src/design-system/\nMMGIS-specific UI -> src/essence/Basics/UserInterface_/")
+    Component(rule_hotreload, "Hot-Reload in Dev", "Do NOT npm run build", "webpack-dev-server on PORT+1", $tags="rule")
+    Component(rule_configure, "Configure = Separate Build", "cd configure &&\nnpm install && npm run build", "Independent React app", $tags="rule")
+    Component(rule_postgis, "PostGIS Required", "init-db.js creates extensions", "Must be installed", $tags="rule")
+    Component(rule_env, "ENV Triple-Update", "Always update all 3", ".env + sample.env + ENVs.md", $tags="rule")
+    Component(rule_sql, "No Raw SQL for Data", "Use APIs & UI only", "Never bypass app layer", $tags="rule")
+    Component(rule_admin, "Admin Auth Always", "Even AUTH=off", "CMS requires admin session", $tags="rule")
+    Component(rule_db, "Database Safety", "Never DROP DATABASE", "Test DBs: mmgis-test only", $tags="rule")
 }
 
 System_Boundary(dev_workflow, "Development Workflow") {
-    Component(speckit, "Spec-Kit Process", "Workflow", "1. /speckit.specify - Write specification\n2. /speckit.plan - Create implementation plan\n3. /speckit.tasks - Break into tasks\n4. /speckit.implement - Implement\n5. /speckit.checklist - Verify completeness")
-    Component(constitution, "Constitution", "7 Principles", "Documentation-First, Clear Requirements,\nIncremental Delivery, Quality Standards,\nNode.js Best Practices, Geospatial Integrity,\nReal-time Collaboration Safety")
-    Component(ref_mission, "Reference Mission", "Blueprint", "blueprints/Missions/Reference-Mission\nAdd new feature configs/data here\nBasis for demo, dev, and testing")
+    Component(speckit, "Spec-Kit Process", "5-Step", "1. specify  2. plan  3. tasks\n4. implement  5. checklist", $tags="workflow")
+    Component(constitution, "Constitution", "7 Principles", "Docs-First, Clear Requirements,\nIncremental, Quality Standards,\nNode.js Best Practices,\nGeospatial, Collaboration Safety", $tags="workflow")
+    Component(ref_mission, "Reference Mission", "Blueprint", "blueprints/Missions/\nReference-Mission", $tags="workflow")
 }
 
-System_Boundary(api_surface, "API Route Groups (for Agent Reference)") {
-    Component(api_configure, "/api/configure/*", "Admin", "Mission CRUD: get, missions,\nadd, save, remove")
-    Component(api_users, "/api/users/*", "Auth", "signup, login, logout,\nfirst_signup (creates admin)")
-    Component(api_draw, "/api/draw/*", "Features", "File CRUD, feature editing,\npublish, merge, undo")
-    Component(api_geodatasets, "/api/geodatasets/*", "Spatial", "get, search (PostGIS),\nupload, manage")
-    Component(api_files, "/api/files/*", "Files", "getfile, upload from\nMissions/ directory")
-    Component(api_webhooks, "/api/webhooks/*", "Integration", "Webhook CRUD for\nexternal notifications")
-    Component(api_tokens, "/api/longtermtokens/*", "Auth", "generate, list, delete\nBearer tokens")
-    Component(api_docs, "/api/docs", "Swagger", "OpenAPI 3.0 interactive docs\nSpec: docs/mmgis-openapi.json")
+System_Boundary(api_routes, "API Route Groups") {
+    Component(api_configure, "/api/configure/*", "Admin", "Mission CRUD", $tags="api")
+    Component(api_users, "/api/users/*", "Auth", "signup, login, logout", $tags="api")
+    Component(api_draw, "/api/draw/*", "Features", "CRUD, publish, merge", $tags="api")
+    Component(api_geodatasets, "/api/geodatasets/*", "Spatial", "get, search, upload", $tags="api")
+    Component(api_files, "/api/files/*", "Files", "getfile, upload", $tags="api")
+    Component(api_tokens, "/api/longtermtokens/*", "Auth", "Token management", $tags="api")
 }
 
-System_Boundary(extension_points, "Extension Points") {
-    Component(tool_plugin, "Tool Plugins", "src/essence/*Plugin-Tools*/", "Custom tool with make()/destroy()\nAuto-discovered by build.js\nSee: New Tool Template.js")
-    Component(backend_plugin, "Backend Plugins", "API/*Plugin-Backend*/", "Custom Express routes\nAuto-discovered by setups.js\nPattern: setup.js + routes/ + models/")
-    Component(component_plugin, "Component Plugins", "src/essence/*Plugin-Components*/", "Custom UI behaviors\nAuto-discovered by build.js")
-    Component(custom_adjacent, "Custom Adjacent Servers", "ADJACENT_SERVER_CUSTOM_*", "Docker-only: add microservices\nvia ENV configuration")
+System_Boundary(extensions, "Extension Points") {
+    Component(tool_plugin, "Tool Plugins", "src/essence/*Plugin-Tools*/", "Custom tool: make()/destroy()", $tags="extension")
+    Component(backend_plugin, "Backend Plugins", "API/*Plugin-Backend*/", "Custom Express routes", $tags="extension")
+    Component(comp_plugin, "Component Plugins", "src/essence/*Plugin-Components*/", "Custom UI behaviors", $tags="extension")
+    Component(custom_adj, "Custom Adjacent Servers", "ADJACENT_SERVER_CUSTOM_*", "Docker microservices via ENV", $tags="extension")
 }
 
 System_Boundary(testing_ci, "Testing & CI") {
-    Component(playwright, "Playwright Tests", "tests/", "E2E: tests/e2e/* (api, auth, map, tools, etc.)\nUnit: tests/unit/*\nRun: npm test or npm run test:e2e")
-    Component(test_db, "Test Database", "mmgis-test", "Dedicated test DB, never use production\nClean: npm run test:clean\nSetup: tests/global-setup.js")
-    Component(ci_pipeline, "GitHub Actions", "CI/CD", "playwright-tests.yml: E2E + unit tests\nsecrets-detection.yaml: secret scanning\ndocker-build.yml: container builds\nbump-version.yml: version management")
-    Component(eslint_check, "ESLint", "Linting", "react-app config\nMust pass before merge")
+    Component(playwright, "Playwright Tests", "tests/", "E2E + Unit tests", $tags="test")
+    Component(ci_pipeline, "GitHub Actions", "CI/CD", "tests, secrets-detection,\ndocker-build, bump-version", $tags="test")
+    Component(eslint_check, "ESLint", "Linting", "Must pass before merge", $tags="test")
 }
 
 System_Boundary(key_commands, "Key Commands") {
-    Component(cmd_start, "npm start", "Development", "init-db.js && server.js\nDev server on PORT+1 (8889)")
-    Component(cmd_build, "npm run build", "Production Build", "Webpack 5 production bundle")
-    Component(cmd_test, "npm test", "All Tests", "Playwright E2E + unit tests")
-    Component(cmd_test_unit, "npm run test:unit", "Unit Only", "Fast unit tests only")
-    Component(cmd_start_test, "npm run start:test", "Test Server", "PORT=18888, DB=mmgis-test")
+    Component(cmd_start, "npm start", "Dev Server", "init-db + server on PORT+1", $tags="cmd")
+    Component(cmd_build, "npm run build", "Production", "Webpack 5 bundle", $tags="cmd")
+    Component(cmd_test, "npm test", "All Tests", "Playwright E2E + unit", $tags="cmd")
+    Component(cmd_start_test, "npm run start:test", "Test Server", "PORT=18888, DB=mmgis-test", $tags="cmd")
 }
 
-' Relationships
-Rel_D(agent, agents_md, "Reads first (primary context)")
+Rel_D(agent, agents_md, "Reads first")
 Rel(agents_md, knowledge_dir, "References for details")
 Rel(agents_md, specify_dir, "References for workflow")
 
 Rel(agent, critical_rules, "Must follow")
-Rel(agent, dev_workflow, "Follows for new features")
-Rel(agent, api_surface, "References for API work")
-Rel(agent, extension_points, "Uses to extend MMGIS")
+Rel(agent, dev_workflow, "Follows for features")
+Rel(agent, api_routes, "References for API")
+Rel(agent, extensions, "Uses to extend")
 Rel(agent, testing_ci, "Runs before submitting")
-Rel(agent, key_commands, "Executes during development")
 
-Rel(speckit, specs_dir, "Produces specs in")
 Rel(speckit, constitution, "Governed by")
 
 @enduml
