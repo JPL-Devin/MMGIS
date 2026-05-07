@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" fill="none">
+  <!-- Natural erosion arch — Delicate Arch style, sunset backdrop -->
+  <defs>
+    <linearGradient id="ea1" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#FF6F00" />
+      <stop offset="50%" stop-color="#FF8F00" />
+      <stop offset="100%" stop-color="#FFB300" />
+    </linearGradient>
+  </defs>
+  <!-- Sunset sky -->
+  <rect width="200" height="200" fill="url(#ea1)" rx="5" />
+  <!-- Sun disk -->
+  <circle cx="100" cy="120" r="35" fill="#FFCC02" opacity="0.6" />
+  <circle cx="100" cy="120" r="25" fill="#FFD54F" opacity="0.4" />
+  <!-- Distant mesa silhouettes -->
+  <path d="M0 155 L30 130 L60 135 L80 125 L100 130 L200 140 L200 200 L0 200 Z" fill="#BF360C" opacity="0.4" />
+  <!-- Arch silhouette -->
+  <path d="M55 200 L55 110 Q55 60 100 55 Q145 60 145 110 L145 200 L130 200 L130 115 Q130 75 100 70 Q70 75 70 115 L70 200 Z" fill="#4E342E" />
+  <!-- Ground -->
+  <path d="M0 170 L200 165 L200 200 L0 200 Z" fill="#5D4037" />
+</svg>

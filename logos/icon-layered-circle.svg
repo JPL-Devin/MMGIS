@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" fill="none">
+  <!-- Overlapping circles - multi-layer concept -->
+  <circle cx="80" cy="80" r="55" fill="#08AEEA" opacity="0.3" stroke="#08AEEA" stroke-width="1.5" />
+  <circle cx="120" cy="80" r="55" fill="#6C63FF" opacity="0.3" stroke="#6C63FF" stroke-width="1.5" />
+  <circle cx="100" cy="115" r="55" fill="#2ECC71" opacity="0.3" stroke="#2ECC71" stroke-width="1.5" />
+</svg>

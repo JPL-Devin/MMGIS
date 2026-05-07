@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" fill="none">
+  <!-- Europa-like ice surface with cracks — planetary geology -->
+  <defs>
+    <linearGradient id="ice1" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#E3F2FD" />
+      <stop offset="100%" stop-color="#BBDEFB" />
+    </linearGradient>
+  </defs>
+  <circle cx="100" cy="100" r="95" fill="url(#ice1)" />
+  <!-- Ice cracks — reddish-brown (like Europa's linea) -->
+  <g stroke="#8D6E63" stroke-width="2" stroke-linecap="round" fill="none">
+    <path d="M15 80 L50 85 L85 70 L120 78 L160 65 L190 72" />
+    <path d="M85 70 L90 40 L95 15" />
+    <path d="M85 70 L80 105 L70 140 L55 180" />
+    <path d="M120 78 L125 110 L140 140 L155 185" />
+    <path d="M120 78 L135 55 L145 25" />
+    <path d="M80 105 L40 115 L10 125" />
+    <path d="M80 105 L110 120 L140 140" />
+    <path d="M125 110 L160 105 L190 115" />
+  </g>
+  <!-- Thinner secondary cracks -->
+  <g stroke="#BCAAA4" stroke-width="0.8" fill="none" opacity="0.6">
+    <path d="M40 50 L60 55" />
+    <path d="M150 90 L170 95" />
+    <path d="M60 150 L80 155 L100 160" />
+    <path d="M30 35 L45 40" />
+  </g>
+  <!-- Subtle shadow for sphere -->
+  <circle cx="100" cy="100" r="95" fill="none" stroke="#90CAF9" stroke-width="3" />
+</svg>

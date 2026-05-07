@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" fill="none">
+  <!-- Audio waveform that forms a mountain landscape silhouette -->
+  <rect width="200" height="200" fill="#1A1A2E" rx="5" />
+  <!-- Waveform bars that create a mountain skyline -->
+  <g fill="#08AEEA">
+    <rect x="5" y="130" width="4" height="30" rx="2" opacity="0.4" />
+    <rect x="12" y="120" width="4" height="40" rx="2" opacity="0.5" />
+    <rect x="19" y="105" width="4" height="55" rx="2" opacity="0.55" />
+    <rect x="26" y="90" width="4" height="70" rx="2" opacity="0.6" />
+    <rect x="33" y="75" width="4" height="85" rx="2" opacity="0.65" />
+    <rect x="40" y="60" width="4" height="100" rx="2" opacity="0.7" />
+    <rect x="47" y="50" width="4" height="110" rx="2" opacity="0.75" />
+    <rect x="54" y="40" width="4" height="120" rx="2" opacity="0.8" />
+    <rect x="61" y="35" width="4" height="125" rx="2" opacity="0.85" />
+    <rect x="68" y="45" width="4" height="115" rx="2" opacity="0.8" />
+    <rect x="75" y="55" width="4" height="105" rx="2" opacity="0.75" />
+    <rect x="82" y="65" width="4" height="95" rx="2" opacity="0.7" />
+    <rect x="89" y="50" width="4" height="110" rx="2" opacity="0.8" />
+    <rect x="96" y="30" width="4" height="130" rx="2" opacity="0.95" />
+    <rect x="103" y="25" width="4" height="135" rx="2" />
+    <rect x="110" y="35" width="4" height="125" rx="2" opacity="0.9" />
+    <rect x="117" y="55" width="4" height="105" rx="2" opacity="0.75" />
+    <rect x="124" y="70" width="4" height="90" rx="2" opacity="0.7" />
+    <rect x="131" y="80" width="4" height="80" rx="2" opacity="0.65" />
+    <rect x="138" y="60" width="4" height="100" rx="2" opacity="0.75" />
+    <rect x="145" y="45" width="4" height="115" rx="2" opacity="0.85" />
+    <rect x="152" y="55" width="4" height="105" rx="2" opacity="0.8" />
+    <rect x="159" y="70" width="4" height="90" rx="2" opacity="0.7" />
+    <rect x="166" y="85" width="4" height="75" rx="2" opacity="0.6" />
+    <rect x="173" y="95" width="4" height="65" rx="2" opacity="0.55" />
+    <rect x="180" y="110" width="4" height="50" rx="2" opacity="0.5" />
+    <rect x="187" y="125" width="4" height="35" rx="2" opacity="0.45" />
+  </g>
+</svg>

@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" fill="none">
+  <!-- Data cascading like a waterfall through layers -->
+  <!-- Top data streams -->
+  <g stroke-width="2" stroke-linecap="round">
+    <line x1="30" y1="10" x2="30" y2="45" stroke="#08AEEA" opacity="0.4" />
+    <line x1="50" y1="10" x2="50" y2="45" stroke="#6C63FF" opacity="0.5" />
+    <line x1="70" y1="10" x2="70" y2="45" stroke="#08AEEA" opacity="0.6" />
+    <line x1="90" y1="10" x2="90" y2="45" stroke="#2ECC71" opacity="0.7" />
+    <line x1="110" y1="10" x2="110" y2="45" stroke="#08AEEA" opacity="0.5" />
+    <line x1="130" y1="10" x2="130" y2="45" stroke="#E91E63" opacity="0.6" />
+    <line x1="150" y1="10" x2="150" y2="45" stroke="#FFC107" opacity="0.4" />
+    <line x1="170" y1="10" x2="170" y2="45" stroke="#08AEEA" opacity="0.5" />
+  </g>
+  <!-- Layer 1 - collector -->
+  <path d="M15 50 L185 50 L160 55 L40 55 Z" fill="#08AEEA" opacity="0.3" />
+  <!-- Filtered streams -->
+  <g stroke-width="2.5" stroke-linecap="round">
+    <line x1="40" y1="55" x2="55" y2="95" stroke="#6C63FF" opacity="0.6" />
+    <line x1="70" y1="55" x2="80" y2="95" stroke="#08AEEA" opacity="0.7" />
+    <line x1="100" y1="55" x2="105" y2="95" stroke="#2ECC71" opacity="0.8" />
+    <line x1="130" y1="55" x2="125" y2="95" stroke="#E91E63" opacity="0.7" />
+    <line x1="160" y1="55" x2="145" y2="95" stroke="#FFC107" opacity="0.6" />
+  </g>
+  <!-- Layer 2 -->
+  <path d="M30 100 L170 100 L150 105 L50 105 Z" fill="#6C63FF" opacity="0.3" />
+  <!-- More filtered -->
+  <g stroke-width="3" stroke-linecap="round">
+    <line x1="65" y1="105" x2="75" y2="145" stroke="#08AEEA" opacity="0.8" />
+    <line x1="100" y1="105" x2="100" y2="145" stroke="#2ECC71" opacity="0.9" />
+    <line x1="135" y1="105" x2="125" y2="145" stroke="#E91E63" opacity="0.8" />
+  </g>
+  <!-- Layer 3 -->
+  <path d="M50 150 L150 150 L140 155 L60 155 Z" fill="#2ECC71" opacity="0.3" />
+  <!-- Final output -->
+  <line x1="100" y1="155" x2="100" y2="190" stroke="#FFC107" stroke-width="4" stroke-linecap="round" />
+  <circle cx="100" cy="190" r="6" fill="#FFC107" />
+</svg>

@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" fill="none">
+  <!-- Aurora borealis over a planetary horizon -->
+  <defs>
+    <linearGradient id="ah1" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#1A1A2E" />
+      <stop offset="100%" stop-color="#16213E" />
+    </linearGradient>
+  </defs>
+  <!-- Sky -->
+  <rect width="200" height="200" fill="url(#ah1)" rx="10" />
+  <!-- Aurora curtains -->
+  <path d="M20 10 Q30 60 25 120" stroke="#2ECC71" stroke-width="8" fill="none" opacity="0.3" />
+  <path d="M50 5 Q55 50 45 110" stroke="#08AEEA" stroke-width="10" fill="none" opacity="0.25" />
+  <path d="M80 8 Q90 55 85 115" stroke="#2ECC71" stroke-width="12" fill="none" opacity="0.35" />
+  <path d="M115 5 Q120 65 110 118" stroke="#6C63FF" stroke-width="10" fill="none" opacity="0.3" />
+  <path d="M145 10 Q155 50 148 112" stroke="#2ECC71" stroke-width="8" fill="none" opacity="0.2" />
+  <path d="M175 8 Q180 55 172 115" stroke="#08AEEA" stroke-width="6" fill="none" opacity="0.25" />
+  <!-- Planet horizon curve -->
+  <path d="M0 140 Q100 120 200 140 L200 200 L0 200 Z" fill="#1A1A2E" />
+  <path d="M0 140 Q100 120 200 140" stroke="#08AEEA" stroke-width="2" fill="none" opacity="0.6" />
+  <!-- Stars -->
+  <circle cx="40" cy="25" r="1" fill="white" opacity="0.7" />
+  <circle cx="120" cy="15" r="1.5" fill="white" opacity="0.8" />
+  <circle cx="165" cy="30" r="1" fill="white" opacity="0.6" />
+  <circle cx="90" cy="40" r="0.8" fill="white" opacity="0.5" />
+  <!-- Terrain silhouette -->
+  <path d="M0 155 L30 145 L60 150 L80 138 L100 142 L130 135 L150 140 L175 132 L200 138 L200 200 L0 200 Z" fill="#0D1321" />
+</svg>

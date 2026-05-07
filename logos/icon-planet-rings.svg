@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" fill="none">
+  <!-- Saturn-like planet with rings -->
+  <defs>
+    <linearGradient id="pr1" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#FFC107" />
+      <stop offset="100%" stop-color="#FF6B35" />
+    </linearGradient>
+  </defs>
+  <!-- Ring behind -->
+  <ellipse cx="100" cy="105" rx="90" ry="25" stroke="#FFC107" stroke-width="3" fill="none" opacity="0.3" />
+  <!-- Planet body -->
+  <circle cx="100" cy="100" r="50" fill="url(#pr1)" />
+  <!-- Planet bands -->
+  <path d="M52 88 Q100 82 148 88" stroke="#FF6B35" stroke-width="1" fill="none" opacity="0.5" />
+  <path d="M50 100 Q100 94 150 100" stroke="#FF6B35" stroke-width="1" fill="none" opacity="0.5" />
+  <path d="M52 112 Q100 106 148 112" stroke="#FF6B35" stroke-width="1" fill="none" opacity="0.5" />
+  <!-- Ring in front -->
+  <path d="M10 105 Q55 130 100 130 Q145 130 190 105" stroke="#FFC107" stroke-width="3" fill="none" />
+  <!-- Shadow -->
+  <circle cx="100" cy="100" r="50" fill="black" opacity="0.1" />
+  <circle cx="92" cy="92" r="50" fill="black" opacity="0.05" />
+</svg>

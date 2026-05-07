@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" fill="none">
+  <!-- Modern minimal compass arrow -->
+  <circle cx="100" cy="100" r="88" stroke="#FF6B35" stroke-width="2" fill="none" />
+  <!-- N arrow -->
+  <path d="M100 18 L110 50 L100 42 L90 50 Z" fill="#FF6B35" />
+  <!-- Degree marks -->
+  <line x1="100" y1="12" x2="100" y2="20" stroke="#FF6B35" stroke-width="2" />
+  <line x1="188" y1="100" x2="180" y2="100" stroke="#FF6B35" stroke-width="2" />
+  <line x1="100" y1="188" x2="100" y2="180" stroke="#FF6B35" stroke-width="1.5" opacity="0.5" />
+  <line x1="12" y1="100" x2="20" y2="100" stroke="#FF6B35" stroke-width="1.5" opacity="0.5" />
+  <!-- Inner ring -->
+  <circle cx="100" cy="100" r="50" stroke="#FF6B35" stroke-width="1" fill="none" opacity="0.3" />
+  <!-- Needle -->
+  <path d="M100 40 L105 100 L100 150 L95 100 Z" fill="#FF6B35" opacity="0.2" />
+  <path d="M100 40 L105 100 L95 100 Z" fill="#FF6B35" />
+  <!-- Center -->
+  <circle cx="100" cy="100" r="5" fill="#FF6B35" />
+  <circle cx="100" cy="100" r="2" fill="white" />
+</svg>

@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" fill="none">
+  <!-- Double helix / data strand -->
+  <path d="M60 10 Q120 50 60 90 Q0 130 60 170 Q90 190 80 200" stroke="#E91E63" stroke-width="3" fill="none" />
+  <path d="M140 10 Q80 50 140 90 Q200 130 140 170 Q110 190 120 200" stroke="#9C27B0" stroke-width="3" fill="none" />
+  <!-- Cross bars -->
+  <line x1="72" y1="30" x2="128" y2="30" stroke="#E91E63" stroke-width="1.5" opacity="0.5" />
+  <line x1="62" y1="50" x2="138" y2="50" stroke="#9C27B0" stroke-width="1.5" opacity="0.5" />
+  <line x1="75" y1="70" x2="125" y2="70" stroke="#E91E63" stroke-width="1.5" opacity="0.5" />
+  <line x1="100" y1="90" x2="100" y2="90" stroke="#9C27B0" stroke-width="1.5" opacity="0.5" />
+  <line x1="75" y1="110" x2="125" y2="110" stroke="#E91E63" stroke-width="1.5" opacity="0.5" />
+  <line x1="62" y1="130" x2="138" y2="130" stroke="#9C27B0" stroke-width="1.5" opacity="0.5" />
+  <line x1="72" y1="150" x2="128" y2="150" stroke="#E91E63" stroke-width="1.5" opacity="0.5" />
+  <line x1="85" y1="170" x2="115" y2="170" stroke="#9C27B0" stroke-width="1.5" opacity="0.5" />
+</svg>

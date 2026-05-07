@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" fill="none">
+  <!-- Planet -->
+  <circle cx="100" cy="100" r="60" fill="#1B2838" />
+  <circle cx="100" cy="100" r="60" stroke="#FF6B35" stroke-width="2" fill="none" />
+  <!-- Surface features -->
+  <circle cx="85" cy="85" r="12" fill="#2C3E50" />
+  <circle cx="115" cy="110" r="8" fill="#2C3E50" />
+  <circle cx="80" cy="120" r="6" fill="#2C3E50" />
+  <!-- Crosshair -->
+  <line x1="100" y1="10" x2="100" y2="35" stroke="#FF6B35" stroke-width="2" />
+  <line x1="100" y1="165" x2="100" y2="190" stroke="#FF6B35" stroke-width="2" />
+  <line x1="10" y1="100" x2="35" y2="100" stroke="#FF6B35" stroke-width="2" />
+  <line x1="165" y1="100" x2="190" y2="100" stroke="#FF6B35" stroke-width="2" />
+  <!-- Crosshair circle -->
+  <circle cx="100" cy="100" r="75" stroke="#FF6B35" stroke-width="1.5" fill="none" stroke-dasharray="4 4" />
+  <!-- Center dot -->
+  <circle cx="100" cy="100" r="3" fill="#FF6B35" />
+</svg>

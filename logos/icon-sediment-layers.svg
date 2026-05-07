@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" fill="none">
+  <!-- Geological sediment layers cross-section — stratigraphy art -->
+  <rect width="200" height="200" rx="5" fill="#87CEEB" />
+  <!-- Sky -->
+  <rect width="200" height="40" rx="5" fill="#87CEEB" />
+  <!-- Surface layer (soil) -->
+  <path d="M0 40 Q30 35 60 38 Q100 42 140 36 Q170 34 200 40 L200 65 L0 65 Z" fill="#4E342E" />
+  <!-- Layer 1 - sandstone -->
+  <path d="M0 65 L200 65 L200 90 Q150 95 100 88 Q50 82 0 90 Z" fill="#FFB74D" />
+  <!-- Layer 2 - limestone -->
+  <path d="M0 90 Q50 82 100 88 Q150 95 200 90 L200 115 Q140 110 80 118 Q30 122 0 115 Z" fill="#E0E0E0" />
+  <!-- Layer 3 - shale -->
+  <path d="M0 115 Q30 122 80 118 Q140 110 200 115 L200 140 Q160 145 100 138 Q40 132 0 140 Z" fill="#546E7A" />
+  <!-- Layer 4 - red sandstone -->
+  <path d="M0 140 Q40 132 100 138 Q160 145 200 140 L200 165 Q150 160 100 168 Q50 172 0 165 Z" fill="#D84315" />
+  <!-- Layer 5 - granite/basement -->
+  <path d="M0 165 Q50 172 100 168 Q150 160 200 165 L200 200 L0 200 Z" fill="#424242" />
+  <!-- Fossil hint in limestone -->
+  <circle cx="120" cy="102" r="5" stroke="#BDBDBD" stroke-width="1" fill="none" opacity="0.5" />
+  <path d="M118 102 Q120 98 122 102" stroke="#BDBDBD" stroke-width="0.8" fill="none" opacity="0.5" />
+  <!-- Fault line -->
+  <path d="M150 40 L145 90 L155 140 L148 200" stroke="#F44336" stroke-width="1.5" stroke-dasharray="5 3" opacity="0.5" />
+</svg>

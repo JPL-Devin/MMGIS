@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" fill="none">
+  <!-- Triangular prism / refraction theme -->
+  <path d="M100 20 L175 170 L25 170 Z" fill="none" stroke="#1A1A2E" stroke-width="3" />
+  <!-- Light beam entering -->
+  <line x1="10" y1="90" x2="80" y2="110" stroke="white" stroke-width="2" opacity="0.5" />
+  <!-- Refracted beams -->
+  <line x1="120" y1="105" x2="190" y2="50" stroke="#E74C3C" stroke-width="2" />
+  <line x1="120" y1="110" x2="190" y2="70" stroke="#FF6B35" stroke-width="2" />
+  <line x1="120" y1="115" x2="190" y2="90" stroke="#FFC107" stroke-width="2" />
+  <line x1="120" y1="120" x2="190" y2="110" stroke="#2ECC71" stroke-width="2" />
+  <line x1="120" y1="125" x2="190" y2="130" stroke="#08AEEA" stroke-width="2" />
+  <line x1="120" y1="130" x2="190" y2="150" stroke="#6C63FF" stroke-width="2" />
+  <!-- Prism fill -->
+  <path d="M100 20 L175 170 L25 170 Z" fill="#1A1A2E" opacity="0.08" />
+</svg>

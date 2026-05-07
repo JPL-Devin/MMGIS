@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" fill="none">
+  <!-- Hexagonal grid pattern - spatial tessellation -->
+  <g stroke="#2ECC71" stroke-width="1.5" fill="none">
+    <!-- Row 1 -->
+    <path d="M70 25 L85 15 L100 25 L100 45 L85 55 L70 45 Z" />
+    <path d="M100 25 L115 15 L130 25 L130 45 L115 55 L100 45 Z" />
+    <!-- Row 2 -->
+    <path d="M40 55 L55 45 L70 55 L70 75 L55 85 L40 75 Z" />
+    <path d="M70 55 L85 45 L100 55 L100 75 L85 85 L70 75 Z" fill="#2ECC71" fill-opacity="0.15" />
+    <path d="M100 55 L115 45 L130 55 L130 75 L115 85 L100 75 Z" fill="#2ECC71" fill-opacity="0.1" />
+    <path d="M130 55 L145 45 L160 55 L160 75 L145 85 L130 75 Z" />
+    <!-- Row 3 -->
+    <path d="M40 85 L55 75 L70 85 L70 105 L55 115 L40 105 Z" />
+    <path d="M70 85 L85 75 L100 85 L100 105 L85 115 L70 105 Z" fill="#2ECC71" fill-opacity="0.25" />
+    <path d="M100 85 L115 75 L130 85 L130 105 L115 115 L100 105 Z" fill="#2ECC71" fill-opacity="0.35" />
+    <path d="M130 85 L145 75 L160 85 L160 105 L145 115 L130 105 Z" fill="#2ECC71" fill-opacity="0.15" />
+    <!-- Row 4 -->
+    <path d="M40 115 L55 105 L70 115 L70 135 L55 145 L40 135 Z" />
+    <path d="M70 115 L85 105 L100 115 L100 135 L85 145 L70 135 Z" fill="#2ECC71" fill-opacity="0.1" />
+    <path d="M100 115 L115 105 L130 115 L130 135 L115 145 L100 135 Z" fill="#2ECC71" fill-opacity="0.2" />
+    <path d="M130 115 L145 105 L160 115 L160 135 L145 145 L130 135 Z" />
+    <!-- Row 5 -->
+    <path d="M70 145 L85 135 L100 145 L100 165 L85 175 L70 165 Z" />
+    <path d="M100 145 L115 135 L130 145 L130 165 L115 175 L100 165 Z" />
+  </g>
+</svg>

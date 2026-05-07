@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" fill="none">
+  <!-- Wind rose / polar chart -->
+  <circle cx="100" cy="100" r="90" stroke="#546E7A" stroke-width="0.5" fill="none" />
+  <circle cx="100" cy="100" r="60" stroke="#546E7A" stroke-width="0.5" fill="none" />
+  <circle cx="100" cy="100" r="30" stroke="#546E7A" stroke-width="0.5" fill="none" />
+  <!-- Axes -->
+  <line x1="100" y1="10" x2="100" y2="190" stroke="#546E7A" stroke-width="0.5" />
+  <line x1="10" y1="100" x2="190" y2="100" stroke="#546E7A" stroke-width="0.5" />
+  <line x1="36" y1="36" x2="164" y2="164" stroke="#546E7A" stroke-width="0.5" />
+  <line x1="164" y1="36" x2="36" y2="164" stroke="#546E7A" stroke-width="0.5" />
+  <!-- Data polygon -->
+  <path d="M100 25 L140 50 L170 85 L155 100 L160 140 L130 155 L100 130 L65 150 L40 130 L50 100 L35 70 L60 45 Z" fill="#00BCD4" opacity="0.25" stroke="#00BCD4" stroke-width="2" />
+  <!-- Center -->
+  <circle cx="100" cy="100" r="4" fill="#00BCD4" />
+</svg>

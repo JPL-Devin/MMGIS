@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" fill="none">
+  <!-- Gravity well / space-time curvature visualization -->
+  <rect width="200" height="200" fill="#0D0D1A" rx="5" />
+  <!-- Warped grid lines -->
+  <g stroke="#6C63FF" stroke-width="0.8" fill="none">
+    <!-- Horizontal lines warped down in center -->
+    <path d="M10 40 Q50 40 75 42 Q95 55 100 80 Q105 55 125 42 Q150 40 190 40" opacity="0.5" />
+    <path d="M10 60 Q50 60 72 64 Q92 80 100 110 Q108 80 128 64 Q150 60 190 60" opacity="0.55" />
+    <path d="M10 80 Q50 80 68 88 Q88 110 100 145 Q112 110 132 88 Q150 80 190 80" opacity="0.6" />
+    <path d="M10 100 Q50 102 65 115 Q85 145 100 175 Q115 145 135 115 Q150 102 190 100" opacity="0.65" />
+    <!-- Vertical lines warped -->
+    <path d="M40 10 Q40 50 42 75 Q52 95 75 100 Q52 105 42 125 Q40 150 40 190" opacity="0.5" />
+    <path d="M70 10 Q70 50 74 72 Q84 92 95 100 Q84 108 74 128 Q70 150 70 190" opacity="0.55" />
+    <path d="M130 10 Q130 50 126 72 Q116 92 105 100 Q116 108 126 128 Q130 150 130 190" opacity="0.55" />
+    <path d="M160 10 Q160 50 158 75 Q148 95 125 100 Q148 105 158 125 Q160 150 160 190" opacity="0.5" />
+  </g>
+  <!-- Mass at center -->
+  <circle cx="100" cy="100" r="8" fill="#FFC107" />
+  <circle cx="100" cy="100" r="15" fill="#FFC107" opacity="0.15" />
+</svg>

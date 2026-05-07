@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" fill="none">
+  <!-- Ferrofluid spikes — magnetic liquid sculpture, alien and beautiful -->
+  <rect width="200" height="200" fill="#1A1A2E" rx="5" />
+  <!-- Reflective surface pool -->
+  <ellipse cx="100" cy="165" rx="80" ry="12" fill="#2C2C54" />
+  <!-- Ferrofluid spikes rising from center -->
+  <path d="M100 160 L95 80 L100 30 L105 80 Z" fill="#1A1A2E" stroke="#6C63FF" stroke-width="0.5" />
+  <path d="M80 162 L78 110 L82 70 L86 110 Z" fill="#1A1A2E" stroke="#6C63FF" stroke-width="0.5" opacity="0.8" />
+  <path d="M120 162 L118 105 L122 65 L126 105 Z" fill="#1A1A2E" stroke="#6C63FF" stroke-width="0.5" opacity="0.8" />
+  <path d="M60 164 L58 130 L62 100 L66 130 Z" fill="#1A1A2E" stroke="#6C63FF" stroke-width="0.5" opacity="0.6" />
+  <path d="M140 164 L138 125 L142 95 L146 125 Z" fill="#1A1A2E" stroke="#6C63FF" stroke-width="0.5" opacity="0.6" />
+  <path d="M45 166 L44 145 L48 125 L52 145 Z" fill="#1A1A2E" stroke="#6C63FF" stroke-width="0.5" opacity="0.4" />
+  <path d="M155 166 L154 142 L158 120 L162 142 Z" fill="#1A1A2E" stroke="#6C63FF" stroke-width="0.5" opacity="0.4" />
+  <!-- Reflective highlights on spikes -->
+  <line x1="99" y1="40" x2="99" y2="100" stroke="#B388FF" stroke-width="1" opacity="0.3" />
+  <line x1="81" y1="75" x2="81" y2="120" stroke="#B388FF" stroke-width="0.8" opacity="0.2" />
+  <line x1="121" y1="70" x2="121" y2="115" stroke="#B388FF" stroke-width="0.8" opacity="0.2" />
+  <!-- Magnetic field hint -->
+  <circle cx="100" cy="100" r="50" stroke="#6C63FF" stroke-width="0.5" fill="none" opacity="0.1" stroke-dasharray="2 4" />
+</svg>

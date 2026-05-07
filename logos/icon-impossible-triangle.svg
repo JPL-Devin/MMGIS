@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" fill="none">
+  <!-- Penrose triangle in GIS colors — impossible geometry -->
+  <!-- Back faces -->
+  <path d="M100 20 L30 160 L55 160 L100 72 L145 160 L170 160 Z" fill="#08AEEA" opacity="0.4" />
+  <!-- Left beam -->
+  <path d="M30 160 L100 20 L115 45 L68 130 L170 130 L170 160 Z" fill="#08AEEA" />
+  <!-- Right beam -->
+  <path d="M170 160 L100 20 L85 45 L132 130 L30 130 L30 160 Z" fill="#6C63FF" />
+  <!-- Bottom beam -->
+  <path d="M30 160 L170 160 L170 130 L58 130 L100 55 L78 55 Z" fill="#1A1A2E" />
+  <!-- Impossible overlap illusion -->
+  <path d="M68 130 L85 100 L100 72 L115 100 L132 130 Z" fill="#08AEEA" opacity="0.6" />
+  <path d="M85 100 L100 72 L100 130 Z" fill="#6C63FF" opacity="0.5" />
+  <path d="M100 72 L115 100 L100 130 Z" fill="#1A1A2E" opacity="0.3" />
+</svg>

@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" fill="none">
+  <!-- Layered terrain waves -->
+  <path d="M10 160 Q50 130 80 145 Q110 160 140 135 Q170 110 190 125" stroke="#1B2838" stroke-width="3" fill="none" />
+  <path d="M10 140 Q40 105 75 120 Q110 135 145 108 Q170 88 190 100" stroke="#2C3E50" stroke-width="3" fill="none" />
+  <path d="M10 115 Q45 80 80 95 Q115 110 145 80 Q165 60 190 75" stroke="#08AEEA" stroke-width="3" fill="none" />
+  <path d="M10 90 Q50 55 85 70 Q115 82 140 55 Q160 38 190 50" stroke="#00BCD4" stroke-width="3" fill="none" />
+  <path d="M10 65 Q45 35 80 45 Q110 55 140 30 Q165 15 190 28" stroke="#2ECC71" stroke-width="3" fill="none" />
+  <!-- Data points on top line -->
+  <circle cx="30" cy="50" r="3" fill="#2ECC71" />
+  <circle cx="80" cy="45" r="3" fill="#2ECC71" />
+  <circle cx="140" cy="30" r="3" fill="#2ECC71" />
+  <circle cx="180" cy="32" r="3" fill="#2ECC71" />
+</svg>

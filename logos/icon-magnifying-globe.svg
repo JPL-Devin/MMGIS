@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" fill="none">
+  <!-- Magnifying glass over globe -->
+  <circle cx="85" cy="85" r="55" stroke="#2C3E50" stroke-width="3" fill="none" />
+  <!-- Globe lines inside -->
+  <circle cx="85" cy="85" r="50" fill="#E3F2FD" />
+  <ellipse cx="85" cy="85" rx="25" ry="50" stroke="#08AEEA" stroke-width="1" fill="none" />
+  <ellipse cx="85" cy="70" rx="42" ry="8" stroke="#08AEEA" stroke-width="1" fill="none" />
+  <ellipse cx="85" cy="100" rx="42" ry="8" stroke="#08AEEA" stroke-width="1" fill="none" />
+  <line x1="35" y1="85" x2="135" y2="85" stroke="#08AEEA" stroke-width="1" />
+  <!-- Handle -->
+  <line x1="125" y1="125" x2="175" y2="175" stroke="#2C3E50" stroke-width="8" stroke-linecap="round" />
+  <line x1="125" y1="125" x2="175" y2="175" stroke="#546E7A" stroke-width="5" stroke-linecap="round" />
+</svg>

@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" fill="none">
+  <!-- Ocean depth bathymetry — submarine topography in blues -->
+  <rect width="200" height="200" fill="#0D47A1" rx="5" />
+  <!-- Depth contours — lighter = shallower, darker = deeper -->
+  <path d="M0 30 Q40 25 80 35 Q120 45 160 30 Q180 22 200 28 L200 60 Q160 55 120 68 Q80 78 40 65 Q20 58 0 62 Z" fill="#1565C0" />
+  <path d="M0 62 Q40 65 80 78 Q120 68 160 55 Q180 52 200 60 L200 95 Q170 88 130 100 Q90 112 50 95 Q25 85 0 92 Z" fill="#1976D2" />
+  <path d="M0 92 Q25 85 50 95 Q90 112 130 100 Q170 88 200 95 L200 130 Q165 120 120 135 Q80 148 40 130 Q15 122 0 128 Z" fill="#1E88E5" />
+  <path d="M0 128 Q15 122 40 130 Q80 148 120 135 Q165 120 200 130 L200 162 Q155 155 110 168 Q70 178 30 160 Q10 152 0 158 Z" fill="#42A5F5" />
+  <path d="M0 158 Q10 152 30 160 Q70 178 110 168 Q155 155 200 162 L200 200 L0 200 Z" fill="#64B5F6" />
+  <!-- Depth markers -->
+  <circle cx="100" cy="50" r="3" fill="#BBDEFB" opacity="0.5" />
+  <circle cx="60" cy="105" r="2.5" fill="#90CAF9" opacity="0.4" />
+  <circle cx="150" cy="145" r="2" fill="#E3F2FD" opacity="0.5" />
+  <!-- Submarine ridge -->
+  <path d="M30 110 Q60 95 90 100 Q110 98 130 105" stroke="#0D47A1" stroke-width="1.5" fill="none" opacity="0.4" />
+</svg>

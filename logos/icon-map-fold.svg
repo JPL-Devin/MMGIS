@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" fill="none">
+  <!-- Folded map icon -->
+  <path d="M25 30 L75 45 L125 30 L175 45 L175 170 L125 155 L75 170 L25 155 Z" fill="#F5F5DC" stroke="#2C3E50" stroke-width="2" />
+  <!-- Fold lines -->
+  <line x1="75" y1="45" x2="75" y2="170" stroke="#2C3E50" stroke-width="1" stroke-dasharray="4 3" />
+  <line x1="125" y1="30" x2="125" y2="155" stroke="#2C3E50" stroke-width="1" stroke-dasharray="4 3" />
+  <!-- Map features -->
+  <path d="M40 80 Q55 70 65 85 Q70 95 60 110" stroke="#08AEEA" stroke-width="2" fill="none" />
+  <circle cx="95" cy="90" r="8" stroke="#E74C3C" stroke-width="1.5" fill="#E74C3C" opacity="0.3" />
+  <circle cx="95" cy="90" r="3" fill="#E74C3C" />
+  <path d="M135 70 L155 85 L140 100 L160 120" stroke="#2ECC71" stroke-width="1.5" fill="none" />
+  <!-- Route dots -->
+  <circle cx="40" cy="130" r="2" fill="#6C63FF" />
+  <circle cx="55" cy="125" r="2" fill="#6C63FF" />
+  <circle cx="110" cy="110" r="2" fill="#6C63FF" />
+</svg>

@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" fill="none">
+  <!-- Desert sand dunes from above — abstract aerial view -->
+  <defs>
+    <linearGradient id="sd1" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#FFCC80" />
+      <stop offset="100%" stop-color="#FF8F00" />
+    </linearGradient>
+  </defs>
+  <rect width="200" height="200" fill="url(#sd1)" rx="5" />
+  <!-- Dune ridges — sinuous curves -->
+  <path d="M-10 40 Q30 25 70 38 Q110 52 150 35 Q180 22 210 30" stroke="#E65100" stroke-width="2" fill="none" opacity="0.3" />
+  <path d="M-10 70 Q40 50 80 65 Q120 82 160 60 Q190 45 210 55" stroke="#E65100" stroke-width="2.5" fill="none" opacity="0.35" />
+  <path d="M-10 105 Q35 85 75 100 Q115 118 155 95 Q185 78 210 88" stroke="#BF360C" stroke-width="3" fill="none" opacity="0.4" />
+  <path d="M-10 140 Q45 115 85 132 Q125 152 165 125 Q195 108 210 120" stroke="#BF360C" stroke-width="3" fill="none" opacity="0.35" />
+  <path d="M-10 172 Q50 150 90 165 Q130 182 170 158 Q200 142 210 152" stroke="#E65100" stroke-width="2" fill="none" opacity="0.3" />
+  <!-- Shadow side of dunes -->
+  <path d="M-10 105 Q35 85 75 100 Q115 118 155 95 Q185 78 210 88 L210 100 Q185 92 155 108 Q115 130 75 112 Q35 98 -10 118 Z" fill="#BF360C" opacity="0.15" />
+</svg>

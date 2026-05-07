@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" fill="none">
+  <!-- Black hole with accretion disk — dramatic space scene -->
+  <defs>
+    <radialGradient id="bh1" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="black" />
+      <stop offset="60%" stop-color="#1A1A2E" />
+      <stop offset="100%" stop-color="transparent" />
+    </radialGradient>
+  </defs>
+  <!-- Outer glow -->
+  <circle cx="100" cy="100" r="95" fill="#0D0D1A" />
+  <!-- Accretion disk - back -->
+  <ellipse cx="100" cy="100" rx="85" ry="25" stroke="#FF6B35" stroke-width="4" fill="none" opacity="0.3" />
+  <ellipse cx="100" cy="100" rx="75" ry="20" stroke="#FFC107" stroke-width="3" fill="none" opacity="0.4" />
+  <ellipse cx="100" cy="100" rx="65" ry="15" stroke="#FF6B35" stroke-width="5" fill="none" opacity="0.5" />
+  <!-- Event horizon -->
+  <circle cx="100" cy="100" r="30" fill="black" />
+  <circle cx="100" cy="100" r="32" stroke="#FFC107" stroke-width="1.5" fill="none" opacity="0.3" />
+  <!-- Accretion disk - front -->
+  <path d="M35 100 Q65 115 100 118 Q135 115 165 100" stroke="#FF6B35" stroke-width="5" fill="none" opacity="0.6" />
+  <path d="M25 100 Q60 122 100 125 Q140 122 175 100" stroke="#FFC107" stroke-width="3" fill="none" opacity="0.4" />
+  <!-- Gravitational lensing light -->
+  <path d="M70 70 Q100 60 130 70" stroke="#FFC107" stroke-width="1" fill="none" opacity="0.3" />
+  <path d="M70 130 Q100 140 130 130" stroke="#FFC107" stroke-width="1" fill="none" opacity="0.3" />
+  <!-- Photon ring -->
+  <circle cx="100" cy="100" r="35" stroke="white" stroke-width="0.5" fill="none" opacity="0.15" />
+</svg>

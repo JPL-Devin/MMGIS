@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" fill="none">
+  <!-- Mineral crystal cluster growing upward — geological beauty -->
+  <defs>
+    <linearGradient id="cr1" x1="0" y1="1" x2="0" y2="0">
+      <stop offset="0%" stop-color="#7B1FA2" />
+      <stop offset="100%" stop-color="#CE93D8" />
+    </linearGradient>
+    <linearGradient id="cr2" x1="0" y1="1" x2="0.3" y2="0">
+      <stop offset="0%" stop-color="#4A148C" />
+      <stop offset="100%" stop-color="#AB47BC" />
+    </linearGradient>
+    <linearGradient id="cr3" x1="0" y1="1" x2="0" y2="0">
+      <stop offset="0%" stop-color="#6A1B9A" />
+      <stop offset="100%" stop-color="#E1BEE7" />
+    </linearGradient>
+  </defs>
+  <!-- Crystal shards -->
+  <path d="M80 190 L65 90 L80 75 L95 90 Z" fill="url(#cr1)" />
+  <path d="M95 190 L85 60 L100 35 L115 60 Z" fill="url(#cr2)" />
+  <path d="M110 190 L105 100 L118 80 L130 100 Z" fill="url(#cr3)" />
+  <path d="M125 190 L120 110 L133 95 L145 115 Z" fill="url(#cr1)" opacity="0.8" />
+  <path d="M60 190 L52 130 L63 115 L72 132 Z" fill="url(#cr2)" opacity="0.7" />
+  <!-- Facet highlights -->
+  <path d="M80 75 L87 82 L95 90 L80 90 Z" fill="white" opacity="0.15" />
+  <path d="M100 35 L107 48 L115 60 L100 55 Z" fill="white" opacity="0.2" />
+  <path d="M118 80 L124 90 L130 100 L118 95 Z" fill="white" opacity="0.15" />
+  <!-- Sparkles -->
+  <circle cx="100" cy="35" r="2" fill="white" opacity="0.6" />
+  <circle cx="80" cy="75" r="1.5" fill="white" opacity="0.5" />
+  <circle cx="133" cy="95" r="1.5" fill="white" opacity="0.4" />
+  <!-- Base rock -->
+  <path d="M40 185 Q70 175 100 180 Q130 175 160 185 L160 200 L40 200 Z" fill="#4E342E" />
+</svg>

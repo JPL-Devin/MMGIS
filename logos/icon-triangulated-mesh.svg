@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" fill="none">
+  <!-- Delaunay triangulation / TIN mesh -->
+  <g stroke="#3F51B5" stroke-width="1.5" fill="none">
+    <path d="M20 180 L60 120 L30 80 Z" opacity="0.3" />
+    <path d="M60 120 L30 80 L90 60 Z" opacity="0.4" />
+    <path d="M20 180 L60 120 L100 170 Z" opacity="0.2" />
+    <path d="M60 120 L100 170 L130 110 Z" opacity="0.35" />
+    <path d="M60 120 L130 110 L90 60 Z" opacity="0.5" />
+    <path d="M30 80 L90 60 L50 20 Z" opacity="0.3" />
+    <path d="M90 60 L50 20 L130 30 Z" opacity="0.45" />
+    <path d="M90 60 L130 30 L130 110 Z" opacity="0.55" />
+    <path d="M130 30 L175 60 L130 110 Z" opacity="0.4" />
+    <path d="M175 60 L180 130 L130 110 Z" opacity="0.3" />
+    <path d="M130 110 L180 130 L160 180 Z" opacity="0.25" />
+    <path d="M100 170 L130 110 L160 180 Z" opacity="0.2" />
+  </g>
+  <!-- Vertices -->
+  <g fill="#08AEEA">
+    <circle cx="20" cy="180" r="4" />
+    <circle cx="60" cy="120" r="4" />
+    <circle cx="30" cy="80" r="4" />
+    <circle cx="100" cy="170" r="4" />
+    <circle cx="130" cy="110" r="4" />
+    <circle cx="90" cy="60" r="4" />
+    <circle cx="50" cy="20" r="4" />
+    <circle cx="130" cy="30" r="4" />
+    <circle cx="175" cy="60" r="4" />
+    <circle cx="180" cy="130" r="4" />
+    <circle cx="160" cy="180" r="4" />
+  </g>
+</svg>

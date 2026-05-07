@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" fill="none">
+  <!-- Connection lines -->
+  <line x1="100" y1="40" x2="45" y2="100" stroke="#6C63FF" stroke-width="2" opacity="0.5" />
+  <line x1="100" y1="40" x2="155" y2="100" stroke="#6C63FF" stroke-width="2" opacity="0.5" />
+  <line x1="100" y1="40" x2="100" y2="120" stroke="#6C63FF" stroke-width="2" opacity="0.5" />
+  <line x1="45" y1="100" x2="100" y2="160" stroke="#6C63FF" stroke-width="2" opacity="0.5" />
+  <line x1="155" y1="100" x2="100" y2="160" stroke="#6C63FF" stroke-width="2" opacity="0.5" />
+  <line x1="45" y1="100" x2="155" y2="100" stroke="#6C63FF" stroke-width="2" opacity="0.5" />
+  <line x1="100" y1="120" x2="45" y2="100" stroke="#6C63FF" stroke-width="2" opacity="0.5" />
+  <line x1="100" y1="120" x2="155" y2="100" stroke="#6C63FF" stroke-width="2" opacity="0.5" />
+  <line x1="100" y1="120" x2="100" y2="160" stroke="#6C63FF" stroke-width="2" opacity="0.5" />
+  <!-- Nodes -->
+  <circle cx="100" cy="40" r="14" fill="#6C63FF" />
+  <circle cx="45" cy="100" r="12" fill="#08AEEA" />
+  <circle cx="155" cy="100" r="12" fill="#08AEEA" />
+  <circle cx="100" cy="120" r="10" fill="#E91E63" />
+  <circle cx="100" cy="160" r="14" fill="#6C63FF" />
+  <!-- Inner dots -->
+  <circle cx="100" cy="40" r="5" fill="white" />
+  <circle cx="100" cy="160" r="5" fill="white" />
+</svg>

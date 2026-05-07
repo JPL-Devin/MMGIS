@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" fill="none">
+  <!-- Total solar eclipse — moon silhouette with corona -->
+  <circle cx="100" cy="100" r="98" fill="#0A0A1A" />
+  <!-- Corona rays -->
+  <g stroke="white" stroke-width="1" fill="none" opacity="0.12">
+    <path d="M100 100 L20 30" /><path d="M100 100 L50 15" /><path d="M100 100 L85 5" />
+    <path d="M100 100 L115 5" /><path d="M100 100 L150 15" /><path d="M100 100 L180 30" />
+    <path d="M100 100 L195 60" /><path d="M100 100 L198 90" /><path d="M100 100 L198 110" />
+    <path d="M100 100 L195 140" /><path d="M100 100 L180 170" /><path d="M100 100 L150 185" />
+    <path d="M100 100 L115 195" /><path d="M100 100 L85 195" /><path d="M100 100 L50 185" />
+    <path d="M100 100 L20 170" /><path d="M100 100 L5 140" /><path d="M100 100 L2 110" />
+    <path d="M100 100 L2 90" /><path d="M100 100 L5 60" />
+  </g>
+  <!-- Inner corona glow -->
+  <circle cx="100" cy="100" r="55" fill="none" stroke="#FFF8E1" stroke-width="15" opacity="0.08" />
+  <circle cx="100" cy="100" r="48" fill="none" stroke="#FFD54F" stroke-width="6" opacity="0.12" />
+  <circle cx="100" cy="100" r="44" fill="none" stroke="#FFB300" stroke-width="2" opacity="0.2" />
+  <!-- Moon (silhouette) -->
+  <circle cx="100" cy="100" r="40" fill="#0A0A1A" />
+  <!-- Diamond ring effect -->
+  <circle cx="140" cy="85" r="5" fill="white" opacity="0.9" />
+  <circle cx="140" cy="85" r="10" fill="white" opacity="0.15" />
+  <!-- Prominences -->
+  <path d="M62 80 Q50 75 55 65" stroke="#FF6B35" stroke-width="1.5" fill="none" opacity="0.4" />
+  <path d="M72 130 Q60 140 65 148" stroke="#FF6B35" stroke-width="1.5" fill="none" opacity="0.3" />
+</svg>

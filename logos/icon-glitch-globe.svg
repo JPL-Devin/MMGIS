@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" fill="none">
+  <!-- Digital glitch effect on a globe — corrupted data aesthetic -->
+  <!-- Base globe -->
+  <circle cx="100" cy="100" r="80" fill="#1A1A2E" />
+  <!-- Glitch slices - offset color channels -->
+  <clipPath id="gc1"><rect x="0" y="0" width="200" height="45" /></clipPath>
+  <clipPath id="gc2"><rect x="0" y="45" width="200" height="30" /></clipPath>
+  <clipPath id="gc3"><rect x="0" y="75" width="200" height="25" /></clipPath>
+  <clipPath id="gc4"><rect x="0" y="100" width="200" height="35" /></clipPath>
+  <clipPath id="gc5"><rect x="0" y="135" width="200" height="30" /></clipPath>
+  <clipPath id="gc6"><rect x="0" y="165" width="200" height="35" /></clipPath>
+  <!-- Red channel offset -->
+  <g clip-path="url(#gc1)">
+    <circle cx="103" cy="100" r="78" stroke="#E74C3C" stroke-width="2" fill="none" />
+    <ellipse cx="103" cy="100" rx="40" ry="78" stroke="#E74C3C" stroke-width="1" fill="none" />
+  </g>
+  <g clip-path="url(#gc2)">
+    <circle cx="97" cy="100" r="78" stroke="#08AEEA" stroke-width="2" fill="none" />
+    <ellipse cx="97" cy="100" rx="40" ry="78" stroke="#08AEEA" stroke-width="1" fill="none" />
+  </g>
+  <g clip-path="url(#gc3)">
+    <circle cx="105" cy="100" r="78" stroke="#2ECC71" stroke-width="2" fill="none" />
+    <ellipse cx="105" cy="100" rx="40" ry="78" stroke="#2ECC71" stroke-width="1" fill="none" />
+  </g>
+  <g clip-path="url(#gc4)">
+    <circle cx="95" cy="100" r="78" stroke="#E74C3C" stroke-width="2" fill="none" />
+    <ellipse cx="95" cy="100" rx="40" ry="78" stroke="#E74C3C" stroke-width="1" fill="none" />
+  </g>
+  <g clip-path="url(#gc5)">
+    <circle cx="102" cy="100" r="78" stroke="#08AEEA" stroke-width="2" fill="none" />
+    <ellipse cx="102" cy="100" rx="40" ry="78" stroke="#08AEEA" stroke-width="1" fill="none" />
+  </g>
+  <g clip-path="url(#gc6)">
+    <circle cx="98" cy="100" r="78" stroke="#2ECC71" stroke-width="2" fill="none" />
+    <ellipse cx="98" cy="100" rx="40" ry="78" stroke="#2ECC71" stroke-width="1" fill="none" />
+  </g>
+  <!-- Noise rectangles -->
+  <rect x="30" y="55" width="45" height="3" fill="#E74C3C" opacity="0.4" />
+  <rect x="110" y="88" width="60" height="2" fill="#08AEEA" opacity="0.5" />
+  <rect x="50" y="140" width="35" height="3" fill="#2ECC71" opacity="0.4" />
+</svg>

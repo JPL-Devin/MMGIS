@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" fill="none">
+  <!-- Bioluminescent ocean — glowing organisms in deep water -->
+  <rect width="200" height="200" fill="#001529" rx="5" />
+  <!-- Deep water gradient feel -->
+  <rect y="100" width="200" height="100" fill="#000D1A" rx="5" />
+  <!-- Glowing plankton clusters -->
+  <circle cx="40" cy="50" r="12" fill="#00E5FF" opacity="0.06" />
+  <circle cx="40" cy="50" r="3" fill="#00E5FF" opacity="0.4" />
+  <circle cx="38" cy="48" r="1" fill="white" opacity="0.6" />
+  <circle cx="120" cy="35" r="15" fill="#00BFA5" opacity="0.05" />
+  <circle cx="120" cy="35" r="4" fill="#00BFA5" opacity="0.35" />
+  <circle cx="118" cy="33" r="1.5" fill="white" opacity="0.5" />
+  <circle cx="170" cy="70" r="10" fill="#00E5FF" opacity="0.07" />
+  <circle cx="170" cy="70" r="2.5" fill="#00E5FF" opacity="0.45" />
+  <circle cx="75" cy="100" r="18" fill="#76FF03" opacity="0.04" />
+  <circle cx="75" cy="100" r="5" fill="#76FF03" opacity="0.3" />
+  <circle cx="73" cy="98" r="2" fill="white" opacity="0.4" />
+  <circle cx="155" cy="120" r="14" fill="#00E5FF" opacity="0.06" />
+  <circle cx="155" cy="120" r="3.5" fill="#00E5FF" opacity="0.4" />
+  <circle cx="30" cy="150" r="10" fill="#00BFA5" opacity="0.05" />
+  <circle cx="30" cy="150" r="2" fill="#00BFA5" opacity="0.35" />
+  <circle cx="100" cy="160" r="16" fill="#00E5FF" opacity="0.05" />
+  <circle cx="100" cy="160" r="4" fill="#00E5FF" opacity="0.35" />
+  <circle cx="98" cy="158" r="1.5" fill="white" opacity="0.5" />
+  <circle cx="180" cy="170" r="8" fill="#76FF03" opacity="0.06" />
+  <circle cx="180" cy="170" r="2" fill="#76FF03" opacity="0.3" />
+  <!-- Jellyfish silhouette -->
+  <path d="M100 70 Q115 65 120 80 Q115 95 100 92 Q85 95 80 80 Q85 65 100 70 Z" fill="#E040FB" opacity="0.08" />
+  <path d="M90 92 L88 115" stroke="#E040FB" stroke-width="0.8" opacity="0.15" />
+  <path d="M100 94 L100 120" stroke="#E040FB" stroke-width="0.8" opacity="0.15" />
+  <path d="M110 92 L112 115" stroke="#E040FB" stroke-width="0.8" opacity="0.15" />
+</svg>

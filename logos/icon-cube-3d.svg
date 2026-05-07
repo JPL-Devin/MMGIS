@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" fill="none">
+  <!-- Isometric 3D cube -->
+  <!-- Top face -->
+  <path d="M100 30 L170 70 L100 110 L30 70 Z" fill="#08AEEA" opacity="0.9" />
+  <!-- Left face -->
+  <path d="M30 70 L100 110 L100 180 L30 140 Z" fill="#0583B0" />
+  <!-- Right face -->
+  <path d="M100 110 L170 70 L170 140 L100 180 Z" fill="#065D80" />
+  <!-- Edges -->
+  <path d="M100 30 L170 70 L100 110 L30 70 Z" stroke="#1A1A2E" stroke-width="1.5" fill="none" />
+  <path d="M30 70 L30 140 L100 180 L170 140 L170 70" stroke="#1A1A2E" stroke-width="1.5" fill="none" />
+  <line x1="100" y1="110" x2="100" y2="180" stroke="#1A1A2E" stroke-width="1.5" />
+</svg>

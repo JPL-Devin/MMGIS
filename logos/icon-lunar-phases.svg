@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" fill="none">
+  <!-- Moon phases row -->
+  <!-- New moon -->
+  <circle cx="25" cy="100" r="18" stroke="#607D8B" stroke-width="1.5" fill="none" />
+  <!-- Waxing crescent -->
+  <circle cx="65" cy="100" r="18" fill="#607D8B" />
+  <path d="M65 82 A18 18 0 0 1 65 118 A10 18 0 0 0 65 82" fill="#B0BEC5" />
+  <!-- First quarter -->
+  <circle cx="100" cy="100" r="18" fill="#607D8B" />
+  <path d="M100 82 A18 18 0 0 1 100 118 L100 82 Z" fill="#B0BEC5" />
+  <!-- Waxing gibbous -->
+  <circle cx="135" cy="100" r="18" fill="#B0BEC5" />
+  <path d="M135 82 A18 18 0 0 0 135 118 A10 18 0 0 0 135 82" fill="#607D8B" />
+  <!-- Full moon -->
+  <circle cx="175" cy="100" r="18" fill="#B0BEC5" />
+  <circle cx="175" cy="100" r="18" stroke="#607D8B" stroke-width="0.5" fill="none" />
+  <!-- Small craters on full moon -->
+  <circle cx="170" cy="95" r="3" fill="#9E9E9E" opacity="0.3" />
+  <circle cx="179" cy="105" r="2" fill="#9E9E9E" opacity="0.3" />
+</svg>

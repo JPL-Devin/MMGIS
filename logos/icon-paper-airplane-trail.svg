@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" fill="none">
+  <!-- Paper airplane leaving a dotted trail across a globe -->
+  <!-- Globe backdrop -->
+  <circle cx="100" cy="110" r="75" fill="#E3F2FD" stroke="#90CAF9" stroke-width="1.5" />
+  <ellipse cx="100" cy="110" rx="38" ry="75" stroke="#90CAF9" stroke-width="0.8" fill="none" />
+  <ellipse cx="100" cy="95" rx="65" ry="12" stroke="#90CAF9" stroke-width="0.8" fill="none" />
+  <ellipse cx="100" cy="125" rx="65" ry="12" stroke="#90CAF9" stroke-width="0.8" fill="none" />
+  <!-- Trail path -->
+  <path d="M30 160 Q50 130 70 120 Q100 105 130 85 Q150 70 160 45" stroke="#FF6B35" stroke-width="2" stroke-dasharray="6 4" fill="none" />
+  <!-- Paper airplane -->
+  <g transform="translate(160,40) rotate(-40)">
+    <path d="M0 0 L-30 8 L-10 0 L-30 -8 Z" fill="#FF6B35" />
+    <path d="M0 0 L-10 0 L-25 0" stroke="#E65100" stroke-width="1" />
+  </g>
+</svg>

@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" fill="none">
+  <!-- Signal/communication waves from a point -->
+  <circle cx="100" cy="170" r="8" fill="#00BCD4" />
+  <!-- Concentric signal arcs -->
+  <path d="M55 130 Q100 85 145 130" stroke="#00BCD4" stroke-width="3" fill="none" stroke-linecap="round" />
+  <path d="M35 105 Q100 45 165 105" stroke="#00BCD4" stroke-width="3" fill="none" stroke-linecap="round" opacity="0.7" />
+  <path d="M15 80 Q100 5 185 80" stroke="#00BCD4" stroke-width="3" fill="none" stroke-linecap="round" opacity="0.4" />
+</svg>

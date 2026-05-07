@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" fill="none">
+  <!-- Tectonic plates shifting - dramatic geological event -->
+  <defs>
+    <linearGradient id="ts1" x1="0" y1="1" x2="0" y2="0">
+      <stop offset="0%" stop-color="#E74C3C" />
+      <stop offset="40%" stop-color="#FF6B35" />
+      <stop offset="100%" stop-color="#795548" />
+    </linearGradient>
+    <linearGradient id="ts2" x1="0" y1="1" x2="0" y2="0">
+      <stop offset="0%" stop-color="#E74C3C" />
+      <stop offset="40%" stop-color="#FF6B35" />
+      <stop offset="100%" stop-color="#5D4037" />
+    </linearGradient>
+  </defs>
+  <!-- Left plate -->
+  <path d="M5 80 L90 70 L95 100 L85 130 L92 190 L5 190 Z" fill="url(#ts1)" />
+  <!-- Right plate -->
+  <path d="M110 65 L195 75 L195 190 L108 190 L115 125 L105 100 Z" fill="url(#ts2)" />
+  <!-- Magma glow between plates -->
+  <path d="M90 70 L95 100 L85 130 L92 190 L108 190 L115 125 L105 100 L110 65" fill="#FFC107" opacity="0.4" />
+  <path d="M93 80 L97 100 L90 125 L95 180 L105 180 L110 120 L103 100 L107 75" fill="#FF6B35" opacity="0.5" />
+  <path d="M96 90 L99 100 L94 118 L97 170 L103 170 L106 115 L101 100 L104 85" fill="#FFC107" opacity="0.7" />
+  <!-- Surface features -->
+  <path d="M15 75 L40 72 L60 78 L80 71" stroke="#4E342E" stroke-width="1" fill="none" opacity="0.5" />
+  <path d="M120 67 L145 72 L170 68 L190 73" stroke="#4E342E" stroke-width="1" fill="none" opacity="0.5" />
+  <!-- Eruption particles -->
+  <circle cx="100" cy="50" r="3" fill="#FFC107" opacity="0.6" />
+  <circle cx="95" cy="35" r="2" fill="#FF6B35" opacity="0.4" />
+  <circle cx="107" cy="40" r="2.5" fill="#FFC107" opacity="0.5" />
+  <circle cx="98" cy="20" r="1.5" fill="#E74C3C" opacity="0.3" />
+</svg>

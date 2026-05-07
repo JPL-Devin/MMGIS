@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" fill="none">
+  <!-- 4D hypercube projection — inner cube connected to outer cube -->
+  <!-- Outer cube -->
+  <path d="M40 50 L120 30 L170 60 L90 80 Z" stroke="#6C63FF" stroke-width="1.5" />
+  <path d="M40 50 L40 130 L90 160 L90 80" stroke="#6C63FF" stroke-width="1.5" />
+  <path d="M120 30 L170 60 L170 140 L120 110" stroke="#6C63FF" stroke-width="1.5" />
+  <path d="M40 130 L120 110 L170 140 L90 160" stroke="#6C63FF" stroke-width="1.5" />
+  <line x1="120" y1="30" x2="120" y2="110" stroke="#6C63FF" stroke-width="1.5" />
+  <!-- Inner cube -->
+  <path d="M72 70 L108 60 L132 78 L96 88 Z" stroke="#08AEEA" stroke-width="2" />
+  <path d="M72 70 L72 108 L96 126 L96 88" stroke="#08AEEA" stroke-width="2" />
+  <path d="M108 60 L132 78 L132 116 L108 98" stroke="#08AEEA" stroke-width="2" />
+  <path d="M72 108 L108 98 L132 116 L96 126" stroke="#08AEEA" stroke-width="2" />
+  <line x1="108" y1="60" x2="108" y2="98" stroke="#08AEEA" stroke-width="2" />
+  <!-- Connecting edges -->
+  <g stroke="#9B59B6" stroke-width="0.8" opacity="0.5" stroke-dasharray="3 2">
+    <line x1="40" y1="50" x2="72" y2="70" />
+    <line x1="120" y1="30" x2="108" y2="60" />
+    <line x1="170" y1="60" x2="132" y2="78" />
+    <line x1="90" y1="80" x2="96" y2="88" />
+    <line x1="40" y1="130" x2="72" y2="108" />
+    <line x1="120" y1="110" x2="108" y2="98" />
+    <line x1="170" y1="140" x2="132" y2="116" />
+    <line x1="90" y1="160" x2="96" y2="126" />
+  </g>
+</svg>

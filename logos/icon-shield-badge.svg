@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" fill="none">
+  <!-- Shield/badge shape -->
+  <path d="M100 15 L175 45 L175 110 C175 150 140 180 100 190 C60 180 25 150 25 110 L25 45 Z" fill="#1A1A2E" />
+  <path d="M100 25 L165 50 L165 108 C165 143 135 170 100 180 C65 170 35 143 35 108 L35 50 Z" fill="none" stroke="#08AEEA" stroke-width="2" />
+  <!-- Inner globe lines -->
+  <circle cx="100" cy="100" r="40" stroke="#08AEEA" stroke-width="1.5" fill="none" />
+  <ellipse cx="100" cy="100" rx="20" ry="40" stroke="#08AEEA" stroke-width="1" fill="none" />
+  <line x1="60" y1="100" x2="140" y2="100" stroke="#08AEEA" stroke-width="1" />
+  <ellipse cx="100" cy="85" rx="35" ry="6" stroke="#08AEEA" stroke-width="1" fill="none" />
+  <ellipse cx="100" cy="115" rx="35" ry="6" stroke="#08AEEA" stroke-width="1" fill="none" />
+</svg>

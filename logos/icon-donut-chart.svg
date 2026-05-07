@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" fill="none">
+  <!-- Donut chart / data viz theme -->
+  <circle cx="100" cy="100" r="80" stroke="#eee" stroke-width="25" fill="none" />
+  <!-- Segments -->
+  <circle cx="100" cy="100" r="80" stroke="#08AEEA" stroke-width="25" fill="none" stroke-dasharray="180 503" stroke-dashoffset="0" />
+  <circle cx="100" cy="100" r="80" stroke="#6C63FF" stroke-width="25" fill="none" stroke-dasharray="120 503" stroke-dashoffset="-180" />
+  <circle cx="100" cy="100" r="80" stroke="#2ECC71" stroke-width="25" fill="none" stroke-dasharray="90 503" stroke-dashoffset="-300" />
+  <circle cx="100" cy="100" r="80" stroke="#FFC107" stroke-width="25" fill="none" stroke-dasharray="60 503" stroke-dashoffset="-390" />
+  <circle cx="100" cy="100" r="80" stroke="#E74C3C" stroke-width="25" fill="none" stroke-dasharray="53 503" stroke-dashoffset="-450" />
+  <!-- Center text area -->
+  <circle cx="100" cy="100" r="55" fill="white" />
+</svg>

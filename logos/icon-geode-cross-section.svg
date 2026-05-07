@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" fill="none">
+  <!-- Geode cross-section — geological wonder, colorful crystal interior -->
+  <!-- Outer rock shell -->
+  <path d="M100 10 Q155 15 180 50 Q200 85 195 120 Q185 160 155 182 Q120 200 85 195 Q45 185 22 155 Q5 125 8 85 Q15 45 50 22 Q75 8 100 10 Z" fill="#757575" />
+  <!-- Inner ring layers -->
+  <path d="M100 25 Q148 30 168 58 Q185 88 180 115 Q172 150 148 168 Q118 185 90 180 Q55 172 38 145 Q20 118 25 85 Q32 52 58 35 Q78 22 100 25 Z" fill="#9E9E9E" />
+  <path d="M100 40 Q140 44 155 68 Q170 92 165 112 Q158 140 140 155 Q115 168 95 164 Q65 158 52 135 Q38 112 42 88 Q48 62 68 48 Q85 38 100 40 Z" fill="#CE93D8" />
+  <path d="M100 55 Q130 58 142 78 Q155 98 150 112 Q145 130 132 142 Q112 152 98 148 Q75 144 65 128 Q55 108 58 90 Q62 72 78 62 Q90 54 100 55 Z" fill="#AB47BC" />
+  <!-- Crystal cavity center -->
+  <path d="M100 72 Q118 74 126 88 Q135 102 132 112 Q128 122 120 128 Q108 135 98 132 Q85 128 80 118 Q74 105 78 92 Q82 80 92 74 Q96 72 100 72 Z" fill="#7B1FA2" />
+  <!-- Crystal points inside -->
+  <path d="M92 95 L95 78 L98 95 Z" fill="#E1BEE7" opacity="0.6" />
+  <path d="M105 90 L108 75 L111 90 Z" fill="#CE93D8" opacity="0.5" />
+  <path d="M100 105 L102 85 L104 105 Z" fill="#E1BEE7" opacity="0.7" />
+  <path d="M88 108 L90 92 L93 108 Z" fill="#CE93D8" opacity="0.4" />
+  <path d="M112 102 L114 88 L116 102 Z" fill="#E1BEE7" opacity="0.5" />
+</svg>

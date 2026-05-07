@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" fill="none">
+  <!-- Abstract M made of parallel lines -->
+  <g stroke-linecap="round" stroke-width="4">
+    <line x1="25" y1="170" x2="25" y2="30" stroke="#FFC107" />
+    <line x1="35" y1="170" x2="35" y2="40" stroke="#FFC107" opacity="0.9" />
+    <line x1="45" y1="170" x2="45" y2="50" stroke="#FF6B35" opacity="0.85" />
+    <line x1="55" y1="170" x2="55" y2="65" stroke="#FF6B35" opacity="0.8" />
+    <line x1="65" y1="170" x2="65" y2="80" stroke="#FF6B35" opacity="0.75" />
+    <line x1="75" y1="170" x2="75" y2="95" stroke="#E74C3C" opacity="0.7" />
+    <line x1="85" y1="170" x2="85" y2="110" stroke="#E74C3C" opacity="0.65" />
+    <line x1="95" y1="170" x2="95" y2="80" stroke="#E74C3C" opacity="0.7" />
+    <line x1="105" y1="170" x2="105" y2="50" stroke="#E74C3C" opacity="0.75" />
+    <line x1="115" y1="170" x2="115" y2="80" stroke="#FF6B35" opacity="0.7" />
+    <line x1="125" y1="170" x2="125" y2="110" stroke="#FF6B35" opacity="0.65" />
+    <line x1="135" y1="170" x2="135" y2="95" stroke="#FF6B35" opacity="0.7" />
+    <line x1="145" y1="170" x2="145" y2="80" stroke="#FFC107" opacity="0.75" />
+    <line x1="155" y1="170" x2="155" y2="65" stroke="#FFC107" opacity="0.8" />
+    <line x1="165" y1="170" x2="165" y2="50" stroke="#FFC107" opacity="0.85" />
+    <line x1="175" y1="170" x2="175" y2="30" stroke="#FFC107" />
+  </g>
+</svg>

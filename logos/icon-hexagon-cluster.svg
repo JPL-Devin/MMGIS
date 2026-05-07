@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" fill="none">
+  <!-- Cluster of hexagons in different colors -->
+  <g stroke-width="2">
+    <polygon points="100,25 130,42 130,78 100,95 70,78 70,42" fill="#FF5722" opacity="0.7" stroke="#FF5722" />
+    <polygon points="62,70 92,87 92,123 62,140 32,123 32,87" fill="#FF9800" opacity="0.7" stroke="#FF9800" />
+    <polygon points="138,70 168,87 168,123 138,140 108,123 108,87" fill="#FFC107" opacity="0.7" stroke="#FFC107" />
+    <polygon points="62,120 92,137 92,173 62,190 32,173 32,137" fill="#4CAF50" opacity="0.7" stroke="#4CAF50" />
+    <polygon points="138,120 168,137 168,173 138,190 108,173 108,137" fill="#2196F3" opacity="0.7" stroke="#2196F3" />
+    <polygon points="100,95 130,112 130,148 100,165 70,148 70,112" fill="#9C27B0" opacity="0.7" stroke="#9C27B0" />
+  </g>
+</svg>

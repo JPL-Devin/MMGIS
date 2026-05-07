@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" fill="none">
+  <!-- Rocket / mission launch -->
+  <path d="M100 15 C100 15 80 50 80 90 L80 140 L90 155 L100 145 L110 155 L120 140 L120 90 C120 50 100 15 100 15 Z" fill="#2C3E50" />
+  <!-- Nose cone -->
+  <path d="M100 15 C100 15 88 40 88 55 L112 55 C112 40 100 15 100 15 Z" fill="#E74C3C" />
+  <!-- Window -->
+  <circle cx="100" cy="80" r="10" fill="#08AEEA" />
+  <circle cx="100" cy="80" r="6" fill="#1B2838" />
+  <!-- Fins -->
+  <path d="M80 120 L60 150 L80 140 Z" fill="#E74C3C" />
+  <path d="M120 120 L140 150 L120 140 Z" fill="#E74C3C" />
+  <!-- Exhaust -->
+  <path d="M90 155 L95 180 L100 170 L105 180 L110 155" stroke="#FFC107" stroke-width="2" fill="#FF6B35" opacity="0.7" />
+  <path d="M93 170 L97 190 L100 183 L103 190 L107 170" stroke="#FFC107" stroke-width="1" fill="none" opacity="0.4" />
+</svg>

@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" fill="none">
+  <!-- Geometric shape dissolving into particles — data transformation -->
+  <!-- Solid hexagon on left dissolving to dots on right -->
+  <path d="M40 60 L70 40 L100 60 L100 100 L70 120 L40 100 Z" fill="#6C63FF" />
+  <!-- Partially dissolved -->
+  <rect x="105" y="55" width="8" height="8" fill="#6C63FF" opacity="0.85" />
+  <rect x="105" y="67" width="8" height="8" fill="#6C63FF" opacity="0.8" />
+  <rect x="105" y="79" width="8" height="8" fill="#6C63FF" opacity="0.75" />
+  <rect x="105" y="91" width="8" height="8" fill="#6C63FF" opacity="0.7" />
+  <rect x="105" y="103" width="8" height="8" fill="#6C63FF" opacity="0.65" />
+  <!-- Dissolving to smaller pieces -->
+  <circle cx="122" cy="52" r="4" fill="#6C63FF" opacity="0.6" />
+  <circle cx="122" cy="65" r="4" fill="#08AEEA" opacity="0.55" />
+  <circle cx="122" cy="78" r="4" fill="#6C63FF" opacity="0.5" />
+  <circle cx="122" cy="91" r="3.5" fill="#08AEEA" opacity="0.45" />
+  <circle cx="122" cy="104" r="3" fill="#6C63FF" opacity="0.4" />
+  <!-- Particles -->
+  <circle cx="138" cy="48" r="3" fill="#08AEEA" opacity="0.4" />
+  <circle cx="140" cy="62" r="2.5" fill="#6C63FF" opacity="0.35" />
+  <circle cx="142" cy="76" r="2.5" fill="#08AEEA" opacity="0.3" />
+  <circle cx="139" cy="90" r="2" fill="#6C63FF" opacity="0.25" />
+  <circle cx="143" cy="105" r="2" fill="#08AEEA" opacity="0.2" />
+  <!-- Dust -->
+  <circle cx="155" cy="45" r="1.5" fill="#08AEEA" opacity="0.25" />
+  <circle cx="158" cy="60" r="1.5" fill="#6C63FF" opacity="0.2" />
+  <circle cx="160" cy="75" r="1" fill="#08AEEA" opacity="0.15" />
+  <circle cx="157" cy="92" r="1.5" fill="#6C63FF" opacity="0.15" />
+  <circle cx="162" cy="55" r="1" fill="#08AEEA" opacity="0.1" />
+  <circle cx="170" cy="50" r="1" fill="#6C63FF" opacity="0.08" />
+  <circle cx="172" cy="68" r="0.8" fill="#08AEEA" opacity="0.08" />
+  <!-- Arrow indicating transformation -->
+  <path d="M70 140 L130 140" stroke="#6C63FF" stroke-width="2" opacity="0.4" />
+  <path d="M125 135 L135 140 L125 145" fill="#6C63FF" opacity="0.4" />
+</svg>

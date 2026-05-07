@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" fill="none">
+  <!-- Natural stone arch framing a starfield — portal to space -->
+  <!-- Night sky background -->
+  <rect width="200" height="200" fill="#0D1B2A" rx="5" />
+  <!-- Stars through the arch -->
+  <circle cx="85" cy="65" r="1" fill="white" opacity="0.8" />
+  <circle cx="115" cy="50" r="1.5" fill="white" opacity="0.9" />
+  <circle cx="95" cy="85" r="0.8" fill="white" opacity="0.6" />
+  <circle cx="108" cy="72" r="1.2" fill="#FFC107" opacity="0.7" />
+  <circle cx="78" cy="90" r="1" fill="white" opacity="0.5" />
+  <circle cx="120" cy="88" r="0.8" fill="#08AEEA" opacity="0.6" />
+  <circle cx="100" cy="40" r="1" fill="white" opacity="0.7" />
+  <!-- Milky Way streak -->
+  <path d="M75 30 Q90 60 95 90 Q100 120 110 150" stroke="white" stroke-width="8" fill="none" opacity="0.04" />
+  <!-- Stone arch -->
+  <path d="M0 200 L0 80 L25 75 L45 50 Q60 20 100 15 Q140 20 155 50 L175 75 L200 80 L200 200 Z" fill="#3E2723" />
+  <!-- Arch opening -->
+  <path d="M50 200 L50 110 Q50 40 100 30 Q150 40 150 110 L150 200 Z" fill="#0D1B2A" />
+  <!-- Rock texture -->
+  <path d="M10 120 L30 115 L25 140" stroke="#4E342E" stroke-width="1" fill="none" opacity="0.5" />
+  <path d="M170 115 L185 120 L180 145" stroke="#4E342E" stroke-width="1" fill="none" opacity="0.5" />
+  <!-- Arch edge detail -->
+  <path d="M50 200 L50 110 Q50 40 100 30 Q150 40 150 110 L150 200" stroke="#5D4037" stroke-width="2" fill="none" />
+  <!-- Ground -->
+  <rect x="0" y="185" width="200" height="15" fill="#2C1B0E" />
+</svg>

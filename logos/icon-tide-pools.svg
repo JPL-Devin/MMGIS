@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" fill="none">
+  <!-- Tide pools from above — abstract organic puddle shapes on rock -->
+  <rect width="200" height="200" fill="#78909C" rx="8" />
+  <!-- Rock texture cracks -->
+  <g stroke="#607D8B" stroke-width="1" opacity="0.4">
+    <path d="M30 0 L50 60 L20 120" /><path d="M150 0 L140 50 L180 110" />
+    <path d="M0 150 L80 160 L200 140" />
+  </g>
+  <!-- Tide pools — organic blob shapes -->
+  <path d="M40 40 Q55 25 75 35 Q85 48 78 65 Q65 78 48 70 Q30 58 40 40 Z" fill="#0288D1" opacity="0.7" />
+  <circle cx="55" cy="48" r="3" fill="#4FC3F7" opacity="0.4" />
+  <path d="M110 55 Q135 40 155 52 Q170 68 160 88 Q145 100 125 95 Q105 85 100 68 Q102 58 110 55 Z" fill="#0277BD" opacity="0.6" />
+  <circle cx="135" cy="70" r="4" fill="#4FC3F7" opacity="0.3" />
+  <path d="M55 120 Q70 105 95 110 Q115 120 110 140 Q100 158 80 155 Q55 148 45 135 Q48 125 55 120 Z" fill="#01579B" opacity="0.7" />
+  <circle cx="78" cy="132" r="5" fill="#4FC3F7" opacity="0.3" />
+  <path d="M140 130 Q160 118 178 128 Q190 145 180 162 Q165 172 148 165 Q132 152 135 138 Z" fill="#0288D1" opacity="0.6" />
+  <!-- Small pool -->
+  <ellipse cx="25" cy="170" rx="15" ry="12" fill="#0277BD" opacity="0.5" />
+  <!-- Starfish hint -->
+  <path d="M130 72 L133 68 L136 72 L132 74 Z" fill="#FF8A65" opacity="0.6" />
+</svg>

@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" fill="none">
+  <!-- Fingerprint that morphs into topographic lines — identity of place -->
+  <g stroke="#795548" stroke-width="2" fill="none" stroke-linecap="round">
+    <path d="M55 170 Q40 130 45 95 Q50 60 75 40 Q100 25 125 40 Q150 60 155 95 Q158 120 148 155" />
+    <path d="M65 165 Q52 130 56 98 Q60 68 80 50 Q100 38 120 50 Q140 68 144 98 Q147 125 138 155" />
+    <path d="M75 160 Q64 130 67 100 Q70 75 85 60 Q100 48 115 60 Q130 75 133 100 Q136 125 128 152" />
+    <path d="M82 155 Q74 128 77 103 Q80 82 90 70 Q100 60 110 70 Q120 82 123 103 Q126 128 118 152" />
+    <path d="M90 148 Q84 125 87 105 Q90 88 95 80 Q100 74 105 80 Q110 88 113 105 Q116 125 110 148" />
+  </g>
+  <!-- Color transition: brown at bottom → cyan at top (terrain to data) -->
+  <g stroke="#08AEEA" stroke-width="2" fill="none" stroke-linecap="round" opacity="0.5">
+    <path d="M55 170 Q40 130 45 95 Q50 60 75 40 Q100 25 125 40 Q150 60 155 95" />
+    <path d="M65 165 Q52 130 56 98 Q60 68 80 50 Q100 38 120 50 Q140 68 144 98" />
+  </g>
+  <!-- Single elevation dot -->
+  <circle cx="100" cy="74" r="4" fill="#E74C3C" />
+</svg>

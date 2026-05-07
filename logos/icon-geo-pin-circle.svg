@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" fill="none">
+  <!-- Circular badge with stylized geo pin -->
+  <circle cx="100" cy="100" r="92" stroke="#00BCD4" stroke-width="3" fill="none" />
+  <circle cx="100" cy="100" r="82" stroke="#00BCD4" stroke-width="1" fill="none" opacity="0.3" />
+  <!-- Pin -->
+  <path d="M100 160 C100 160 60 110 60 80 C60 57.9 77.9 40 100 40 C122.1 40 140 57.9 140 80 C140 110 100 160 100 160 Z" fill="#00BCD4" />
+  <circle cx="100" cy="78" r="16" fill="white" />
+  <!-- Grid inside circle on pin -->
+  <line x1="92" y1="70" x2="108" y2="70" stroke="#00BCD4" stroke-width="1.5" />
+  <line x1="92" y1="78" x2="108" y2="78" stroke="#00BCD4" stroke-width="1.5" />
+  <line x1="92" y1="86" x2="108" y2="86" stroke="#00BCD4" stroke-width="1.5" />
+  <line x1="96" y1="65" x2="96" y2="91" stroke="#00BCD4" stroke-width="1.5" />
+  <line x1="104" y1="65" x2="104" y2="91" stroke="#00BCD4" stroke-width="1.5" />
+</svg>

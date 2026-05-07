@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" fill="none">
+  <!-- North star / polaris -->
+  <defs>
+    <linearGradient id="ns1" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#FFC107" />
+      <stop offset="100%" stop-color="#FF6B35" />
+    </linearGradient>
+  </defs>
+  <!-- 8-pointed star -->
+  <path d="M100 10 L112 75 L175 55 L125 100 L175 145 L112 125 L100 190 L88 125 L25 145 L75 100 L25 55 L88 75 Z" fill="url(#ns1)" />
+  <!-- Inner glow -->
+  <circle cx="100" cy="100" r="20" fill="white" opacity="0.5" />
+  <circle cx="100" cy="100" r="10" fill="white" opacity="0.8" />
+</svg>

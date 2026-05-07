@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" fill="none">
+  <!-- Compass rose with cardinal points -->
+  <circle cx="100" cy="100" r="90" stroke="#2C3E50" stroke-width="2" fill="none" />
+  <circle cx="100" cy="100" r="70" stroke="#2C3E50" stroke-width="1" fill="none" />
+  <!-- N pointer -->
+  <path d="M100 15 L108 80 L100 65 L92 80 Z" fill="#E74C3C" />
+  <!-- S pointer -->
+  <path d="M100 185 L108 120 L100 135 L92 120 Z" fill="#2C3E50" />
+  <!-- E pointer -->
+  <path d="M185 100 L120 92 L135 100 L120 108 Z" fill="#2C3E50" />
+  <!-- W pointer -->
+  <path d="M15 100 L80 92 L65 100 L80 108 Z" fill="#2C3E50" />
+  <!-- Diagonal pointers -->
+  <path d="M160 40 L115 92 L125 85 Z" fill="#08AEEA" opacity="0.7" />
+  <path d="M40 160 L85 108 L75 115 Z" fill="#08AEEA" opacity="0.7" />
+  <path d="M160 160 L115 108 L125 115 Z" fill="#08AEEA" opacity="0.7" />
+  <path d="M40 40 L85 92 L75 85 Z" fill="#08AEEA" opacity="0.7" />
+  <!-- Center dot -->
+  <circle cx="100" cy="100" r="5" fill="#2C3E50" />
+</svg>

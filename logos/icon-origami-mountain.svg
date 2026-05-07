@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" fill="none">
+  <!-- Origami/low-poly mountain — paper-folded geometric landscape -->
+  <!-- Sky gradient via shapes -->
+  <path d="M0 0 L200 0 L200 140 L0 160 Z" fill="#E3F2FD" />
+  <!-- Back mountain -->
+  <path d="M120 160 L165 65 L200 120 L200 160 Z" fill="#90CAF9" />
+  <path d="M165 65 L200 120 L200 65 Z" fill="#BBDEFB" />
+  <!-- Main mountain - multiple facets -->
+  <path d="M10 160 L85 30 L120 80 Z" fill="#1565C0" />
+  <path d="M85 30 L120 80 L160 160 Z" fill="#1976D2" />
+  <path d="M10 160 L120 80 L160 160 Z" fill="#2196F3" />
+  <!-- Snow cap facets -->
+  <path d="M85 30 L95 55 L75 55 Z" fill="white" />
+  <path d="M85 30 L95 55 L105 50 Z" fill="#E3F2FD" />
+  <!-- Ground plane -->
+  <path d="M0 160 L200 160 L200 200 L0 200 Z" fill="#4CAF50" />
+  <path d="M0 160 L80 155 L200 160 L200 165 L0 170 Z" fill="#388E3C" />
+</svg>

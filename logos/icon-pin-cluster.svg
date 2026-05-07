@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" fill="none">
+  <!-- Multiple map pins at different sizes/positions -->
+  <g>
+    <!-- Background pin (largest, faded) -->
+    <path d="M140 150 C140 150 115 115 115 95 C115 81.2 126.2 70 140 70 C153.8 70 165 81.2 165 95 C165 115 140 150 140 150 Z" fill="#E91E63" opacity="0.35" />
+    <circle cx="140" cy="93" r="8" fill="white" opacity="0.35" />
+    <!-- Middle pin -->
+    <path d="M70 160 C70 160 40 118 40 94 C40 77.4 53.4 64 70 64 C86.6 64 100 77.4 100 94 C100 118 70 160 70 160 Z" fill="#6C63FF" opacity="0.6" />
+    <circle cx="70" cy="91" r="9" fill="white" opacity="0.6" />
+    <!-- Front pin (main) -->
+    <path d="M105 185 C105 185, 62 128, 62 98 C62 74.3 81.3 55 105 55 C128.7 55 148 74.3 148 98 C148 128 105 185 105 185 Z" fill="#08AEEA" />
+    <circle cx="105" cy="95" r="14" fill="white" />
+    <circle cx="105" cy="95" r="6" fill="#08AEEA" />
+  </g>
+</svg>

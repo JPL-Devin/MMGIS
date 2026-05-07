@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" fill="none">
+  <!-- Spiral galaxy -->
+  <circle cx="100" cy="100" r="8" fill="#E8D5B7" />
+  <path d="M100 100 C110 90 130 85 140 95 C150 105 145 130 130 140 C115 150 85 148 70 135 C55 122 55 90 72 72 C89 54 125 52 148 68 C171 84 175 120 160 145 C145 170 110 178 80 165 C50 152 38 118 48 85" stroke="#9B59B6" stroke-width="3" fill="none" opacity="0.6" />
+  <path d="M100 100 C90 110 70 115 60 105 C50 95 55 70 70 60 C85 50 115 52 130 65 C145 78 145 110 128 128 C111 146 75 148 52 132 C29 116 25 80 40 55 C55 30 90 22 120 35" stroke="#6C63FF" stroke-width="2" fill="none" opacity="0.4" />
+  <!-- Stars scattered -->
+  <circle cx="25" cy="30" r="1.5" fill="white" opacity="0.5" />
+  <circle cx="170" cy="25" r="1" fill="white" opacity="0.4" />
+  <circle cx="180" cy="170" r="1.5" fill="white" opacity="0.5" />
+  <circle cx="20" cy="165" r="1" fill="white" opacity="0.3" />
+</svg>

@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" fill="none">
+  <!-- Eye / scanning / observation theme -->
+  <path d="M10 100 Q60 40 100 40 Q140 40 190 100 Q140 160 100 160 Q60 160 10 100 Z" stroke="#3F51B5" stroke-width="3" fill="none" />
+  <circle cx="100" cy="100" r="35" stroke="#3F51B5" stroke-width="2" fill="none" />
+  <circle cx="100" cy="100" r="18" fill="#3F51B5" />
+  <circle cx="100" cy="100" r="8" fill="#08AEEA" />
+  <!-- Scan lines -->
+  <line x1="25" y1="80" x2="175" y2="80" stroke="#08AEEA" stroke-width="0.5" opacity="0.3" />
+  <line x1="20" y1="100" x2="180" y2="100" stroke="#08AEEA" stroke-width="0.5" opacity="0.3" />
+  <line x1="25" y1="120" x2="175" y2="120" stroke="#08AEEA" stroke-width="0.5" opacity="0.3" />
+  <!-- Highlight -->
+  <circle cx="92" cy="92" r="6" fill="white" opacity="0.3" />
+</svg>

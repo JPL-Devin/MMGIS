@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" fill="none">
+  <!-- Tree cross-section rings — organic data layers -->
+  <circle cx="100" cy="100" r="92" fill="#D7CCC8" stroke="#795548" stroke-width="2" />
+  <!-- Growth rings (irregular, organic) -->
+  <ellipse cx="102" cy="98" rx="80" ry="78" stroke="#8D6E63" stroke-width="1.5" fill="none" />
+  <ellipse cx="98" cy="102" rx="68" ry="65" stroke="#795548" stroke-width="2" fill="none" />
+  <ellipse cx="103" cy="97" rx="55" ry="52" stroke="#8D6E63" stroke-width="1.5" fill="none" />
+  <ellipse cx="97" cy="103" rx="42" ry="40" stroke="#795548" stroke-width="2" fill="none" />
+  <ellipse cx="101" cy="99" rx="30" ry="28" stroke="#8D6E63" stroke-width="1.5" fill="none" />
+  <ellipse cx="99" cy="101" rx="18" ry="16" stroke="#795548" stroke-width="2" fill="none" />
+  <ellipse cx="100" cy="100" rx="8" ry="7" fill="#5D4037" />
+  <!-- Highlight/sap line (like a data anomaly) -->
+  <path d="M100 100 L100 8" stroke="#FFC107" stroke-width="1.5" opacity="0.6" />
+  <path d="M100 100 L170 60" stroke="#FFC107" stroke-width="1" opacity="0.4" />
+</svg>

@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" fill="none">
+  <!-- Eye shape made entirely of topographic contour lines -->
+  <!-- Eye outline as contours -->
+  <path d="M10 100 Q55 30 100 30 Q145 30 190 100 Q145 170 100 170 Q55 170 10 100 Z" stroke="#1A1A2E" stroke-width="2" fill="none" />
+  <path d="M25 100 Q60 45 100 45 Q140 45 175 100 Q140 155 100 155 Q60 155 25 100 Z" stroke="#1A1A2E" stroke-width="1.5" fill="none" opacity="0.7" />
+  <path d="M40 100 Q65 60 100 60 Q135 60 160 100 Q135 140 100 140 Q65 140 40 100 Z" stroke="#1A1A2E" stroke-width="1.2" fill="none" opacity="0.5" />
+  <!-- Iris as elevation rings -->
+  <circle cx="100" cy="100" r="35" stroke="#08AEEA" stroke-width="2" fill="none" />
+  <circle cx="100" cy="100" r="28" stroke="#08AEEA" stroke-width="1.5" fill="none" opacity="0.8" />
+  <circle cx="100" cy="100" r="21" stroke="#00BCD4" stroke-width="1.2" fill="none" opacity="0.6" />
+  <circle cx="100" cy="100" r="14" stroke="#00BCD4" stroke-width="1" fill="none" opacity="0.4" />
+  <!-- Pupil as mountain peak -->
+  <path d="M93 105 L100 85 L107 105 Z" fill="#1A1A2E" />
+  <circle cx="100" cy="100" r="6" fill="#1A1A2E" />
+  <!-- Reflection spark -->
+  <circle cx="108" cy="92" r="3" fill="white" opacity="0.6" />
+</svg>

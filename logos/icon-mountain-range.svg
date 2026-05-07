@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" fill="none">
+  <!-- Mountain range silhouette -->
+  <path d="M0 170 L30 100 L50 130 L80 60 L110 120 L130 80 L160 40 L185 90 L200 70 L200 170 Z" fill="#2C3E50" />
+  <path d="M0 170 L20 130 L45 150 L70 95 L95 140 L120 110 L150 75 L175 120 L200 100 L200 170 Z" fill="#1B2838" opacity="0.7" />
+  <!-- Snow caps -->
+  <path d="M155 45 L160 40 L165 45 L162 48 L158 48 Z" fill="white" />
+  <path d="M76 64 L80 60 L84 64 L82 67 L78 67 Z" fill="white" />
+  <!-- Sun/star -->
+  <circle cx="30" cy="30" r="15" fill="#FFC107" opacity="0.8" />
+  <circle cx="30" cy="30" r="10" fill="#FFC107" />
+</svg>

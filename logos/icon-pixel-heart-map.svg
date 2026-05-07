@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" fill="none">
+  <!-- Pixel art heart shape filled with map-like terrain colors -->
+  <g>
+    <!-- Row 1 -->
+    <rect x="40" y="40" width="20" height="20" fill="#2ECC71" />
+    <rect x="60" y="40" width="20" height="20" fill="#27AE60" />
+    <rect x="100" y="40" width="20" height="20" fill="#4CAF50" />
+    <rect x="120" y="40" width="20" height="20" fill="#388E3C" />
+    <!-- Row 2 -->
+    <rect x="20" y="60" width="20" height="20" fill="#8BC34A" />
+    <rect x="40" y="60" width="20" height="20" fill="#FFC107" />
+    <rect x="60" y="60" width="20" height="20" fill="#795548" />
+    <rect x="80" y="60" width="20" height="20" fill="#FF9800" />
+    <rect x="100" y="60" width="20" height="20" fill="#8D6E63" />
+    <rect x="120" y="60" width="20" height="20" fill="#FFC107" />
+    <rect x="140" y="60" width="20" height="20" fill="#66BB6A" />
+    <!-- Row 3 -->
+    <rect x="20" y="80" width="20" height="20" fill="#08AEEA" />
+    <rect x="40" y="80" width="20" height="20" fill="#2ECC71" />
+    <rect x="60" y="80" width="20" height="20" fill="#FFF9C4" />
+    <rect x="80" y="80" width="20" height="20" fill="#795548" />
+    <rect x="100" y="80" width="20" height="20" fill="#E8F5E9" />
+    <rect x="120" y="80" width="20" height="20" fill="#4CAF50" />
+    <rect x="140" y="80" width="20" height="20" fill="#08AEEA" />
+    <!-- Row 4 -->
+    <rect x="40" y="100" width="20" height="20" fill="#08AEEA" />
+    <rect x="60" y="100" width="20" height="20" fill="#0288D1" />
+    <rect x="80" y="100" width="20" height="20" fill="#2ECC71" />
+    <rect x="100" y="100" width="20" height="20" fill="#0288D1" />
+    <rect x="120" y="100" width="20" height="20" fill="#08AEEA" />
+    <!-- Row 5 -->
+    <rect x="60" y="120" width="20" height="20" fill="#0277BD" />
+    <rect x="80" y="120" width="20" height="20" fill="#08AEEA" />
+    <rect x="100" y="120" width="20" height="20" fill="#0288D1" />
+    <!-- Row 6 -->
+    <rect x="80" y="140" width="20" height="20" fill="#01579B" />
+  </g>
+</svg>

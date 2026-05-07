@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" fill="none">
+  <!-- Earth with highlighted grid cells -->
+  <circle cx="100" cy="100" r="90" fill="#1A237E" />
+  <!-- Continents (simplified) -->
+  <path d="M60 50 Q70 40 85 45 Q95 48 90 60 Q85 70 70 65 Q55 60 60 50 Z" fill="#4CAF50" opacity="0.6" />
+  <path d="M110 55 Q130 45 145 55 Q155 65 150 80 Q140 90 125 85 Q110 80 105 65 Z" fill="#4CAF50" opacity="0.6" />
+  <path d="M55 100 Q60 90 75 95 Q85 100 80 115 Q70 125 55 115 Z" fill="#4CAF50" opacity="0.6" />
+  <path d="M120 110 Q135 105 145 115 Q150 130 140 140 Q125 145 115 130 Z" fill="#4CAF50" opacity="0.6" />
+  <!-- Grid overlay -->
+  <ellipse cx="100" cy="100" rx="90" ry="30" stroke="white" stroke-width="0.5" fill="none" opacity="0.3" />
+  <ellipse cx="100" cy="100" rx="90" ry="60" stroke="white" stroke-width="0.5" fill="none" opacity="0.3" />
+  <ellipse cx="100" cy="100" rx="30" ry="90" stroke="white" stroke-width="0.5" fill="none" opacity="0.3" />
+  <ellipse cx="100" cy="100" rx="60" ry="90" stroke="white" stroke-width="0.5" fill="none" opacity="0.3" />
+  <!-- Atmosphere glow -->
+  <circle cx="100" cy="100" r="92" stroke="#64B5F6" stroke-width="2" fill="none" opacity="0.4" />
+</svg>

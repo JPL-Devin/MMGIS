@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" fill="none">
+  <!-- Lava flow from above — volcanic terrain mapping -->
+  <defs>
+    <linearGradient id="lf1" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#FF6B35" />
+      <stop offset="100%" stop-color="#BF360C" />
+    </linearGradient>
+  </defs>
+  <rect width="200" height="200" fill="#212121" rx="5" />
+  <!-- Cooled lava surface cracks -->
+  <g stroke="#424242" stroke-width="0.8" opacity="0.4">
+    <path d="M10 30 L60 50 L40 90" /><path d="M60 50 L110 20" />
+    <path d="M130 40 L160 70 L190 50" /><path d="M160 70 L150 120" />
+    <path d="M20 150 L70 140 L50 180" /><path d="M130 160 L180 170" />
+  </g>
+  <!-- Active lava channels -->
+  <path d="M100 10 Q95 40 90 60 Q82 85 95 100 Q105 115 100 140 Q92 165 95 195" stroke="url(#lf1)" stroke-width="8" fill="none" stroke-linecap="round" />
+  <path d="M100 10 Q95 40 90 60 Q82 85 95 100 Q105 115 100 140 Q92 165 95 195" stroke="#FFC107" stroke-width="3" fill="none" opacity="0.6" stroke-linecap="round" />
+  <!-- Branch flows -->
+  <path d="M90 60 Q70 75 55 95 Q45 110 50 130" stroke="#FF6B35" stroke-width="5" fill="none" stroke-linecap="round" opacity="0.7" />
+  <path d="M90 60 Q70 75 55 95" stroke="#FFC107" stroke-width="2" fill="none" opacity="0.4" stroke-linecap="round" />
+  <path d="M105 115 Q125 125 140 145 Q150 160 155 180" stroke="#FF6B35" stroke-width="4" fill="none" stroke-linecap="round" opacity="0.6" />
+  <!-- Glow spots -->
+  <circle cx="90" cy="60" r="6" fill="#FFC107" opacity="0.2" />
+  <circle cx="95" cy="100" r="5" fill="#FFC107" opacity="0.15" />
+</svg>

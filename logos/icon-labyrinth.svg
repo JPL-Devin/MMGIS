@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" fill="none">
+  <!-- Classical labyrinth pattern — ancient navigation -->
+  <circle cx="100" cy="100" r="92" stroke="#795548" stroke-width="2.5" fill="none" />
+  <!-- Labyrinth paths -->
+  <g stroke="#795548" stroke-width="2.5" fill="none">
+    <path d="M100 10 L100 30" />
+    <path d="M100 30 Q30 30 30 100 Q30 170 100 170" />
+    <path d="M100 170 L100 150" />
+    <path d="M100 150 Q50 150 50 100 Q50 50 100 50" />
+    <path d="M100 50 L100 70" />
+    <path d="M100 70 Q70 70 70 100 Q70 130 100 130" />
+    <path d="M100 130 L100 110" />
+    <path d="M100 110 Q90 110 90 100 Q90 90 100 90" />
+    <!-- Right side -->
+    <path d="M100 8 Q190 10 190 100 Q190 190 100 190" />
+    <path d="M100 190 Q10 190 10 100 Q10 10 100 10" />
+    <path d="M100 170 Q170 170 170 100 Q170 30 100 30" />
+    <path d="M100 50 Q150 50 150 100 Q150 150 100 150" />
+    <path d="M100 70 Q130 70 130 100 Q130 130 100 130" />
+    <path d="M100 90 Q110 90 110 100 Q110 110 100 110" />
+  </g>
+  <!-- Center -->
+  <circle cx="100" cy="100" r="4" fill="#E74C3C" />
+</svg>

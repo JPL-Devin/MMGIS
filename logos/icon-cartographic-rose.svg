@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" fill="none">
+  <!-- Ornate cartographic compass rose — vintage nautical chart style -->
+  <circle cx="100" cy="100" r="92" stroke="#8D6E63" stroke-width="1" fill="none" opacity="0.3" />
+  <circle cx="100" cy="100" r="88" stroke="#8D6E63" stroke-width="0.5" fill="none" opacity="0.2" />
+  <!-- 16-point star -->
+  <g fill="#795548">
+    <!-- Cardinal points (large) -->
+    <path d="M100 12 L107 80 L100 75 L93 80 Z" /><!-- N -->
+    <path d="M188 100 L120 107 L125 100 L120 93 Z" /><!-- E -->
+    <path d="M100 188 L93 120 L100 125 L107 120 Z" /><!-- S -->
+    <path d="M12 100 L80 93 L75 100 L80 107 Z" /><!-- W -->
+  </g>
+  <g fill="#A1887F">
+    <!-- Intercardinal (medium) -->
+    <path d="M162 38 L115 88 L118 82 L112 85 Z" />
+    <path d="M162 162 L115 112 L118 118 L112 115 Z" />
+    <path d="M38 162 L85 112 L82 118 L88 115 Z" />
+    <path d="M38 38 L85 88 L82 82 L88 85 Z" />
+  </g>
+  <!-- Decorative rings -->
+  <circle cx="100" cy="100" r="45" stroke="#795548" stroke-width="1.5" fill="none" />
+  <circle cx="100" cy="100" r="42" stroke="#795548" stroke-width="0.5" fill="none" />
+  <!-- Fleur-de-lis hint at north -->
+  <path d="M97 14 Q100 8 103 14" stroke="#E74C3C" stroke-width="1.5" fill="none" />
+  <!-- Center ornament -->
+  <circle cx="100" cy="100" r="8" fill="#795548" />
+  <circle cx="100" cy="100" r="4" fill="#D7CCC8" />
+</svg>

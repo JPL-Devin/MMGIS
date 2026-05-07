@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" fill="none">
+  <!-- Mars-colored pin with terrain -->
+  <path d="M100 185 C100 185, 45 115, 45 75 C45 44.6 69.6 20 100 20 C130.4 20 155 44.6 155 75 C155 115 100 185 100 185 Z" fill="#E74C3C" />
+  <!-- Surface crater details inside pin -->
+  <circle cx="88" cy="65" r="10" fill="#C0392B" />
+  <circle cx="112" cy="78" r="7" fill="#C0392B" />
+  <circle cx="95" cy="88" r="5" fill="#C0392B" />
+  <!-- Mountain peak in pin -->
+  <path d="M80 95 L100 55 L120 95" stroke="white" stroke-width="2" fill="none" opacity="0.4" />
+  <!-- Pin highlight -->
+  <circle cx="90" cy="60" r="15" fill="white" opacity="0.15" />
+</svg>

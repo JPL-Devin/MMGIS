@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" fill="none">
+  <!-- Heatmap grid -->
+  <g>
+    <rect x="10" y="10" width="35" height="35" rx="3" fill="#FFEB3B" opacity="0.4" />
+    <rect x="50" y="10" width="35" height="35" rx="3" fill="#FF9800" opacity="0.6" />
+    <rect x="90" y="10" width="35" height="35" rx="3" fill="#F44336" opacity="0.9" />
+    <rect x="130" y="10" width="35" height="35" rx="3" fill="#FF9800" opacity="0.7" />
+    <rect x="10" y="50" width="35" height="35" rx="3" fill="#4CAF50" opacity="0.3" />
+    <rect x="50" y="50" width="35" height="35" rx="3" fill="#FFEB3B" opacity="0.5" />
+    <rect x="90" y="50" width="35" height="35" rx="3" fill="#F44336" opacity="1.0" />
+    <rect x="130" y="50" width="35" height="35" rx="3" fill="#F44336" opacity="0.8" />
+    <rect x="10" y="90" width="35" height="35" rx="3" fill="#4CAF50" opacity="0.2" />
+    <rect x="50" y="90" width="35" height="35" rx="3" fill="#4CAF50" opacity="0.4" />
+    <rect x="90" y="90" width="35" height="35" rx="3" fill="#FFEB3B" opacity="0.6" />
+    <rect x="130" y="90" width="35" height="35" rx="3" fill="#FF9800" opacity="0.5" />
+    <rect x="10" y="130" width="35" height="35" rx="3" fill="#2196F3" opacity="0.3" />
+    <rect x="50" y="130" width="35" height="35" rx="3" fill="#4CAF50" opacity="0.3" />
+    <rect x="90" y="130" width="35" height="35" rx="3" fill="#FFEB3B" opacity="0.4" />
+    <rect x="130" y="130" width="35" height="35" rx="3" fill="#4CAF50" opacity="0.3" />
+  </g>
+</svg>

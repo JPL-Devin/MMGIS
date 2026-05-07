@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" fill="none">
+  <!-- Matrix-style data rain over a planetary surface — code meets geography -->
+  <rect width="200" height="200" fill="#0A0A0A" rx="5" />
+  <!-- Data columns falling (varying speeds/opacity) -->
+  <g fill="#00E676" font-family="monospace">
+    <rect x="10" y="5" width="3" height="12" rx="1" opacity="0.3" />
+    <rect x="10" y="22" width="3" height="8" rx="1" opacity="0.5" />
+    <rect x="10" y="35" width="3" height="15" rx="1" opacity="0.2" />
+    <rect x="30" y="0" width="3" height="10" rx="1" opacity="0.6" />
+    <rect x="30" y="15" width="3" height="18" rx="1" opacity="0.4" />
+    <rect x="30" y="40" width="3" height="8" rx="1" opacity="0.7" />
+    <rect x="50" y="10" width="3" height="14" rx="1" opacity="0.3" />
+    <rect x="50" y="30" width="3" height="10" rx="1" opacity="0.5" />
+    <rect x="70" y="0" width="3" height="20" rx="1" opacity="0.5" />
+    <rect x="70" y="25" width="3" height="12" rx="1" opacity="0.8" />
+    <rect x="70" y="42" width="3" height="8" rx="1" opacity="0.4" />
+    <rect x="90" y="8" width="3" height="16" rx="1" opacity="0.4" />
+    <rect x="90" y="30" width="3" height="10" rx="1" opacity="0.6" />
+    <rect x="110" y="0" width="3" height="12" rx="1" opacity="0.7" />
+    <rect x="110" y="18" width="3" height="20" rx="1" opacity="0.3" />
+    <rect x="130" y="5" width="3" height="18" rx="1" opacity="0.5" />
+    <rect x="130" y="28" width="3" height="14" rx="1" opacity="0.6" />
+    <rect x="150" y="0" width="3" height="10" rx="1" opacity="0.4" />
+    <rect x="150" y="15" width="3" height="22" rx="1" opacity="0.3" />
+    <rect x="170" y="8" width="3" height="14" rx="1" opacity="0.6" />
+    <rect x="170" y="28" width="3" height="10" rx="1" opacity="0.5" />
+    <rect x="190" y="0" width="3" height="18" rx="1" opacity="0.3" />
+  </g>
+  <!-- Transition zone — data dissolving into terrain -->
+  <g fill="#00E676" opacity="0.15">
+    <rect x="10" y="55" width="3" height="25" rx="1" />
+    <rect x="30" y="52" width="3" height="30" rx="1" />
+    <rect x="50" y="48" width="3" height="35" rx="1" />
+    <rect x="70" y="55" width="3" height="28" rx="1" />
+    <rect x="90" y="50" width="3" height="32" rx="1" />
+    <rect x="110" y="45" width="3" height="38" rx="1" />
+    <rect x="130" y="50" width="3" height="30" rx="1" />
+    <rect x="150" y="48" width="3" height="35" rx="1" />
+    <rect x="170" y="52" width="3" height="28" rx="1" />
+    <rect x="190" y="55" width="3" height="25" rx="1" />
+  </g>
+  <!-- Terrain emerging from data (bottom half) -->
+  <path d="M0 120 L20 105 L45 112 L65 95 L85 108 L100 88 L120 100 L140 85 L165 95 L185 82 L200 90 L200 200 L0 200 Z" fill="#004D40" opacity="0.6" />
+  <path d="M0 140 L25 128 L50 135 L75 118 L100 130 L125 115 L150 125 L175 110 L200 120 L200 200 L0 200 Z" fill="#00695C" opacity="0.5" />
+  <path d="M0 160 L30 150 L60 155 L90 142 L120 152 L150 140 L180 148 L200 142 L200 200 L0 200 Z" fill="#00796B" opacity="0.4" />
+</svg>

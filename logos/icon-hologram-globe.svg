@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" fill="none">
+  <!-- Holographic globe projection — sci-fi wireframe on dark -->
+  <rect width="200" height="200" fill="#0A0A1A" rx="5" />
+  <!-- Projection base -->
+  <ellipse cx="100" cy="180" rx="50" ry="6" fill="#08AEEA" opacity="0.1" />
+  <!-- Projection beam lines -->
+  <line x1="60" y1="178" x2="55" y2="140" stroke="#08AEEA" stroke-width="0.5" opacity="0.2" />
+  <line x1="140" y1="178" x2="145" y2="140" stroke="#08AEEA" stroke-width="0.5" opacity="0.2" />
+  <!-- Holographic globe -->
+  <circle cx="100" cy="90" r="60" stroke="#08AEEA" stroke-width="1.5" fill="none" opacity="0.4" />
+  <ellipse cx="100" cy="90" rx="30" ry="60" stroke="#08AEEA" stroke-width="1" fill="none" opacity="0.3" />
+  <ellipse cx="100" cy="90" rx="55" ry="15" stroke="#08AEEA" stroke-width="1" fill="none" opacity="0.3" />
+  <ellipse cx="100" cy="75" rx="50" ry="12" stroke="#08AEEA" stroke-width="0.8" fill="none" opacity="0.2" />
+  <ellipse cx="100" cy="105" rx="50" ry="12" stroke="#08AEEA" stroke-width="0.8" fill="none" opacity="0.2" />
+  <!-- Continent outlines (simplified, holographic) -->
+  <path d="M70 60 Q80 55 90 58 Q95 62 88 70 Q80 75 72 68 Z" stroke="#08AEEA" stroke-width="1" fill="#08AEEA" opacity="0.15" />
+  <path d="M110 70 Q125 65 135 72 Q140 82 130 88 Q118 90 112 80 Z" stroke="#08AEEA" stroke-width="1" fill="#08AEEA" opacity="0.15" />
+  <path d="M80 100 Q90 95 98 100 Q100 108 90 112 Q82 110 78 105 Z" stroke="#08AEEA" stroke-width="1" fill="#08AEEA" opacity="0.12" />
+  <!-- Scan line flicker -->
+  <rect x="40" y="78" width="120" height="1" fill="#08AEEA" opacity="0.15" />
+  <rect x="40" y="95" width="120" height="1" fill="#08AEEA" opacity="0.1" />
+  <!-- Projector dot -->
+  <circle cx="100" cy="178" r="3" fill="#08AEEA" opacity="0.6" />
+</svg>

@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" fill="none">
+  <!-- Planetary magnetic field lines — invisible force made visible -->
+  <rect width="200" height="200" fill="#0D0D1A" rx="5" />
+  <!-- Planet -->
+  <circle cx="100" cy="100" r="25" fill="#1565C0" />
+  <circle cx="100" cy="100" r="25" stroke="#42A5F5" stroke-width="1" fill="none" opacity="0.4" />
+  <!-- Magnetic field lines -->
+  <g stroke="#7C4DFF" stroke-width="1.5" fill="none">
+    <path d="M100 20 Q140 40 145 70 Q148 90 140 100 Q148 110 145 130 Q140 160 100 180" opacity="0.5" />
+    <path d="M100 20 Q60 40 55 70 Q52 90 60 100 Q52 110 55 130 Q60 160 100 180" opacity="0.5" />
+    <path d="M100 10 Q160 35 168 70 Q175 90 160 100 Q175 110 168 130 Q160 165 100 190" opacity="0.35" />
+    <path d="M100 10 Q40 35 32 70 Q25 90 40 100 Q25 110 32 130 Q40 165 100 190" opacity="0.35" />
+    <path d="M100 5 Q180 30 188 75 Q195 95 180 100 Q195 105 188 125 Q180 170 100 195" opacity="0.2" />
+    <path d="M100 5 Q20 30 12 75 Q5 95 20 100 Q5 105 12 125 Q20 170 100 195" opacity="0.2" />
+  </g>
+  <!-- Poles -->
+  <circle cx="100" cy="75" r="3" fill="#B388FF" />
+  <circle cx="100" cy="125" r="3" fill="#B388FF" />
+  <!-- Solar wind particles deflected -->
+  <path d="M5 50 L30 55 Q50 58 60 68" stroke="#FFC107" stroke-width="0.8" fill="none" opacity="0.3" />
+  <path d="M5 100 L25 100 Q45 100 55 100" stroke="#FFC107" stroke-width="0.8" fill="none" opacity="0.3" />
+  <path d="M5 150 L30 145 Q50 142 60 132" stroke="#FFC107" stroke-width="0.8" fill="none" opacity="0.3" />
+</svg>

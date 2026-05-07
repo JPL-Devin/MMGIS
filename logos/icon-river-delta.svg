@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" fill="none">
+  <!-- River delta branching pattern from above — fractal hydrology -->
+  <rect width="200" height="200" fill="#2E7D32" rx="5" />
+  <!-- Water body at bottom -->
+  <path d="M0 160 Q50 150 100 155 Q150 150 200 160 L200 200 L0 200 Z" fill="#0277BD" opacity="0.6" />
+  <!-- Main river channel -->
+  <path d="M95 0 Q98 30 96 60" stroke="#0288D1" stroke-width="6" fill="none" stroke-linecap="round" />
+  <!-- First fork -->
+  <path d="M96 60 Q85 80 70 100 Q55 120 40 145 Q30 155 25 165" stroke="#0288D1" stroke-width="4" fill="none" stroke-linecap="round" />
+  <path d="M96 60 Q110 85 125 105 Q140 125 160 145 Q170 155 175 165" stroke="#0288D1" stroke-width="4" fill="none" stroke-linecap="round" />
+  <!-- Second level branches -->
+  <path d="M70 100 Q55 110 45 125 Q38 135 30 148" stroke="#0288D1" stroke-width="2.5" fill="none" stroke-linecap="round" />
+  <path d="M70 100 Q78 115 80 130 Q82 145 80 160" stroke="#0288D1" stroke-width="2.5" fill="none" stroke-linecap="round" />
+  <path d="M125 105 Q115 118 110 135 Q108 148 110 160" stroke="#0288D1" stroke-width="2.5" fill="none" stroke-linecap="round" />
+  <path d="M125 105 Q140 115 155 130 Q165 142 170 155" stroke="#0288D1" stroke-width="2.5" fill="none" stroke-linecap="round" />
+  <!-- Tiny tributaries -->
+  <path d="M45 125 Q35 138 28 152" stroke="#0288D1" stroke-width="1.5" fill="none" opacity="0.7" />
+  <path d="M80 130 Q72 142 65 155" stroke="#0288D1" stroke-width="1.5" fill="none" opacity="0.7" />
+  <path d="M110 135 Q118 148 125 158" stroke="#0288D1" stroke-width="1.5" fill="none" opacity="0.7" />
+  <path d="M155 130 Q162 142 165 155" stroke="#0288D1" stroke-width="1.5" fill="none" opacity="0.7" />
+  <!-- Sediment patches -->
+  <ellipse cx="80" cy="165" rx="15" ry="5" fill="#8D6E63" opacity="0.3" />
+  <ellipse cx="130" cy="162" rx="12" ry="4" fill="#8D6E63" opacity="0.25" />
+</svg>

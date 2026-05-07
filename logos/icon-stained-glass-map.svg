@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" fill="none">
+  <!-- Stained glass window with map/geography theme -->
+  <circle cx="100" cy="100" r="95" stroke="#1A1A2E" stroke-width="3" fill="#F5F0E8" />
+  <!-- Glass panes as irregular map regions -->
+  <path d="M100 5 L60 50 L100 70 Z" fill="#08AEEA" opacity="0.7" stroke="#1A1A2E" stroke-width="2" />
+  <path d="M100 5 L140 50 L100 70 Z" fill="#FFC107" opacity="0.7" stroke="#1A1A2E" stroke-width="2" />
+  <path d="M60 50 L20 90 L50 110 L100 70 Z" fill="#2ECC71" opacity="0.7" stroke="#1A1A2E" stroke-width="2" />
+  <path d="M140 50 L180 90 L150 110 L100 70 Z" fill="#E74C3C" opacity="0.7" stroke="#1A1A2E" stroke-width="2" />
+  <path d="M100 70 L50 110 L70 160 L100 130 Z" fill="#9C27B0" opacity="0.7" stroke="#1A1A2E" stroke-width="2" />
+  <path d="M100 70 L150 110 L130 160 L100 130 Z" fill="#FF6B35" opacity="0.7" stroke="#1A1A2E" stroke-width="2" />
+  <path d="M20 90 L10 130 L40 150 L50 110 Z" fill="#6C63FF" opacity="0.7" stroke="#1A1A2E" stroke-width="2" />
+  <path d="M180 90 L190 130 L160 150 L150 110 Z" fill="#00BCD4" opacity="0.7" stroke="#1A1A2E" stroke-width="2" />
+  <path d="M70 160 L100 195 L100 130 Z" fill="#FF9800" opacity="0.7" stroke="#1A1A2E" stroke-width="2" />
+  <path d="M130 160 L100 195 L100 130 Z" fill="#8BC34A" opacity="0.7" stroke="#1A1A2E" stroke-width="2" />
+  <path d="M40 150 L55 190 L70 160 L50 110 Z" fill="#E91E63" opacity="0.7" stroke="#1A1A2E" stroke-width="2" />
+  <path d="M160 150 L145 190 L130 160 L150 110 Z" fill="#3F51B5" opacity="0.7" stroke="#1A1A2E" stroke-width="2" />
+  <!-- Center jewel -->
+  <circle cx="100" cy="100" r="6" fill="#FFC107" stroke="#1A1A2E" stroke-width="2" />
+</svg>

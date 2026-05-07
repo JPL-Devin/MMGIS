@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" fill="none">
+  <!-- Underwater coral reef — organic branching forms, unusual palette -->
+  <rect width="200" height="200" fill="#0A3D62" rx="5" />
+  <!-- Water caustics -->
+  <path d="M0 20 Q30 10 60 20 Q90 30 120 15 Q150 5 200 18" stroke="white" stroke-width="0.5" opacity="0.1" />
+  <path d="M0 35 Q40 25 80 35 Q110 42 160 28 Q180 22 200 30" stroke="white" stroke-width="0.5" opacity="0.08" />
+  <!-- Coral branches -->
+  <path d="M50 190 L50 140 L35 110 M50 140 L55 105 L45 80 M55 105 L70 85" stroke="#FF6B6B" stroke-width="4" stroke-linecap="round" />
+  <path d="M90 190 L85 130 L75 100 M85 130 L95 95 L90 70 M95 95 L110 80 L115 60" stroke="#FF8E53" stroke-width="4" stroke-linecap="round" />
+  <path d="M140 190 L145 150 L155 120 L160 95 M145 150 L135 115 L140 85" stroke="#E55D87" stroke-width="4" stroke-linecap="round" />
+  <!-- Tips glow -->
+  <circle cx="45" cy="80" r="5" fill="#FF6B6B" opacity="0.6" />
+  <circle cx="70" cy="85" r="4" fill="#FF8E53" opacity="0.6" />
+  <circle cx="90" cy="70" r="5" fill="#FF8E53" opacity="0.6" />
+  <circle cx="110" cy="80" r="4" fill="#FFB347" opacity="0.5" />
+  <circle cx="115" cy="60" r="5" fill="#FFD700" opacity="0.6" />
+  <circle cx="160" cy="95" r="4" fill="#E55D87" opacity="0.5" />
+  <circle cx="140" cy="85" r="5" fill="#E55D87" opacity="0.6" />
+  <!-- Bubbles -->
+  <circle cx="30" cy="60" r="3" stroke="white" stroke-width="0.5" fill="none" opacity="0.3" />
+  <circle cx="170" cy="45" r="4" stroke="white" stroke-width="0.5" fill="none" opacity="0.2" />
+  <circle cx="120" cy="35" r="2" stroke="white" stroke-width="0.5" fill="none" opacity="0.25" />
+  <!-- Sea floor -->
+  <path d="M0 185 Q50 178 100 182 Q150 186 200 180 L200 200 L0 200 Z" fill="#07314E" />
+</svg>

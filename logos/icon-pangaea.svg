@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" fill="none">
+  <!-- Pangaea supercontinent — all landmasses joined, ancient Earth -->
+  <circle cx="100" cy="100" r="92" fill="#1565C0" />
+  <!-- Ancient ocean texture -->
+  <circle cx="100" cy="100" r="92" fill="none" stroke="#1976D2" stroke-width="0.5" />
+  <!-- Pangaea landmass (single connected continent) -->
+  <path d="M65 35 Q80 28 100 32 Q125 28 145 40 Q165 55 170 75 Q175 95 168 110 Q160 128 150 138 Q145 150 155 165 Q155 178 140 182 Q120 185 105 175 Q90 180 75 175 Q55 168 48 150 Q40 135 38 115 Q35 95 40 78 Q42 60 52 45 Q58 38 65 35 Z" fill="#4CAF50" />
+  <!-- Mountain range across middle -->
+  <path d="M55 70 Q70 55 90 62 Q110 55 130 60 Q150 65 160 80" stroke="#2E7D32" stroke-width="1.5" fill="none" />
+  <!-- Desert region -->
+  <ellipse cx="110" cy="95" rx="25" ry="15" fill="#FFC107" opacity="0.3" />
+  <!-- Ice cap -->
+  <path d="M80 35 Q90 30 100 32 Q110 30 118 36 Q110 42 98 40 Q88 42 80 35 Z" fill="white" opacity="0.5" />
+  <!-- Atmosphere -->
+  <circle cx="100" cy="100" r="94" stroke="#64B5F6" stroke-width="2" fill="none" opacity="0.3" />
+</svg>

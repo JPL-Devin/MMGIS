@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" fill="none">
+  <!-- Synthwave/retro neon grid horizon — 80s future aesthetic -->
+  <rect width="200" height="200" fill="#1A0030" rx="5" />
+  <!-- Sun -->
+  <circle cx="100" cy="80" r="35" fill="#FF006E" />
+  <rect x="65" y="72" width="70" height="3" fill="#1A0030" />
+  <rect x="65" y="79" width="70" height="3" fill="#1A0030" />
+  <rect x="65" y="85" width="70" height="4" fill="#1A0030" />
+  <rect x="65" y="92" width="70" height="5" fill="#1A0030" />
+  <rect x="65" y="100" width="70" height="6" fill="#1A0030" />
+  <!-- Horizon line -->
+  <line x1="0" y1="115" x2="200" y2="115" stroke="#FF006E" stroke-width="2" />
+  <!-- Perspective grid - horizontal lines -->
+  <line x1="0" y1="125" x2="200" y2="125" stroke="#08AEEA" stroke-width="0.8" opacity="0.6" />
+  <line x1="0" y1="138" x2="200" y2="138" stroke="#08AEEA" stroke-width="0.8" opacity="0.5" />
+  <line x1="0" y1="155" x2="200" y2="155" stroke="#08AEEA" stroke-width="0.8" opacity="0.4" />
+  <line x1="0" y1="175" x2="200" y2="175" stroke="#08AEEA" stroke-width="0.8" opacity="0.3" />
+  <!-- Perspective grid - vertical lines converging to center -->
+  <line x1="100" y1="115" x2="0" y2="200" stroke="#08AEEA" stroke-width="0.8" opacity="0.4" />
+  <line x1="100" y1="115" x2="40" y2="200" stroke="#08AEEA" stroke-width="0.8" opacity="0.35" />
+  <line x1="100" y1="115" x2="80" y2="200" stroke="#08AEEA" stroke-width="0.8" opacity="0.3" />
+  <line x1="100" y1="115" x2="120" y2="200" stroke="#08AEEA" stroke-width="0.8" opacity="0.3" />
+  <line x1="100" y1="115" x2="160" y2="200" stroke="#08AEEA" stroke-width="0.8" opacity="0.35" />
+  <line x1="100" y1="115" x2="200" y2="200" stroke="#08AEEA" stroke-width="0.8" opacity="0.4" />
+  <!-- Stars -->
+  <circle cx="25" cy="20" r="1" fill="white" opacity="0.7" />
+  <circle cx="170" cy="15" r="1.5" fill="white" opacity="0.6" />
+  <circle cx="50" cy="45" r="0.8" fill="white" opacity="0.5" />
+  <circle cx="155" cy="40" r="1" fill="white" opacity="0.4" />
+</svg>
