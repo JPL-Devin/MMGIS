@@ -1,0 +1,80 @@
+/* OpGrid – Compact 4×3 grid operator selector */
+
+.opGrid {
+    position: relative;
+    height: 30px;
+    width: 30px;
+}
+
+.opGrid_trigger {
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    background: var(--color-a1);
+    color: var(--color-f);
+    font-family: monospace;
+    font-size: 12px;
+    font-weight: bold;
+    transition: background 0.15s ease;
+    user-select: none;
+}
+.opGrid_trigger:hover {
+    background: var(--color-a2);
+}
+
+.opGrid_popup {
+    display: none;
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 200;
+    padding-bottom: 4px;
+}
+.opGrid_popup.opGrid_open {
+    display: block;
+}
+
+.opGrid_grid {
+    display: grid;
+    grid-template-columns: repeat(4, 34px);
+    grid-template-rows: repeat(3, 30px);
+    gap: 1px;
+    background: var(--color-a);
+    border: 1px solid var(--color-a3);
+    border-radius: 3px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+}
+
+.opGrid_cell {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--color-a1);
+    color: var(--color-a6);
+    cursor: pointer;
+    font-family: monospace;
+    font-size: 12px;
+    font-weight: bold;
+    transition: background 0.12s ease, color 0.12s ease;
+    user-select: none;
+}
+.opGrid_cell:hover {
+    background: var(--color-c);
+    color: var(--color-f);
+}
+.opGrid_cell.opGrid_active {
+    background: var(--color-mmgis);
+    color: #000;
+}
+
+.opGrid_cell span {
+    font-family: monospace;
+    font-size: 12px;
+    font-weight: bold;
+    line-height: 1;
+}

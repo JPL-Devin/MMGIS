@@ -340,6 +340,12 @@ function get(reqtype, req, res, next, options) {
                   case "!=":
                     op = "!=";
                     break;
+                  case "isnull":
+                    op = "IS NULL";
+                    break;
+                  case "isnotnull":
+                    op = "IS NOT NULL";
+                    break;
                   case "=":
                   default:
                     break;
@@ -366,7 +372,15 @@ function get(reqtype, req, res, next, options) {
                   replacements[`filter_value_${i}`] = f.value;
                   value = `:filter_value_${i}`;
                 }
-                if (f.type === "number" && op !== "LIKE") {
+                if (op === "IS NULL" || op === "IS NOT NULL") {
+                  const qNull = `${
+                    derivedKey === true
+                      ? `${fkey}`
+                      : `properties->>:filter_key_${i}`
+                  } ${op}`;
+                  if (currentGroupOp == null) filterSQL.push(qNull);
+                  else currentGroup.push(qNull);
+                } else if (f.type === "number" && op !== "LIKE") {
                   const q1 = `${
                     derivedKey === true
                       ? `${fkey}`

@@ -96,7 +96,11 @@ const GeodatasetFilterer = {
                 if (fvalues.length > 0) {
                     let encoded = []
                     fvalues.forEach((v) => {
-                        if (v.value != null && v.key != null)
+                        if ((v.op === 'isnull' || v.op === 'isnotnull') && v.key != null)
+                            encoded.push(
+                                `${v.key}+${v.op}+${v.type || 'string'}+`
+                            )
+                        else if (v.value != null && v.key != null)
                             encoded.push(
                                 `${v.key}+${v.op === ',' ? 'in' : v.op}+${
                                     v.type
@@ -131,7 +135,11 @@ const GeodatasetFilterer = {
                     filterValue = filterValue == 'true'
                 }
 
-                if (featureValue != null) {
+                if (v.op === 'isnull') {
+                    v.matches = featureValue == null
+                } else if (v.op === 'isnotnull') {
+                    v.matches = featureValue != null
+                } else if (featureValue != null) {
                     switch (v.op) {
                         case '=':
                             if (featureValue == filterValue) v.matches = true

@@ -11,6 +11,7 @@ import GeodatasetFilterer from './GeodatasetFilterer'
 
 import Help from '../../UserInterface_/components/Help/Help'
 import Dropy from '../../../../external/Dropy/dropy'
+import OpGrid from './OpGrid'
 import { circle } from '@turf/turf'
 
 import Sortable from 'sortablejs'
@@ -696,45 +697,14 @@ const Filtering = {
             } else $(this).css('border', '1px solid var(--color-p4)')
         })
 
-        // Operator Dropdown
+        // Operator Grid
         elmId = `#layersTool_filtering_value_operator_${F_.getSafeName(
             layerName
         )}_${id}`
 
-        const ops = [
-            '=',
-            '!=',
-            ',',
-            '<',
-            '>',
-            '<=',
-            '>=',
-            'contains',
-            'beginswith',
-            'endswith',
-        ]
-        const opId = Math.max(ops.indexOf(options.op), 0)
-        $(elmId).html(
-            Dropy.construct(
-                [
-                    `<i class='mdi mdi-equal mdi-18px' title='Equals'></i>`,
-                    `<div title='Not Equals' style='font-family: monospace;'>!=</div>`,
-                    `<div title='Comma-separated list' style='font-family: monospace;'>in</div>`,
-                    `<i class='mdi mdi-less-than mdi-18px' title='Less than'></i>`,
-                    `<i class='mdi mdi-greater-than mdi-18px' title='Greater than'></i>`,
-                    `<i class='mdi mdi-less-than-or-equal mdi-18px' title='Less than or Equal'></i>`,
-                    `<i class='mdi mdi-greater-than-or-equal mdi-18px' title='Greater than or Equal'></i>`,
-                    `<i class='mdi mdi-contain mdi-18px' title='Contains'></i>`,
-                    `<i class='mdi mdi-contain-start mdi-18px' title='Begins With'></i>`,
-                    `<i class='mdi mdi-contain-end mdi-18px' title='Ends With'></i>`,
-                ],
-                'op',
-                opId,
-                { openUp: true, hideChevron: true }
-            )
-        )
-        Dropy.init($(elmId), function (idx) {
-            Filtering.filters[layerName].values[id].op = ops[idx]
+        $(elmId).html(OpGrid.construct(options.op || '='))
+        OpGrid.init($(elmId), function (opKey) {
+            Filtering.filters[layerName].values[id].op = opKey
             Filtering.setSubmitButtonState(true)
         })
 

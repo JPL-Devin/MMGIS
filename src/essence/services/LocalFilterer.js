@@ -140,7 +140,11 @@ const LocalFilterer = {
                     filterValue = filterValue == 'true'
                 }
 
-                if (featureValue != null) {
+                if (v.op === 'isnull') {
+                    v.matches = featureValue == null
+                } else if (v.op === 'isnotnull') {
+                    v.matches = featureValue != null
+                } else if (featureValue != null) {
                     switch (v.op) {
                         case '=':
                             if (featureValue == filterValue) v.matches = true

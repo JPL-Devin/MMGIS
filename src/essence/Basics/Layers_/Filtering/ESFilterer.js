@@ -192,7 +192,8 @@ const ESFilterer = {
         let must = []
         if (filter && filter.values && filter.values.length > 0) {
             filter.values.forEach((v) => {
-                if (v == null || v.key == null || v.value == null) return
+                if (v == null || v.key == null) return
+                if (v.op !== 'isnull' && v.op !== 'isnotnull' && v.value == null) return
                 switch (v.op) {
                     case '=':
                         must.push({
@@ -230,6 +231,24 @@ const ESFilterer = {
                                 [v.key]: {
                                     lt: v.value,
                                 },
+                            },
+                        })
+                        break
+                    case 'isnull':
+                        must.push({
+                            bool: {
+                                must_not: {
+                                    exists: {
+                                        field: v.key,
+                                    },
+                                },
+                            },
+                        })
+                        break
+                    case 'isnotnull':
+                        must.push({
+                            exists: {
+                                field: v.key,
                             },
                         })
                         break
