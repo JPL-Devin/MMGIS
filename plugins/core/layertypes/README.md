@@ -2,7 +2,9 @@
 
 A **layer type** (`vector`, `tile`, `data`, `model`, …) is a plugin that owns how
 a layer of that type is drawn and managed on each rendering surface. Every
-built-in type is plugin-backed; there is no per-type branching left in core.
+built-in type is plugin-backed; core dispatches to a renderer rather than branching on type.
+(Some legacy `type === 'vector'` checks remain in `Layers_/` for cross-cutting concerns — pairings,
+attachments, filtering — but nothing in the render path.)
 
 This document is the contract. If you implement these methods, core wires your
 type into the map and both globe engines, opacity/visibility, the time bar,

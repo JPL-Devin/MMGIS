@@ -66,30 +66,36 @@ npm start
 
 ## 4. Creating a Mission
 
-- **Via UI:** Navigate to `http://localhost:8888/configure`, create an admin account (the first user is automatically the Administrator), then click **"New Mission"**.
-- **Reference Mission:** Check the **"Setup Reference Mission Demo"** checkbox when creating a new mission to prepopulate it with sample data.
-- **Note:** There is currently no CLI or API for mission creation — it requires the web UI.
+- **Via UI (the normal path):** Navigate to `http://localhost:8888/configure`, create an admin account (the first user is automatically the Administrator), then click **"New Mission"**.
+- **Reference Mission:** Check the **"Setup Reference Mission Demo"** checkbox when creating a new mission to prepopulate it with sample data. Pick a variant (Earth Default or Lunar South Pole) and click **Make Mission**. See [../blueprints/README.md](../blueprints/README.md).
+- **Via API:** the same thing the UI does is `POST /api/configure/add` with `{ mission, setupReferenceMission: true, referenceMissionVariant }`. There is no CLI. It needs an admin session — see the auth note below — and the UI remains the supported path.
 - **Tip:** If only one mission exists, the landing page auto-redirects to the map. Use `?forcelanding=true` in the URL to force the landing page to display.
+- **Auth:** `/api/configure/*` requires an admin session **even when `AUTH=off`**. On a fresh database, start with `AUTH=local` and `POST /api/users/first_signup` — the first user becomes a Site Admin.
 
 ---
 
 ## 5. Architecture Overview
 
 ```
-src/essence/           -- React + jQuery front-end (main application)
-  Basics/              -- Core GIS: Layers_, Map_, Globe_, Viewer_, TimeUI
-  Tools/               -- Plugin-based analysis tools (Draw, Measure, Curtain, etc.)
-  Ancillary/           -- Support modules (Coordinates, QueryURL, Filtering)
-  LandingPage/         -- Mission selection landing page
-API/Backend/           -- Express route handlers (Geodatasets, Users, Files)
-configure/             -- Separate React CMS app (needs its own npm install + build)
-scripts/server.js      -- Main Express entrypoint
-scripts/init-db.js     -- Database initialization (creates DB, extensions, tables)
-public/                -- Static assets, index.html
-sample.env             -- Environment variable template (copy to .env)
-adjacent-servers/      -- Proxy logic for TiTiler, STAC, and OGC services
-docs/                  -- Technical documentation and setup guides
+plugins/core/          -- nearly all features: tools/ backend/ components/
+                          interactions/ layertypes/   (see ../plugins/AGENTS.md)
+src/essence/           -- React + jQuery front-end
+  Basics/              -- core GIS singletons: Layers_ (L_), Map_, Globe_, Viewer_, TimeControl_
+  LandingPage/         -- mission selection landing page
+src/design-system/     -- generic, reusable UI components
+src/pre/               -- GENERATED plugin registries (gitignored — never hand-edit)
+API/                   -- backend infrastructure: connection, logger, plugin discovery/validation
+configure/             -- separate React CMS app (needs its own npm install + build)
+scripts/server.js      -- main Express entrypoint
+scripts/init-db.js     -- database initialization (creates DB, extensions, tables)
+blueprints/            -- reference mission templates
+sample.env             -- environment variable template (copy to .env)
+adjacent-servers/      -- proxy logic for TiTiler, STAC, and OGC services
+docs/pages/            -- user-facing documentation
 ```
+
+Feature code goes in `plugins/`, not `API/` or `src/essence/`. See
+[../plugins/AGENTS.md](../plugins/AGENTS.md).
 
 ---
 
@@ -105,11 +111,22 @@ All options are documented in `sample.env`. The critical ones:
 | `DB_USER`      | Database user                                        | `user`        |
 | `DB_PASS`      | Database password                                    | `password`    |
 | `PORT`         | Server port                                          | `8888`        |
-| `AUTH`         | Authentication mode (`off`, `none`, `local`, `csso`) | `none`        |
+| `AUTH`         | Authentication mode — see below                      | `none`        |
 | `NODE_ENV`     | Environment (`development` or `production`)          | `development` |
 | `SECRET`       | Session secret                                       | `aSecretKey`  |
 | `MAIN_MISSION` | Auto-load a specific mission (skips landing page)    | _(empty)_     |
 | `HIDE_CONFIG`  | Disable the `/configure` page                        | `false`       |
+
+`AUTH` modes are not interchangeable:
+
+| Mode | Meaning |
+|---|---|
+| `off` | No auth at all. Users cannot sign up or log in; tools that need a login won't work. |
+| `none` | No auth required to view, but users **can** sign up and log in from within MMGIS. This is the default and the one you want locally. |
+| `local` | Login required. The admin creates accounts (or set `AUTH_LOCAL_ALLOW_SIGNUP=true`). Needed once to bootstrap the first admin. Does not work in the dev environment — build first and use `npm run start:prod`. |
+| `csso` | A Cloud Single Sign-On service proxied in front of MMGIS. |
+
+Either way, `/api/configure/*` still demands an admin session.
 
 ---
 
@@ -123,13 +140,22 @@ All options are documented in `sample.env`. The critical ones:
   PORT=8888 AUTH=none NODE_ENV=production node scripts/server.js
   ```
 
-- **PostGIS extension required:** The PostGIS extension must be enabled in your PostgreSQL instance. The `init-db.js` script attempts to create it (`CREATE EXTENSION postgis;`), but the PostgreSQL instance must have PostGIS installed for this to succeed.
+- **PostGIS extension required:** `init-db.js` runs `CREATE EXTENSION postgis;`, but the server must actually have PostGIS installed for that to succeed — a stock PostgreSQL will not do. The quickest local option is the official image:
 
-- **Session table created by `init-db.js`:** The session table is created by `init-db.js`, not by the server on first boot. Always run `node scripts/init-db.js` (or `npm start`, which runs it automatically) before starting the server directly with `node scripts/server.js`.
+  ```bash
+  docker run -d --name mmgis-db -e POSTGRES_PASSWORD=password -e POSTGRES_USER=user \
+    -e POSTGRES_DB=mmgis -p 5432:5432 postgis/postgis:16-3.4
+  ```
+
+- **Session table created by `init-db.js`:** The session table is created by `init-db.js`, not by the server on first boot. `npm start` runs it for you — you only need `node scripts/init-db.js` explicitly if you start the server directly with `node scripts/server.js`.
 
 - **Dev mode uses port 8889:** In development mode, the main app is served on port **8889** (webpack-dev-server), NOT port 8888. Port 8888 is the Express API server. The dev server proxies API requests to 8888 automatically.
 
 - **`.env` file is required:** The server silently uses defaults from `sample.env` values (e.g., `DB_NAME=name`, `DB_USER=user`) that won't match any real database. The `cp sample.env .env` step is easy to miss.
+
+- **A new plugin won't show up until its registry is regenerated:** `npm run plugins -- activate`
+  covers tools, components, and interactions; layer types are only regenerated on a server start or
+  `npm run build`. `src/pre/*` is generated and gitignored — never hand-edit it.
 
 - **`init-db.js` also creates extensions:** The script creates both the `postgis` and `btree_gist` extensions, along with the session table and spatial indexes. If the database or extensions already exist, it gracefully continues.
 
@@ -137,24 +163,21 @@ All options are documented in `sample.env`. The critical ones:
 
 ## 8. Testing
 
-- **Playwright** is used for E2E testing:
+- **Playwright runs everything — there is no Jest.** `npm run test:unit` is
+  `PLAYWRIGHT_TEST_UNIT_ONLY=true playwright test tests/unit`.
   ```bash
   npx playwright test
   ```
-- Test files are located in `tests/e2e/`.
-- The accessibility test (`tests/e2e/accessibility.spec.js`) scans the landing page and map interface for WCAG 2.1 AA violations.
+- Test files live in `tests/unit/`, `tests/e2e/`, and `tests/ci/`; plugin tests are colocated under
+  `plugins/**/tests/` and run with `npm run test:plugins`.
+- Tests run against `mmgis-test` / `mmgis-stac-test` only. The database safety rules in
+  [../AGENTS.md](../AGENTS.md) apply.
+- The accessibility test (`tests/e2e/accessibility/`) scans the landing page and map interface for WCAG 2.1 AA violations.
 - Use `npm run test:headed` to see tests run in a visible browser, or `npm run test:debug` to step through tests interactively.
 
 ---
 
-## 9. Database Safety Rules for AI Agents
+## 9. Database Safety
 
-When writing or modifying code that interacts with the database, AI agents MUST follow these rules:
-
-1. **NEVER use `DROP DATABASE` in application code.** The only place `DROP DATABASE` is permitted is in `tests/test-db-clean.js`, and only against the hardcoded `mmgis-test` and `mmgis-stac-test` databases.
-2. **NEVER use `DROP TABLE` or `TRUNCATE TABLE` without proper authorization checks** and input sanitization via `Utils.forceAlphaNumUnder()`.
-3. **NEVER hardcode production database names, hosts, or credentials** in test files or scripts.
-4. **ALWAYS use the dedicated test databases** (`mmgis-test` and `mmgis-stac-test`) for any test-related database operations. Never modify the test database name constants.
-5. **ALWAYS use `DB_USER_TEST` / `DB_PASS_TEST`** environment variables for test database credentials when available, to maintain least-privilege separation.
-6. **NEVER remove or weaken** the `NODE_ENV === 'production'` safety checks in test setup files (`tests/global-setup.js`, `tests/test-db-clean.js`).
-7. When writing database-related tests, **never use destructive commands** like `DROP` or `TRUNCATE` on the main schema. Always target the `mmgis-test` (or `mmgis-stac-test` for STAC) database and implement environment safety checks.
+The database safety rules are non-negotiable and live in one place: **[../AGENTS.md](../AGENTS.md)**.
+Read them before touching anything that issues SQL.
