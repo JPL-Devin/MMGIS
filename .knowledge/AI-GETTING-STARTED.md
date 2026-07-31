@@ -111,11 +111,22 @@ All options are documented in `sample.env`. The critical ones:
 | `DB_USER`      | Database user                                        | `user`        |
 | `DB_PASS`      | Database password                                    | `password`    |
 | `PORT`         | Server port                                          | `8888`        |
-| `AUTH`         | Authentication mode (`off`, `none`, `local`, `csso`) | `none`        |
+| `AUTH`         | Authentication mode — see below                      | `none`        |
 | `NODE_ENV`     | Environment (`development` or `production`)          | `development` |
 | `SECRET`       | Session secret                                       | `aSecretKey`  |
 | `MAIN_MISSION` | Auto-load a specific mission (skips landing page)    | _(empty)_     |
 | `HIDE_CONFIG`  | Disable the `/configure` page                        | `false`       |
+
+`AUTH` modes are not interchangeable:
+
+| Mode | Meaning |
+|---|---|
+| `off` | No auth at all. Users cannot sign up or log in; tools that need a login won't work. |
+| `none` | No auth required to view, but users **can** sign up and log in from within MMGIS. This is the default and the one you want locally. |
+| `local` | Login required. The admin creates accounts (or set `AUTH_LOCAL_ALLOW_SIGNUP=true`). Needed once to bootstrap the first admin. Does not work in the dev environment — build first and use `npm run start:prod`. |
+| `csso` | A Cloud Single Sign-On service proxied in front of MMGIS. |
+
+Either way, `/api/configure/*` still demands an admin session.
 
 ---
 
@@ -129,9 +140,14 @@ All options are documented in `sample.env`. The critical ones:
   PORT=8888 AUTH=none NODE_ENV=production node scripts/server.js
   ```
 
-- **PostGIS extension required:** The PostGIS extension must be enabled in your PostgreSQL instance. The `init-db.js` script attempts to create it (`CREATE EXTENSION postgis;`), but the PostgreSQL instance must have PostGIS installed for this to succeed.
+- **PostGIS extension required:** `init-db.js` runs `CREATE EXTENSION postgis;`, but the server must actually have PostGIS installed for that to succeed — a stock PostgreSQL will not do. The quickest local option is the official image:
 
-- **Session table created by `init-db.js`:** The session table is created by `init-db.js`, not by the server on first boot. Always run `node scripts/init-db.js` (or `npm start`, which runs it automatically) before starting the server directly with `node scripts/server.js`.
+  ```bash
+  docker run -d --name mmgis-db -e POSTGRES_PASSWORD=password -e POSTGRES_USER=user \
+    -e POSTGRES_DB=mmgis -p 5432:5432 postgis/postgis:16-3.4
+  ```
+
+- **Session table created by `init-db.js`:** The session table is created by `init-db.js`, not by the server on first boot. `npm start` runs it for you — you only need `node scripts/init-db.js` explicitly if you start the server directly with `node scripts/server.js`.
 
 - **Dev mode uses port 8889:** In development mode, the main app is served on port **8889** (webpack-dev-server), NOT port 8888. Port 8888 is the Express API server. The dev server proxies API requests to 8888 automatically.
 

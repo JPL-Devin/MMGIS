@@ -63,8 +63,8 @@ npm run plugins -- info <plugin-id>
 
 | `type` | Required manifest fields | Entry contract |
 |---|---|---|
-| `tool` | `name`, `paths` | Object with `make()` (open) and `destroy()` (close); optional `getUrlString()`. `separatedTool`, `toolbarPriority`, `config` control placement and the Configure-page UI. |
-| `backend` | `name` (keyed by directory) | `plugin.js` exports `{ onceInit, onceStarted, onceSynced }`; mounts routers from `routes/`, Sequelize models in `models/`. Declare `routes.prefix`/`routes.auth`. |
+| `tool` | `name`, `paths` | Object with `make()` (open) and `destroy()` (close); optional `getUrlString()`. Render into `#toolPanel` and drive the map/globe/viewer — never reach into unrelated UI. `separatedTool`, `toolbarPriority`, `config` control placement and the Configure-page UI. |
+| `backend` | `name` (keyed by directory) | `plugin.js` exports `{ onceInit, onceStarted, onceSynced }`; mounts routers from `routes/`, Sequelize models in `models/`. Declare `routes.prefix` and `routes.auth` (`public` \| `user` \| `admin`). |
 | `component` | `name`, `paths` | Same shape as a tool, but always-on rather than toolbar-activated. |
 | `interaction` | `name`, `interactionId`, `paths` | Object with `use(ctx)` (may be async). Declare `phase` (`preamble`/`main`/`postamble`), `order`, and optionally `suppresses`, `kindAlias`, `applicableLayerTypes`, `applicableEvents`. |
 | `layertype` | `name`, `typeId`, `paths` (unless non-rendering, e.g. `header`) | Renderer module per surface exporting `make` (required) plus any of `load`, `destroy`, `setOpacity`, `setVisibility`, `setStyle`, `timeChange`. Also declare `capabilities.renderers` and `supportedData`. |
@@ -75,6 +75,8 @@ npm run plugins -- info <plugin-id>
 
 - A renderer module is `export default { …operations }`, one module per surface/engine, wired up by
   `paths` (`map`, `globe.cesium`, `globe.lithosphere`) and declared in `capabilities.renderers`.
+  Convention is `map/<typeid>.js`, `globe/cesium/<typeid>.js` — lowercase module file, PascalCase
+  plugin directory.
   **A declared engine with no module — or a module for an undeclared engine — is a startup error.**
 - **Only `make` is required.** Core supplies a default for every other operation (generic removal for
   `destroy`, a uniform applier for `setOpacity`/`setVisibility`, no-op for `setStyle`, reload for
