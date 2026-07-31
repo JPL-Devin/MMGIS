@@ -1,228 +1,154 @@
-# Code Patterns & Project Structure
+# Code Patterns & Orientation
 
-Copy-paste-modify templates for the main code patterns in MMGIS, plus the detailed directory map.
+Copy-paste-modify templates, plus a map of the tree. Rules live in [../AGENTS.md](../AGENTS.md);
+plugin contracts live in [../plugins/AGENTS.md](../plugins/AGENTS.md).
 
-## Project Structure
+## Orientation map
+
+Only the directories you need to find your way. This is deliberately shallow — the authoritative
+description of a subsystem is the README next to it.
 
 ```
 MMGIS/
-├── API/                           # Backend Express server
-│   ├── Backend/                  # Feature-domain modules
-│   │   ├── Accounts/             # Account management (routes/, setup.js)
-│   │   ├── Config/               # Mission configuration (routes/, models/, setup.js)
-│   │   ├── Datasets/             # Dataset management (routes/, models/, setup.js)
-│   │   ├── Draw/                 # Vector drawing & collaboration (routes/, models/, setup.js)
-│   │   ├── Geodatasets/          # Geodata management (routes/, models/, setup.js)
-│   │   ├── LongTermToken/        # API token management (routes/, models/, setup.js)
-│   │   ├── Shortener/            # URL shortening (routes/, models/, setup.js)
-│   │   ├── Stac/                 # STAC catalog integration (routes/, setup.js)
-│   │   ├── Users/                # User auth & management (routes/, models/, setup.js)
-│   │   ├── Utils/                # Shared backend utilities (routes/)
-│   │   ├── Webhooks/             # Webhook processing (routes/, models/, processes/)
-│   │   └── GeneralOptions/       # General options (models/, setup.js)
-│   ├── connection.js             # Database connection config
-│   ├── database.js               # Database initialization
-│   ├── logger.js                 # Winston logger configuration
-│   ├── setups.js                 # Loads all plugin.js lifecycle hooks via discovery
-│   ├── utils.js                  # Shared API utilities
-│   └── websocket.js              # WebSocket server setup
-├── src/                          # Frontend source code
-│   ├── design-system/            # Reusable, generic UI components & theming
-│   │   ├── components/           # Generic components (Toast, Modal, Tooltip, Button, Toggle, Dropdown, IconButton)
-│   │   ├── themes.js             # Color scheme definitions
-│   │   └── themeApplier.js       # Runtime theme application
-│   └── essence/                  # Core MMGIS frontend
-│       ├── Basics/               # Global singleton controllers
-│       │   ├── Layers_/          # L_ — layer lifecycle, visibility, state
-│       │   ├── Map_/             # Map_ — 2D rendering (Leaflet)
-│       │   ├── Globe_/           # Globe_ — 3D rendering (Cesium/LithoSphere)
-│       │   ├── Formulae_/        # F_ — utility/math functions
-│       │   ├── ToolController_/  # Tool lifecycle manager
-│       │   ├── Viewer_/          # Viewer panel controller
-│       │   ├── UserInterface_/   # MMGIS-specific UI (TopBar, Toolbar, Coordinates, CursorInfo)
-│       │   ├── TimeControl_/     # Temporal data control and UI
-│       │   └── ComponentController_/ # Component lifecycle manager
-│       ├── Tools/                # Interactive tool plugins
-│       │   ├── Analysis/         # Data analysis
-│       │   ├── Animation/        # Map animation creation (GIF/MP4)
-│       │   ├── Chemistry/        # Chemical composition visualization
-│       │   ├── Curtain/          # GPR subsurface imagery
-│       │   ├── Draw/             # Collaborative vector drawing
-│       │   ├── Identifier/       # Pixel value queries
-│       │   ├── Info/             # Feature property display
-│       │   ├── Isochrone/        # Terrain traversability analysis
-│       │   ├── Kinds/            # Layer click behavior configuration
-│       │   ├── Layers/           # Layer management interface
-│       │   ├── Legend/           # Map legend display
-│       │   ├── Measure/          # Distance & elevation profiles
-│       │   ├── SegmentTool/      # Segment analysis
-│       │   ├── Shade/            # Sun/shadow illumination
-│       │   ├── Sites/            # Quick navigation bookmarks
-│       │   └── Viewshed/         # Line-of-sight visibility
-│       ├── Components/           # Shared UI components
-│       ├── Helpers/              # Frontend helper utilities
-│       ├── LandingPage/          # Mission selection landing page
-│       ├── mmgisAPI/             # JavaScript API for external integration
-│       ├── services/             # Frontend service modules
-│       └── essence.js            # Main frontend entry point
-├── configure/                    # Admin configuration interface (separate React app)
-├── scripts/                      # Build and utility scripts
-│   ├── build.js                  # Webpack build script
-│   ├── server.js                 # Express server startup
-│   ├── init-db.js                # Database initialization
-│   └── middleware.js             # Request middleware (path validation, auth)
-├── tests/                        # Test suite
-│   ├── e2e/                     # Playwright E2E tests
-│   ├── unit/                    # Jest unit tests
-│   ├── pages/                   # Page object models
-│   ├── fixtures/                # Test data
-│   ├── helpers/                 # Test utilities
-│   ├── global-setup.js          # Test environment setup
-│   └── test-db-clean.js         # Test database cleanup
-├── configuration/                # Build configuration
-│   ├── webpack.config.js         # Webpack configuration
-│   └── webpackDevServer.config.js # Dev server configuration
-├── .knowledge/                   # Agent context: setup, conventions, gotchas
-│   ├── AI-GETTING-STARTED.md    # Agent setup guide
-│   ├── AI-DEVELOPMENT.md        # Spec-kit workflow guide
-│   ├── code-patterns.md         # This file — project tree + code templates
-│   ├── conventions-and-gotchas.md # Naming, style, common issues
-│   └── knowledge-notes.md       # Auth, DB init, path security gotchas
-├── .specify/                     # Spec-kit infrastructure
-│   ├── memory/
-│   │   └── constitution.md       # Project governance principles
-│   ├── templates/                # Spec, plan, tasks templates
-│   └── scripts/bash/             # Workflow automation scripts
-├── .github/                      # GitHub Actions CI/CD, PR templates, CodeQL
-├── specs/                        # Feature specifications (retrospective + new)
-├── docs/                         # Jekyll documentation site (docs/pages/)
-├── Missions/                     # Mission data storage
-├── blueprints/                   # Mission templates and variants (see blueprints/README.md)
-├── adjacent-servers/             # TiTiler, STAC, TiPG, Veloserver proxy configs
-├── auxiliary/                    # GDAL tiling and data processing scripts
-├── build/                        # Production build output (compiled frontend)
-├── examples/                     # Example integrations (ReactWrappedIframe, etc.)
-├── private/                      # Private API scripts (Python GDAL raster extraction)
-├── public/                       # Static assets, index.html, login pages
-├── spice/                        # SPICE kernel download and management
-├── views/                        # Pug templates (login, admin login, error pages)
-├── AGENTS.md                     # AI agent context (top-level, ~120 lines)
-├── CLAUDE.md                     # Claude Code context (references AGENTS.md)
-├── Dockerfile                    # Docker image definition
-└── docker-compose.sample.yml     # Sample Docker services definition
+├── plugins/              # nearly all features (see plugins/AGENTS.md)
+│   ├── plugin-cli.js
+│   └── core/{tools,backend,components,interactions,layertypes}/
+├── API/                  # backend infrastructure (NOT feature code)
+│   ├── pluginDiscovery.js pluginValidation.js updateTools.js setups.js
+│   ├── connection.js database.js logger.js websocket.js utils.js
+│   └── templates/ public/
+├── src/
+│   ├── design-system/    # generic, reusable UI + theming
+│   ├── essence/
+│   │   ├── Basics/       # the singletons
+│   │   │   ├── Layers_/  # L_ — split by concern: lifecycle/ render/ display/ data/
+│   │   │   │              #   features/ registry/ interface/ hierarchy/ inspect/
+│   │   │   │              #   commons/ capture/ Filtering/
+│   │   │   ├── Map_/ Globe_/ Viewer_/ Formulae_/ TimeControl_/ UserInterface_/
+│   │   │   ├── ToolController_/ ComponentController_/ InteractionRunner/
+│   │   ├── LandingPage/ mmgisAPI/ services/ essence.js
+│   └── pre/              # GENERATED plugin registries — gitignored, never hand-edit
+├── configure/            # separate React admin app (own install + build)
+├── scripts/              # server.js init-db.js build.js middleware.js
+│                         #   resolve-plugin-deps.js
+├── tests/                # Playwright: unit/ e2e/ ci/ pages/ fixtures/ helpers/
+├── configuration/        # webpack config (incl. plugin aliases like @basics)
+├── blueprints/           # reference mission templates
+├── docs/pages/           # Jekyll user documentation
+├── Missions/             # mission data at runtime
+├── adjacent-servers/     # TiTiler, STAC, TiPG, Veloserver proxy configs
+├── auxiliary/ private/ spice/   # GDAL tiling, Python raster scripts, SPICE kernels
+├── .specify/ specs/      # spec-kit infra; specs/archive/ is historical only
+└── AGENTS.md CLAUDE.md   # agent context (CLAUDE.md just imports AGENTS.md)
 ```
 
-### Key Directories
+Key distinction: **`API/` is infrastructure, `plugins/core/backend/` is features.** A new endpoint
+group goes in the latter.
 
-- **`plugins/core/backend/*/`** — Each backend feature is a self-contained module with `plugin.js` (lifecycle hooks), `plugin.json` (manifest), `routes/` (Express handlers), and `models/` (Sequelize definitions). See `plugins/README.md` for templates.
-- **`src/design-system/`** — Generic, reusable UI components and theming. Components here (Toast, Modal, Tooltip, Button, Toggle, Dropdown, IconButton) are **not MMGIS-specific**. New generic UI components belong here.
-- **`src/essence/Basics/UserInterface_/`** — MMGIS-specific UI (TopBar, Toolbar, Coordinates, CursorInfo, BottomBar). Tightly coupled to MMGIS state. **Do not place generic components here** — use `src/design-system/` instead.
-- **`plugins/core/tools/`** — Core tool plugins. Each tool is self-contained with `make()`/`destroy()` lifecycle and a `plugin.json` manifest.
-- **`src/essence/Basics/Layers_/`** — The `L_` singleton — manages all layer state, visibility, and lifecycle. One of the most important modules.
-- **`src/essence/Basics/Map_/`** — The `Map_` singleton — core 2D map rendering engine (Leaflet).
-- **`configure/`** — Separate admin interface for mission configuration. Needs its own `npm install && npm run build`.
-- **`specs/`** — Feature specifications following spec-kit format.
+## Express route handler
 
----
-
-## Express Route Handler
+`plugins/core/backend/<Feature>/routes/<feature>.js`
 
 ```javascript
-// API/Backend/FeatureName/routes/featurename.js
 const express = require("express");
 const router = express.Router();
-const logger = require("../../../logger");
-const database = require("../../../database");
-const { sequelize } = require("../../../connection");
+const logger = require("../../../../../API/logger");
+const Utils = require("../../../../../API/utils");
 
-router.post("/", async (req, res) => {
-  try {
-    // Validate input
-    const { field } = req.body;
-    if (!field) {
-      return res.status(400).json({ error: "field is required" });
-    }
+router.post("/get", function (req, res) {
+  // Sanitize anything that reaches SQL or the filesystem
+  const name = Utils.forceAlphaNumUnder(req.body.name);
 
-    // Business logic
-    const result = await SomeModel.create({ field });
-
-    // Response
-    res.status(201).json({ success: true, data: result });
-  } catch (err) {
-    logger("error", "Error in /api/feature:", "FeatureName", null, err);
-    res.status(500).json({ error: "Internal server error" });
-  }
+  Model.findAll({ where: { name } })
+    .then((rows) => res.send({ status: "success", body: { rows } }))
+    .catch((err) => {
+      logger("error", "Failed to get.", req.originalUrl, req, err);
+      res.send({ status: "failure", message: "Failed to get." });
+    });
 });
 
-module.exports = { router };
+module.exports = router;
 ```
 
-### Backend Module setup.js
+## Backend plugin entry point
+
+`plugins/core/backend/<Feature>/plugin.js` — mounts the router and runs migrations.
 
 ```javascript
-// API/Backend/FeatureName/setup.js
-const routerFeature = require("./routes/featurename").router;
+const router = require("./routes/feature");
 
 let setup = {
+  // Once the app initializes
   onceInit: (s) => {
     s.app.use(
-      s.ROOT_PATH + "/api/featurename",
+      s.ROOT_PATH + "/api/feature",
       s.ensureUser(),
       s.checkHeadersCodeInjection,
       s.setContentType,
-      routerFeature
+      router
     );
   },
+  // Once the server starts
+  onceStarted: (s) => {},
+  // Once all tables sync — run schema migrations here
   onceSynced: (s) => {
-    // Called after sequelize.sync() — run migrations here
+    require("./models/feature").up();
   },
 };
 
 module.exports = setup;
 ```
 
-## Sequelize Model
+Pair it with a `plugin.json` declaring at least `name`, `type: "backend"`, and
+`routes: { prefix, auth }`. Scaffold both with
+`npm run plugins -- create backend Feature --container my-plugins`.
+
+## Sequelize model + migration
+
+`plugins/core/backend/<Feature>/models/<feature>.js`
 
 ```javascript
-// API/Backend/FeatureName/models/featurename.js
 const Sequelize = require("sequelize");
-const { sequelize } = require("../../../connection");
-const logger = require("../../../logger");
+const sequelize = require("../../../../../API/connection");
 
-const attributes = {
-  name: {
-    type: Sequelize.STRING,
-    unique: false,
-    allowNull: false,
+const Feature = sequelize.define(
+  "features",
+  {
+    id: { type: Sequelize.INTEGER, primaryKey: true, autoIncrement: true },
+    mission: { type: Sequelize.STRING, allowNull: false },
+    props: { type: Sequelize.JSONB },
   },
-  geometry: {
-    type: Sequelize.DataTypes.GEOMETRY("POINT", 4326),
-    allowNull: true,
-  },
+  { timestamps: true, freezeTableName: true }
+);
+
+// sequelize.sync() runs WITHOUT alter:true, so it never adds columns to an
+// existing table. Additive schema changes go here and are called from
+// plugin.js -> onceSynced. Prefer awaiting it: unawaited up() calls race
+// queries made immediately after startup.
+Feature.up = async function () {
+  await sequelize.query(
+    `ALTER TABLE features ADD COLUMN IF NOT EXISTS props JSONB;`
+  );
 };
 
-const FeatureName = sequelize.define("feature_name", attributes);
-
-const up = async () => {
-  // Schema migrations — runs in onceSynced callback
-  // ALTER TABLE ... ADD COLUMN IF NOT EXISTS
-};
-
-module.exports = { FeatureName, up };
+module.exports = Feature;
 ```
 
-## Frontend Tool Plugin
+## Frontend tool plugin
+
+`plugins/core/tools/<Name>/<Name>Tool.js` (scaffold with
+`npm run plugins -- create tool Name --container my-plugins`). Import core through webpack aliases,
+not deep relative paths.
 
 ```javascript
-// src/essence/Tools/ToolName/ToolNameTool.js
 import $ from "jquery";
-import F_ from "../../Basics/Formulae_/Formulae_";
-import L_ from "../../Basics/Layers_/Layers_";
-import Map_ from "../../Basics/Map_/Map_";
+import F_ from "@basics/Formulae_/Formulae_";
+import L_ from "@basics/Layers_/Layers_";
+import Map_ from "@basics/Map_/Map_";
 
-const markup = [`<div id='toolName'>`, `</div>`].join("\n");
+const markup = [`<div id="nameTool">`, `</div>`].join("\n");
 
-const ToolName = {
+const NameTool = {
   height: 0,
   width: 300,
   MMGISInterface: null,
@@ -242,40 +168,81 @@ function interfaceWithMMGIS() {
     separateFromMMGIS();
   };
 
-  let tools = $("#toolPanel");
+  const tools = $("#toolPanel");
   tools.css("background", "var(--color-k)");
   tools.empty();
   tools.html('<div style="height: 100%">' + markup + "</div>");
 
-  // Add event functions and whatnot
+  // Bind event handlers here
 
   function separateFromMMGIS() {
-    // Event cleanup
+    // Unbind everything bound above — destroy() must leave no listeners
   }
 }
 
-export default ToolName;
+export default NameTool;
 ```
 
-## WebSocket Message Handler
+Its `plugin.json` needs `name`, `paths` (`{ "NameTool": "./NameTool" }`), and a `config` block if
+admins should be able to configure it on the Configure page.
+
+## Interaction plugin
+
+`plugins/core/interactions/<Name>/<Name>.js` — one step of a feature click/hover pipeline.
 
 ```javascript
-// API/websocket.js
+const FeatureGlow = {
+  use(ctx) {
+    if (!ctx.feature) return;
+    // ctx: Map_, feature, layer, layerName, layerData, layerVar, event,
+    //      eventType, additional, state (pass data downstream), stop (halt)
+  },
+};
+
+export default FeatureGlow;
+```
+
+`plugin.json` declares `interactionId`, `phase` (`preamble`/`main`/`postamble`), `order`, and
+optionally `suppresses` / `kindAlias`. See [../plugins/AGENTS.md](../plugins/AGENTS.md).
+
+## Layer type renderer
+
+`plugins/core/layertypes/<Type>/map/<type>.js`. Only `make` is required — core defaults cover the
+rest. See [../plugins/core/layertypes/README.md](../plugins/core/layertypes/README.md) for the full
+contract.
+
+```javascript
+import L_ from "@basics/Layers_/Layers_";
+import MapRenderer from "@basics/Map_/MapRenderer";
+
+function make(layerObj, ctx = {}) {
+  const mctx = MapRenderer.context(ctx.mapContext);
+  // Build the layer with neutral primitives (MapRenderer.addTile/addVector),
+  // dropping to mctx.raw only for engine-specific work. Assign it to
+  // L_.layers.layer[layerObj.name], then mark it loaded.
+  L_._layersLoaded[L_._layersOrdered.indexOf(layerObj.name)] = true;
+  L_.Map_.allLayersLoaded();
+}
+
+export default { make };
+```
+
+## WebSocket message handler
+
+`API/websocket.js`
+
+```javascript
 ws.on("message", function (message) {
   try {
     const msg = JSON.parse(message);
 
-    // Validate message structure
     if (!msg.type || !msg.room) {
       return ws.send(JSON.stringify({ error: "Invalid message format" }));
     }
-
-    // Authenticate
     if (!isAuthenticated(ws.userId)) {
       return ws.send(JSON.stringify({ error: "Unauthorized" }));
     }
 
-    // Route message
     switch (msg.type) {
       case "draw":
         broadcastToRoom(msg.room, msg, ws);
@@ -284,8 +251,9 @@ ws.on("message", function (message) {
         ws.send(JSON.stringify({ error: "Unknown message type" }));
     }
   } catch (err) {
-    console.error("WebSocket error:", err);
     ws.send(JSON.stringify({ error: "Invalid JSON" }));
   }
 });
 ```
+
+Requires `ENABLE_MMGIS_WEBSOCKETS=true`.

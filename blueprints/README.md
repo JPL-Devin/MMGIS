@@ -69,7 +69,7 @@ The config file should contain the full MMGIS config JSON with appropriate proje
 
 ### 2. Register the Variant in the Backend
 
-Add an entry to `REFERENCE_MISSION_VARIANTS` in `API/Backend/Utils/missionTemplates.js`:
+Add an entry to `REFERENCE_MISSION_VARIANTS` in `plugins/core/backend/Utils/missionTemplates.js`:
 
 ```javascript
 const REFERENCE_MISSION_VARIANTS = {
@@ -144,7 +144,7 @@ Optionally add an E2E smoke test at `tests/e2e/reference-mission-mars-equatorial
 PLAYWRIGHT_TEST_UNIT_ONLY=true npx playwright test tests/unit/missionTemplates.spec.js
 
 # Lint changed files
-NODE_ENV=development npx eslint API/Backend/Utils/missionTemplates.js \
+NODE_ENV=development npx eslint plugins/core/backend/Utils/missionTemplates.js \
   configure/src/components/Panel/Modals/NewMissionModal/NewMissionModal.js \
   configure/src/components/Tabs/Home/Home.js
 ```

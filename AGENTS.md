@@ -1,127 +1,154 @@
-# MMGIS - AI Agent Context
+# AGENTS.md — MMGIS
 
-**Project**: MMGIS (Multi-Mission Geographic Information System)
-**Version**: 4.3.0
-**Last Updated**: 2026-05-01
+MMGIS (Multi-Mission Geographic Information System) is a full-stack planetary GIS for mission
+science operations: an Express/Node backend on PostgreSQL+PostGIS, a React + jQuery frontend, and
+three rendering surfaces (Leaflet 2D map, Cesium/LithoSphere 3D globe, and a Viewer panel).
+**Almost all functionality — tools, API modules, layer types, feature-click behavior — is delivered
+as plugins under `/plugins/`.** Read [Plugin System](#plugin-system) before writing any feature code.
 
-> **New to this repo?** See [.knowledge/AI-GETTING-STARTED.md](./.knowledge/AI-GETTING-STARTED.md) for setup guide, port map, and common pitfalls.
-> **Development workflow?** See [.knowledge/AI-DEVELOPMENT.md](./.knowledge/AI-DEVELOPMENT.md) for the spec-kit workflow.
-
-## Important Instructions
-
-- Use MCP tools, such as serena and playwright, when possible for code analysis, symbol navigation, and code modifications.
-- Local development uses hot-reloading — there is little reason to run `npm run build` during development.
-- New development work that depends on a specific configuration and/or data should often be included in a Reference Mission blueprint under `/blueprints/Missions/`. Multiple variants exist (Earth, Lunar South Pole, etc.) — see [blueprints/README.md](./blueprints/README.md) for the full list and instructions on adding new variants. Site Admins can create a working Reference Mission in `/Missions` via the Configure Page, and developers can update the blueprint itself.
-- For code pattern templates (Express routes, Sequelize models, Tool plugins, WebSocket handlers) and the detailed project structure, see [.knowledge/code-patterns.md](./.knowledge/code-patterns.md).
-
-## Quick Start
+## Setup
 
 ```bash
-cp sample.env .env          # Configure DB_NAME, DB_USER, DB_PASS, SECRET
+cp sample.env .env              # set DB_NAME, DB_USER, DB_PASS, and SECRET (>=24 chars)
 npm install
-npm start                   # Runs init-db.js then server.js
-# Browse app at http://localhost:8889 (dev) or :8888 (prod)
-# Configure at http://localhost:8888/configure
+(cd configure && npm install && npm run build)   # separate React app; /configure is blank without this
+npm start                       # runs scripts/init-db.js then scripts/server.js
 ```
 
-Docker: `docker build -t mmgis . && docker-compose up -d`
+Requires Node >= 22 and PostgreSQL with PostGIS. Docker: `docker build -t mmgis . && docker-compose up -d`.
 
-## Critical Rules
+**In development, browse the app at http://localhost:8889** (webpack-dev-server, `PORT`+1). Port 8888
+is the Express API and serves `/configure`. Frontend code hot-reloads — do not run `npm run build`
+to see your changes.
 
-- **Hot-reloading**: Dev mode uses webpack-dev-server on PORT+1 (8889). No need to run `npm run build` during development.
-- **Configure page**: Separate React app — must be built independently: `cd configure && npm install && npm run build && cd ..`
-- **PostGIS required**: PostgreSQL must have PostGIS extension installed. `init-db.js` creates it.
-- **ENV triple-update**: When modifying environment variables, update `.env`, `sample.env`, AND `docs/pages/Setup/ENVs/ENVs.md`.
-- **No raw SQL for data**: Use application APIs and UI workflows — never bypass the application layer with direct SQL.
-- **Admin auth always required**: CMS endpoints (`/api/configure/*`) require admin session even when `AUTH=off`.
-- **Database safety**: Never `DROP DATABASE` in app code. Test DBs only: `mmgis-test`, `mmgis-stac-test`.
-- **Reference Mission**: New features needing specific config/data should be added to a Reference Mission blueprint. See [blueprints/README.md](./blueprints/README.md).
-- **Design system placement**: Generic UI components → `src/design-system/`. MMGIS-specific UI → `src/essence/Basics/UserInterface_/`.
-- **Spec-kit for features**: Significant new features follow: `/speckit.specify` → `/speckit.plan` → `/speckit.tasks` → `/speckit.implement` → `/speckit.checklist`.
+## Testing
 
-## Architecture at a Glance
-
-Express 5.2 backend (Node.js 22+) with PostgreSQL/PostGIS, Sequelize ORM, and WebSocket real-time collaboration. React + jQuery frontend built with Webpack 5. Tri-renderer: Leaflet (2D) + Cesium/LithoSphere (3D) + Viewer panel (OpenSeadragon, Photosphere, Model, PDF, Video). Playwright E2E tests, Jest unit tests, GitHub Actions CI/CD, Docker deployment.
-
-## Key Patterns
-
-- **Singletons**: `L_` (Layers), `Map_`, `Globe_`, `F_` (Formulae), `ToolController_`, `Viewer_` — global state controllers with trailing underscore
-- **Tool lifecycle**: Each tool implements `make()` (open) and `destroy()` (close) in `plugins/core/tools/ToolName/`
-- **Layer types**: vector, tile, data, model, image, vectortile, velocity, video, header, query
-- **Backend pattern**: Each feature is a module in `plugins/core/backend/FeatureName/` with `plugin.json` (metadata/manifest), `plugin.js` (lifecycle hooks, registers routes), `routes/` (Express handlers), `models/` (Sequelize definitions)
-- **Plugin system**: Unified `/plugins/` directory. Core plugins live in `plugins/core/{tools,backend,components}/`. External plugins go in `plugins/<container>/` (auto-gitignored).
-
-## Project Structure (Abbreviated)
-
-```
-MMGIS/
-├── plugins/core/         # Core plugins: tools/, backend/, components/
-├── src/essence/          # Frontend: Basics/ (singletons), Helpers/, services/
-├── src/design-system/    # Generic reusable UI components & theming
-├── configure/            # Separate React admin app (own npm install + build)
-├── scripts/              # server.js, init-db.js, build.js, middleware.js
-├── tests/                # Playwright E2E + Jest unit tests
-├── .knowledge/           # Agent context: setup, conventions, gotchas, code patterns
-├── .specify/             # Spec-kit infrastructure + constitution
-├── specs/                # Feature specifications (spec-kit)
-├── blueprints/           # Mission templates and variants (see blueprints/README.md)
-├── docs/                 # Jekyll documentation site (docs/pages/)
-├── Missions/             # Mission data storage
-├── adjacent-servers/     # TiTiler, STAC, TiPG, Veloserver proxy configs
-├── views/                # Pug templates (login, admin, error pages)
-├── private/              # Private API scripts (Python GDAL)
-├── spice/                # SPICE kernel management
-└── auxiliary/            # GDAL tiling and data processing scripts
+```bash
+npm test                # Playwright — the whole suite (there is no Jest runner)
+npm run test:unit       # tests/unit
+npm run test:e2e        # tests/e2e (uses DB_NAME=mmgis-test)
+npm run test:plugins    # plugin tests colocated under plugins/
+npm run test:headed     # watch it run in a browser
+npm run plugins -- validate     # validate every plugin.json
 ```
 
-## Active Features
+Tests only ever touch the `mmgis-test` and `mmgis-stac-test` databases.
 
-| # | Feature | Status |
-|---|---------|--------|
-| 001 | Authentication & User Management | Implemented |
-| 002 | Geodata Management & Tile Serving | Implemented |
-| 003 | Real-time Collaboration (WebSocket) | Implemented |
-| 004 | Mission/Project Configuration | Implemented |
-| 005 | Tri-Rendering (Leaflet + Cesium + Viewer) | Implemented |
-| 006 | Interactive Mapping Tools (16 tools) | Implemented |
-| 007 | Layer & Map Configuration | Implemented |
-| 008 | Configure Page (Admin CMS) | Implemented |
-| 009 | Data Formats & Layer Types | Implemented |
-| 012 | Reference Mission Demo | Implemented |
+## Rules
 
-See `specs/NNN-feature-name/` for individual spec and plan documents.
+Non-negotiable. Violating one of these breaks the build, the database, or a deploy.
 
-## Constitution (Summary)
+- **Never hand-edit `src/pre/tools.js`, `src/pre/components.js`, `src/pre/interactions.js`,
+  `src/pre/layertypes.js`, or `src/pre/layerattachments.js`.** They are generated by
+  `API/updateTools.js` and gitignored. `npm run plugins -- activate` regenerates the first three;
+  the layer-type and layer-attachment registries are regenerated by a server start or `npm run build`
+  (or `node -e "require('./API/updateTools').updateLayerTypes()"`).
+- **Never add per-layer-type or per-`kind` branching to the render path.** A layer type owns its own
+  rendering and feature-click behavior is a plugin pipeline. `if (layer.type === 'vector')` still
+  exists in `src/essence/Basics/Layers_/` for cross-cutting concerns (pairings, attachments,
+  filtering) — that is not license to add more, and never for rendering.
+- **Never write raw SQL to create or modify application data.** Use the app's own APIs and UI
+  (e.g. the Configure page). Escalate rather than bypassing the application layer.
+- **`DROP DATABASE` is permitted only in `tests/test-db-clean.js`, and only against the hardcoded
+  `mmgis-test` / `mmgis-stac-test` names.** Never `DROP`/`TRUNCATE` in application code. Never
+  weaken the `NODE_ENV === 'production'` guards in `tests/global-setup.js` or
+  `tests/test-db-clean.js`. Never hardcode production DB names, hosts, or credentials.
+- **Adding or renaming an environment variable requires updating all three of** `.env` (gitignored,
+  local only), `sample.env`, and `docs/pages/Setup/ENVs/ENVs.md`.
+- **`/api/configure/*` requires an admin session even when `AUTH=off`.** To get an admin on a fresh
+  database, start with `AUTH=local` and `POST /api/users/first_signup` (the first user becomes admin).
+- **Generic reusable UI goes in `src/design-system/`; MMGIS-specific UI goes in
+  `src/essence/Basics/UserInterface_/`.** Do not put generic components in `essence/`.
+- **A `../` in a layer URL is legitimate** (cross-mission references) but must never resolve outside
+  `/Missions/`. Validate against `/Missions`, not a single mission subdirectory.
+- **Fatal startup errors** use `logger('error', msg, 'server', null, 'infrastructure_error')`, not
+  `throw`.
+- **Features that need specific configuration or sample data** belong in a Reference Mission
+  blueprint under `blueprints/Missions/` so others can reproduce them. See
+  [blueprints/README.md](./blueprints/README.md).
 
-Seven principles in `.specify/memory/constitution.md`: Documentation-First Development, Clear Requirements, Incremental Delivery, Quality Standards (ESLint clean, 80% coverage), Node.js Best Practices, Geospatial Data Integrity, Real-time Collaboration Safety.
+## Plugin System
 
-## Knowledge Base
+Plugins live at `plugins/<container>/<type>/<PluginName>/`. `plugins/core/` is committed; every other
+container is installed from git and gitignored. Every plugin has a `plugin.json` manifest.
+**Directory names are plural, manifest `type` values are singular.**
 
-Agent-optimized context in **[.knowledge/](./.knowledge/README.md)**. Full docs in `docs/pages/`.
+| `type` | Directory | Is | Contract |
+|---|---|---|---|
+| `tool` | `plugins/core/tools/` | Toolbar/panel UI (11 core: Draw, Measure, Legend, …) | `make()` opens, `destroy()` closes; `paths` maps name → entry module |
+| `backend` | `plugins/core/backend/` | Express feature module (13 core: Users, Geodatasets, Stac, …) | `plugin.js` exports `onceInit`/`onceStarted`/`onceSynced`; `routes/`, `models/` |
+| `component` | `plugins/core/components/` | Always-on UI (OperationsClock, Search) | like `tool`, but not toolbar-activated |
+| `interaction` | `plugins/core/interactions/` | One step of a feature click/hover pipeline (14 core) | `use(ctx)` + `phase` (`preamble`/`main`/`postamble`) and `order` |
+| `layertype` | `plugins/core/layertypes/` | How a layer type draws on each surface (12 core: Vector, Tile, Model, …) | up to 7 renderer ops per surface; `typeId` + `capabilities.renderers` |
 
-| File | What's There |
-|------|-------------|
-| `.knowledge/AI-GETTING-STARTED.md` | Setup, ports, key commands, mission creation |
-| `.knowledge/AI-DEVELOPMENT.md` | Spec-kit workflow, constitution |
-| `.knowledge/code-patterns.md` | Full project tree, key directories, code templates |
-| `.knowledge/conventions-and-gotchas.md` | Naming, code style, component placement, common issues |
-| `.knowledge/knowledge-notes.md` | Auth, DB init, path security, error handling gotchas |
+`layerattachment` appears in the CLI and validator but **is not implemented yet — do not use it.**
 
-## Database Safety Rules for AI Agents
+```bash
+npm run plugins -- list --json          # every command supports --json
+npm run plugins -- create layertype Heatmap --container my-plugins
+npm run plugins -- info Draw
+npm run plugins -- validate
+npm run plugins -- activate             # regenerate tools/components/interactions registries
+```
 
-When writing or modifying code that interacts with the database, AI agents MUST follow these rules:
+Two subsystems replaced older designs and are the most common source of stale assumptions:
 
-1. **NEVER use `DROP DATABASE` in application code.** The only place `DROP DATABASE` is permitted is in `tests/test-db-clean.js`, and only against the hardcoded `mmgis-test` and `mmgis-stac-test` databases.
-2. **NEVER use `DROP TABLE` or `TRUNCATE TABLE` without proper authorization checks** and input sanitization via `Utils.forceAlphaNumUnder()`.
-3. **NEVER hardcode production database names, hosts, or credentials** in test files or scripts.
-4. **ALWAYS use the dedicated test databases** (`mmgis-test` and `mmgis-stac-test`) for any test-related database operations. Never modify the test database name constants.
-5. **ALWAYS use `DB_USER_TEST` / `DB_PASS_TEST`** environment variables for test database credentials when available, to maintain least-privilege separation.
-6. **NEVER remove or weaken** the `NODE_ENV === 'production'` safety checks in test setup files (`tests/global-setup.js`, `tests/test-db-clean.js`).
-7. When writing database-related tests, **never use destructive commands** like `DROP` or `TRUNCATE` on the main schema. Always target the `mmgis-test` (or `mmgis-stac-test` for STAC) database and implement environment safety checks.
+- **Feature click/hover behavior is an interaction pipeline, not a layer "kind".** A layer's
+  effective pipeline is `preamble → main → postamble`; the legacy `kind` string still works by
+  mapping through each interaction's `kindAlias`. The runner
+  (`src/essence/Basics/InteractionRunner/InteractionRunner.js`) contains no hardcoded interaction IDs.
+- **Every built-in layer type is plugin-backed; core dispatches, it does not branch per type.** A renderer
+  module exports any of `load`, `make`, `destroy`, `setOpacity`, `setVisibility`, `setStyle`,
+  `timeChange`; only `make` is required, and core supplies a sane default for each one you omit. The
+  dispatcher is `src/essence/Basics/Layers_/interface/LayerInterface.js`.
 
-## References
+**Read [plugins/AGENTS.md](./plugins/AGENTS.md) before creating or modifying any plugin**, then the
+full references: [plugins/README.md](./plugins/README.md) (all types, CLI, manifest, discovery) and
+[plugins/core/layertypes/README.md](./plugins/core/layertypes/README.md) (the renderer contract).
 
-- **Full Documentation**: `docs/pages/` or https://nasa-ammos.github.io/MMGIS/
-- **GitHub Repository**: https://github.com/NASA-AMMOS/MMGIS
-- **Constitution**: `.specify/memory/constitution.md`
-- **API Docs**: Swagger UI at `/api-docs` when server running
+## Architecture
+
+Frontend state lives in global singletons named with a trailing underscore: `L_` (layers), `Map_`
+(Leaflet), `Globe_` (Cesium/LithoSphere), `F_` (formulae/math), `ToolController_`,
+`ComponentController_`, `Viewer_`, `TimeControl_`, `UserInterface_`. `L_` is the most important
+module in the codebase; it is split into subdirectories by concern
+(`lifecycle/`, `render/`, `display/`, `data/`, `features/`, `registry/`, `interface/`, `hierarchy/`, …).
+
+The backend boots `scripts/init-db.js` (database, PostGIS/btree_gist extensions, session table,
+spatial indexes) then `scripts/server.js`, which runs `sequelize.sync()` — **without `alter: true`,
+so it creates missing tables but never adds columns.** Adding a column is done by an `up()` function
+in the model file (`ALTER TABLE ... ADD COLUMN IF NOT EXISTS`), invoked from the backend plugin's
+`onceSynced`. Some `up()` calls are not awaited, so a query immediately after startup can race a
+migration.
+
+## Documentation map
+
+Read the deeper doc when the trigger applies; do not go hunting first.
+
+| When you are… | Read |
+|---|---|
+| creating or changing any plugin | [plugins/AGENTS.md](./plugins/AGENTS.md) → [plugins/README.md](./plugins/README.md) |
+| writing a layer-type renderer | [plugins/core/layertypes/README.md](./plugins/core/layertypes/README.md) |
+| setting the project up, or it won't run | [.knowledge/AI-GETTING-STARTED.md](./.knowledge/AI-GETTING-STARTED.md) |
+| unsure of naming, style, or where a file goes | [.knowledge/conventions.md](./.knowledge/conventions.md) |
+| needing a route/model/tool/WebSocket template | [.knowledge/code-patterns.md](./.knowledge/code-patterns.md) |
+| starting a large feature and want the spec workflow | [.knowledge/AI-DEVELOPMENT.md](./.knowledge/AI-DEVELOPMENT.md) |
+| adding config/data a feature depends on | [blueprints/README.md](./blueprints/README.md) |
+| looking for user-facing docs (layers, tools, APIs, ENVs) | `docs/pages/` — https://nasa-ammos.github.io/MMGIS/ |
+| exploring the live API | Swagger UI at `/api-docs` on a running server |
+
+**Precedence when sources disagree:** this file > a nested `AGENTS.md` closer to the file you are
+editing > `plugins/**/README.md` and `.knowledge/` > `docs/pages/`. `specs/archive/` is **historical
+and not authoritative** — it describes the pre-plugin architecture; never use it as a reference for
+how the code works today.
+
+`CLAUDE.md` exists only to import this file (Claude Code reads `CLAUDE.md`, not `AGENTS.md`). Keep
+instructions here, never duplicated there.
+
+## Pull requests
+
+- Branch off `development` (not `master`). Follow `.github/PULL_REQUEST_TEMPLATE.md`.
+- Run `npm run plugins -- validate` if you touched a manifest, and the relevant `npm run test:*`
+  suite for the area you changed.
+- If you move or rename a directory, update every doc that names it — including this file. Stale
+  paths in agent docs are worse than missing ones.

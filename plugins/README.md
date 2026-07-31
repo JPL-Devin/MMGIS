@@ -1,6 +1,11 @@
 # MMGIS Plugin System
 
-MMGIS uses a plugin-based architecture for tools, backend modules, and components. Plugins are organized under `/plugins/` in a three-level hierarchy: `<container>/<type>/<PluginName>/`.
+MMGIS uses a plugin-based architecture for tools, backend modules, components, feature interactions,
+and layer types. Plugins are organized under `/plugins/` in a three-level hierarchy:
+`<container>/<type>/<PluginName>/`.
+
+> Working in this tree? [AGENTS.md](./AGENTS.md) is the short contract summary. This file is the
+> full reference.
 
 ## Table of Contents
 
@@ -8,7 +13,7 @@ MMGIS uses a plugin-based architecture for tools, backend modules, and component
 2. [Key Files](#key-files)
 3. [Quick Start](#quick-start)
 4. [CLI Commands](#cli-commands)
-5. [Plugin Types](#plugin-types)
+5. [Plugin Types](#plugin-types) — [Tools](#tools) · [Backend](#backend) · [Components](#components) · [Interactions](#interactions) · [Layer Types](#layer-types)
 6. [Installing Plugins](#installing-plugins)
 7. [Creating Plugins](#creating-plugins)
 8. [`plugin.json` Reference](#pluginjson-reference)
@@ -34,12 +39,14 @@ plugins/
 │   ├── tools/                 # Frontend tools (Draw, Measure, Legend, etc.)
 │   ├── backend/               # Server modules (Accounts, Config, Users, etc.)
 │   ├── components/            # UI components (OperationsClock, etc.)
-│   └── interactions/          # Feature interaction handlers (Select, InfoOpen, etc.)
+│   ├── interactions/          # Feature interaction handlers (Select, InfoOpen, etc.)
+│   └── layertypes/            # Layer types (Vector, Tile, Model, ThreeDTiles, etc.)
 └── <org--repo>/               # Installed from git (org--repo naming, gitignored)
     ├── tools/
     ├── backend/
     ├── components/
-    └── interactions/
+    ├── interactions/
+    └── layertypes/
 ```
 
 ## Key Files
@@ -51,7 +58,8 @@ plugins/
 | `plugins/plugin-state.json` | Enable/disable state (gitignored, instance-specific) |
 | `API/pluginDiscovery.js` | Discovery logic — `discoverPlugins()` scans all containers |
 | `API/pluginValidation.js` | Manifest validation — `validatePluginConfig()` |
-| `API/updateTools.js` | Build-time tool/component discovery → generates `src/pre/tools.js` |
+| `API/updateTools.js` | Build-time discovery → generates `src/pre/tools.js`, `components.js`, `interactions.js`, `layertypes.js` |
+| `src/essence/Basics/Layers_/interface/LayerInterface.js` | Layer-type dispatcher + JSDoc typedefs |
 | `API/setups.js` | Runtime backend discovery → loads `plugin.js` lifecycle hooks |
 | `scripts/resolve-plugin-deps.js` | Aggregates plugin dependencies for build |
 
@@ -101,7 +109,7 @@ All commands support `--json` for machine-readable output. Use `npm run plugin` 
 | `disable <plugin-id>` | Mark a plugin as inactive (cannot disable `required` plugins) |
 | `enable-all` | Enable all plugins (use `--container` to scope) |
 | `disable-all` | Disable all non-required plugins (use `--container` to scope) |
-| `create <type> <Name>` | Scaffold a new plugin (tool, backend, component, interaction) |
+| `create <type> <Name>` | Scaffold a new plugin (tool, backend, component, interaction, layertype) |
 | `destroy <plugin-id>` | Delete a plugin (prompts confirmation, `--force` to skip) |
 | `activate` | Regenerate frontend plugin imports without a full build |
 | `update [repo-name]` | `git pull` latest for one or all installed repos |
@@ -205,6 +213,44 @@ An interaction can declare `suppresses` to replace a default when present — e.
 #### Generated file & runtime
 
 At build time, `updateInteractions()` (`API/updateTools.js`) discovers all enabled interactions, enforces `pluginDependencies` (an interaction whose dependency is missing/disabled is excluded), and generates `src/pre/interactions.js` with static imports plus the phase arrays, suppression map, and kind-alias map. The runtime executor `src/essence/Basics/InteractionRunner/InteractionRunner.js` reads that generated data — it contains **no hardcoded interaction IDs**. All orchestration lives in the manifests.
+
+### Layer Types
+
+A layer type (`vector`, `tile`, `data`, `model`, …) owns how a layer of that type is drawn and managed
+on each rendering surface. Directory name is plural (`layertypes/`) but manifest type is singular
+(`"type": "layertype"`). **Every built-in type is plugin-backed — core dispatches to a renderer
+instead of branching on type in the render path.**
+
+**Required manifest fields**: `name`, `typeId`, `paths` — except for a non-rendering type (e.g.
+`header`), which owns configuration/UI metadata but draws nothing and may omit `paths`. Also declare
+`capabilities.renderers` (which surfaces/engines you support) and `supportedData` (formats, surfaced on
+the Configure page). `metaconfig` points at the `metaconfig.json` that generates the layer's admin form.
+
+A renderer module per surface exports `make` (required) plus any of `load`, `destroy`, `setOpacity`,
+`setVisibility`, `setStyle`, `timeChange`; core supplies a default for every operation you omit. Each
+operation may be a bare function (shorthand for `{ main }`) or `{ before, main, after }` — and `make`
+additionally supports `afterCommit`. Startup validation cross-checks `capabilities.renderers` against
+the modules actually present, and `validate` statically parses each module to reject unknown operation
+or phase names.
+
+```
+plugins/core/layertypes/<Type>/
+  plugin.json                    # typeId, capabilities.renderers, paths, supportedData, metaconfig
+  metaconfig.json                # configure-page form metadata
+  map/<type>.js                  # Leaflet renderer                    — optional
+  globe/cesium/<type>.js         # Cesium renderer                     — optional
+  globe/lithosphere/<type>.js    # LithoSphere renderer                — optional
+  tests/<type>.spec.js
+```
+
+**The full renderer contract — signatures, phases, engine context, default interactions, and a
+checklist for a new type — is [core/layertypes/README.md](./core/layertypes/README.md).** Read it
+before writing a layer type.
+
+### Layer Attachments
+
+`layerattachment` is recognized by the CLI and the manifest validator, but the subsystem is **not
+implemented yet**. Do not author one.
 
 ## Installing Plugins
 
@@ -821,7 +867,8 @@ Compact reference for agents working with the plugin CLI programmatically.
 
 - All commands support `--json`. Error paths also emit JSON when `--json` is set: `{"error": "message"}`.
 - The `enable` command returns `{"noop": true, "reason": "required"}` for required plugins (exit 0, not an error).
-- The `type` field in JSON output is always **singular** (`tool`, `backend`, `component`, `interaction`) — never the plural directory name.
+- The `type` field in JSON output is always **singular** (`tool`, `backend`, `component`, `interaction`, `layertype`) — never the plural directory name.
+- Generated registries (`src/pre/tools.js`, `components.js`, `interactions.js`, `layertypes.js`, `layerattachments.js`) are gitignored build artifacts. Never hand-edit them; run `activate`.
 - `list --json` includes: `id`, `name`, `type`, `container`, `enabled`, `core`, `required`, `version`, `tier`, `author`, `description`, `path`.
 - `info --json` includes the full `manifest` object plus computed fields (`enabled`, `core`, `required`, `path`).
 - `validate --json` returns `{ valid, total, passed, errors, warnings, results: [{ plugin, valid, errors }] }`.
