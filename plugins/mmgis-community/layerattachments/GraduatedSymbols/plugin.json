@@ -1,0 +1,207 @@
+{
+    "name": "GraduatedSymbols",
+    "type": "layerattachment",
+    "attachmentId": "graduated_symbols",
+    "version": "1.0.0",
+    "tier": "community",
+    "overridable": true,
+    "configPath": "variables.layerAttachments.graduatedSymbols",
+    "description": "Proportional-radius circles over a host layer's points, sized and colored by one of its numeric properties.",
+    "descriptionFull": {
+        "title": "Graduated (proportional) symbols: every point feature of the host gets a circle whose radius scales with a numeric property and whose fill comes from configurable value breaks. The classic thematic-mapping surface MMGIS's vector styling lacks.",
+        "example": {
+            "variables": {
+                "layerAttachments": {
+                    "graduatedSymbols": {
+                        "enabled": true,
+                        "property": "depth_m",
+                        "scale": "sqrt",
+                        "autoDomain": true,
+                        "minValue": 0,
+                        "maxValue": 100,
+                        "minRadius": 4,
+                        "maxRadius": 22,
+                        "fillOpacity": 0.6,
+                        "weight": 1,
+                        "strokeColor": "#222222",
+                        "breaks": [
+                            { "value": 0, "color": "#2c7bb6" },
+                            { "value": 50, "color": "#ffffbf" },
+                            { "value": 100, "color": "#d7191c" }
+                        ]
+                    }
+                }
+            }
+        }
+    },
+    "capabilities": {
+        "renderers": {
+            "map": {
+                "engines": [
+                    "leaflet"
+                ]
+            },
+            "globe": false
+        },
+        "host": {
+            "order": 45
+        }
+    },
+    "applicableLayerTypes": [
+        "vector",
+        "query"
+    ],
+    "config": {
+        "tab": "Attachment - Markers",
+        "tabOrder": 12,
+        "order": 20,
+        "rows": [
+            {
+                "subname": "Graduated Symbols",
+                "components": [
+                    {
+                        "field": "variables.layerAttachments.graduatedSymbols.enabled",
+                        "name": "Enabled",
+                        "description": "Draw proportional circles over this layer's point features.",
+                        "type": "switch",
+                        "width": 3,
+                        "defaultChecked": false
+                    },
+                    {
+                        "field": "variables.layerAttachments.graduatedSymbols.property",
+                        "name": "Property",
+                        "description": "The numeric feature property the symbols are sized and colored by. Features missing it, or whose value is not a number, are skipped.",
+                        "type": "text",
+                        "width": 5
+                    },
+                    {
+                        "field": "variables.layerAttachments.graduatedSymbols.scale",
+                        "name": "Scale",
+                        "description": "How a value maps to a radius. 'sqrt' makes circle area proportional to the value and is the honest default for magnitudes; 'linear' exaggerates large values; 'log' compresses them.",
+                        "type": "dropdown",
+                        "width": 4,
+                        "options": [
+                            "sqrt",
+                            "linear",
+                            "log"
+                        ],
+                        "default": "sqrt"
+                    }
+                ]
+            },
+            {
+                "subname": "Graduated Symbols - domain",
+                "components": [
+                    {
+                        "field": "variables.layerAttachments.graduatedSymbols.autoDomain",
+                        "name": "Auto domain",
+                        "description": "Take the value range from the data currently loaded, instead of the fixed Min/Max value below. Turn off for a range that stays comparable across time steps or dynamic queries.",
+                        "type": "switch",
+                        "width": 3,
+                        "defaultChecked": true
+                    },
+                    {
+                        "field": "variables.layerAttachments.graduatedSymbols.minValue",
+                        "name": "Min value",
+                        "description": "Value drawn at the smallest radius. Ignored while Auto domain is on.",
+                        "type": "number",
+                        "width": 3
+                    },
+                    {
+                        "field": "variables.layerAttachments.graduatedSymbols.maxValue",
+                        "name": "Max value",
+                        "description": "Value drawn at the largest radius. Ignored while Auto domain is on.",
+                        "type": "number",
+                        "width": 3
+                    }
+                ]
+            },
+            {
+                "subname": "Graduated Symbols - symbols",
+                "components": [
+                    {
+                        "field": "variables.layerAttachments.graduatedSymbols.minRadius",
+                        "name": "Min radius (px)",
+                        "description": "Radius drawn for the minimum value. Defaults to 4.",
+                        "type": "number",
+                        "width": 3,
+                        "min": 1,
+                        "max": 60,
+                        "step": 1
+                    },
+                    {
+                        "field": "variables.layerAttachments.graduatedSymbols.maxRadius",
+                        "name": "Max radius (px)",
+                        "description": "Radius drawn for the maximum value. Defaults to 20.",
+                        "type": "number",
+                        "width": 3,
+                        "min": 1,
+                        "max": 120,
+                        "step": 1
+                    },
+                    {
+                        "field": "variables.layerAttachments.graduatedSymbols.fillOpacity",
+                        "name": "Fill opacity",
+                        "description": "Opacity of the circle fill. The attachment's own opacity slider multiplies this.",
+                        "type": "slider",
+                        "width": 3,
+                        "min": 0,
+                        "max": 1,
+                        "step": 0.05,
+                        "default": 0.6
+                    },
+                    {
+                        "field": "variables.layerAttachments.graduatedSymbols.strokeColor",
+                        "name": "Stroke",
+                        "description": "Outline color of every circle.",
+                        "type": "colorpicker",
+                        "width": 3
+                    }
+                ]
+            },
+            {
+                "subname": "Graduated Symbols - color breaks",
+                "components": [
+                    {
+                        "field": "variables.layerAttachments.graduatedSymbols.breaks",
+                        "name": "Color breaks",
+                        "description": "Fill colors by value, lowest first. A feature takes the color of the last break whose value it reaches; with no breaks configured every circle uses the single fill color of the last break, or grey.",
+                        "type": "objectarray",
+                        "width": 12,
+                        "object": [
+                            {
+                                "field": "value",
+                                "name": "At value",
+                                "description": "The lower bound of this class.",
+                                "type": "number",
+                                "width": 4
+                            },
+                            {
+                                "field": "color",
+                                "name": "Fill",
+                                "description": "Fill color for values at or above the bound.",
+                                "type": "colorpicker",
+                                "width": 4
+                            },
+                            {
+                                "field": "label",
+                                "name": "Label",
+                                "description": "Optional class name, used in the circle's tooltip.",
+                                "type": "text",
+                                "width": 4
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
+    },
+    "author": "MMGIS community",
+    "license": "Apache-2.0",
+    "keywords": [
+        "thematic",
+        "proportional symbols",
+        "graduated"
+    ],
+    "module": "./graduatedSymbols"
+}
