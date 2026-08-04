@@ -1,0 +1,113 @@
+{
+    "name": "Overpass",
+    "type": "layertype",
+    "typeId": "overpass",
+    "extends": "vector",
+    "version": "1.0.0",
+    "tier": "community",
+    "overridable": true,
+    "color": "#e8590c",
+    "defaultIcon": "Layers",
+    "description": "Live OpenStreetMap features from an Overpass API endpoint. The query is an Overpass QL POST body with {{bbox}} bound to the current view; OSM JSON is converted to GeoJSON and large views are split into a grid of stitched requests.",
+    "keywords": ["openstreetmap", "osm", "overpass", "overpassql", "live"],
+    "capabilities": {
+        "renderers": {
+            "map": { "engines": ["leaflet"] },
+            "globe": { "engines": ["cesium", "lithosphere"] }
+        }
+    },
+    "supportedData": [
+        {
+            "label": "Overpass API (OpenStreetMap)",
+            "category": "vector",
+            "standards": ["Overpass QL", "OSM JSON", "GeoJSON"],
+            "formats": ["json"],
+            "urlSchemes": [
+                "https://overpass-api.de/api/interpreter",
+                "https://{your-overpass}/api/interpreter"
+            ],
+            "description": "Any Overpass API interpreter. The layer's Overpass QL query (variables.overpass.query) is POSTed with {{bbox}} replaced by the current view, so the layer re-queries as the map moves; nodes become points, closed area-tagged ways become polygons, other ways lines, and relations MultiLineStrings. variables.overpass.tiles splits a big view into an NxN grid of sequential requests (Overpass has no pagination) and variables.overpass.headers carries auth for a private instance.",
+            "procurement": "Public instances at overpass-api.de / kumi.systems, or self-host overpass-api.",
+            "requiresServices": []
+        }
+    ],
+    "config": {
+        "tabs": [
+            {
+                "name": "Core",
+                "rows": [
+                    {
+                        "forceHeight": "64px",
+                        "components": [
+                            {
+                                "field": "type",
+                                "name": "Layer Type",
+                                "description": "",
+                                "type": "dropdown",
+                                "width": 2,
+                                "options": ["overpass"]
+                            },
+                            {
+                                "field": "name",
+                                "name": "Layer Name",
+                                "description": "",
+                                "type": "textnotrim",
+                                "width": 8,
+                                "required": true
+                            },
+                            {
+                                "field": "visibility",
+                                "name": "Initially On",
+                                "description": "",
+                                "type": "checkbox",
+                                "width": 2,
+                                "defaultChecked": false
+                            }
+                        ]
+                    },
+                    {
+                        "name": "Overpass",
+                        "components": [
+                            {
+                                "field": "url",
+                                "name": "Interpreter URL",
+                                "description": "Overpass endpoint (default https://overpass-api.de/api/interpreter)",
+                                "type": "text",
+                                "width": 12
+                            },
+                            {
+                                "field": "variables.overpass.query",
+                                "name": "Overpass QL",
+                                "description": "Statements only; {{bbox}} is replaced by the current view",
+                                "type": "text",
+                                "width": 12
+                            },
+                            {
+                                "field": "variables.overpass.tiles",
+                                "name": "Tiles (NxN)",
+                                "description": "Split the view into N x N sequential requests",
+                                "type": "number",
+                                "width": 4
+                            },
+                            {
+                                "field": "variables.overpass.timeout",
+                                "name": "Server Timeout (s)",
+                                "description": "Overpass [timeout:] setting",
+                                "type": "number",
+                                "width": 4
+                            },
+                            {
+                                "field": "variables.overpass.maxFeatures",
+                                "name": "Max Features",
+                                "description": "Stop stitching tiles past this many features",
+                                "type": "number",
+                                "width": 4
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
+    },
+    "module": "./overpass"
+}
