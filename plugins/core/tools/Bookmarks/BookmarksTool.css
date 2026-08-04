@@ -1,0 +1,64 @@
+.bookmarksTool_content {
+    padding: 8px;
+    overflow-y: auto;
+}
+
+.bookmarksTool_add {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    margin-bottom: 8px;
+}
+
+.bookmarksTool_add input {
+    flex: 1;
+    background: var(--color-a1, #26282f);
+    color: var(--color-f, #dcdcdc);
+    border: 1px solid var(--color-a2, #3a3d46);
+    border-radius: 3px;
+    padding: 4px 6px;
+    font-size: 13px;
+}
+
+.bookmarksTool_error {
+    color: #ff6b6b;
+    font-size: 12px;
+    margin-bottom: 6px;
+}
+
+.bookmarksTool_list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.bookmarksTool_empty {
+    color: var(--color-e, #999);
+    font-size: 13px;
+    padding: 6px 2px;
+}
+
+.bookmarksTool_item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid var(--color-a2, #3a3d46);
+}
+
+.bookmarksTool_go {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    flex: 1;
+    background: none;
+    border: none;
+    color: var(--color-f, #dcdcdc);
+    cursor: pointer;
+    padding: 6px 2px;
+    text-align: left;
+    font-size: 13px;
+}
+
+.bookmarksTool_go:hover {
+    color: var(--color-hover, #56b6ff);
+}

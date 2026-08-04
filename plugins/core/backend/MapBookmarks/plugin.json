@@ -1,0 +1,12 @@
+{
+    "name": "MapBookmarks",
+    "type": "backend",
+    "version": "1.0.0",
+    "priority": 1000,
+    "description": "Store and recall named map views (center + zoom) per mission.",
+    "routes": {
+        "prefix": "/api/mapBookmarks",
+        "auth": "admin (GET public)"
+    },
+    "engines": { "mmgis": ">=4.3.0" }
+}

@@ -1,0 +1,9 @@
+{
+    "name": "Bookmarks",
+    "type": "tool",
+    "defaultIcon": "bookmark-multiple",
+    "description": "Save and recall named map views (center + zoom) per mission.",
+    "paths": {
+        "BookmarksTool": "./BookmarksTool"
+    }
+}
