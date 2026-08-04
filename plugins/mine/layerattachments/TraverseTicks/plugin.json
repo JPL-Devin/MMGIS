@@ -1,0 +1,77 @@
+{
+    "name": "TraverseTicks",
+    "type": "layerattachment",
+    "attachmentId": "traverse_ticks",
+    "version": "1.0.0",
+    "tier": "community",
+    "overridable": true,
+    "configPath": "variables.layerAttachments.traverseTicks",
+    "description": "Odometry tick marks and distance labels at a fixed along-path interval on a traverse layer's lines.",
+    "capabilities": {
+        "renderers": {
+            "map": {
+                "engines": [
+                    "leaflet"
+                ]
+            },
+            "globe": false
+        },
+        "host": {
+            "order": 55
+        }
+    },
+    "applicableLayerTypes": [
+        "vector",
+        "query"
+    ],
+    "config": {
+        "tab": "Attachment - Paths",
+        "tabOrder": 14,
+        "order": 20,
+        "rows": [
+            {
+                "subname": "Traverse Ticks",
+                "components": [
+                    {
+                        "field": "variables.layerAttachments.traverseTicks.enabled",
+                        "name": "Enabled",
+                        "description": "Tick marks every N meters along this layer's lines.",
+                        "type": "switch",
+                        "width": 3,
+                        "defaultChecked": false
+                    },
+                    {
+                        "field": "variables.layerAttachments.traverseTicks.intervalMeters",
+                        "name": "Interval (m)",
+                        "description": "Along-path spacing between ticks. Default 100.",
+                        "type": "number",
+                        "width": 3
+                    },
+                    {
+                        "field": "variables.layerAttachments.traverseTicks.showLabels",
+                        "name": "Distance Labels",
+                        "description": "Label each tick with its cumulative distance.",
+                        "type": "switch",
+                        "width": 3,
+                        "defaultChecked": true
+                    },
+                    {
+                        "field": "variables.layerAttachments.traverseTicks.color",
+                        "name": "Color",
+                        "description": "Tick and label color.",
+                        "type": "color",
+                        "width": 3
+                    },
+                    {
+                        "field": "variables.layerAttachments.traverseTicks.radius",
+                        "name": "Tick Radius (px)",
+                        "description": "Radius of each tick marker. Default 4.",
+                        "type": "number",
+                        "width": 3
+                    }
+                ]
+            }
+        ]
+    },
+    "module": "./traverseTicks"
+}
