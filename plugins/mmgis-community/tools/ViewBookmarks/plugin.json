@@ -1,0 +1,159 @@
+{
+    "name": "ViewBookmarks",
+    "type": "tool",
+    "version": "1.0.0",
+    "tier": "community",
+    "id": "mmgis-community-viewbookmarks",
+    "defaultIcon": "bookmark-multiple-outline",
+    "toolbarPriority": 130,
+    "description": "Mission-authored named map views. Admins declare bookmarks in Configure; users click one to fly there and optionally switch layers on.",
+    "descriptionFull": {
+        "title": "A list of named views (lon/lat/zoom, optional layer set) authored by mission admins in the Configure page. Clicking a bookmark moves the map and turns the bookmark's layers on.",
+        "example": {
+            "bookmarks": [
+                {
+                    "name": "Jezero Delta Front",
+                    "description": "Contact between the delta and crater floor",
+                    "group": "Landing Site",
+                    "icon": "map-marker",
+                    "longitude": 77.4,
+                    "latitude": 18.44,
+                    "zoom": 14,
+                    "layers": "DEM Hillshade, Traverse"
+                }
+            ],
+            "showDescriptions": true,
+            "groupBookmarks": true,
+            "exclusiveLayers": false,
+            "defaultZoom": 12
+        }
+    },
+    "hasVars": true,
+    "paths": {
+        "ViewBookmarksTool": "./ViewBookmarksTool"
+    },
+    "config": {
+        "rows": [
+            {
+                "components": [
+                    {
+                        "field": "variables.bookmarks",
+                        "name": "Bookmarks",
+                        "description": "The named views shown in the tool, in order. Each bookmark needs at least a name, longitude and latitude.",
+                        "type": "objectarray",
+                        "width": 12,
+                        "object": [
+                            {
+                                "field": "name",
+                                "name": "Name",
+                                "description": "Label shown in the bookmark list.",
+                                "type": "text",
+                                "width": 4
+                            },
+                            {
+                                "field": "group",
+                                "name": "Group",
+                                "description": "Optional group heading. Bookmarks sharing a group are listed together when 'Group bookmarks' is on.",
+                                "type": "text",
+                                "width": 4
+                            },
+                            {
+                                "field": "icon",
+                                "name": "Icon",
+                                "description": "Optional Material Design Icon name (without the 'mdi-' prefix), e.g. 'map-marker' or 'crosshairs-gps'.",
+                                "type": "text",
+                                "width": 4
+                            },
+                            {
+                                "field": "description",
+                                "name": "Description",
+                                "description": "Optional one-line note shown under the bookmark name when 'Show descriptions' is on.",
+                                "type": "text",
+                                "width": 12
+                            },
+                            {
+                                "field": "longitude",
+                                "name": "Longitude",
+                                "description": "Center longitude of the view, in degrees.",
+                                "type": "number",
+                                "min": -360,
+                                "max": 360,
+                                "step": 0.0001,
+                                "width": 4
+                            },
+                            {
+                                "field": "latitude",
+                                "name": "Latitude",
+                                "description": "Center latitude of the view, in degrees.",
+                                "type": "number",
+                                "min": -90,
+                                "max": 90,
+                                "step": 0.0001,
+                                "width": 4
+                            },
+                            {
+                                "field": "zoom",
+                                "name": "Zoom",
+                                "description": "Zoom level for the view. Falls back to the 'Default zoom' below, then the map's current zoom.",
+                                "type": "number",
+                                "min": 0,
+                                "max": 30,
+                                "step": 1,
+                                "width": 4
+                            },
+                            {
+                                "field": "layers",
+                                "name": "Layers to turn on",
+                                "description": "Optional comma-separated layer names to switch on when the bookmark is used. Names must match the layer names in the Layers tab.",
+                                "type": "text",
+                                "width": 12
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "components": [
+                    {
+                        "field": "variables.defaultZoom",
+                        "name": "Default zoom",
+                        "description": "Zoom used for bookmarks that do not set their own zoom.",
+                        "type": "number",
+                        "min": 0,
+                        "max": 30,
+                        "step": 1,
+                        "width": 6
+                    },
+                    {
+                        "field": "variables.showDescriptions",
+                        "name": "Show descriptions",
+                        "description": "Show each bookmark's description under its name.",
+                        "type": "checkbox",
+                        "width": 6
+                    }
+                ]
+            },
+            {
+                "components": [
+                    {
+                        "field": "variables.groupBookmarks",
+                        "name": "Group bookmarks",
+                        "description": "Group the list under each bookmark's 'Group' heading. Ungrouped bookmarks are listed first.",
+                        "type": "checkbox",
+                        "width": 6
+                    },
+                    {
+                        "field": "variables.exclusiveLayers",
+                        "name": "Exclusive layers",
+                        "description": "When on, using a bookmark that declares layers turns every other toggleable layer off first, so only the bookmark's layers remain on.",
+                        "type": "checkbox",
+                        "width": 6
+                    }
+                ]
+            }
+        ]
+    },
+    "author": "MMGIS community",
+    "license": "Apache-2.0",
+    "keywords": ["bookmarks", "views", "navigation"]
+}
