@@ -1,0 +1,74 @@
+.timeMachineTool {
+}
+.timeMachineTool_content {
+    padding: 10px 12px;
+    display: flex;
+    flex-flow: column;
+    gap: 12px;
+}
+
+.timeMachine_notice {
+    font-size: 12px;
+    line-height: 1.4;
+    opacity: 0.85;
+}
+.timeMachine_notice code {
+    padding: 1px 4px;
+    border-radius: 3px;
+    background: rgba(127, 127, 127, 0.25);
+}
+
+.timeMachine_readout {
+    display: flex;
+    flex-flow: column;
+    gap: 4px;
+}
+.timeMachine_now {
+    font-size: 15px;
+    font-weight: 600;
+    font-variant-numeric: tabular-nums;
+    text-align: center;
+}
+.timeMachine_range {
+    display: flex;
+    justify-content: space-between;
+    font-size: 10px;
+    opacity: 0.7;
+    font-variant-numeric: tabular-nums;
+}
+.timeMachine_slider {
+    width: 100%;
+    margin: 2px 0 0 0;
+}
+.timeMachine_progress {
+    text-align: center;
+    font-size: 10px;
+    opacity: 0.7;
+}
+
+.timeMachine_controls {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 4px;
+}
+
+.timeMachine_settings {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+}
+.timeMachine_settings label {
+    display: flex;
+    flex-flow: column;
+    gap: 2px;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    opacity: 0.8;
+}
+.timeMachine_settings select {
+    font-size: 12px;
+    padding: 2px 4px;
+}

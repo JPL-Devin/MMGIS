@@ -1,0 +1,10 @@
+{
+    "name": "TimeMachine",
+    "type": "tool",
+    "version": "1.0.0",
+    "defaultIcon": "clock-outline",
+    "description": "Temporal playback: slide the global time window across the mission's configured time range with play/pause, stepping, scrubbing and speed control.",
+    "paths": {
+        "TimeMachineTool": "./TimeMachineTool"
+    }
+}
