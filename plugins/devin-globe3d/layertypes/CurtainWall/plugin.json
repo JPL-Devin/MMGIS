@@ -1,0 +1,156 @@
+{
+    "name": "CurtainWall",
+    "type": "layertype",
+    "typeId": "curtainwall",
+    "version": "1.0.0",
+    "tier": "community",
+    "overridable": true,
+    "color": "#8f5902",
+    "defaultIcon": "Layers",
+    "description": "A radargram/section hung as a vertical image curtain along a ground track — subsurface sounder data (SHARAD, RIMFAX, MARSIS), seismic sections or flight-level profiles, standing in 3D where the instrument actually flew. Globe-only (Cesium).",
+    "capabilities": {
+        "renderers": {
+            "map": false,
+            "globe": {
+                "engines": ["cesium"]
+            }
+        },
+        "time": false
+    },
+    "fileTypes": ["json", "geojson"],
+    "supportedData": [
+        {
+            "label": "Ground track + section image",
+            "category": "vector",
+            "standards": ["GeoJSON", "RFC 7946"],
+            "formats": ["geojson", "json"],
+            "extensions": [".geojson", ".json"],
+            "description": "A LineString (or MultiLineString) ground track plus an image whose x axis is distance along that track and whose y axis is depth or altitude. Also accepts a sidecar document `{ track, heights, image }`, where `heights` gives the per-vertex surface elevation the curtain hangs from.",
+            "procurement": "Export the instrument's ground track as GeoJSON and its radargram/section as a PNG with the same along-track ordering; host both statically in the mission directory."
+        }
+    ],
+    "config": {
+        "tabs": [
+            {
+                "name": "Core",
+                "rows": [
+                    {
+                        "forceHeight": "64px",
+                        "components": [
+                            {
+                                "field": "type",
+                                "name": "Layer Type",
+                                "description": "",
+                                "type": "dropdown",
+                                "width": 2,
+                                "options": ["curtainwall"]
+                            },
+                            {
+                                "field": "name",
+                                "name": "Layer Name",
+                                "description": "A display name for the layer.",
+                                "type": "textnotrim",
+                                "width": 8,
+                                "required": true
+                            },
+                            {
+                                "field": "visibility",
+                                "name": "Initially On",
+                                "description": "",
+                                "type": "checkbox",
+                                "width": 2,
+                                "defaultChecked": false
+                            }
+                        ]
+                    },
+                    {
+                        "components": [
+                            {
+                                "field": "url",
+                                "name": "Track URL",
+                                "description": "GeoJSON LineString ground track, or a sidecar document { track, heights, image }.",
+                                "type": "text",
+                                "width": 12,
+                                "required": true
+                            }
+                        ]
+                    },
+                    {
+                        "name": "CurtainWall",
+                        "components": [
+                            {
+                                "field": "variables.curtain.image",
+                                "name": "Section Image URL",
+                                "description": "The radargram/section image. Its x axis must run along the track.",
+                                "type": "text",
+                                "width": 12
+                            }
+                        ]
+                    },
+                    {
+                        "components": [
+                            {
+                                "field": "variables.curtain.top",
+                                "name": "Top (m)",
+                                "description": "Height of the top edge, relative to the surface under each vertex.",
+                                "type": "number",
+                                "width": 3,
+                                "default": 0
+                            },
+                            {
+                                "field": "variables.curtain.bottom",
+                                "name": "Bottom (m)",
+                                "description": "Height of the bottom edge — negative hangs the curtain below the surface.",
+                                "type": "number",
+                                "width": 3,
+                                "default": -1000
+                            },
+                            {
+                                "field": "variables.curtain.repeat",
+                                "name": "Repeat Per Segment",
+                                "description": "Off (default) stretches one image across the whole track; on repeats it per segment.",
+                                "type": "checkbox",
+                                "width": 3,
+                                "defaultChecked": false
+                            },
+                            {
+                                "field": "variables.curtain.transparent",
+                                "name": "Image Has Alpha",
+                                "description": "Honour transparency in the image.",
+                                "type": "checkbox",
+                                "width": 3,
+                                "defaultChecked": true
+                            }
+                        ]
+                    },
+                    {
+                        "components": [
+                            {
+                                "field": "variables.curtain.outlineColor",
+                                "name": "Outline Color",
+                                "description": "Outline the curtain's edges. Leave empty for no outline.",
+                                "type": "text",
+                                "width": 6
+                            },
+                            {
+                                "field": "variables.curtain.depthLabel",
+                                "name": "Depth Axis Label",
+                                "description": "Label used in the derived legend.",
+                                "type": "text",
+                                "width": 6,
+                                "default": "Depth (m)"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
+    },
+    "modules": {
+        "globe": {
+            "cesium": "./globe/cesium"
+        },
+        "source": "./source",
+        "legend": "./legend"
+    }
+}
