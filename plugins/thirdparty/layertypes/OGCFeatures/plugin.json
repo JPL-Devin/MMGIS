@@ -1,0 +1,120 @@
+{
+    "name": "OGCFeatures",
+    "type": "layertype",
+    "typeId": "ogcfeatures",
+    "extends": "vector",
+    "version": "1.0.0",
+    "tier": "community",
+    "overridable": true,
+    "color": "#4e9a06",
+    "defaultIcon": "Layers",
+    "description": "OGC API - Features (OGC 17-069r4) collections as vector layers. Point it at a landing page and every collection becomes a sublayer; items are fetched as GeoJSON with limit/bbox/datetime/CQL2 params.",
+    "keywords": ["ogc", "ogcapi", "features", "wfs3", "geojson"],
+    "capabilities": {
+        "renderers": {
+            "map": { "engines": ["leaflet"] },
+            "globe": { "engines": ["cesium", "lithosphere"] }
+        },
+        "map": { "stacking": "overlay" }
+    },
+    "supportedData": [
+        {
+            "label": "OGC API - Features collection",
+            "category": "vector",
+            "standards": [
+                "OGC API - Features",
+                "OGC 17-069r4",
+                "GeoJSON",
+                "CQL2"
+            ],
+            "formats": ["geojson", "json"],
+            "urlSchemes": [
+                "https://host/ogcapi (landing page — expands to a sublayer per collection)",
+                "https://host/ogcapi/collections",
+                "https://host/ogcapi/collections/{collectionId}",
+                "https://host/ogcapi/collections/{collectionId}/items?..."
+            ],
+            "description": "Features served by any OGC API - Features implementation (pygeoapi, GeoServer, ldproxy, TiPg, ESRI). The type appends /items and the configured limit/bbox/datetime/crs/filter query parameters; the response is a GeoJSON FeatureCollection, so rendering, picking and filtering are inherited from the vector type.",
+            "procurement": "Any public OGC API - Features endpoint, e.g. https://demo.pygeoapi.io/master or a local TiPg."
+        }
+    ],
+    "config": {
+        "tabs": [
+            {
+                "name": "Core",
+                "rows": [
+                    {
+                        "forceHeight": "64px",
+                        "components": [
+                            {
+                                "field": "type",
+                                "name": "Layer Type",
+                                "description": "",
+                                "type": "dropdown",
+                                "width": 2,
+                                "options": ["ogcfeatures"]
+                            },
+                            {
+                                "field": "name",
+                                "name": "Layer Name",
+                                "description": "",
+                                "type": "textnotrim",
+                                "width": 8,
+                                "required": true
+                            },
+                            {
+                                "field": "visibility",
+                                "name": "Initially On",
+                                "description": "",
+                                "type": "checkbox",
+                                "width": 2,
+                                "defaultChecked": false
+                            }
+                        ]
+                    },
+                    {
+                        "name": "OGC API",
+                        "components": [
+                            {
+                                "field": "url",
+                                "name": "URL",
+                                "description": "Landing page, /collections, or a single /collections/{id}",
+                                "type": "text",
+                                "width": 12
+                            },
+                            {
+                                "field": "variables.ogcapi.limit",
+                                "name": "Limit",
+                                "description": "Max features per request",
+                                "type": "number",
+                                "width": 3
+                            },
+                            {
+                                "field": "variables.ogcapi.bbox",
+                                "name": "BBox",
+                                "description": "minx,miny,maxx,maxy",
+                                "type": "text",
+                                "width": 4
+                            },
+                            {
+                                "field": "variables.ogcapi.datetime",
+                                "name": "Datetime",
+                                "description": "RFC 3339 instant or interval",
+                                "type": "text",
+                                "width": 5
+                            },
+                            {
+                                "field": "variables.ogcapi.filter",
+                                "name": "CQL2 Filter",
+                                "description": "CQL2-text, if the server supports it",
+                                "type": "text",
+                                "width": 12
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
+    },
+    "module": "./ogcfeatures"
+}
