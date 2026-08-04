@@ -1,0 +1,169 @@
+{
+    "name": "Extrusion",
+    "type": "layertype",
+    "typeId": "extrusion",
+    "version": "1.0.0",
+    "tier": "community",
+    "overridable": true,
+    "color": "#4e9a06",
+    "defaultIcon": "Layers",
+    "description": "GeoJSON drawn as data-driven 3D geometry on the globe: polygons become extruded prisms and points become columns, sized and colored by a numeric feature property. Globe-only (Cesium).",
+    "capabilities": {
+        "renderers": {
+            "map": false,
+            "globe": {
+                "engines": ["cesium"]
+            }
+        },
+        "map": {
+            "stacking": false,
+            "tracksLoad": false,
+            "picking": false,
+            "styling": false
+        },
+        "time": false,
+        "filtering": false,
+        "identify": false
+    },
+    "fileTypes": ["json", "geojson"],
+    "supportedData": [
+        {
+            "label": "GeoJSON with a numeric property",
+            "category": "vector",
+            "standards": ["GeoJSON", "RFC 7946"],
+            "formats": ["geojson", "json"],
+            "extensions": [".geojson", ".json"],
+            "description": "A FeatureCollection of Polygons and/or Points where each feature carries a numeric property (crater depth, methane column, elevation, count). The property drives both extrusion height and color.",
+            "procurement": "Any GeoJSON source — a static file in the mission directory, an MMGIS geodataset export, or a service that returns GeoJSON."
+        }
+    ],
+    "config": {
+        "tabs": [
+            {
+                "name": "Core",
+                "rows": [
+                    {
+                        "forceHeight": "64px",
+                        "components": [
+                            {
+                                "field": "type",
+                                "name": "Layer Type",
+                                "description": "",
+                                "type": "dropdown",
+                                "width": 2,
+                                "options": ["extrusion"]
+                            },
+                            {
+                                "field": "name",
+                                "name": "Layer Name",
+                                "description": "A display name for the layer.",
+                                "type": "textnotrim",
+                                "width": 8,
+                                "required": true
+                            },
+                            {
+                                "field": "visibility",
+                                "name": "Initially On",
+                                "description": "",
+                                "type": "checkbox",
+                                "width": 2,
+                                "defaultChecked": false
+                            }
+                        ]
+                    },
+                    {
+                        "components": [
+                            {
+                                "field": "url",
+                                "name": "URL",
+                                "description": "URL to a GeoJSON FeatureCollection of Polygons and/or Points.",
+                                "type": "text",
+                                "width": 12,
+                                "required": true
+                            }
+                        ]
+                    },
+                    {
+                        "name": "Extrusion",
+                        "components": [
+                            {
+                                "field": "variables.extrusion.property",
+                                "name": "Property",
+                                "description": "Numeric feature property that drives height and color.",
+                                "type": "text",
+                                "width": 4
+                            },
+                            {
+                                "field": "variables.extrusion.heightScale",
+                                "name": "Height Scale",
+                                "description": "Meters of height per unit of the property. Ignored when Max Height is set.",
+                                "type": "number",
+                                "width": 4,
+                                "default": 1
+                            },
+                            {
+                                "field": "variables.extrusion.maxHeight",
+                                "name": "Max Height (m)",
+                                "description": "When > 0, the largest value is drawn this tall and everything scales into it (units-agnostic).",
+                                "type": "number",
+                                "width": 4,
+                                "default": 0
+                            }
+                        ]
+                    },
+                    {
+                        "components": [
+                            {
+                                "field": "variables.extrusion.baseHeight",
+                                "name": "Base Height (m)",
+                                "description": "Height the geometry starts at.",
+                                "type": "number",
+                                "width": 4,
+                                "default": 0
+                            },
+                            {
+                                "field": "variables.extrusion.columnRadius",
+                                "name": "Column Radius (m)",
+                                "description": "Radius of the column drawn for Point features.",
+                                "type": "number",
+                                "width": 4,
+                                "default": 500
+                            },
+                            {
+                                "field": "variables.extrusion.outline",
+                                "name": "Outline",
+                                "description": "Outline each prism/column.",
+                                "type": "checkbox",
+                                "width": 4,
+                                "defaultChecked": true
+                            }
+                        ]
+                    },
+                    {
+                        "components": [
+                            {
+                                "field": "variables.extrusion.min",
+                                "name": "Color/Height Min",
+                                "description": "Fix the low end of the domain instead of deriving it from the data.",
+                                "type": "number",
+                                "width": 6
+                            },
+                            {
+                                "field": "variables.extrusion.max",
+                                "name": "Color/Height Max",
+                                "description": "Fix the high end of the domain instead of deriving it from the data.",
+                                "type": "number",
+                                "width": 6
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
+    },
+    "modules": {
+        "globe": {
+            "cesium": "./globe/cesium"
+        }
+    }
+}
