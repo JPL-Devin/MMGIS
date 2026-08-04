@@ -1,0 +1,21 @@
+{
+    "name": "FeatureSonify",
+    "type": "interaction",
+    "interactionId": "feature:sonify",
+    "description": "Sonifies a numeric property of the clicked feature (e.g. elevation, depth, concentration) as a pitch, so you can hear how it compares to the rest of the layer. Configurable via layerData.variables.sonify.",
+    "applicableLayerTypes": [
+        "vector",
+        "vectortile",
+        "query"
+    ],
+    "applicableEvents": [
+        "click"
+    ],
+    "phase": "main",
+    "order": 50,
+    "paths": {
+        "FeatureSonify": "./FeatureSonify"
+    },
+    "author": "Devin",
+    "license": "Apache-2.0"
+}
