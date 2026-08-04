@@ -1,0 +1,22 @@
+{
+    "name": "KinHighlight",
+    "type": "interaction",
+    "interactionId": "kin:highlight",
+    "description": "Linked brushing: on hover, highlights every other feature in the layer that shares the hovered feature's key property value (e.g. same sol, site or campaign) and reports the kin count in the cursor tooltip. Clears on mouseout.",
+    "applicableLayerTypes": [
+        "vector",
+        "vectortile",
+        "query"
+    ],
+    "applicableEvents": [
+        "hover",
+        "mouseout"
+    ],
+    "phase": "main",
+    "order": 10,
+    "paths": {
+        "KinHighlight": "./KinHighlight"
+    },
+    "author": "NASA-AMMOS/MMGIS",
+    "license": "Apache-2.0"
+}
