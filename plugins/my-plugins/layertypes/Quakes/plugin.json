@@ -1,0 +1,93 @@
+{
+    "name": "Quakes",
+    "type": "layertype",
+    "typeId": "quakes",
+    "version": "1.0.0",
+    "tier": "community",
+    "extends": "vector",
+    "overridable": true,
+    "color": "#de2d26",
+    "defaultIcon": "Pulse",
+    "description": "Live USGS earthquakes as a time-varying vector layer: re-queries the FDSN event API for the active time window, colors quakes by magnitude, and derives its legend from what was fetched.",
+    "capabilities": {
+        "renderers": {
+            "map": {
+                "engines": [
+                    "leaflet"
+                ]
+            }
+        },
+        "time": true
+    },
+    "supportedData": [
+        {
+            "label": "USGS FDSN event feed",
+            "category": "vector",
+            "standards": ["GeoJSON", "FDSN Event Web Service"],
+            "formats": ["geojson"],
+            "urlSchemes": ["(none — data comes from the USGS query API)"],
+            "description": "Earthquakes fetched live from earthquake.usgs.gov/fdsnws/event/1/query for the active global time window. No url is configured; variables.minMagnitude and variables.maxFeatures tune the query.",
+            "procurement": "Public USGS FDSN event web service; no key required."
+        }
+    ],
+    "config": {
+        "tabs": [
+            {
+                "name": "Core",
+                "rows": [
+                    {
+                        "forceHeight": "64px",
+                        "components": [
+                            {
+                                "field": "type",
+                                "name": "Layer Type",
+                                "description": "",
+                                "type": "dropdown",
+                                "width": 2,
+                                "options": ["quakes"]
+                            },
+                            {
+                                "field": "name",
+                                "name": "Layer Name",
+                                "description": "",
+                                "type": "textnotrim",
+                                "width": 8,
+                                "required": true
+                            },
+                            {
+                                "field": "visibility",
+                                "name": "Initially On",
+                                "description": "",
+                                "type": "checkbox",
+                                "width": 2,
+                                "defaultChecked": false
+                            }
+                        ]
+                    },
+                    {
+                        "name": "Quakes",
+                        "components": [
+                            {
+                                "field": "variables.minMagnitude",
+                                "name": "Min Magnitude",
+                                "description": "Only fetch earthquakes at or above this magnitude.",
+                                "type": "number",
+                                "step": 0.1,
+                                "width": 6
+                            },
+                            {
+                                "field": "variables.maxFeatures",
+                                "name": "Max Features",
+                                "description": "Cap on the number of returned earthquakes (USGS limit).",
+                                "type": "number",
+                                "step": 100,
+                                "width": 6
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
+    },
+    "module": "./quakes"
+}
