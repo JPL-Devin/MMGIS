@@ -1,0 +1,23 @@
+{
+    "name": "ClipboardCopy",
+    "type": "interaction",
+    "interactionId": "clipboard:copy",
+    "description": "Copies a per-layer templated string for the clicked feature to the clipboard, e.g. '{name} @ {lat},{lng}'. Tokens resolve against feature properties plus the built-ins {lat}, {lng}, {layer}. Optionally accumulates across clicks so a set of features can be pasted as one list.",
+    "applicableLayerTypes": [
+        "vector",
+        "vectortile",
+        "query"
+    ],
+    "applicableEvents": [
+        "click"
+    ],
+    "phase": "main",
+    "order": 5,
+    "kindAlias": ["clipboard"],
+    "configPath": "variables.interactions.clipboardCopy",
+    "paths": {
+        "ClipboardCopy": "./ClipboardCopy"
+    },
+    "author": "NASA-AMMOS/MMGIS",
+    "license": "Apache-2.0"
+}
