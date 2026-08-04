@@ -1,0 +1,6 @@
+{
+    "name": "GeodatasetStats",
+    "type": "backend",
+    "version": "1.0.0",
+    "description": "Read-only PostGIS aggregate summaries for a geodataset (feature count, geometry-type breakdown, bounding box, centroid, temporal extent) without downloading all features."
+}
