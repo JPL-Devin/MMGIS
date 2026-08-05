@@ -1,0 +1,106 @@
+{
+    "name": "USGSEarthquakes",
+    "type": "layertype",
+    "typeId": "usgsearthquakes",
+    "version": "1.0.0",
+    "tier": "community",
+    "extends": "vector",
+    "overridable": true,
+    "color": "#cc0000",
+    "defaultIcon": "Public",
+    "description": "Live global seismicity from the USGS FDSN Event web service (earthquake.usgs.gov). A single-file layertype that extends 'vector' for all drawing/picking/filtering and only replaces data acquisition: it queries the FDSN event endpoint by the current viewport (dynamic extent) and time window, returning GeoJSON points scaled and colored by magnitude.",
+    "capabilities": {
+        "renderers": {
+            "map": {
+                "engines": [
+                    "leaflet"
+                ]
+            }
+        },
+        "time": true
+    },
+    "supportedData": [
+        {
+            "label": "USGS FDSN Event (GeoJSON)",
+            "category": "vector",
+            "standards": ["FDSN Event Web Service 1.0", "GeoJSON"],
+            "formats": ["geojson"],
+            "urlSchemes": ["https://earthquake.usgs.gov/fdsnws/event/1/query (or any FDSN event endpoint)"],
+            "description": "Earthquake epicenters queried live from an FDSN event web service. Supports viewport (bbox) and time-window (datetime) querying; each returned feature carries magnitude, place, depth and USGS event id.",
+            "procurement": "None — a public, key-less web service. Leave the URL blank to use the USGS default endpoint."
+        }
+    ],
+    "config": {
+        "tabs": [
+            {
+                "name": "Core",
+                "rows": [
+                    {
+                        "forceHeight": "64px",
+                        "components": [
+                            {
+                                "field": "type",
+                                "name": "Layer Type",
+                                "description": "",
+                                "type": "dropdown",
+                                "width": 2,
+                                "options": ["usgsearthquakes"]
+                            },
+                            {
+                                "field": "name",
+                                "name": "Layer Name",
+                                "description": "",
+                                "type": "textnotrim",
+                                "width": 8,
+                                "required": true
+                            },
+                            {
+                                "field": "visibility",
+                                "name": "Initially On",
+                                "description": "",
+                                "type": "checkbox",
+                                "width": 2,
+                                "defaultChecked": false
+                            }
+                        ]
+                    },
+                    {
+                        "name": "USGS Earthquakes",
+                        "components": [
+                            {
+                                "field": "url",
+                                "name": "FDSN Event endpoint (blank = USGS default)",
+                                "description": "",
+                                "type": "text",
+                                "width": 12
+                            },
+                            {
+                                "field": "variables.minmagnitude",
+                                "name": "Minimum magnitude",
+                                "description": "Only return quakes at or above this magnitude.",
+                                "type": "text",
+                                "width": 4
+                            },
+                            {
+                                "field": "variables.limit",
+                                "name": "Max results",
+                                "description": "FDSN 'limit' per request (max 20000).",
+                                "type": "text",
+                                "width": 4
+                            },
+                            {
+                                "field": "variables.dynamicExtent",
+                                "name": "Query by viewport",
+                                "description": "Refetch quakes for the visible map extent as you pan/zoom.",
+                                "type": "checkbox",
+                                "width": 4,
+                                "defaultChecked": true
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
+    },
+    "module": "./usgsearthquakes"
+}
