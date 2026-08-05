@@ -1,0 +1,105 @@
+{
+    "name": "Telemetry",
+    "type": "layertype",
+    "typeId": "telemetry",
+    "extends": "vector",
+    "version": "1.0.0",
+    "tier": "community",
+    "overridable": true,
+    "color": "#4e9a06",
+    "defaultIcon": "ChartTimelineVariant",
+    "description": "A vector layer whose meaning is time. Features are refiltered to the current mission-clock window as it moves.",
+    "capabilities": {
+        "time": {
+            "histogram": true
+        }
+    },
+    "supportedData": [
+        {
+            "label": "GeoJSON with per-feature timestamps",
+            "category": "vector",
+            "standards": ["GeoJSON", "RFC 7946"],
+            "formats": ["geojson", "json"],
+            "extensions": [".geojson", ".json"],
+            "urlSchemes": ["{url} (relative to mission dir or absolute)"],
+            "description": "A GeoJSON FeatureCollection whose features each carry an ISO-8601 timestamp property (named by the layer's Time settings). The full set is fetched once and refiltered to the mission clock's window client-side.",
+            "procurement": "Any telemetry export with a per-point time property."
+        }
+    ],
+    "config": {
+        "tabs": [
+            {
+                "name": "Core",
+                "rows": [
+                    {
+                        "forceHeight": "64px",
+                        "components": [
+                            {
+                                "field": "type",
+                                "name": "Layer Type",
+                                "type": "dropdown",
+                                "width": 2,
+                                "options": ["telemetry"]
+                            },
+                            {
+                                "field": "name",
+                                "name": "Layer Name",
+                                "type": "textnotrim",
+                                "width": 8,
+                                "required": true
+                            },
+                            {
+                                "field": "visibility",
+                                "name": "Initially On",
+                                "type": "checkbox",
+                                "width": 2,
+                                "defaultChecked": false
+                            }
+                        ]
+                    },
+                    {
+                        "name": "Data",
+                        "components": [
+                            {
+                                "field": "url",
+                                "name": "GeoJSON URL",
+                                "type": "text",
+                                "width": 12,
+                                "description": "URL to a GeoJSON FeatureCollection. Fetched once, then refiltered to the time window."
+                            }
+                        ]
+                    },
+                    {
+                        "name": "Time",
+                        "components": [
+                            {
+                                "field": "time.enabled",
+                                "name": "Time Enabled",
+                                "type": "switch",
+                                "width": 3,
+                                "defaultChecked": true
+                            },
+                            {
+                                "field": "time.startProp",
+                                "name": "Start Property",
+                                "type": "text",
+                                "width": 4,
+                                "description": "Feature property holding the start timestamp (optional for point-in-time features)."
+                            },
+                            {
+                                "field": "time.endProp",
+                                "name": "Time Property",
+                                "type": "text",
+                                "width": 4,
+                                "description": "Feature property holding the (end) timestamp used to place the feature in time."
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
+    },
+    "modules": {
+        "source": "./source"
+    }
+}

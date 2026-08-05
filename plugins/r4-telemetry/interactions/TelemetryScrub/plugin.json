@@ -1,0 +1,32 @@
+{
+    "name": "TelemetryScrub",
+    "type": "interaction",
+    "interactionId": "telemetry:scrub",
+    "description": "On click, move the mission clock to the clicked feature's timestamp — clicking a point scrubs the clock.",
+    "applicableLayerTypes": ["telemetry", "vector", "query"],
+    "applicableEvents": ["click"],
+    "phase": "main",
+    "order": 300,
+    "kindAlias": ["telemetry"],
+    "configPath": "variables.interactions.telemetryScrub",
+    "config": {
+        "rows": [
+            {
+                "components": [
+                    {
+                        "type": "dropdown",
+                        "name": "Window placement",
+                        "width": 6,
+                        "field": "variables.interactions.telemetryScrub.mode",
+                        "options": ["center", "endAt"],
+                        "default": "center",
+                        "description": "center: timestamp in the middle of the window; endAt: window ends at the timestamp."
+                    }
+                ]
+            }
+        ]
+    },
+    "paths": {
+        "TelemetryScrub": "./TelemetryScrub"
+    }
+}

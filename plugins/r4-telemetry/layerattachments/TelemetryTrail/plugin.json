@@ -1,0 +1,62 @@
+{
+    "name": "TelemetryTrail",
+    "type": "layerattachment",
+    "attachmentId": "telemetry_trail",
+    "version": "1.0.0",
+    "tier": "community",
+    "overridable": true,
+    "configPath": "variables.layerAttachments.telemetryTrail",
+    "description": "A trail through a layer's point features in time order, with each point faded by its age relative to the mission clock's playhead.",
+    "capabilities": {
+        "renderers": {
+            "map": {
+                "engines": ["leaflet"]
+            },
+            "globe": false
+        },
+        "host": {
+            "order": 60
+        }
+    },
+    "applicableLayerTypes": ["telemetry", "vector", "query"],
+    "config": {
+        "tab": "Attachment - Paths",
+        "tabOrder": 14,
+        "order": 20,
+        "rows": [
+            {
+                "subname": "Telemetry Trail",
+                "components": [
+                    {
+                        "field": "variables.layerAttachments.telemetryTrail.enabled",
+                        "name": "Enabled",
+                        "type": "switch",
+                        "width": 3,
+                        "defaultChecked": false
+                    },
+                    {
+                        "field": "variables.layerAttachments.telemetryTrail.trailColor",
+                        "name": "Trail Colour",
+                        "type": "colorpicker",
+                        "width": 3
+                    },
+                    {
+                        "field": "variables.layerAttachments.telemetryTrail.fadeSeconds",
+                        "name": "Fade (s)",
+                        "type": "number",
+                        "width": 3,
+                        "description": "Seconds behind the playhead over which a point fades to its minimum opacity."
+                    },
+                    {
+                        "field": "variables.layerAttachments.telemetryTrail.minOpacity",
+                        "name": "Min Opacity",
+                        "type": "number",
+                        "width": 3,
+                        "description": "Opacity of a fully-aged point (0-1)."
+                    }
+                ]
+            }
+        ]
+    },
+    "module": "./telemetryTrail"
+}
