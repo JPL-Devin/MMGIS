@@ -1,0 +1,34 @@
+{
+    "name": "AnnotationAdd",
+    "type": "interaction",
+    "interactionId": "annotation:add",
+    "version": "1.0.0",
+    "tier": "community",
+    "description": "Click the map to leave a note; posts it to the Annotations backend and refreshes annotation layers.",
+    "applicableLayerTypes": [
+        "annotation"
+    ],
+    "order": 100,
+    "configPath": "variables.interactions.annotationAdd",
+    "config": {
+        "rows": [
+            {
+                "components": [
+                    {
+                        "type": "text",
+                        "name": "Prompt text",
+                        "width": 6,
+                        "field": "variables.interactions.annotationAdd.promptText"
+                    }
+                ]
+            }
+        ]
+    },
+    "applicableEvents": [
+        "click"
+    ],
+    "phase": "main",
+    "paths": {
+        "AnnotationAdd": "./AnnotationAdd"
+    }
+}

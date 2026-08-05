@@ -1,0 +1,13 @@
+{
+    "name": "Annotations",
+    "type": "backend",
+    "version": "1.0.0",
+    "tier": "community",
+    "description": "Stores and lists point field annotations (notes left on the map).",
+    "priority": 1000,
+    "routes": {
+        "prefix": "/api/annotations",
+        "auth": "admin (public GET)"
+    },
+    "envs": []
+}

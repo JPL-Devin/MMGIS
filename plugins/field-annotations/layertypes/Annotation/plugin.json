@@ -1,0 +1,87 @@
+{
+    "name": "Annotation",
+    "type": "layertype",
+    "typeId": "annotation",
+    "extends": "vector",
+    "version": "1.0.0",
+    "tier": "community",
+    "overridable": true,
+    "color": "#4e9a06",
+    "defaultIcon": "EditNote",
+    "description": "Field annotations (point notes) stored by the Annotations backend plugin and drawn as a vector layer.",
+    "capabilities": {
+        "renderers": {
+            "map": {
+                "engines": [
+                    "leaflet"
+                ]
+            }
+        }
+    },
+    "supportedData": [
+        {
+            "label": "MMGIS field annotations",
+            "category": "vector",
+            "standards": [
+                "GeoJSON"
+            ],
+            "formats": [],
+            "extensions": [],
+            "description": "Point notes stored in the field_annotations table and served by the Annotations backend plugin at /api/annotations/list. No url is configured \u2014 the type fetches its own data.",
+            "procurement": "Created in-app by the annotation:add interaction."
+        }
+    ],
+    "config": {
+        "tabs": [
+            {
+                "name": "Core",
+                "rows": [
+                    {
+                        "forceHeight": "64px",
+                        "components": [
+                            {
+                                "field": "type",
+                                "name": "Layer Type",
+                                "description": "",
+                                "type": "dropdown",
+                                "width": 2,
+                                "options": [
+                                    "annotation"
+                                ]
+                            },
+                            {
+                                "field": "name",
+                                "name": "Layer Name",
+                                "description": "",
+                                "type": "textnotrim",
+                                "width": 8,
+                                "required": true
+                            },
+                            {
+                                "field": "visibility",
+                                "name": "Initially On",
+                                "description": "",
+                                "type": "checkbox",
+                                "width": 2,
+                                "defaultChecked": false
+                            }
+                        ]
+                    },
+                    {
+                        "name": "Annotation",
+                        "components": [
+                            {
+                                "field": "variables.annotationColor",
+                                "name": "Annotation Color",
+                                "description": "Color of each annotation point.",
+                                "type": "colorpicker",
+                                "width": 4
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
+    },
+    "module": "./annotation"
+}
