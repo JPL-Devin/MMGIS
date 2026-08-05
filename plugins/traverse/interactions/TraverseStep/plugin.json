@@ -1,0 +1,42 @@
+{
+    "name": "TraverseStep",
+    "type": "interaction",
+    "tier": "community",
+    "version": "1.0.0",
+    "overridable": true,
+    "interactionId": "traverse:step",
+    "description": "Steps the selection to the next (or previous, with shift) waypoint on click and pans the map to it, so an operator can walk a rover traverse.",
+    "applicableLayerTypes": ["vector", "query", "traverse"],
+    "applicableEvents": ["click"],
+    "phase": "main",
+    "order": 100,
+    "kindAlias": ["traverse"],
+    "configPath": "variables.interactions.traverseStep",
+    "config": {
+        "rows": [
+            {
+                "components": [
+                    {
+                        "field": "variables.interactions.traverseStep.direction",
+                        "name": "Default Direction",
+                        "description": "Which way a plain click walks. Hold shift to go the other way.",
+                        "type": "dropdown",
+                        "width": 6,
+                        "options": ["next", "previous"]
+                    },
+                    {
+                        "field": "variables.interactions.traverseStep.wrap",
+                        "name": "Wrap At Ends",
+                        "description": "Loop from the last waypoint back to the first (and vice versa) instead of stopping.",
+                        "type": "checkbox",
+                        "width": 6,
+                        "defaultChecked": true
+                    }
+                ]
+            }
+        ]
+    },
+    "paths": {
+        "TraverseStep": "./TraverseStep"
+    }
+}

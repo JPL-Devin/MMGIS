@@ -1,0 +1,70 @@
+{
+    "name": "WaypointSol",
+    "type": "layerattachment",
+    "attachmentId": "waypoint_sol",
+    "version": "1.0.0",
+    "tier": "community",
+    "overridable": true,
+    "configPath": "variables.layerAttachments.waypointSol",
+    "description": "Labels each traverse waypoint with its sol and draws the drive direction (a bearing arrow) at each segment between consecutive waypoints. Reads the waypoint-property names the RoverTraverse layer type writes to variables.traverse.",
+    "capabilities": {
+        "renderers": {
+            "map": {
+                "engines": ["leaflet"]
+            },
+            "globe": false
+        },
+        "host": {
+            "order": 5
+        }
+    },
+    "applicableLayerTypes": ["vector", "query", "traverse"],
+    "config": {
+        "tab": "Attachment - Paths",
+        "tabOrder": 13,
+        "order": 5,
+        "rows": [
+            {
+                "subname": "Waypoint Sol & Direction",
+                "components": [
+                    {
+                        "field": "variables.layerAttachments.waypointSol.enabled",
+                        "name": "Enabled",
+                        "description": "Label each waypoint with its sol and draw the per-segment drive bearing.",
+                        "type": "switch",
+                        "width": 3,
+                        "defaultChecked": false
+                    },
+                    {
+                        "field": "variables.layerAttachments.waypointSol.initialVisibility",
+                        "name": "Initial Visibility",
+                        "description": "Whether the sublayer is initially on.",
+                        "type": "checkbox",
+                        "width": 3,
+                        "defaultChecked": true
+                    }
+                ]
+            },
+            {
+                "components": [
+                    {
+                        "field": "variables.layerAttachments.waypointSol.showArrows",
+                        "name": "Show Direction Arrows",
+                        "description": "Draw a bearing arrow at the midpoint of each drive segment.",
+                        "type": "checkbox",
+                        "width": 3,
+                        "defaultChecked": true
+                    },
+                    {
+                        "field": "variables.layerAttachments.waypointSol.arrowColor",
+                        "name": "Arrow Color",
+                        "description": "Color of the drive-direction arrows.",
+                        "type": "colorpicker",
+                        "width": 3
+                    }
+                ]
+            }
+        ]
+    },
+    "module": "./waypointSol"
+}

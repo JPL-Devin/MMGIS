@@ -1,0 +1,113 @@
+{
+    "name": "RoverTraverse",
+    "type": "layertype",
+    "typeId": "traverse",
+    "extends": "vector",
+    "version": "1.0.0",
+    "tier": "community",
+    "overridable": true,
+    "color": "#c9611e",
+    "defaultIcon": "Timeline",
+    "description": "A rover traverse: an ordered path of drive-segment waypoints carrying sol/site/drive properties. Draws like a vector layer (inherited), but pre-wires the waypoint-sol attachment and the traverse-step click interaction so an operator can walk the drive.",
+    "supportedData": [
+        {
+            "label": "Traverse GeoJSON (ordered waypoints)",
+            "category": "vector",
+            "standards": ["GeoJSON", "RFC 7946"],
+            "formats": ["geojson", "json"],
+            "extensions": [".geojson", ".json"],
+            "urlSchemes": ["{url} (relative to mission dir or absolute)"],
+            "description": "A GeoJSON FeatureCollection whose Point features are drive waypoints in traverse order, each carrying sol/site/drive properties (configurable names). The waypoint-sol attachment labels each by sol and draws the per-segment drive bearing; the traverse-step interaction walks the selection along it.",
+            "procurement": "Export a rover localization/traverse product to GeoJSON (one Point per waypoint)."
+        }
+    ],
+    "capabilities": {
+        "defaultInteractions": {
+            "click": ["traverse:step"]
+        }
+    },
+    "config": {
+        "tabs": [
+            {
+                "name": "Core",
+                "rows": [
+                    {
+                        "forceHeight": "64px",
+                        "components": [
+                            {
+                                "field": "type",
+                                "name": "Layer Type",
+                                "description": "",
+                                "type": "dropdown",
+                                "width": 2,
+                                "options": ["traverse"]
+                            },
+                            {
+                                "field": "name",
+                                "name": "Layer Name",
+                                "description": "A display name for the layer.",
+                                "type": "textnotrim",
+                                "width": 8,
+                                "required": true
+                            },
+                            {
+                                "field": "visibility",
+                                "name": "Initially On",
+                                "description": "",
+                                "type": "checkbox",
+                                "width": 2,
+                                "defaultChecked": false
+                            }
+                        ]
+                    },
+                    {
+                        "components": [
+                            {
+                                "field": "url",
+                                "name": "URL",
+                                "description": "GeoJSON of ordered drive waypoints.",
+                                "type": "text",
+                                "width": 12
+                            }
+                        ]
+                    },
+                    {
+                        "name": "Traverse",
+                        "subname": "Waypoint properties",
+                        "components": [
+                            {
+                                "field": "variables.traverse.orderProp",
+                                "name": "Order Property",
+                                "description": "Feature property the waypoints are ordered by (ascending). Defaults to the sol property.",
+                                "type": "text",
+                                "width": 3
+                            },
+                            {
+                                "field": "variables.traverse.solProp",
+                                "name": "Sol Property",
+                                "description": "Feature property holding each waypoint's sol.",
+                                "type": "text",
+                                "width": 3
+                            },
+                            {
+                                "field": "variables.traverse.siteProp",
+                                "name": "Site Property",
+                                "description": "Feature property holding the site index.",
+                                "type": "text",
+                                "width": 3
+                            },
+                            {
+                                "field": "variables.traverse.driveProp",
+                                "name": "Drive Property",
+                                "description": "Feature property holding the drive index.",
+                                "type": "text",
+                                "width": 3
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
+    },
+    "module": "./traverse"
+}
