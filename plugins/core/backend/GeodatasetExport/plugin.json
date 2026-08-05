@@ -1,0 +1,17 @@
+{
+  "id": "core-geodatasetexport",
+  "name": "GeodatasetExport",
+  "display_name": "Geodataset Export",
+  "aliases": ["geodatasetexport"],
+  "version": "1.0.0",
+  "type": "backend",
+  "overridable": true,
+  "priority": 1000,
+  "routes": {
+    "prefix": "/api/geodatasetExport",
+    "auth": "admin-or-public-get"
+  },
+  "description": "Downloads a PostGIS-backed geodataset as GeoJSON, CSV or WKT, with optional bbox, limit and property selection.",
+  "pluginDependencies": ["core/backend/Geodatasets"],
+  "license": "Apache-2.0"
+}
