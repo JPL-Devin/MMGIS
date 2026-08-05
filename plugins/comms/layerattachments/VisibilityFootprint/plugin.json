@@ -1,0 +1,83 @@
+{
+    "name": "VisibilityFootprint",
+    "type": "layerattachment",
+    "attachmentId": "visibility_footprint",
+    "version": "1.0.0",
+    "tier": "community",
+    "overridable": true,
+    "configPath": "variables.layerAttachments.visibilityFootprint",
+    "description": "A circle around each surface asset sized from an elevation mask and the orbiter's altitude.",
+    "capabilities": {
+        "renderers": {
+            "map": {
+                "engines": [
+                    "leaflet"
+                ]
+            },
+            "globe": false
+        },
+        "host": {
+            "order": 100
+        }
+    },
+    "applicableLayerTypes": [
+        "vector",
+        "query"
+    ],
+    "config": {
+        "tab": "Attachment - Markers",
+        "tabOrder": 100,
+        "order": 0,
+        "rows": [
+            {
+                "subname": "Visibility Footprint",
+                "components": [
+                    {
+                        "field": "variables.layerAttachments.visibilityFootprint.enabled",
+                        "name": "Enabled",
+                        "description": "",
+                        "type": "switch",
+                        "width": 3,
+                        "defaultChecked": false
+                    },
+                    {
+                        "field": "variables.layerAttachments.visibilityFootprint.elevationMaskDeg",
+                        "name": "Elevation Mask (deg)",
+                        "description": "Minimum orbiter elevation for a usable link.",
+                        "type": "number",
+                        "width": 3
+                    },
+                    {
+                        "field": "variables.layerAttachments.visibilityFootprint.trackLayerName",
+                        "name": "Ground Track Layer",
+                        "description": "Name of the groundtrack layer whose orbit altitude sizes the footprint.",
+                        "type": "text",
+                        "width": 3
+                    },
+                    {
+                        "field": "variables.layerAttachments.visibilityFootprint.altitudeMeters",
+                        "name": "Orbit Altitude (m)",
+                        "description": "Fallback when no ground track layer is named.",
+                        "type": "number",
+                        "width": 3
+                    },
+                    {
+                        "field": "variables.layerAttachments.visibilityFootprint.bodyRadiusMeters",
+                        "name": "Body Radius (m)",
+                        "description": "Defaults to Mars.",
+                        "type": "number",
+                        "width": 3
+                    },
+                    {
+                        "field": "variables.layerAttachments.visibilityFootprint.color",
+                        "name": "Color",
+                        "description": "",
+                        "type": "colorpicker",
+                        "width": 3
+                    }
+                ]
+            }
+        ]
+    },
+    "module": "./visibilityFootprint"
+}

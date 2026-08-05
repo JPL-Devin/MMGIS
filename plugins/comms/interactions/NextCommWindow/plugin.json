@@ -1,0 +1,47 @@
+{
+    "name": "NextCommWindow",
+    "type": "interaction",
+    "interactionId": "comms:next_window",
+    "description": "On clicking an orbiter ground track, report the next communication window over the clicked surface asset and offer to move the clock to its start.",
+    "applicableLayerTypes": [
+        "groundtrack"
+    ],
+    "applicableEvents": [
+        "click"
+    ],
+    "phase": "main",
+    "order": 100,
+    "configPath": "variables.interactions.nextCommWindow",
+    "pluginDependencies": [
+        "comms/layertypes/GroundTrack"
+    ],
+    "config": {
+        "rows": [
+            {
+                "components": [
+                    {
+                        "type": "text",
+                        "name": "Asset Layer",
+                        "width": 4,
+                        "field": "variables.interactions.nextCommWindow.assetLayerName"
+                    },
+                    {
+                        "type": "number",
+                        "name": "Elevation Mask (deg)",
+                        "width": 4,
+                        "field": "variables.interactions.nextCommWindow.elevationMaskDeg"
+                    },
+                    {
+                        "type": "text",
+                        "name": "Times Property",
+                        "width": 4,
+                        "field": "variables.interactions.nextCommWindow.timesProp"
+                    }
+                ]
+            }
+        ]
+    },
+    "paths": {
+        "NextCommWindow": "./NextCommWindow"
+    }
+}

@@ -1,0 +1,139 @@
+{
+    "name": "GroundTrack",
+    "type": "layertype",
+    "typeId": "groundtrack",
+    "extends": "vector",
+    "version": "1.0.0",
+    "tier": "community",
+    "overridable": true,
+    "color": "#4e9a06",
+    "defaultIcon": "Layers",
+    "description": "An orbiter ground track clipped to the mission clock's time window.",
+    "capabilities": {
+        "renderers": {
+            "map": {
+                "engines": [
+                    "leaflet"
+                ]
+            }
+        },
+        "time": true,
+        "defaultInteractions": {
+            "click": [
+                "comms:next_window"
+            ]
+        }
+    },
+    "supportedData": [
+        {
+            "label": "Ground track GeoJSON",
+            "category": "vector",
+            "standards": [
+                "GeoJSON"
+            ],
+            "formats": [
+                "application/geo+json"
+            ],
+            "extensions": [
+                ".json",
+                ".geojson"
+            ],
+            "description": "LineString features whose properties carry one ISO time per coordinate (default property 'times') and an 'altitude_m'. With no url, the type propagates a circular orbit from its variables."
+        }
+    ],
+    "config": {
+        "tabs": [
+            {
+                "name": "Core",
+                "rows": [
+                    {
+                        "forceHeight": "64px",
+                        "components": [
+                            {
+                                "field": "type",
+                                "name": "Layer Type",
+                                "description": "",
+                                "type": "dropdown",
+                                "width": 2,
+                                "options": [
+                                    "groundtrack"
+                                ]
+                            },
+                            {
+                                "field": "name",
+                                "name": "Layer Name",
+                                "description": "",
+                                "type": "textnotrim",
+                                "width": 8,
+                                "required": true
+                            },
+                            {
+                                "field": "visibility",
+                                "name": "Initially On",
+                                "description": "",
+                                "type": "checkbox",
+                                "width": 2,
+                                "defaultChecked": false
+                            }
+                        ]
+                    },
+                    {
+                        "name": "Ground Track",
+                        "components": [
+                            {
+                                "field": "url",
+                                "name": "Track Service URL",
+                                "description": "Optional. Empty propagates a synthetic circular orbit.",
+                                "type": "text",
+                                "width": 12
+                            },
+                            {
+                                "field": "variables.timesProp",
+                                "name": "Times Property",
+                                "description": "Feature property holding one ISO time per coordinate.",
+                                "type": "text",
+                                "width": 3
+                            },
+                            {
+                                "field": "variables.altitudeMeters",
+                                "name": "Orbit Altitude (m)",
+                                "description": "Used to size visibility footprints.",
+                                "type": "number",
+                                "width": 3
+                            },
+                            {
+                                "field": "variables.orbitPeriodSeconds",
+                                "name": "Orbit Period (s)",
+                                "description": "",
+                                "type": "number",
+                                "width": 3
+                            },
+                            {
+                                "field": "variables.inclinationDeg",
+                                "name": "Inclination (deg)",
+                                "description": "",
+                                "type": "number",
+                                "width": 3
+                            },
+                            {
+                                "field": "variables.stepSeconds",
+                                "name": "Sample Step (s)",
+                                "description": "",
+                                "type": "number",
+                                "width": 3
+                            },
+                            {
+                                "field": "variables.bodyRotationSeconds",
+                                "name": "Body Rotation Period (s)",
+                                "description": "",
+                                "type": "number",
+                                "width": 3
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
+    },
+    "module": "./groundTrack"
+}
