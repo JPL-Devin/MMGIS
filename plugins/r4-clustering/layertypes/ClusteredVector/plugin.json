@@ -1,0 +1,170 @@
+{
+    "name": "ClusteredVector",
+    "type": "layertype",
+    "typeId": "clusteredvector",
+    "extends": "vector",
+    "version": "1.0.0",
+    "tier": "community",
+    "overridable": true,
+    "color": "#4e9a06",
+    "defaultIcon": "Layers",
+    "description": "A vector point layer that clusters or decimates by zoom so tens of thousands of points stay responsive, with a legend derived from the cluster counts.",
+    "capabilities": {
+        "renderers": {
+            "map": {
+                "engines": [
+                    "leaflet"
+                ]
+            },
+            "globe": false
+        },
+        "map": {
+            "stacking": "overlay",
+            "picking": true,
+            "styling": true
+        },
+        "time": false,
+        "defaultInteractions": {
+            "click": [
+                "cluster:expand"
+            ]
+        }
+    },
+    "supportedData": [
+        {
+            "label": "Dense point GeoJSON",
+            "category": "vector",
+            "standards": [
+                "GeoJSON"
+            ],
+            "formats": [
+                "application/geo+json"
+            ],
+            "extensions": [
+                ".json",
+                ".geojson"
+            ],
+            "description": "A point FeatureCollection of any size; it is fetched once and re-aggregated per zoom.",
+            "procurement": "Any url core can fetch."
+        }
+    ],
+    "config": {
+        "tabs": [
+            {
+                "name": "Core",
+                "rows": [
+                    {
+                        "forceHeight": "64px",
+                        "components": [
+                            {
+                                "field": "type",
+                                "name": "Layer Type",
+                                "description": "",
+                                "type": "dropdown",
+                                "width": 2,
+                                "options": [
+                                    "clusteredvector"
+                                ]
+                            },
+                            {
+                                "field": "name",
+                                "name": "Layer Name",
+                                "description": "",
+                                "type": "textnotrim",
+                                "width": 8,
+                                "required": true
+                            },
+                            {
+                                "field": "visibility",
+                                "name": "Initially On",
+                                "description": "",
+                                "type": "checkbox",
+                                "width": 2,
+                                "defaultChecked": false
+                            }
+                        ]
+                    },
+                    {
+                        "name": "Data",
+                        "components": [
+                            {
+                                "field": "url",
+                                "name": "URL",
+                                "description": "A point GeoJSON url. Fetched once, then re-clustered per zoom.",
+                                "type": "text",
+                                "width": 12
+                            }
+                        ]
+                    },
+                    {
+                        "name": "Clustering",
+                        "components": [
+                            {
+                                "field": "variables.clustering.enabled",
+                                "name": "Enabled",
+                                "description": "Off draws nothing — the type is clustering.",
+                                "type": "switch",
+                                "width": 2,
+                                "defaultChecked": true
+                            },
+                            {
+                                "field": "variables.clustering.mode",
+                                "name": "Mode",
+                                "description": "cluster aggregates per grid cell; decimate keeps a sample of the raw points.",
+                                "type": "dropdown",
+                                "width": 3,
+                                "options": [
+                                    "cluster",
+                                    "decimate"
+                                ],
+                                "default": "cluster"
+                            },
+                            {
+                                "field": "variables.clustering.cellsPerTile",
+                                "name": "Cells per tile",
+                                "description": "Higher = smaller clusters at the same zoom.",
+                                "type": "number",
+                                "width": 2,
+                                "default": 2
+                            },
+                            {
+                                "field": "variables.clustering.passthroughZoom",
+                                "name": "Raw points at zoom",
+                                "description": "At or above this zoom the raw (decimated) points are drawn instead of clusters.",
+                                "type": "number",
+                                "width": 2,
+                                "default": 14
+                            },
+                            {
+                                "field": "variables.clustering.maxPoints",
+                                "name": "Max raw points",
+                                "description": "Decimation ceiling once clustering is off.",
+                                "type": "number",
+                                "width": 3,
+                                "default": 20000
+                            }
+                        ]
+                    },
+                    {
+                        "name": "Dynamic extent",
+                        "components": [
+                            {
+                                "field": "variables.dynamicExtent",
+                                "name": "Re-cluster on view change",
+                                "description": "Required for zoom-dependent clustering — core only re-drives the source surface for a dynamic-extent layer. Defaulted on by the type.",
+                                "type": "switch",
+                                "width": 4,
+                                "defaultChecked": true
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
+    },
+    "modules": {
+        "source": "./source",
+        "legend": "./legend",
+        "config": "./config"
+    }
+}

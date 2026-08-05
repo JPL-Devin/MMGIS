@@ -1,0 +1,56 @@
+{
+    "name": "ClusterExpand",
+    "type": "interaction",
+    "interactionId": "cluster:expand",
+    "version": "1.0.0",
+    "tier": "community",
+    "description": "Clicking a cluster zooms to its bounds, or publishes its members for a list UI.",
+    "applicableLayerTypes": [
+        "clusteredvector"
+    ],
+    "applicableEvents": [
+        "click"
+    ],
+    "phase": "main",
+    "order": 100,
+    "configPath": "variables.interactions.clusterExpand",
+    "config": {
+        "rows": [
+            {
+                "components": [
+                    {
+                        "field": "variables.interactions.clusterExpand.mode",
+                        "name": "On click",
+                        "description": "zoom fits the cluster's bounds; list publishes its members.",
+                        "type": "dropdown",
+                        "width": 4,
+                        "options": [
+                            "zoom",
+                            "list"
+                        ],
+                        "default": "zoom"
+                    },
+                    {
+                        "field": "variables.interactions.clusterExpand.minCount",
+                        "name": "Minimum count",
+                        "description": "A feature holding fewer points than this is left to the rest of the pipeline.",
+                        "type": "number",
+                        "width": 4,
+                        "default": 2
+                    },
+                    {
+                        "field": "variables.interactions.clusterExpand.maxZoom",
+                        "name": "Max zoom",
+                        "description": "Ceiling for the zoom-to-bounds.",
+                        "type": "number",
+                        "width": 4,
+                        "default": 18
+                    }
+                ]
+            }
+        ]
+    },
+    "paths": {
+        "ClusterExpand": "./ClusterExpand"
+    }
+}

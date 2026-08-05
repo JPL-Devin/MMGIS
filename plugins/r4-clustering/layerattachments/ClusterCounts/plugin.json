@@ -1,0 +1,78 @@
+{
+    "name": "ClusterCounts",
+    "type": "layerattachment",
+    "attachmentId": "cluster_counts",
+    "version": "1.0.0",
+    "tier": "community",
+    "overridable": true,
+    "configPath": "variables.layerAttachments.clusterCounts",
+    "description": "Labels each cluster of a clusteredvector host with the number of points it represents.",
+    "capabilities": {
+        "renderers": {
+            "map": {
+                "engines": [
+                    "leaflet"
+                ]
+            },
+            "globe": false
+        },
+        "host": {
+            "order": 60
+        }
+    },
+    "applicableLayerTypes": [
+        "clusteredvector"
+    ],
+    "config": {
+        "tab": "Attachment - Markers",
+        "tabOrder": 12,
+        "order": 20,
+        "rows": [
+            {
+                "subname": "Cluster Counts",
+                "components": [
+                    {
+                        "field": "variables.layerAttachments.clusterCounts.enabled",
+                        "name": "Enabled",
+                        "description": "Draw a count label on each cluster.",
+                        "type": "switch",
+                        "width": 2,
+                        "defaultChecked": false
+                    },
+                    {
+                        "field": "variables.layerAttachments.clusterCounts.minCount",
+                        "name": "Minimum count",
+                        "description": "Only label clusters holding at least this many points.",
+                        "type": "number",
+                        "width": 2,
+                        "default": 2
+                    },
+                    {
+                        "field": "variables.layerAttachments.clusterCounts.color",
+                        "name": "Label colour",
+                        "description": "",
+                        "type": "colorpicker",
+                        "width": 3
+                    },
+                    {
+                        "field": "variables.layerAttachments.clusterCounts.fontSize",
+                        "name": "Font size (px)",
+                        "description": "",
+                        "type": "number",
+                        "width": 2,
+                        "default": 11
+                    },
+                    {
+                        "field": "variables.layerAttachments.clusterCounts.abbreviate",
+                        "name": "Abbreviate",
+                        "description": "1200 becomes 1.2k.",
+                        "type": "switch",
+                        "width": 3,
+                        "defaultChecked": true
+                    }
+                ]
+            }
+        ]
+    },
+    "module": "./clusterCounts"
+}
