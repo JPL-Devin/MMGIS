@@ -1,0 +1,16 @@
+{
+    "name": "TimeSnap",
+    "type": "tool",
+    "version": "1.0.0",
+    "author": "Third-party plugin author",
+    "description": "Snap the time bar's playhead to the real timestamps of loaded features, with a per-layer availability histogram.",
+    "descriptionFull": {
+        "title": "TimeSnap reads the times off features that time-enabled layers hold client-side, shows how many of them fall inside the current time window as a per-layer histogram, and lets you step the playhead to an actual event time instead of scrubbing blindly through empty stretches."
+    },
+    "defaultIcon": "clock-fast",
+    "toolbarPriority": 1003,
+    "hasVars": false,
+    "paths": {
+        "TimeSnapTool": "./TimeSnapTool"
+    }
+}
