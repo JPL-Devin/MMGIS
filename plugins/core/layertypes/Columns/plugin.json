@@ -1,0 +1,161 @@
+{
+    "name": "Columns",
+    "type": "layertype",
+    "typeId": "columns",
+    "extends": "vector",
+    "version": "1.0.0",
+    "tier": "community",
+    "overridable": true,
+    "color": "#4e9a06",
+    "defaultIcon": "BarChart",
+    "description": "Point features drawn on the 3D globe as extruded vertical columns whose height and color come from a numeric property — a magnitude plot in 3D. Draws as a normal vector layer on the 2D map (inherited from the vector type).",
+    "capabilities": {
+        "renderers": {
+            "globe": {
+                "engines": ["cesium"]
+            }
+        }
+    },
+    "supportedData": [
+        {
+            "label": "Point GeoJSON with a numeric magnitude property",
+            "category": "vector",
+            "standards": ["GeoJSON"],
+            "formats": ["geojson", "json"],
+            "extensions": [".geojson", ".json"],
+            "urlSchemes": [
+                "{url} (relative to mission dir or absolute)",
+                "geodatasets:{name}"
+            ],
+            "description": "A Point/MultiPoint FeatureCollection where each feature carries a numeric property (concentration, depth, count, elevation gain, …). Each point becomes a vertical column on the globe, scaled by that property and colored across the layer's value range.",
+            "procurement": "Any point GeoJSON; set 'Height Property' to the numeric property to extrude by."
+        }
+    ],
+    "config": {
+        "tabs": [
+            {
+                "name": "Core",
+                "rows": [
+                    {
+                        "forceHeight": "64px",
+                        "components": [
+                            {
+                                "field": "type",
+                                "name": "Layer Type",
+                                "description": "",
+                                "type": "dropdown",
+                                "width": 2,
+                                "options": ["columns"]
+                            },
+                            {
+                                "field": "name",
+                                "name": "Layer Name",
+                                "description": "",
+                                "type": "textnotrim",
+                                "width": 8,
+                                "required": true
+                            },
+                            {
+                                "field": "visibility",
+                                "name": "Initially On",
+                                "description": "",
+                                "type": "checkbox",
+                                "width": 2,
+                                "defaultChecked": false
+                            }
+                        ]
+                    },
+                    {
+                        "name": "Data",
+                        "components": [
+                            {
+                                "field": "url",
+                                "name": "URL",
+                                "description": "A point GeoJSON file (relative to the mission's directory or absolute), or a 'geodatasets:{name}'.",
+                                "type": "text",
+                                "width": 12
+                            }
+                        ]
+                    },
+                    {
+                        "name": "Columns",
+                        "components": [
+                            {
+                                "field": "variables.columns.heightProp",
+                                "name": "Height Property",
+                                "description": "The numeric feature property each column's height is derived from.",
+                                "type": "text",
+                                "width": 4
+                            },
+                            {
+                                "field": "variables.columns.heightScale",
+                                "name": "Height Scale",
+                                "description": "Meters of column height per unit of the height property.",
+                                "type": "number",
+                                "width": 2
+                            },
+                            {
+                                "field": "variables.columns.minHeight",
+                                "name": "Min Height (m)",
+                                "description": "",
+                                "type": "number",
+                                "width": 2
+                            },
+                            {
+                                "field": "variables.columns.maxHeight",
+                                "name": "Max Height (m)",
+                                "description": "Clamp so an outlier can't produce a column into orbit.",
+                                "type": "number",
+                                "width": 2
+                            },
+                            {
+                                "field": "variables.columns.radius",
+                                "name": "Radius (m)",
+                                "description": "",
+                                "type": "number",
+                                "width": 2
+                            }
+                        ]
+                    },
+                    {
+                        "components": [
+                            {
+                                "field": "variables.columns.baseElevation",
+                                "name": "Base Elevation (m)",
+                                "description": "Elevation each column starts at; a feature's own z is added to it.",
+                                "type": "number",
+                                "width": 3
+                            },
+                            {
+                                "field": "variables.columns.lowColor",
+                                "name": "Low Color",
+                                "description": "Color at the layer's minimum value.",
+                                "type": "colorpicker",
+                                "width": 2
+                            },
+                            {
+                                "field": "variables.columns.highColor",
+                                "name": "High Color",
+                                "description": "Color at the layer's maximum value.",
+                                "type": "colorpicker",
+                                "width": 2
+                            },
+                            {
+                                "field": "variables.columns.colorProp",
+                                "name": "Color From Property",
+                                "description": "Optional: a property holding a hex color per feature, used instead of the ramp.",
+                                "type": "text",
+                                "width": 4
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
+    },
+    "modules": {
+        "globe": {
+            "cesium": "./globe/cesium"
+        }
+    }
+}
