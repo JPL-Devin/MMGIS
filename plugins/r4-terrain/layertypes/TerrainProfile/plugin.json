@@ -1,0 +1,113 @@
+{
+    "name": "TerrainProfile",
+    "type": "layertype",
+    "typeId": "terrainprofile",
+    "version": "1.0.0",
+    "tier": "community",
+    "overridable": true,
+    "extends": "vector",
+    "color": "#4e9a06",
+    "defaultIcon": "ChartLine",
+    "description": "A GeoJSON LineString drawn as a terrain-profile line/corridor on the 2D map (inherited from vector) and on the LithoSphere globe (own renderer). Pairs with the profile:pick interaction and the TerrainProfile tool.",
+    "capabilities": {
+        "renderers": {
+            "map": { "engines": ["leaflet"] },
+            "globe": { "engines": ["cesium", "lithosphere"] }
+        }
+    },
+    "supportedData": [
+        {
+            "label": "GeoJSON LineString",
+            "category": "vector",
+            "standards": ["GeoJSON", "RFC 7946"],
+            "formats": ["geojson", "json"],
+            "extensions": [".geojson", ".json"],
+            "urlSchemes": ["{url} (relative to mission dir or absolute)"],
+            "description": "A GeoJSON FeatureCollection containing the LineString(s) whose elevation profile the TerrainProfile tool plots. Behaves as a vector layer for fetching, styling and picking.",
+            "procurement": "Draw a line with the Draw tool and publish it, or author a GeoJSON by hand."
+        }
+    ],
+    "config": {
+        "tabs": [
+            {
+                "name": "Core",
+                "rows": [
+                    {
+                        "forceHeight": "64px",
+                        "components": [
+                            {
+                                "field": "type",
+                                "name": "Layer Type",
+                                "description": "",
+                                "type": "dropdown",
+                                "width": 2,
+                                "options": ["terrainprofile"]
+                            },
+                            {
+                                "field": "name",
+                                "name": "Layer Name",
+                                "description": "A display name for the layer.",
+                                "type": "textnotrim",
+                                "width": 6,
+                                "required": true
+                            },
+                            {
+                                "field": "visibility",
+                                "name": "Initially On",
+                                "description": "",
+                                "type": "checkbox",
+                                "width": 2,
+                                "defaultChecked": false
+                            }
+                        ]
+                    },
+                    {
+                        "name": "Source",
+                        "components": [
+                            {
+                                "field": "url",
+                                "name": "Source URL",
+                                "description": "Path to a GeoJSON of LineString features (relative to the mission dir or absolute).",
+                                "type": "text",
+                                "width": 12
+                            }
+                        ]
+                    },
+                    {
+                        "name": "Profile",
+                        "components": [
+                            {
+                                "field": "variables.terrainProfile.samples",
+                                "name": "Samples",
+                                "description": "How many points to sample along the line when plotting the profile.",
+                                "type": "number",
+                                "width": 3,
+                                "default": 128
+                            },
+                            {
+                                "field": "variables.terrainProfile.corridorMeters",
+                                "name": "Corridor width (m)",
+                                "description": "Optional corridor half-width around the line, for future corridor sampling. 0 = line only.",
+                                "type": "number",
+                                "width": 3,
+                                "default": 0
+                            },
+                            {
+                                "field": "style.color",
+                                "name": "Line colour",
+                                "description": "",
+                                "type": "colorpicker",
+                                "width": 3
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
+    },
+    "modules": {
+        "globe": {
+            "lithosphere": "./globe/lithosphere"
+        }
+    }
+}

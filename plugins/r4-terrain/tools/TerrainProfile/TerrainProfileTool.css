@@ -1,0 +1,35 @@
+.terrainProfileTool {
+    color: var(--color-a, #ddd);
+    font-size: 13px;
+    padding: 6px 8px;
+}
+.terrainProfileTool .tpHeader {
+    font-weight: 600;
+    margin-bottom: 6px;
+}
+.terrainProfileTool .tpStatus {
+    margin-bottom: 8px;
+    opacity: 0.85;
+}
+.terrainProfileTool .tpButtons {
+    display: flex;
+    gap: 6px;
+    margin-bottom: 8px;
+}
+.terrainProfileTool .tpButtons button {
+    cursor: pointer;
+    padding: 4px 10px;
+}
+.terrainProfileTool .tpButtons button:disabled {
+    cursor: default;
+    opacity: 0.5;
+}
+.terrainProfileTool .tpMsg {
+    font-size: 12px;
+    opacity: 0.8;
+    margin-bottom: 6px;
+}
+.terrainProfileTool .tpPlot {
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 3px;
+}

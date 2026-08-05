@@ -1,0 +1,12 @@
+{
+    "name": "TerrainProfile",
+    "type": "tool",
+    "version": "1.0.0",
+    "tier": "community",
+    "defaultIcon": "ChartLine",
+    "toolbarPriority": 1002,
+    "description": "Plots an elevation-vs-distance terrain profile for a line (or two endpoints) picked with the profile:pick interaction.",
+    "paths": {
+        "TerrainProfileTool": "./TerrainProfileTool"
+    }
+}

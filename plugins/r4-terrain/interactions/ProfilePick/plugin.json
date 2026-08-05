@@ -1,0 +1,20 @@
+{
+    "name": "ProfilePick",
+    "type": "interaction",
+    "interactionId": "profile:pick",
+    "description": "Picks terrain-profile endpoints (or a whole line) from clicks on features and shares them with the TerrainProfile tool.",
+    "applicableLayerTypes": [
+        "terrainprofile",
+        "vector",
+        "vectortile",
+        "query"
+    ],
+    "applicableEvents": [
+        "click"
+    ],
+    "phase": "main",
+    "order": 100,
+    "paths": {
+        "ProfilePick": "./ProfilePick"
+    }
+}
