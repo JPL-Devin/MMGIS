@@ -1,0 +1,71 @@
+{
+    "name": "StratUnitLabels",
+    "type": "layerattachment",
+    "attachmentId": "strat_unit_labels",
+    "version": "1.0.0",
+    "tier": "community",
+    "overridable": true,
+    "configPath": "variables.layerAttachments.stratUnitLabels",
+    "description": "Unit names beside each outcrop's column bar. Off unless an admin turns it on.",
+    "capabilities": {
+        "renderers": {
+            "map": {
+                "engines": ["leaflet"]
+            },
+            "globe": false
+        },
+        "host": {
+            "order": 60,
+            "buildsAfterSiblings": true
+        }
+    },
+    "applicableLayerTypes": ["stratcolumn"],
+    "config": {
+        "tab": "Attachment - Markers",
+        "tabOrder": 12,
+        "order": 21,
+        "rows": [
+            {
+                "subname": "Stratigraphic Unit Labels",
+                "components": [
+                    {
+                        "field": "variables.layerAttachments.stratUnitLabels.enabled",
+                        "name": "Enabled",
+                        "description": "",
+                        "type": "switch",
+                        "width": 3,
+                        "defaultChecked": false
+                    },
+                    {
+                        "field": "variables.layerAttachments.stratUnitLabels.showThickness",
+                        "name": "Show Thickness",
+                        "description": "Append each unit's thickness to its name.",
+                        "type": "checkbox",
+                        "width": 3,
+                        "defaultChecked": false,
+                        "disableSwitch": "variables.layerAttachments.stratUnitLabels.enabled"
+                    },
+                    {
+                        "field": "variables.layerAttachments.stratUnitLabels.textColor",
+                        "name": "Text Colour",
+                        "description": "",
+                        "type": "colorpicker",
+                        "width": 3,
+                        "disableSwitch": "variables.layerAttachments.stratUnitLabels.enabled"
+                    },
+                    {
+                        "field": "variables.layerAttachments.stratUnitLabels.side",
+                        "name": "Side",
+                        "description": "",
+                        "type": "dropdown",
+                        "width": 3,
+                        "options": ["left", "right"],
+                        "default": "right",
+                        "disableSwitch": "variables.layerAttachments.stratUnitLabels.enabled"
+                    }
+                ]
+            }
+        ]
+    },
+    "module": "./stratUnitLabels"
+}

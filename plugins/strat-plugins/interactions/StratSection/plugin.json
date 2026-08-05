@@ -1,0 +1,48 @@
+{
+    "name": "StratSection",
+    "type": "interaction",
+    "interactionId": "strat:section",
+    "version": "1.0.0",
+    "tier": "community",
+    "description": "On clicking an outcrop, report its measured section against the layer's unit table.",
+    "applicableLayerTypes": ["stratcolumn"],
+    "applicableEvents": ["click"],
+    "phase": "main",
+    "order": 200,
+    "configPath": "variables.interactions.stratSection",
+    "config": {
+        "rows": [
+            {
+                "components": [
+                    {
+                        "field": "variables.interactions.stratSection.depthProp",
+                        "name": "Depth Property",
+                        "description": "The feature property holding this outcrop's measured depth. Declared by the layer type; type here to override it.",
+                        "type": "text",
+                        "width": 4
+                    },
+                    {
+                        "field": "variables.interactions.stratSection.depthUnit",
+                        "name": "Depth Unit",
+                        "description": "",
+                        "type": "dropdown",
+                        "width": 3,
+                        "options": ["m", "cm", "ft"],
+                        "default": "m"
+                    },
+                    {
+                        "field": "variables.interactions.stratSection.includeMarkers",
+                        "name": "Include Marker Horizons",
+                        "description": "Report the layer's marker horizons that fall within this outcrop's depth.",
+                        "type": "switch",
+                        "width": 5,
+                        "defaultChecked": true
+                    }
+                ]
+            }
+        ]
+    },
+    "paths": {
+        "StratSection": "./StratSection"
+    }
+}

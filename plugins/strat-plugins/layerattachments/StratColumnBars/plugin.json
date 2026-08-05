@@ -1,0 +1,70 @@
+{
+    "name": "StratColumnBars",
+    "type": "layerattachment",
+    "attachmentId": "strat_column_bars",
+    "version": "1.0.0",
+    "tier": "community",
+    "overridable": true,
+    "configPath": "variables.layerAttachments.stratColumnBars",
+    "description": "A stacked unit bar drawn at each outcrop, coloured by the layer's unit table.",
+    "capabilities": {
+        "renderers": {
+            "map": {
+                "engines": ["leaflet"]
+            },
+            "globe": false
+        },
+        "host": {
+            "order": 40
+        }
+    },
+    "applicableLayerTypes": ["stratcolumn"],
+    "config": {
+        "tab": "Attachment - Markers",
+        "tabOrder": 12,
+        "order": 20,
+        "rows": [
+            {
+                "subname": "Stratigraphic Column Bars",
+                "components": [
+                    {
+                        "field": "variables.layerAttachments.stratColumnBars.enabled",
+                        "name": "Enabled",
+                        "description": "This type ships the bars turned on, so an empty form here means 'as the layer type declared'.",
+                        "type": "switch",
+                        "width": 3,
+                        "defaultChecked": true
+                    },
+                    {
+                        "field": "variables.layerAttachments.stratColumnBars.widthMeters",
+                        "name": "Bar Width (m)",
+                        "description": "",
+                        "type": "number",
+                        "width": 3,
+                        "disableSwitch": "variables.layerAttachments.stratColumnBars.enabled"
+                    },
+                    {
+                        "field": "variables.layerAttachments.stratColumnBars.exaggeration",
+                        "name": "Vertical Exaggeration",
+                        "description": "Metres of bar per metre of unit thickness.",
+                        "type": "slider",
+                        "width": 3,
+                        "min": 0.1,
+                        "max": 20,
+                        "step": 0.1,
+                        "disableSwitch": "variables.layerAttachments.stratColumnBars.enabled"
+                    },
+                    {
+                        "field": "variables.layerAttachments.stratColumnBars.outlineColor",
+                        "name": "Outline",
+                        "description": "",
+                        "type": "colorpicker",
+                        "width": 3,
+                        "disableSwitch": "variables.layerAttachments.stratColumnBars.enabled"
+                    }
+                ]
+            }
+        ]
+    },
+    "module": "./stratColumnBars"
+}

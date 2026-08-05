@@ -1,0 +1,180 @@
+{
+    "name": "StratColumn",
+    "type": "layertype",
+    "typeId": "stratcolumn",
+    "extends": "vector",
+    "version": "1.0.0",
+    "tier": "community",
+    "overridable": true,
+    "color": "#4e9a06",
+    "defaultIcon": "Layers",
+    "description": "Outcrops with a measured stratigraphic column at each point.",
+    "capabilities": {
+        "renderers": {
+            "map": {
+                "engines": ["leaflet"]
+            }
+        },
+        "defaultAttachments": {
+            "strat_column_bars": {
+                "widthMeters": 40,
+                "exaggeration": 1,
+                "outlineColor": "#222222"
+            }
+        },
+        "defaultInteractions": {
+            "click": {
+                "strat:section": {
+                    "depthProp": "measured_depth_m",
+                    "depthUnit": "m"
+                }
+            }
+        }
+    },
+    "supportedData": [
+        {
+            "label": "Outcrop measurements (GeoJSON)",
+            "category": "vector",
+            "standards": ["GeoJSON"],
+            "formats": ["application/geo+json"],
+            "extensions": [".json", ".geojson"],
+            "description": "Point features, one per outcrop, each carrying a measured depth property and whatever facies properties the section was logged with."
+        }
+    ],
+    "config": {
+        "tabs": [
+            {
+                "name": "Core",
+                "rows": [
+                    {
+                        "forceHeight": "64px",
+                        "components": [
+                            {
+                                "field": "type",
+                                "name": "Layer Type",
+                                "description": "",
+                                "type": "dropdown",
+                                "width": 2,
+                                "options": ["stratcolumn"]
+                            },
+                            {
+                                "field": "name",
+                                "name": "Layer Name",
+                                "description": "",
+                                "type": "textnotrim",
+                                "width": 8,
+                                "required": true
+                            },
+                            {
+                                "field": "visibility",
+                                "name": "Initially On",
+                                "description": "",
+                                "type": "checkbox",
+                                "width": 2,
+                                "defaultChecked": false
+                            }
+                        ]
+                    },
+                    {
+                        "name": "Outcrops",
+                        "components": [
+                            {
+                                "field": "url",
+                                "name": "Service URL",
+                                "description": "A GeoJSON of outcrop points, or an OGC API Features collection.",
+                                "type": "text",
+                                "width": 8
+                            },
+                            {
+                                "field": "variables.stratColumn.limit",
+                                "name": "Max Outcrops",
+                                "description": "Passed to the service as `limit`.",
+                                "type": "number",
+                                "width": 4,
+                                "default": 1000
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "name": "Stratigraphy",
+                "rows": [
+                    {
+                        "name": "Unit Table",
+                        "components": [
+                            {
+                                "field": "variables.stratColumn.unitTable",
+                                "name": "Units (name, colour, thickness in m — top first)",
+                                "description": "One unit per line, e.g. `Shale,#7a6a53,12.5`. Lines starting with # are ignored. This table drives the column bars, the unit labels and the section readout.",
+                                "type": "textarea",
+                                "rows": 10
+                            }
+                        ]
+                    },
+                    {
+                        "name": "Marker Horizons",
+                        "components": [
+                            {
+                                "field": "variables.stratColumn.markerHorizons",
+                                "name": "Marker Horizons",
+                                "description": "Correlatable surfaces called out on every column.",
+                                "type": "objectarray",
+                                "object": [
+                                    {
+                                        "field": "label",
+                                        "name": "Label",
+                                        "type": "text",
+                                        "width": 5
+                                    },
+                                    {
+                                        "field": "depth",
+                                        "name": "Depth (m)",
+                                        "type": "number",
+                                        "width": 3
+                                    },
+                                    {
+                                        "field": "color",
+                                        "name": "Colour",
+                                        "type": "colorpicker",
+                                        "width": 4
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "name": "Column Appearance",
+                        "components": [
+                            {
+                                "field": "variables.stratColumn.depthProp",
+                                "name": "Depth Property",
+                                "description": "The feature property holding each outcrop's measured depth. A dropdown of the service's own property names is not expressible here — see the container README.",
+                                "type": "text",
+                                "width": 4
+                            },
+                            {
+                                "field": "variables.stratColumn.depthUnit",
+                                "name": "Depth Unit",
+                                "description": "",
+                                "type": "dropdown",
+                                "width": 4,
+                                "options": ["m", "cm", "ft"],
+                                "default": "m"
+                            },
+                            {
+                                "field": "variables.stratColumn.outlineColor",
+                                "name": "Column Outline",
+                                "description": "",
+                                "type": "colorpicker",
+                                "width": 4,
+                                "default": "#222222"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
+    },
+    "module": "./stratColumn"
+}
