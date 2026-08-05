@@ -1,0 +1,16 @@
+{
+    "name": "SampleDepot",
+    "type": "backend",
+    "version": "1.0.0",
+    "description": "Stores sample-tube depots and the tubes left in them, and serves them to the SampleTubes layer type.",
+    "priority": 1000,
+    "overridable": true,
+    "routes": {
+        "prefix": "/api/sampledepot",
+        "auth": "user"
+    },
+    "envs": [],
+    "engines": {
+        "mmgis": ">=4.3.0"
+    }
+}

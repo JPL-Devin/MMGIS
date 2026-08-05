@@ -1,0 +1,43 @@
+{
+    "name": "TubeRetrieve",
+    "type": "interaction",
+    "interactionId": "tube:retrieve",
+    "version": "1.0.0",
+    "description": "Marks the clicked sample tube retrieved (or drops a new one on an empty click) and reloads the layer.",
+    "applicableLayerTypes": [
+        "sampletubes"
+    ],
+    "applicableEvents": [
+        "click"
+    ],
+    "phase": "main",
+    "order": 100,
+    "pluginDependencies": [
+        "sample-depot/layertypes/SampleTubes",
+        "sample-depot/backend/SampleDepot"
+    ],
+    "configPath": "variables.interactions.tubeRetrieve",
+    "config": {
+        "rows": [
+            {
+                "components": [
+                    {
+                        "type": "checkbox",
+                        "name": "Clicking empty map adds a tube",
+                        "width": 6,
+                        "field": "variables.interactions.tubeRetrieve.allowAdd"
+                    },
+                    {
+                        "type": "text",
+                        "name": "Sample type for added tubes",
+                        "width": 6,
+                        "field": "variables.interactions.tubeRetrieve.sampleType"
+                    }
+                ]
+            }
+        ]
+    },
+    "paths": {
+        "TubeRetrieve": "./TubeRetrieve"
+    }
+}
