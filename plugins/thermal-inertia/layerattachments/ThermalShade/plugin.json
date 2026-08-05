@@ -1,0 +1,74 @@
+{
+    "name": "ThermalShade",
+    "type": "layerattachment",
+    "attachmentId": "thermal_shade",
+    "version": "1.0.0",
+    "tier": "community",
+    "overridable": true,
+    "configPath": "variables.layerAttachments.thermalShade",
+    "description": "Shades each of the host's features by an apparent thermal inertia derived from paired day/night temperature properties.",
+    "capabilities": {
+        "renderers": {
+            "map": { "engines": ["leaflet"] },
+            "globe": false
+        },
+        "host": { "order": 100 }
+    },
+    "applicableLayerTypes": ["vector", "query"],
+    "config": {
+        "tab": "Attachment - Markers",
+        "tabOrder": 12,
+        "order": 20,
+        "rows": [
+            {
+                "subname": "Thermal Shade",
+                "components": [
+                    {
+                        "field": "variables.layerAttachments.thermalShade.enabled",
+                        "name": "Enabled",
+                        "description": "Shade features by derived thermal inertia.",
+                        "type": "switch",
+                        "width": 3,
+                        "defaultChecked": false
+                    },
+                    {
+                        "field": "variables.layerAttachments.thermalShade.dayTempProp",
+                        "name": "Day Temp Property",
+                        "description": "Feature property holding the daytime temperature.",
+                        "type": "text",
+                        "width": 3
+                    },
+                    {
+                        "field": "variables.layerAttachments.thermalShade.nightTempProp",
+                        "name": "Night Temp Property",
+                        "description": "Feature property holding the night-time temperature.",
+                        "type": "text",
+                        "width": 3
+                    },
+                    {
+                        "field": "variables.layerAttachments.thermalShade.scale",
+                        "name": "Model Scale",
+                        "description": "Constant in inertia = scale / (day - night).",
+                        "type": "number",
+                        "width": 3
+                    },
+                    {
+                        "field": "variables.layerAttachments.thermalShade.min",
+                        "name": "Ramp Min",
+                        "description": "Low end of the colour-ramp domain (red).",
+                        "type": "number",
+                        "width": 3
+                    },
+                    {
+                        "field": "variables.layerAttachments.thermalShade.max",
+                        "name": "Ramp Max",
+                        "description": "High end of the colour-ramp domain (blue).",
+                        "type": "number",
+                        "width": 3
+                    }
+                ]
+            }
+        ]
+    },
+    "module": "./thermalShade"
+}

@@ -1,0 +1,40 @@
+{
+    "name": "ThermalExplain",
+    "type": "interaction",
+    "interactionId": "thermal:explain",
+    "description": "On click, derives a feature's apparent thermal inertia from its day/night temperatures and shows the computation in a popup.",
+    "applicableLayerTypes": ["vector", "vectortile", "query"],
+    "applicableEvents": ["click"],
+    "phase": "main",
+    "order": 100,
+    "configPath": "variables.interactions.thermalExplain",
+    "config": {
+        "rows": [
+            {
+                "components": [
+                    {
+                        "type": "text",
+                        "name": "Day Temp Property",
+                        "width": 4,
+                        "field": "variables.interactions.thermalExplain.dayTempProp"
+                    },
+                    {
+                        "type": "text",
+                        "name": "Night Temp Property",
+                        "width": 4,
+                        "field": "variables.interactions.thermalExplain.nightTempProp"
+                    },
+                    {
+                        "type": "number",
+                        "name": "Model Scale",
+                        "width": 4,
+                        "field": "variables.interactions.thermalExplain.scale"
+                    }
+                ]
+            }
+        ]
+    },
+    "paths": {
+        "ThermalExplain": "./ThermalExplain"
+    }
+}

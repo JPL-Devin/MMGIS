@@ -1,0 +1,95 @@
+{
+    "name": "ThermalInertia",
+    "type": "layertype",
+    "typeId": "thermalinertia",
+    "extends": "vector",
+    "version": "1.0.0",
+    "tier": "community",
+    "overridable": true,
+    "color": "#d7191c",
+    "defaultIcon": "Polyline",
+    "description": "A vector layer of day/night surface-temperature observations; its features are shaded by, and explain, an apparent thermal-inertia value derived from the diurnal amplitude.",
+    "capabilities": {
+        "defaultAttachments": {
+            "thermal_shade": {
+                "dayTempProp": "temp_day",
+                "nightTempProp": "temp_night",
+                "scale": 1000,
+                "min": 0,
+                "max": 2000
+            }
+        },
+        "defaultInteractions": {
+            "click": {
+                "thermal:explain": {
+                    "dayTempProp": "temp_day",
+                    "nightTempProp": "temp_night",
+                    "scale": 1000
+                }
+            }
+        }
+    },
+    "supportedData": [
+        {
+            "label": "Day/night temperature GeoJSON",
+            "category": "vector",
+            "standards": ["GeoJSON", "RFC 7946"],
+            "formats": ["geojson", "json"],
+            "extensions": [".geojson", ".json"],
+            "urlSchemes": ["{url} (relative to mission dir or absolute)"],
+            "description": "A GeoJSON FeatureCollection of point observations, each carrying a daytime and a night-time surface temperature (default property names 'temp_day' and 'temp_night'). Apparent thermal inertia is derived per feature. Every source vector inherits (file, geodataset, STAC, api).",
+            "procurement": "Any GIS export with paired day/night temperature columns."
+        }
+    ],
+    "config": {
+        "tabs": [
+            {
+                "name": "Core",
+                "rows": [
+                    {
+                        "forceHeight": "64px",
+                        "components": [
+                            {
+                                "field": "type",
+                                "name": "Layer Type",
+                                "description": "",
+                                "type": "dropdown",
+                                "width": 2,
+                                "options": ["thermalinertia"]
+                            },
+                            {
+                                "field": "name",
+                                "name": "Layer Name",
+                                "description": "A display name for the layer.",
+                                "type": "textnotrim",
+                                "width": 8,
+                                "required": true
+                            },
+                            {
+                                "field": "visibility",
+                                "name": "Initially On",
+                                "description": "",
+                                "type": "checkbox",
+                                "width": 2,
+                                "defaultChecked": false
+                            }
+                        ]
+                    },
+                    {
+                        "name": "Source",
+                        "components": [
+                            {
+                                "field": "url",
+                                "name": "Source URL",
+                                "description": "A GeoJSON of point observations with paired day/night temperatures. Relative paths resolve to the mission directory.",
+                                "type": "text",
+                                "width": 12
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
+    },
+    "module": "./thermalInertia"
+}
