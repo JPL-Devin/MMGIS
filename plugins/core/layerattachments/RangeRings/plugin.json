@@ -1,0 +1,188 @@
+{
+    "name": "RangeRings",
+    "type": "layerattachment",
+    "attachmentId": "range_rings",
+    "version": "1.0.0",
+    "tier": "community",
+    "overridable": true,
+    "author": "Devin (plugin authoring exercise)",
+    "license": "Apache-2.0",
+    "keywords": ["rings", "range", "buffer", "annotation"],
+    "configPath": "variables.layerAttachments.rangeRings",
+    "description": "Concentric range rings about a host layer's point features — comm/drive range, blast radius, keep-out zones — declared entirely from Configure as a repeatable list of rings.",
+    "capabilities": {
+        "renderers": {
+            "map": {
+                "engines": ["leaflet"]
+            },
+            "globe": false
+        },
+        "host": {
+            "order": 100
+        }
+    },
+    "applicableLayerTypes": ["vector", "query"],
+    "config": {
+        "tab": "Attachment - Markers",
+        "tabOrder": 12,
+        "order": 9,
+        "rows": [
+            {
+                "subname": "Range Rings",
+                "components": [
+                    {
+                        "field": "variables.layerAttachments.rangeRings.enabled",
+                        "name": "Enabled",
+                        "description": "Draws concentric rings about each point feature of this layer.",
+                        "type": "switch",
+                        "width": 3,
+                        "defaultChecked": false
+                    },
+                    {
+                        "field": "variables.layerAttachments.rangeRings.initialVisibility",
+                        "name": "Initial Visibility",
+                        "description": "Whether the rings sublayer starts on. Users can toggle it in the Layers tool.",
+                        "type": "checkbox",
+                        "width": 3,
+                        "default": true,
+                        "enableWhenField": "variables.layerAttachments.rangeRings.enabled"
+                    },
+                    {
+                        "field": "variables.layerAttachments.rangeRings.units",
+                        "name": "Radius Units",
+                        "description": "Units the ring radii below are given in.",
+                        "type": "dropdown",
+                        "options": ["meters", "kilometers"],
+                        "default": "meters",
+                        "width": 3,
+                        "enableWhenField": "variables.layerAttachments.rangeRings.enabled"
+                    },
+                    {
+                        "field": "variables.layerAttachments.rangeRings.radiusProperty",
+                        "name": "Radius From Property",
+                        "description": "Optional. A feature property holding a per-feature radius; each ring's radius then acts as a multiplier of it (1, 2, 3 = 1x, 2x, 3x remaining drive range).",
+                        "type": "text",
+                        "width": 3,
+                        "enableWhenField": "variables.layerAttachments.rangeRings.enabled"
+                    }
+                ]
+            },
+            {
+                "components": [
+                    {
+                        "type": "gap",
+                        "description": "Each ring below is drawn about every point feature. Radii are sorted outward automatically, so order here does not matter."
+                    }
+                ]
+            },
+            {
+                "components": [
+                    {
+                        "field": "variables.layerAttachments.rangeRings.rings",
+                        "name": "Rings",
+                        "description": "The rings to draw. Add one row per ring.",
+                        "type": "objectarray",
+                        "object": [
+                            {
+                                "field": "radius",
+                                "name": "Radius",
+                                "type": "number",
+                                "width": 3,
+                                "default": 100
+                            },
+                            {
+                                "field": "color",
+                                "name": "Color",
+                                "type": "colorpicker",
+                                "width": 3,
+                                "default": "#4ad4ff"
+                            },
+                            {
+                                "field": "fill",
+                                "name": "Filled",
+                                "type": "checkbox",
+                                "width": 2
+                            },
+                            {
+                                "field": "label",
+                                "name": "Label",
+                                "description": "Shown on the ring. Defaults to the radius in metres.",
+                                "type": "text",
+                                "width": 4
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "subname": "Ring Styling",
+                "components": [
+                    {
+                        "field": "variables.layerAttachments.rangeRings.weight",
+                        "name": "Stroke Weight",
+                        "type": "number",
+                        "min": 0,
+                        "max": 10,
+                        "default": 1,
+                        "width": 2,
+                        "enableWhenField": "variables.layerAttachments.rangeRings.enabled"
+                    },
+                    {
+                        "field": "variables.layerAttachments.rangeRings.opacity",
+                        "name": "Stroke Opacity",
+                        "type": "slider",
+                        "min": 0,
+                        "max": 1,
+                        "step": 0.05,
+                        "default": 0.9,
+                        "width": 3,
+                        "enableWhenField": "variables.layerAttachments.rangeRings.enabled"
+                    },
+                    {
+                        "field": "variables.layerAttachments.rangeRings.fillOpacity",
+                        "name": "Fill Opacity",
+                        "description": "Applies to rings marked Filled above.",
+                        "type": "slider",
+                        "min": 0,
+                        "max": 1,
+                        "step": 0.05,
+                        "default": 0.1,
+                        "width": 3,
+                        "enableWhenField": "variables.layerAttachments.rangeRings.enabled"
+                    },
+                    {
+                        "field": "variables.layerAttachments.rangeRings.dashArray",
+                        "name": "Dash Pattern",
+                        "description": "SVG dash pattern, e.g. '4 6'. Blank for a solid ring.",
+                        "type": "text",
+                        "default": "4 6",
+                        "width": 2,
+                        "enableWhenField": "variables.layerAttachments.rangeRings.enabled"
+                    }
+                ]
+            },
+            {
+                "subname": "Ring Labels",
+                "components": [
+                    {
+                        "field": "variables.layerAttachments.rangeRings.showLabels",
+                        "name": "Show Labels",
+                        "type": "checkbox",
+                        "default": true,
+                        "width": 3,
+                        "enableWhenField": "variables.layerAttachments.rangeRings.enabled"
+                    },
+                    {
+                        "field": "variables.layerAttachments.rangeRings.labelsOnHover",
+                        "name": "Only On Hover",
+                        "description": "Labels appear on hover instead of always being drawn.",
+                        "type": "checkbox",
+                        "width": 3,
+                        "enableWhenField": "variables.layerAttachments.rangeRings.showLabels"
+                    }
+                ]
+            }
+        ]
+    },
+    "module": "./rangeRings"
+}
