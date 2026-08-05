@@ -1,0 +1,73 @@
+{
+    "name": "GustReport",
+    "type": "interaction",
+    "interactionId": "gust:report",
+    "description": "Reports the gust at the clicked weather station.",
+    "applicableLayerTypes": [
+        "windstation",
+        "vector",
+        "query"
+    ],
+    "applicableEvents": [
+        "click"
+    ],
+    "phase": "main",
+    "order": 50,
+    "configPath": "variables.interactions.gustReport",
+    "config": {
+        "rows": [
+            {
+                "components": [
+                    {
+                        "field": "variables.interactions.gustReport.speedProp",
+                        "name": "Speed Property",
+                        "description": "Sustained wind speed.",
+                        "type": "dropdown",
+                        "width": 4,
+                        "options": [
+                            "wind_speed"
+                        ],
+                        "optionsFrom": "layerProperties"
+                    },
+                    {
+                        "field": "variables.interactions.gustReport.gustProp",
+                        "name": "Gust Property",
+                        "description": "Peak gust speed.",
+                        "type": "dropdown",
+                        "width": 4,
+                        "options": [
+                            "wind_gust"
+                        ],
+                        "optionsFrom": "layerProperties"
+                    },
+                    {
+                        "field": "variables.interactions.gustReport.stationIdProp",
+                        "name": "Station Id Property",
+                        "description": "Identifier shown in the report.",
+                        "type": "dropdown",
+                        "width": 4,
+                        "options": [
+                            "station_id"
+                        ],
+                        "optionsFrom": "layerProperties"
+                    }
+                ]
+            },
+            {
+                "components": [
+                    {
+                        "field": "variables.interactions.gustReport.gustThreshold",
+                        "name": "Gust Threshold",
+                        "description": "Gusts below this are not reported.",
+                        "type": "number",
+                        "width": 4,
+                        "default": 0
+                    }
+                ]
+            }
+        ]
+    },
+    "paths": {
+        "GustReport": "./GustReport"
+    }
+}

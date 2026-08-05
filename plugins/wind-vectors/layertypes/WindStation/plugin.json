@@ -1,0 +1,163 @@
+{
+    "name": "WindStation",
+    "type": "layertype",
+    "typeId": "windstation",
+    "extends": "vector",
+    "version": "1.0.0",
+    "tier": "community",
+    "overridable": true,
+    "color": "#4e9a06",
+    "defaultIcon": "Layers",
+    "description": "Weather stations reporting wind speed and direction, with the feature properties those live in chosen per layer.",
+    "capabilities": {
+        "renderers": {
+            "map": {
+                "engines": [
+                    "leaflet"
+                ]
+            }
+        },
+        "defaultAttachments": {
+            "wind_barb": {
+                "speedProp": "wind_speed",
+                "directionProp": "wind_direction",
+                "speedUnits": "knots"
+            }
+        },
+        "defaultInteractions": {
+            "click": {
+                "gust:report": {
+                    "speedProp": "wind_speed",
+                    "gustProp": "wind_gust",
+                    "stationIdProp": "station_id"
+                }
+            }
+        }
+    },
+    "supportedData": [
+        {
+            "label": "Weather station GeoJSON",
+            "category": "vector",
+            "standards": [
+                "GeoJSON"
+            ],
+            "formats": [
+                "geojson"
+            ],
+            "extensions": [
+                ".geojson",
+                ".json"
+            ],
+            "description": "Point features per station, each carrying a wind speed, a wind direction and a station id property."
+        }
+    ],
+    "config": {
+        "tabs": [
+            {
+                "name": "Core",
+                "rows": [
+                    {
+                        "forceHeight": "64px",
+                        "components": [
+                            {
+                                "field": "type",
+                                "name": "Layer Type",
+                                "description": "",
+                                "type": "dropdown",
+                                "width": 2,
+                                "options": [
+                                    "windstation"
+                                ]
+                            },
+                            {
+                                "field": "name",
+                                "name": "Layer Name",
+                                "description": "",
+                                "type": "textnotrim",
+                                "width": 8,
+                                "required": true
+                            },
+                            {
+                                "field": "visibility",
+                                "name": "Initially On",
+                                "description": "",
+                                "type": "checkbox",
+                                "width": 2,
+                                "defaultChecked": false
+                            }
+                        ]
+                    },
+                    {
+                        "name": "WindStation",
+                        "components": [
+                            {
+                                "field": "url",
+                                "name": "Service URL",
+                                "description": "GeoJSON of station points.",
+                                "type": "text",
+                                "width": 12
+                            }
+                        ]
+                    },
+                    {
+                        "name": "Wind Properties",
+                        "components": [
+                            {
+                                "field": "variables.windStation.speedProp",
+                                "name": "Speed Property",
+                                "description": "Feature property holding wind speed.",
+                                "type": "dropdown",
+                                "width": 4,
+                                "options": [
+                                    "wind_speed"
+                                ],
+                                "optionsFrom": "layerProperties"
+                            },
+                            {
+                                "field": "variables.windStation.directionProp",
+                                "name": "Direction Property",
+                                "description": "Feature property holding wind direction in degrees from north.",
+                                "type": "dropdown",
+                                "width": 4,
+                                "options": [
+                                    "wind_direction"
+                                ],
+                                "optionsFrom": "layerProperties"
+                            },
+                            {
+                                "field": "variables.windStation.stationIdProp",
+                                "name": "Station Id Property",
+                                "description": "Feature property holding the station identifier.",
+                                "type": "dropdown",
+                                "width": 4,
+                                "options": [
+                                    "station_id"
+                                ],
+                                "optionsFrom": "layerProperties"
+                            }
+                        ]
+                    },
+                    {
+                        "components": [
+                            {
+                                "field": "variables.windStation.speedUnits",
+                                "name": "Speed Units",
+                                "description": "Barbs are drawn in knots; other units are converted.",
+                                "type": "dropdown",
+                                "width": 4,
+                                "options": [
+                                    "knots",
+                                    "m/s",
+                                    "km/h",
+                                    "mph"
+                                ],
+                                "default": "knots"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
+    },
+    "module": "./windStation"
+}

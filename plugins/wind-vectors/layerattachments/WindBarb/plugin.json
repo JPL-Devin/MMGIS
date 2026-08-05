@@ -1,0 +1,81 @@
+{
+    "name": "WindBarb",
+    "type": "layerattachment",
+    "attachmentId": "wind_barb",
+    "version": "1.0.0",
+    "tier": "community",
+    "overridable": true,
+    "configPath": "variables.layerAttachments.windBarb",
+    "description": "Draws a meteorological wind barb at each station feature.",
+    "capabilities": {
+        "renderers": {
+            "map": {
+                "engines": [
+                    "leaflet"
+                ]
+            },
+            "globe": false
+        },
+        "host": {
+            "order": 100
+        }
+    },
+    "applicableLayerTypes": [
+        "windstation",
+        "vector",
+        "query"
+    ],
+    "config": {
+        "tab": "Attachment - Markers",
+        "tabOrder": 100,
+        "order": 0,
+        "rows": [
+            {
+                "subname": "WindBarb",
+                "components": [
+                    {
+                        "field": "variables.layerAttachments.windBarb.enabled",
+                        "name": "Enabled",
+                        "description": "On by default for windstation layers.",
+                        "type": "switch",
+                        "width": 3,
+                        "defaultChecked": false
+                    },
+                    {
+                        "field": "variables.layerAttachments.windBarb.speedProp",
+                        "name": "Speed Property",
+                        "description": "Leave empty to use the property the layer type declared.",
+                        "type": "dropdown",
+                        "width": 3,
+                        "options": [
+                            "wind_speed"
+                        ],
+                        "optionsFrom": "layerProperties",
+                        "disableSwitch": "variables.layerAttachments.windBarb.enabled"
+                    },
+                    {
+                        "field": "variables.layerAttachments.windBarb.directionProp",
+                        "name": "Direction Property",
+                        "description": "Degrees clockwise from north.",
+                        "type": "dropdown",
+                        "width": 3,
+                        "options": [
+                            "wind_direction"
+                        ],
+                        "optionsFrom": "layerProperties",
+                        "disableSwitch": "variables.layerAttachments.windBarb.enabled"
+                    },
+                    {
+                        "field": "variables.layerAttachments.windBarb.color",
+                        "name": "Barb Colour",
+                        "description": "",
+                        "type": "colorpicker",
+                        "width": 3,
+                        "disableSwitch": "variables.layerAttachments.windBarb.enabled"
+                    }
+                ]
+            }
+        ]
+    },
+    "module": "./windBarb"
+}
