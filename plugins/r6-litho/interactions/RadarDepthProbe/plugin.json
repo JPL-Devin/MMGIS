@@ -1,0 +1,52 @@
+{
+    "name": "RadarDepthProbe",
+    "type": "interaction",
+    "interactionId": "radar:depth:probe",
+    "version": "1.0.0",
+    "tier": "community",
+    "description": "Reports the subsurface depth at the clicked point of a radar sounding track.",
+    "applicableLayerTypes": [
+        "radargram"
+    ],
+    "applicableEvents": [
+        "click"
+    ],
+    "phase": "main",
+    "order": 100,
+    "configPath": "variables.interactions.radarDepthProbe",
+    "config": {
+        "rows": [
+            {
+                "components": [
+                    {
+                        "field": "variables.interactions.radarDepthProbe.twoWayTimeProp",
+                        "name": "Two-way time property (ns)",
+                        "description": "Feature property holding two-way travel time — a number, or one per trace.",
+                        "type": "text",
+                        "width": 4,
+                        "default": "twt_ns"
+                    },
+                    {
+                        "field": "variables.interactions.radarDepthProbe.dielectric",
+                        "name": "Dielectric permittivity",
+                        "description": "Real part, used to convert travel time to depth. 3.15 is water ice.",
+                        "type": "number",
+                        "width": 4,
+                        "default": 3.15
+                    },
+                    {
+                        "field": "variables.interactions.radarDepthProbe.maxDepthMeters",
+                        "name": "Radargram depth (m)",
+                        "description": "The depth the radargram bottom represents, so the reported depth can be placed in the image.",
+                        "type": "number",
+                        "width": 4,
+                        "default": 3000
+                    }
+                ]
+            }
+        ]
+    },
+    "paths": {
+        "RadarDepthProbe": "./RadarDepthProbe"
+    }
+}

@@ -1,0 +1,93 @@
+{
+    "name": "Radargram",
+    "type": "layertype",
+    "typeId": "radargram",
+    "version": "1.0.0",
+    "tier": "community",
+    "overridable": true,
+    "extends": "vector",
+    "color": "#8f5902",
+    "defaultIcon": "Layers",
+    "description": "A subsurface radar sounding track: the ground track on the map, and the radargram itself hung below the surface as a vertical curtain on the globe.",
+    "capabilities": {
+        "renderers": {
+            "globe": {
+                "engines": [
+                    "lithosphere"
+                ]
+            }
+        },
+        "defaultAttachments": {
+            "subsurface_interfaces": {
+                "enabled": true,
+                "interfacesProp": "interfaces",
+                "depthProp": "depth_m",
+                "maxDepthMeters": 3000
+            }
+        },
+        "defaultInteractions": {
+            "click": {
+                "radar:depth:probe": {
+                    "maxDepthMeters": 3000,
+                    "twoWayTimeProp": "twt_ns",
+                    "dielectric": 3.15
+                }
+            }
+        }
+    },
+    "supportedData": [
+        {
+            "label": "Radar sounding track",
+            "category": "vector",
+            "standards": ["GeoJSON"],
+            "formats": ["GeoJSON FeatureCollection of LineStrings"],
+            "extensions": [".json", ".geojson"],
+            "description": "One LineString per radar observation. The feature's properties carry the radargram image url and the depth the image bottom represents (see the Radargram tab)."
+        }
+    ],
+    "config": {
+        "tabs": [
+            {
+                "name": "Radargram",
+                "order": 20,
+                "rows": [
+                    {
+                        "name": "Radargram",
+                        "components": [
+                            {
+                                "field": "variables.radargram.imageProp",
+                                "name": "Image URL property",
+                                "description": "Feature property holding the radargram image url for that track.",
+                                "type": "text",
+                                "width": 4,
+                                "default": "radargram_url"
+                            },
+                            {
+                                "field": "variables.radargram.maxDepthMeters",
+                                "name": "Depth of image bottom (m)",
+                                "description": "What the bottom row of the radargram image represents, in meters below the surface.",
+                                "type": "number",
+                                "width": 4,
+                                "default": 3000
+                            },
+                            {
+                                "field": "variables.radargram.verticalExaggeration",
+                                "name": "Vertical exaggeration",
+                                "description": "Multiplies the hung depth so a shallow sounding is visible at globe scale.",
+                                "type": "number",
+                                "width": 4,
+                                "default": 1
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
+    },
+    "modules": {
+        "globe": {
+            "lithosphere": "./globe/lithosphere"
+        },
+        "config": "./config"
+    }
+}
