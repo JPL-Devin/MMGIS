@@ -1,0 +1,39 @@
+{
+    "name": "SeismicSummary",
+    "type": "interaction",
+    "interactionId": "seismic:summary",
+    "version": "1.0.0",
+    "tier": "community",
+    "description": "Summarises the clicked seismic event and highlights the events near it in time (and their magnitude rings).",
+    "applicableLayerTypes": ["seismic", "vector", "query"],
+    "applicableEvents": ["click"],
+    "phase": "main",
+    "order": 150,
+    "kindAlias": ["seismic"],
+    "configPath": "variables.interactions.seismicSummary",
+    "config": {
+        "rows": [
+            {
+                "components": [
+                    {
+                        "field": "variables.interactions.seismicSummary.windowMinutes",
+                        "name": "Time window (min)",
+                        "description": "Events within this many minutes of the clicked one are highlighted.",
+                        "type": "number",
+                        "width": 4
+                    },
+                    {
+                        "field": "variables.interactions.seismicSummary.highlightColor",
+                        "name": "Highlight colour",
+                        "description": "",
+                        "type": "colorpicker",
+                        "width": 4
+                    }
+                ]
+            }
+        ]
+    },
+    "paths": {
+        "SeismicSummary": "./SeismicSummary"
+    }
+}

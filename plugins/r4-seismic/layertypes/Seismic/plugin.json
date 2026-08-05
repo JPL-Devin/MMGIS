@@ -1,0 +1,98 @@
+{
+    "name": "Seismic",
+    "type": "layertype",
+    "typeId": "seismic",
+    "extends": "vector",
+    "version": "1.0.0",
+    "tier": "community",
+    "overridable": true,
+    "color": "#d7191c",
+    "defaultIcon": "Vibration",
+    "description": "Live seismic events (earthquakes/marsquakes) from an FDSN event service, bounded by the current view, with magnitude and depth as feature properties.",
+    "capabilities": {
+        "renderers": {
+            "map": {
+                "engines": ["leaflet"]
+            }
+        },
+        "defaultInteractions": {
+            "click": ["seismic:summary", "info:open"]
+        }
+    },
+    "supportedData": [
+        {
+            "label": "FDSN event service (GeoJSON)",
+            "category": "vector",
+            "standards": ["FDSN event/1/query", "GeoJSON"],
+            "formats": ["application/geo+json"],
+            "extensions": [],
+            "description": "An FDSN event web service — https://earthquake.usgs.gov/fdsnws/event/1/query — queried with format=geojson and the current view as a bbox. `mag` and the third coordinate are promoted to `magnitude` and `depth_km` feature properties.",
+            "procurement": "None — queried live from the service on every view change."
+        }
+    ],
+    "config": {
+        "tabs": [
+            {
+                "name": "Core",
+                "rows": [
+                    {
+                        "forceHeight": "64px",
+                        "components": [
+                            {
+                                "field": "type",
+                                "name": "Layer Type",
+                                "description": "",
+                                "type": "dropdown",
+                                "width": 2,
+                                "options": ["seismic"]
+                            },
+                            {
+                                "field": "name",
+                                "name": "Layer Name",
+                                "description": "",
+                                "type": "textnotrim",
+                                "width": 8,
+                                "required": true
+                            },
+                            {
+                                "field": "visibility",
+                                "name": "Initially On",
+                                "description": "",
+                                "type": "checkbox",
+                                "width": 2,
+                                "defaultChecked": false
+                            }
+                        ]
+                    },
+                    {
+                        "name": "Seismic",
+                        "components": [
+                            {
+                                "field": "url",
+                                "name": "FDSN Event Service URL",
+                                "description": "Defaults to the USGS earthquake catalog when left blank.",
+                                "type": "text",
+                                "width": 6
+                            },
+                            {
+                                "field": "variables.minMagnitude",
+                                "name": "Min Magnitude",
+                                "description": "Events below this magnitude are not requested.",
+                                "type": "number",
+                                "width": 3
+                            },
+                            {
+                                "field": "variables.limit",
+                                "name": "Max Events",
+                                "description": "Per-request event cap (FDSN limit).",
+                                "type": "number",
+                                "width": 3
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
+    },
+    "module": "./seismic"
+}
