@@ -1,0 +1,106 @@
+{
+    "name": "TruthOffset",
+    "type": "layerattachment",
+    "attachmentId": "truth_offset",
+    "version": "1.0.0",
+    "tier": "community",
+    "overridable": true,
+    "configPath": "variables.layerAttachments.truthOffset",
+    "description": "Draws, on an orbital-prediction layer, a line from each prediction to the ground-truth feature it predicts in another layer, coloured and labelled by the offset in metres.",
+    "capabilities": {
+        "renderers": {
+            "map": {
+                "engines": ["leaflet"]
+            },
+            "globe": false
+        },
+        "host": {
+            "order": 60
+        }
+    },
+    "applicableLayerTypes": ["orbitalprediction", "vector", "query"],
+    "pluginDependencies": ["orbital-crossref/layertypes/OrbitalPrediction"],
+    "config": {
+        "tab": "Attachment - Layers",
+        "tabOrder": 10,
+        "order": 5,
+        "rows": [
+            {
+                "subname": "Truth Offset",
+                "components": [
+                    {
+                        "field": "variables.layerAttachments.truthOffset.enabled",
+                        "name": "Enabled",
+                        "description": "Compare each of this layer's predictions against the nearest/matching feature of another layer.",
+                        "type": "switch",
+                        "width": 3,
+                        "defaultChecked": false
+                    },
+                    {
+                        "field": "variables.layerAttachments.truthOffset.initialVisibility",
+                        "name": "Initial Visibility",
+                        "description": "Whether the offset lines sublayer is initially on.",
+                        "type": "checkbox",
+                        "width": 2,
+                        "defaultChecked": true
+                    },
+                    {
+                        "field": "variables.layerAttachments.truthOffset.truthLayers",
+                        "name": "Ground-truth Layers",
+                        "description": "A comma-separated array of names or UUIDs of the ground-truth layers to compare against. There is no layer picker: this is free text, and a renamed layer silently stops matching.",
+                        "type": "textarray",
+                        "width": 7
+                    }
+                ]
+            },
+            {
+                "components": [
+                    {
+                        "field": "variables.layerAttachments.truthOffset.matchProp",
+                        "name": "Match Property",
+                        "description": "The dot.notated feature property that must be equal in a prediction and its ground truth. Leave empty to match purely by nearest distance. Defaults to _crossrefTruthId, which the orbitalprediction layer type stamps.",
+                        "type": "text",
+                        "width": 4
+                    },
+                    {
+                        "field": "variables.layerAttachments.truthOffset.maxDistanceMeters",
+                        "name": "Max Offset (m)",
+                        "description": "Pairs further apart than this are not drawn.",
+                        "type": "number",
+                        "min": 0,
+                        "width": 3
+                    },
+                    {
+                        "field": "variables.layerAttachments.truthOffset.worstMeters",
+                        "name": "Worst Offset (m)",
+                        "description": "The offset at which a line is drawn fully red. Smaller offsets ramp toward green.",
+                        "type": "number",
+                        "min": 1,
+                        "width": 3
+                    }
+                ]
+            },
+            {
+                "components": [
+                    {
+                        "field": "variables.layerAttachments.truthOffset.showLabels",
+                        "name": "Label Offsets",
+                        "description": "Show the offset in metres as a tooltip on each line.",
+                        "type": "checkbox",
+                        "width": 3,
+                        "defaultChecked": true
+                    },
+                    {
+                        "field": "variables.layerAttachments.truthOffset.style.weight",
+                        "name": "Line Weight",
+                        "description": "The thickness of the offset lines.",
+                        "type": "number",
+                        "min": 1,
+                        "width": 3
+                    }
+                ]
+            }
+        ]
+    },
+    "module": "./truthOffset"
+}

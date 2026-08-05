@@ -1,0 +1,47 @@
+{
+    "name": "TruthOpen",
+    "type": "interaction",
+    "interactionId": "truth:open",
+    "version": "1.0.0",
+    "tier": "community",
+    "description": "Clicking a prediction selects and opens the ground-truth feature it predicts, in another layer, and reports the offset between them.",
+    "applicableLayerTypes": ["orbitalprediction"],
+    "applicableEvents": ["click"],
+    "phase": "main",
+    "order": 100,
+    "configPath": "variables.interactions.truthOpen",
+    "pluginDependencies": ["orbital-crossref/layertypes/OrbitalPrediction"],
+    "config": {
+        "rows": [
+            {
+                "components": [
+                    {
+                        "type": "textarray",
+                        "name": "Ground-truth Layers",
+                        "description": "A comma-separated array of names or UUIDs of the ground-truth layers to search. This duplicates the TruthOffset attachment's identical setting: a plugin may not read another plugin's config subtree, and there is no shared place for a per-layer fact two families need.",
+                        "width": 6,
+                        "field": "variables.interactions.truthOpen.truthLayers"
+                    },
+                    {
+                        "type": "text",
+                        "name": "Match Property",
+                        "description": "The feature property that must be equal in a prediction and its ground truth. Defaults to _crossrefTruthId, which the orbitalprediction layer type stamps.",
+                        "width": 3,
+                        "field": "variables.interactions.truthOpen.matchProp"
+                    },
+                    {
+                        "type": "number",
+                        "name": "Max Offset (m)",
+                        "description": "Do not open a ground-truth feature further away than this.",
+                        "min": 0,
+                        "width": 3,
+                        "field": "variables.interactions.truthOpen.maxDistanceMeters"
+                    }
+                ]
+            }
+        ]
+    },
+    "paths": {
+        "TruthOpen": "./TruthOpen"
+    }
+}

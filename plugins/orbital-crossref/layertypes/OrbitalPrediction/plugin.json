@@ -1,0 +1,104 @@
+{
+    "name": "OrbitalPrediction",
+    "type": "layertype",
+    "typeId": "orbitalprediction",
+    "extends": "vector",
+    "version": "1.0.0",
+    "tier": "community",
+    "overridable": true,
+    "color": "#4e9a06",
+    "defaultIcon": "Layers",
+    "description": "Predicted surface positions from an orbital propagation service, compared against a ground-truth vector layer the mission already has.",
+    "capabilities": {
+        "renderers": {
+            "map": {
+                "engines": [
+                    "leaflet"
+                ]
+            }
+        },
+        "defaultAttachments": {
+            "truth_offset": {
+                "matchProp": "_crossrefTruthId",
+                "worstMeters": 1000
+            }
+        },
+        "defaultInteractions": {
+            "click": {
+                "truth:open": {
+                    "matchProp": "_crossrefTruthId"
+                }
+            }
+        }
+    },
+    "supportedData": [
+        {
+            "label": "Orbital prediction service",
+            "category": "vector",
+            "standards": ["OGC API - Features"],
+            "formats": ["GeoJSON"],
+            "extensions": [".json", ".geojson"],
+            "description": "A GeoJSON endpoint of predicted surface positions, optionally bbox- and datetime-parameterized."
+        }
+    ],
+    "config": {
+        "tabs": [
+            {
+                "name": "Core",
+                "rows": [
+                    {
+                        "forceHeight": "64px",
+                        "components": [
+                            {
+                                "field": "type",
+                                "name": "Layer Type",
+                                "description": "",
+                                "type": "dropdown",
+                                "width": 2,
+                                "options": [
+                                    "orbitalprediction"
+                                ]
+                            },
+                            {
+                                "field": "name",
+                                "name": "Layer Name",
+                                "description": "",
+                                "type": "textnotrim",
+                                "width": 8,
+                                "required": true
+                            },
+                            {
+                                "field": "visibility",
+                                "name": "Initially On",
+                                "description": "",
+                                "type": "checkbox",
+                                "width": 2,
+                                "defaultChecked": false
+                            }
+                        ]
+                    },
+                    {
+                        "name": "OrbitalPrediction",
+                        "components": [
+                            {
+                                "field": "url",
+                                "name": "Service URL",
+                                "description": "A GeoJSON endpoint of predicted positions. bbox and datetime are appended by the type.",
+                                "type": "text",
+                                "width": 8
+                            },
+                            {
+                                "field": "variables.crossref.truthIdProp",
+                                "name": "Ground-truth ID Property",
+                                "description": "The prediction property naming the ground-truth feature it predicts. Copied to _crossrefTruthId, which is what the TruthOffset attachment and the truth:open interaction match on.",
+                                "type": "text",
+                                "width": 4
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
+    },
+    "module": "./orbitalPrediction"
+}
