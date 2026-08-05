@@ -1,0 +1,14 @@
+{
+    "name": "Spectra",
+    "type": "tool",
+    "version": "1.0.0",
+    "tier": "community",
+    "author": "r5-spectra",
+    "license": "Apache-2.0",
+    "description": "Plots the spectra of the points selected by the spectra:select interaction, together.",
+    "defaultIcon": "chart-bell-curve",
+    "toolbarPriority": 501,
+    "paths": {
+        "SpectraTool": "./SpectraTool"
+    }
+}

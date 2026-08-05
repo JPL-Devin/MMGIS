@@ -1,0 +1,148 @@
+{
+    "name": "SpectraPoints",
+    "type": "layertype",
+    "typeId": "spectrapoints",
+    "extends": "vector",
+    "version": "1.0.0",
+    "tier": "community",
+    "overridable": true,
+    "color": "#4e9a06",
+    "defaultIcon": "chart-bell-curve",
+    "description": "Instrument observation points that each carry a wavelength/reflectance spectrum.",
+    "author": "r5-spectra",
+    "license": "Apache-2.0",
+    "capabilities": {
+        "renderers": {
+            "map": {
+                "engines": ["leaflet"]
+            }
+        },
+        "defaultInteractions": {
+            "click": ["spectra:select"]
+        }
+    },
+    "supportedData": [
+        {
+            "label": "GeoJSON point spectra",
+            "category": "vector",
+            "standards": ["GeoJSON"],
+            "formats": ["application/geo+json"],
+            "extensions": [".json", ".geojson"],
+            "description": "Point features whose configured spectrum property holds parallel wavelength and reflectance arrays. With no URL configured the type synthesises plausible VSWIR-shaped spectra instead."
+        }
+    ],
+    "config": {
+        "tabs": [
+            {
+                "name": "Core",
+                "rows": [
+                    {
+                        "forceHeight": "64px",
+                        "components": [
+                            {
+                                "field": "type",
+                                "name": "Layer Type",
+                                "description": "",
+                                "type": "dropdown",
+                                "width": 2,
+                                "options": ["spectrapoints"]
+                            },
+                            {
+                                "field": "name",
+                                "name": "Layer Name",
+                                "description": "",
+                                "type": "textnotrim",
+                                "width": 8,
+                                "required": true
+                            },
+                            {
+                                "field": "visibility",
+                                "name": "Initially On",
+                                "description": "",
+                                "type": "checkbox",
+                                "width": 2,
+                                "defaultChecked": false
+                            }
+                        ]
+                    },
+                    {
+                        "name": "SpectraPoints",
+                        "components": [
+                            {
+                                "field": "url",
+                                "name": "Service URL",
+                                "description": "GeoJSON of point features carrying spectra. Leave empty to synthesise demo spectra.",
+                                "type": "text",
+                                "width": 12
+                            }
+                        ]
+                    },
+                    {
+                        "components": [
+                            {
+                                "field": "variables.spectra.spectrumProp",
+                                "name": "Spectrum Property",
+                                "description": "Feature property holding the spectrum object.",
+                                "type": "text",
+                                "width": 3,
+                                "default": "spectrum"
+                            },
+                            {
+                                "field": "variables.spectra.wavelengthKey",
+                                "name": "Wavelength Key",
+                                "description": "Key inside the spectrum object holding the wavelength array.",
+                                "type": "text",
+                                "width": 3,
+                                "default": "wavelengths"
+                            },
+                            {
+                                "field": "variables.spectra.reflectanceKey",
+                                "name": "Reflectance Key",
+                                "description": "Key inside the spectrum object holding the reflectance array.",
+                                "type": "text",
+                                "width": 3,
+                                "default": "reflectance"
+                            },
+                            {
+                                "field": "variables.spectra.wavelengthUnits",
+                                "name": "Wavelength Units",
+                                "description": "Axis label for the plot.",
+                                "type": "text",
+                                "width": 3,
+                                "default": "nm"
+                            }
+                        ]
+                    },
+                    {
+                        "components": [
+                            {
+                                "field": "variables.spectra.maxSelections",
+                                "name": "Max Compared Spectra",
+                                "description": "How many clicked points the Spectra tool keeps for comparison.",
+                                "type": "number",
+                                "width": 3,
+                                "default": 4
+                            },
+                            {
+                                "field": "variables.spectra.count",
+                                "name": "Synthetic Point Count",
+                                "description": "Only used when no Service URL is configured.",
+                                "type": "number",
+                                "width": 3,
+                                "default": 24
+                            },
+                            {
+                                "field": "variables.spectra.bbox",
+                                "name": "Synthetic BBox",
+                                "description": "minx,miny,maxx,maxy for synthesised points.",
+                                "type": "textarray",
+                                "width": 6
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
+    },
+    "module": "./spectraPoints"
+}

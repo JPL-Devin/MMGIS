@@ -1,0 +1,58 @@
+{
+    "name": "SpectraSelect",
+    "type": "interaction",
+    "version": "1.0.0",
+    "tier": "community",
+    "author": "r5-spectra",
+    "license": "Apache-2.0",
+    "interactionId": "spectra:select",
+    "description": "Adds the clicked point's spectrum to the Spectra tool's comparison set (clicking it again removes it).",
+    "applicableLayerTypes": ["spectrapoints", "vector", "vectortile"],
+    "applicableEvents": ["click"],
+    "phase": "main",
+    "order": 200,
+    "kindAlias": ["spectra"],
+    "pluginDependencies": ["r5-spectra/tools/Spectra"],
+    "configPath": "variables.interactions.spectraSelect",
+    "config": {
+        "rows": [
+            {
+                "components": [
+                    {
+                        "type": "text",
+                        "name": "Spectrum Property",
+                        "description": "Overrides the layer type's spectrum property, for a layer that is not a SpectraPoints layer.",
+                        "width": 4,
+                        "field": "variables.interactions.spectraSelect.spectrumProp"
+                    },
+                    {
+                        "type": "text",
+                        "name": "Wavelength Key",
+                        "width": 4,
+                        "field": "variables.interactions.spectraSelect.wavelengthKey"
+                    },
+                    {
+                        "type": "text",
+                        "name": "Reflectance Key",
+                        "width": 4,
+                        "field": "variables.interactions.spectraSelect.reflectanceKey"
+                    }
+                ]
+            },
+            {
+                "components": [
+                    {
+                        "type": "number",
+                        "name": "Max Compared Spectra",
+                        "description": "Overrides the layer type's own maximum.",
+                        "width": 4,
+                        "field": "variables.interactions.spectraSelect.maxSelections"
+                    }
+                ]
+            }
+        ]
+    },
+    "paths": {
+        "SpectraSelect": "./SpectraSelect"
+    }
+}

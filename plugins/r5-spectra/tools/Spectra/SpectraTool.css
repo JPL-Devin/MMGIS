@@ -1,0 +1,35 @@
+.spectraTool {
+}
+.spectraTool_content {
+    padding: 8px;
+}
+.spectraTool_empty {
+    font-size: 12px;
+    opacity: 0.7;
+}
+.spectraTool_plot {
+    background: var(--color-a);
+}
+.spectraTool_legend {
+    list-style: none;
+    margin: 4px 0 0 0;
+    padding: 0;
+}
+.spectraTool_legend li {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 12px;
+}
+.spectraTool_swatch {
+    width: 10px;
+    height: 10px;
+    border-radius: 2px;
+    flex: 0 0 auto;
+}
+.spectraTool_label {
+    flex: 1 1 auto;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
