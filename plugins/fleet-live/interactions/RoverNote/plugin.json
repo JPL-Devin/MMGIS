@@ -1,0 +1,36 @@
+{
+    "name": "RoverNote",
+    "type": "interaction",
+    "interactionId": "rover:note",
+    "version": "1.0.0",
+    "description": "Writes an operator note for the clicked rover through the FleetState backend and refreshes the layer.",
+    "applicableLayerTypes": ["fleetrovers"],
+    "applicableEvents": ["click"],
+    "phase": "main",
+    "order": 100,
+    "pluginDependencies": ["fleet-live/backend/FleetState"],
+    "configPath": "variables.interactions.roverNote",
+    "config": {
+        "rows": [
+            {
+                "components": [
+                    {
+                        "type": "text",
+                        "name": "Rover ID property",
+                        "width": 6,
+                        "field": "variables.interactions.roverNote.idProp"
+                    },
+                    {
+                        "type": "text",
+                        "name": "Note prefix",
+                        "width": 6,
+                        "field": "variables.interactions.roverNote.notePrefix"
+                    }
+                ]
+            }
+        ]
+    },
+    "paths": {
+        "RoverNote": "./RoverNote"
+    }
+}

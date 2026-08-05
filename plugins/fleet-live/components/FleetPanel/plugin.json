@@ -1,0 +1,29 @@
+{
+    "name": "FleetPanel",
+    "type": "component",
+    "version": "1.0.0",
+    "defaultIcon": "robot-industrial",
+    "description": "Fleet-wide rover state readout, polled from the FleetState backend plugin.",
+    "hasVars": true,
+    "pluginDependencies": ["fleet-live/backend/FleetState"],
+    "paths": {
+        "FleetPanel": "./FleetPanel"
+    },
+    "config": {
+        "rows": [
+            {
+                "name": "Fleet Panel",
+                "components": [
+                    {
+                        "field": "variables.refreshSeconds",
+                        "name": "Refresh seconds",
+                        "description": "How often to poll /api/fleetstate/state.",
+                        "type": "number",
+                        "width": 6,
+                        "default": 30
+                    }
+                ]
+            }
+        ]
+    }
+}

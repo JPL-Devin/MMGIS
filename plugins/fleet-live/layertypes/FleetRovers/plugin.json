@@ -1,0 +1,74 @@
+{
+    "name": "FleetRovers",
+    "type": "layertype",
+    "typeId": "fleetrovers",
+    "extends": "vector",
+    "version": "1.0.0",
+    "tier": "community",
+    "overridable": true,
+    "color": "#4e9a06",
+    "defaultIcon": "Polyline",
+    "description": "Live rover fleet positions and health, read from the FleetState backend plugin.",
+    "pluginDependencies": ["fleet-live/backend/FleetState"],
+    "capabilities": {
+        "renderers": {
+            "map": {
+                "engines": ["leaflet"]
+            }
+        },
+        "defaultInteractions": {
+            "click": {
+                "rover:note": { "idProp": "rover" }
+            }
+        }
+    },
+    "supportedData": [
+        {
+            "label": "FleetState telemetry",
+            "category": "vector",
+            "standards": ["GeoJSON"],
+            "formats": ["GeoJSON"],
+            "extensions": [],
+            "description": "Rover positions/health served by the FleetState backend plugin at /api/fleetstate/state."
+        }
+    ],
+    "config": {
+        "tabs": [
+            {
+                "name": "Core",
+                "rows": [
+                    {
+                        "forceHeight": "64px",
+                        "components": [
+                            {
+                                "field": "type",
+                                "name": "Layer Type",
+                                "description": "",
+                                "type": "dropdown",
+                                "width": 2,
+                                "options": ["fleetrovers"]
+                            },
+                            {
+                                "field": "name",
+                                "name": "Layer Name",
+                                "description": "",
+                                "type": "textnotrim",
+                                "width": 8,
+                                "required": true
+                            },
+                            {
+                                "field": "visibility",
+                                "name": "Initially On",
+                                "description": "",
+                                "type": "checkbox",
+                                "width": 2,
+                                "defaultChecked": false
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
+    },
+    "module": "./fleetrovers"
+}

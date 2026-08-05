@@ -1,0 +1,12 @@
+{
+    "name": "FleetState",
+    "type": "backend",
+    "version": "1.0.0",
+    "description": "Persistent live rover fleet state: telemetry writes, operator notes, GeoJSON reads.",
+    "priority": 1000,
+    "routes": {
+        "prefix": "/api/fleetstate",
+        "auth": "user"
+    },
+    "envs": []
+}
