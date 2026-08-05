@@ -1,0 +1,16 @@
+{
+    "name": "mmgis-hazard-zones",
+    "version": "1.0.0",
+    "description": "One MMGIS feature across three plugin families: hazard zones (layertype), their exclusion buffers (layerattachment) and a report of which zones a clicked feature falls in (interaction).",
+    "license": "Apache-2.0",
+    "private": true,
+    "keywords": ["mmgis", "mmgis-plugin", "hazard", "safety"],
+    "mmgis": {
+        "container": "hazard-zones",
+        "plugins": [
+            "layertypes/HazardZone",
+            "layerattachments/HazardBuffer",
+            "interactions/HazardReport"
+        ]
+    }
+}

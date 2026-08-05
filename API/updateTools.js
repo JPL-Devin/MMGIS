@@ -286,10 +286,18 @@ function updateInteractions() {
     { loggerCategory: "Interactions" }
   );
 
-  // 2. Build set of all enabled plugin IDs (tools + backend + components)
-  //    for hard dependency checking.
+  // 2. Build set of all enabled plugin IDs (every family) for hard dependency
+  //    checking — an interaction may depend on a layer type or attachment it
+  //    cooperates with, not only on a tool or backend.
   const enabledPluginIds = new Set();
-  for (const type of ["tools", "backend", "components", "interactions"]) {
+  for (const type of [
+    "tools",
+    "backend",
+    "components",
+    "interactions",
+    "layertypes",
+    "layerattachments",
+  ]) {
     const plugins = discoverPlugins(PLUGINS_ROOT, type, "plugin.json", {
       loader: "parse",
       loggerCategory: "Interactions",

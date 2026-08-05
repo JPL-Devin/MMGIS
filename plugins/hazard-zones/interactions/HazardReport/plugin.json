@@ -1,0 +1,43 @@
+{
+    "name": "HazardReport",
+    "type": "interaction",
+    "interactionId": "hazard:report",
+    "version": "1.0.0",
+    "tier": "community",
+    "description": "Reports which hazard zones — and which exclusion buffers — a clicked feature falls in.",
+    "author": "Hazard Zones plugin container",
+    "license": "Apache-2.0",
+    "pluginDependencies": ["hazard-zones/layertypes/HazardZone"],
+    "applicableLayerTypes": ["vector", "query", "hazardzone"],
+    "applicableEvents": ["click"],
+    "phase": "main",
+    "order": 300,
+    "configPath": "variables.interactions.hazardReport",
+    "config": {
+        "rows": [
+            {
+                "components": [
+                    {
+                        "type": "text",
+                        "name": "Label Property",
+                        "description": "Feature property used to name the clicked feature in the report.",
+                        "field": "variables.interactions.hazardReport.labelProperty",
+                        "width": 4,
+                        "default": "name"
+                    },
+                    {
+                        "type": "switch",
+                        "name": "Only Visible Zones",
+                        "description": "Ignore hazard zone layers that are toggled off.",
+                        "field": "variables.interactions.hazardReport.onlyVisibleZones",
+                        "width": 4,
+                        "defaultChecked": true
+                    }
+                ]
+            }
+        ]
+    },
+    "paths": {
+        "HazardReport": "./HazardReport"
+    }
+}

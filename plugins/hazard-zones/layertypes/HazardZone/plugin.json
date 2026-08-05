@@ -1,0 +1,70 @@
+{
+    "name": "HazardZone",
+    "type": "layertype",
+    "typeId": "hazardzone",
+    "version": "1.0.0",
+    "tier": "community",
+    "overridable": true,
+    "extends": "vector",
+    "color": "#e53935",
+    "defaultIcon": "AlertOctagon",
+    "description": "Polygonal hazard zones, coloured and legended by a severity property. Draws as a vector; adds a severity legend and a severity-driven style.",
+    "author": "Hazard Zones plugin container",
+    "license": "Apache-2.0",
+    "keywords": ["hazard", "safety", "zones"],
+    "pluginDependencies": [
+        "hazard-zones/layerattachments/HazardBuffer",
+        "hazard-zones/interactions/HazardReport"
+    ],
+    "capabilities": {
+        "renderers": {
+            "map": {
+                "engines": ["leaflet"]
+            }
+        },
+        "defaultInteractions": {
+            "click": ["hazard:report"]
+        }
+    },
+    "supportedData": [
+        {
+            "label": "GeoJSON polygons with a severity property",
+            "category": "vector",
+            "standards": ["GeoJSON"],
+            "formats": ["application/geo+json"],
+            "extensions": [".json", ".geojson"],
+            "description": "Polygon or MultiPolygon features, each with a `severity` property of low | medium | high | extreme."
+        }
+    ],
+    "config": {
+        "tabs": [
+            {
+                "name": "Hazard Zones",
+                "rows": [
+                    {
+                        "name": "Severity",
+                        "components": [
+                            {
+                                "field": "variables.hazardZone.severityProperty",
+                                "name": "Severity Property",
+                                "description": "Feature property holding low | medium | high | extreme.",
+                                "type": "text",
+                                "width": 4,
+                                "default": "severity"
+                            },
+                            {
+                                "field": "variables.hazardZone.fillOpacity",
+                                "name": "Fill Opacity",
+                                "description": "Fill opacity of a zone.",
+                                "type": "number",
+                                "width": 4,
+                                "default": 0.35
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
+    },
+    "module": "./hazardZone"
+}
