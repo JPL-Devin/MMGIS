@@ -1,0 +1,114 @@
+{
+    "name": "WindField",
+    "type": "layertype",
+    "typeId": "windfield",
+    "extends": "vector",
+    "version": "1.0.0",
+    "tier": "community",
+    "overridable": true,
+    "color": "#4e9a06",
+    "defaultIcon": "weather-windy",
+    "description": "Surface wind observations: a vector layer whose features carry a speed and a direction.",
+    "pluginDependencies": [
+        "wind-field/layerattachments/WindBarbs",
+        "wind-field/interactions/WindReport"
+    ],
+    "capabilities": {
+        "renderers": {
+            "map": {
+                "engines": [
+                    "leaflet"
+                ]
+            }
+        },
+        "defaultAttachments": {
+            "wind_barbs": {
+                "speedProp": "windSpeed",
+                "directionProp": "windDirection",
+                "scale": 200
+            }
+        },
+        "defaultInteractions": {
+            "click": [
+                "wind:report"
+            ]
+        }
+    },
+    "supportedData": [
+        {
+            "label": "Wind observations feed",
+            "category": "vector",
+            "standards": ["GeoJSON"],
+            "formats": ["application/geo+json"],
+            "extensions": [".json", ".geojson"],
+            "description": "Point features with a wind speed (m/s) and a meteorological direction (degrees the wind blows from)."
+        }
+    ],
+    "config": {
+        "tabs": [
+            {
+                "name": "Core",
+                "rows": [
+                    {
+                        "forceHeight": "64px",
+                        "components": [
+                            {
+                                "field": "type",
+                                "name": "Layer Type",
+                                "description": "",
+                                "type": "dropdown",
+                                "width": 2,
+                                "options": [
+                                    "windfield"
+                                ]
+                            },
+                            {
+                                "field": "name",
+                                "name": "Layer Name",
+                                "description": "",
+                                "type": "textnotrim",
+                                "width": 8,
+                                "required": true
+                            },
+                            {
+                                "field": "visibility",
+                                "name": "Initially On",
+                                "description": "",
+                                "type": "checkbox",
+                                "width": 2,
+                                "defaultChecked": false
+                            }
+                        ]
+                    },
+                    {
+                        "name": "WindField",
+                        "components": [
+                            {
+                                "field": "url",
+                                "name": "Service URL",
+                                "description": "A GeoJSON feed of wind observations.",
+                                "type": "text",
+                                "width": 12
+                            },
+                            {
+                                "field": "variables.speedProp",
+                                "name": "Speed Property",
+                                "description": "Feature property holding wind speed in m/s. Defaults to windSpeed.",
+                                "type": "text",
+                                "width": 6
+                            },
+                            {
+                                "field": "variables.directionProp",
+                                "name": "Direction Property",
+                                "description": "Feature property holding the direction the wind blows from, in degrees. Defaults to windDirection.",
+                                "type": "text",
+                                "width": 6
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
+    },
+    "module": "./windField"
+}

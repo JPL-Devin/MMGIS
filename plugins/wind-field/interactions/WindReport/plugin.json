@@ -1,0 +1,42 @@
+{
+    "name": "WindReport",
+    "type": "interaction",
+    "interactionId": "wind:report",
+    "description": "Reports a clicked observation's wind speed, direction and category in a popup.",
+    "version": "1.0.0",
+    "tier": "community",
+    "order": 100,
+    "applicableLayerTypes": [
+        "windfield"
+    ],
+    "configPath": "variables.interactions.windReport",
+    "config": {
+        "rows": [
+            {
+                "components": [
+                    {
+                        "type": "text",
+                        "name": "Speed Property",
+                        "width": 6,
+                        "field": "variables.interactions.windReport.speedProp",
+                        "description": "Defaults to windSpeed, which is what the windfield layer type normalizes onto."
+                    },
+                    {
+                        "type": "text",
+                        "name": "Direction Property",
+                        "width": 6,
+                        "field": "variables.interactions.windReport.directionProp",
+                        "description": "Defaults to windDirection."
+                    }
+                ]
+            }
+        ]
+    },
+    "applicableEvents": [
+        "click"
+    ],
+    "phase": "main",
+    "paths": {
+        "WindReport": "./WindReport"
+    }
+}
