@@ -1,0 +1,118 @@
+{
+    "name": "DustOpacityCompare",
+    "type": "layertype",
+    "typeId": "dustopacitycompare",
+    "extends": "vector",
+    "version": "1.0.0",
+    "tier": "community",
+    "overridable": true,
+    "color": "#b2182b",
+    "defaultIcon": "Layers",
+    "description": "Predicted versus observed dust opacity, acquired as two GeoJSON services and joined into one layer.",
+    "capabilities": {
+        "renderers": {
+            "map": {
+                "engines": [
+                    "leaflet"
+                ]
+            }
+        },
+        "defaultAttachments": {
+            "opacity_delta": {
+                "deltaProp": "dust_delta",
+                "scale": 12
+            }
+        }
+    },
+    "supportedData": [
+        {
+            "label": "Paired GeoJSON point services",
+            "category": "vector",
+            "standards": ["GeoJSON"],
+            "formats": ["application/geo+json"],
+            "extensions": [".json", ".geojson"],
+            "description": "Two point collections sharing a site identifier: one predicted, one observed."
+        }
+    ],
+    "config": {
+        "tabs": [
+            {
+                "name": "Core",
+                "rows": [
+                    {
+                        "forceHeight": "64px",
+                        "components": [
+                            {
+                                "field": "type",
+                                "name": "Layer Type",
+                                "description": "",
+                                "type": "dropdown",
+                                "width": 2,
+                                "options": [
+                                    "dustopacitycompare"
+                                ]
+                            },
+                            {
+                                "field": "name",
+                                "name": "Layer Name",
+                                "description": "",
+                                "type": "textnotrim",
+                                "width": 8,
+                                "required": true
+                            },
+                            {
+                                "field": "visibility",
+                                "name": "Initially On",
+                                "description": "",
+                                "type": "checkbox",
+                                "width": 2,
+                                "defaultChecked": false
+                            }
+                        ]
+                    },
+                    {
+                        "name": "Dust Opacity",
+                        "components": [
+                            {
+                                "field": "url",
+                                "name": "Predicted GeoJSON URL",
+                                "description": "The predicted dataset. Used unless a Predicted URL is set below.",
+                                "type": "text",
+                                "width": 12
+                            },
+                            {
+                                "field": "variables.dustOpacity.observedUrl",
+                                "name": "Observed GeoJSON URL",
+                                "description": "The observed dataset, joined onto the predicted features.",
+                                "type": "text",
+                                "width": 12
+                            },
+                            {
+                                "field": "variables.dustOpacity.joinProp",
+                                "name": "Join Property",
+                                "description": "Property present in both datasets identifying a site. Default: site_id",
+                                "type": "text",
+                                "width": 4
+                            },
+                            {
+                                "field": "variables.dustOpacity.predictedProp",
+                                "name": "Predicted Value Property",
+                                "description": "Default: opacity",
+                                "type": "text",
+                                "width": 4
+                            },
+                            {
+                                "field": "variables.dustOpacity.observedProp",
+                                "name": "Observed Value Property",
+                                "description": "Default: opacity",
+                                "type": "text",
+                                "width": 4
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
+    },
+    "module": "./dustOpacityCompare"
+}

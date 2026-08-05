@@ -1,0 +1,61 @@
+{
+    "name": "OpacityDelta",
+    "type": "layerattachment",
+    "attachmentId": "opacity_delta",
+    "version": "1.0.0",
+    "tier": "community",
+    "overridable": true,
+    "configPath": "variables.layerAttachments.opacityDelta",
+    "description": "Diverging circles sized and coloured by the predicted-minus-observed dust opacity its host joined.",
+    "capabilities": {
+        "renderers": {
+            "map": {
+                "engines": [
+                    "leaflet"
+                ]
+            },
+            "globe": false
+        },
+        "host": {
+            "order": 60
+        }
+    },
+    "applicableLayerTypes": [
+        "dustopacitycompare"
+    ],
+    "config": {
+        "tab": "Attachment - Markers",
+        "tabOrder": 12,
+        "order": 20,
+        "rows": [
+            {
+                "subname": "Opacity Delta",
+                "components": [
+                    {
+                        "field": "variables.layerAttachments.opacityDelta.enabled",
+                        "name": "Enabled",
+                        "description": "",
+                        "type": "switch",
+                        "width": 3,
+                        "defaultChecked": false
+                    },
+                    {
+                        "field": "variables.layerAttachments.opacityDelta.deltaProp",
+                        "name": "Delta Property",
+                        "description": "Feature property holding the difference. Default: dust_delta",
+                        "type": "text",
+                        "width": 5
+                    },
+                    {
+                        "field": "variables.layerAttachments.opacityDelta.scale",
+                        "name": "Max Extra Radius (px)",
+                        "description": "How much the largest delta grows the circle. Default: 12",
+                        "type": "number",
+                        "width": 4
+                    }
+                ]
+            }
+        ]
+    },
+    "module": "./opacityDelta"
+}
