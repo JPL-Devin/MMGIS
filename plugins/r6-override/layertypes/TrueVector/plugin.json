@@ -1,0 +1,88 @@
+{
+    "name": "TrueVector",
+    "type": "layertype",
+    "typeId": "truevector",
+    "extends": "vector",
+    "version": "1.0.0",
+    "tier": "community",
+    "overridable": true,
+    "color": "#4e9a06",
+    "defaultIcon": "Polyline",
+    "description": "A drop-in replacement for the built-in `vector` type: same GeoJSON behaviour, this author's styling and vertex bookkeeping. Intended to supersede `vector` for a mission — see README-FINDINGS.md for why it cannot actually claim `vector`'s typeId.",
+    "capabilities": {
+        "map": {
+            "stacking": "overlay"
+        },
+        "defaultInteractions": {
+            "click": {
+                "vertex:probe": {
+                    "property": "name",
+                    "vertexCountProp": "trueVectorVertexCount"
+                }
+            }
+        }
+    },
+    "supportedData": [
+        {
+            "label": "GeoJSON (as `vector`)",
+            "category": "vector",
+            "standards": ["GeoJSON", "RFC 7946"],
+            "formats": ["geojson", "json"],
+            "extensions": [".geojson", ".json"],
+            "urlSchemes": ["{url} (relative to mission dir or absolute)"],
+            "description": "Exactly what core's `vector` accepts — the data source is inherited unchanged. Only styling and per-feature vertex bookkeeping differ.",
+            "procurement": "Export from any GIS (QGIS, ogr2ogr -f GeoJSON)."
+        }
+    ],
+    "config": {
+        "tabs": [
+            {
+                "name": "Core",
+                "rows": [
+                    {
+                        "forceHeight": "64px",
+                        "components": [
+                            {
+                                "field": "type",
+                                "name": "Layer Type",
+                                "description": "",
+                                "type": "dropdown",
+                                "width": 2,
+                                "options": ["truevector"]
+                            },
+                            {
+                                "field": "name",
+                                "name": "Layer Name",
+                                "description": "",
+                                "type": "textnotrim",
+                                "width": 8,
+                                "required": true
+                            },
+                            {
+                                "field": "visibility",
+                                "name": "Initially On",
+                                "description": "",
+                                "type": "checkbox",
+                                "width": 2,
+                                "defaultChecked": false
+                            }
+                        ]
+                    },
+                    {
+                        "name": "TrueVector",
+                        "components": [
+                            {
+                                "field": "url",
+                                "name": "GeoJSON URL",
+                                "description": "",
+                                "type": "text",
+                                "width": 12
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
+    },
+    "module": "./trueVector"
+}

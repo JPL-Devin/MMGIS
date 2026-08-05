@@ -1,0 +1,39 @@
+{
+    "name": "VertexProbe",
+    "type": "interaction",
+    "interactionId": "vertex:probe",
+    "version": "1.0.0",
+    "tier": "community",
+    "description": "Reports the clicked feature's label and vertex count. Only meaningful on TrueVector, which stamps the count at make time; on any other vector-ish type it walks the geometry itself.",
+    "applicableLayerTypes": ["truevector"],
+    "applicableEvents": ["click"],
+    "phase": "main",
+    "order": 200,
+    "configPath": "variables.interactions.vertexProbe",
+    "config": {
+        "rows": [
+            {
+                "components": [
+                    {
+                        "field": "variables.interactions.vertexProbe.property",
+                        "name": "Label property",
+                        "description": "Feature property to name the feature by. Blank leaves the layer type's declared value standing.",
+                        "type": "text",
+                        "width": 6
+                    },
+                    {
+                        "field": "variables.interactions.vertexProbe.vertexCountProp",
+                        "name": "Vertex-count property",
+                        "description": "Property TrueVector stamped the vertex count onto. Blank uses what the layer type declared.",
+                        "type": "text",
+                        "width": 6
+                    }
+                ]
+            }
+        ]
+    },
+    "pluginDependencies": ["r6-override/layertypes/TrueVector"],
+    "paths": {
+        "VertexProbe": "./VertexProbe"
+    }
+}
