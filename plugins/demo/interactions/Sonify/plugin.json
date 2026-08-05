@@ -1,0 +1,100 @@
+{
+    "name": "Sonify",
+    "id": "demo-interaction-sonify",
+    "version": "1.0.0",
+    "type": "interaction",
+    "tier": "experimental",
+    "interactionId": "sonify",
+    "description": "Plays a short pentatonic tone for a clicked feature, pitched by one of its numeric properties and panned by its longitude — an eyes-free read of the data.",
+    "applicableLayerTypes": ["vector", "vectortile", "query"],
+    "applicableEvents": ["click"],
+    "phase": "postamble",
+    "order": 10,
+    "configPath": "variables.interactions.sonify",
+    "config": {
+        "rows": [
+            {
+                "components": [
+                    {
+                        "type": "text",
+                        "field": "variables.interactions.sonify.property",
+                        "name": "Property",
+                        "description": "Numeric feature property to sonify (dot paths allowed).",
+                        "width": 6
+                    },
+                    {
+                        "type": "number",
+                        "field": "variables.interactions.sonify.min",
+                        "name": "Min",
+                        "description": "Value mapped to the lowest note.",
+                        "width": 3,
+                        "default": 0
+                    },
+                    {
+                        "type": "number",
+                        "field": "variables.interactions.sonify.max",
+                        "name": "Max",
+                        "description": "Value mapped to the highest note.",
+                        "width": 3,
+                        "default": 1
+                    }
+                ]
+            },
+            {
+                "components": [
+                    {
+                        "type": "dropdown",
+                        "field": "variables.interactions.sonify.scale",
+                        "name": "Scale",
+                        "options": ["linear", "log"],
+                        "width": 3,
+                        "default": "linear"
+                    },
+                    {
+                        "type": "dropdown",
+                        "field": "variables.interactions.sonify.waveform",
+                        "name": "Waveform",
+                        "options": ["sine", "triangle", "square", "sawtooth"],
+                        "width": 3,
+                        "default": "triangle"
+                    },
+                    {
+                        "type": "number",
+                        "field": "variables.interactions.sonify.baseHz",
+                        "name": "Base Hz",
+                        "description": "Frequency of the lowest note.",
+                        "width": 3,
+                        "default": 261.63
+                    },
+                    {
+                        "type": "slider",
+                        "field": "variables.interactions.sonify.duration",
+                        "name": "Duration (s)",
+                        "min": 0.1,
+                        "max": 2,
+                        "step": 0.05,
+                        "width": 3,
+                        "default": 0.45
+                    }
+                ]
+            },
+            {
+                "components": [
+                    {
+                        "type": "switch",
+                        "field": "variables.interactions.sonify.pan",
+                        "name": "Pan by longitude",
+                        "description": "Place the note in the stereo field by the feature's longitude.",
+                        "width": 6,
+                        "default": true
+                    }
+                ]
+            }
+        ]
+    },
+    "paths": {
+        "Sonify": "./Sonify"
+    },
+    "author": "Devin (plugin authoring exercise)",
+    "license": "Apache-2.0"
+}
