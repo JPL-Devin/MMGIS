@@ -1,0 +1,66 @@
+{
+    "name": "StrayField",
+    "type": "layerattachment",
+    "attachmentId": "stray_field",
+    "version": "1.0.0",
+    "tier": "community",
+    "overridable": true,
+    "configPath": "variables.layerAttachments.strayField",
+    "description": "",
+    "capabilities": {
+        "renderers": {
+            "map": {
+                "engines": [
+                    "leaflet"
+                ]
+            },
+            "globe": false
+        },
+        "host": {
+            "order": 100
+        }
+    },
+    "applicableLayerTypes": [
+        "vector",
+        "query"
+    ],
+    "config": {
+        "tab": "Attachment - Markers",
+        "tabOrder": 100,
+        "order": 0,
+        "rows": [
+            {
+                "subname": "StrayField",
+                "components": [
+                    {
+                        "field": "variables.layerAttachments.strayField.enabled",
+                        "name": "Enabled",
+                        "type": "switch",
+                        "width": 3,
+                        "optionsFrom": "layerProperties"
+                    },
+                    {
+                        "field": "variables.layerAttachments.labels.font",
+                        "name": "Steal Labels' font",
+                        "type": "text",
+                        "width": 4
+                    },
+                    {
+                        "field": "variables.layerAttachments.strayField.prop",
+                        "name": "Property",
+                        "type": "dropdown",
+                        "width": 4,
+                        "optionsFrom": "notAProvider"
+                    },
+                    {
+                        "field": "variables.layerAttachments.strayField.style",
+                        "name": "Style",
+                        "type": "neverheardofit",
+                        "width": 4
+                    }
+                ]
+            }
+        ]
+    },
+    "module": "./strayField"
+}

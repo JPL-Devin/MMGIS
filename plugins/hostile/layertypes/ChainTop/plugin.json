@@ -1,0 +1,19 @@
+{
+    "name": "ChainTop",
+    "type": "layertype",
+    "typeId": "chaintop",
+    "extends": "chainmid",
+    "version": "1.0.0",
+    "tier": "community",
+    "description": "Two-level extends chain.",
+    "capabilities": {
+        "renderers": {
+            "map": {
+                "engines": [
+                    "leaflet"
+                ]
+            }
+        }
+    },
+    "module": "./chainTop"
+}
