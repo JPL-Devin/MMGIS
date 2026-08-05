@@ -1,0 +1,45 @@
+{
+    "name": "FieldObsAdd",
+    "type": "interaction",
+    "version": "1.0.0",
+    "interactionId": "field:obs:add",
+    "description": "Writes a field observation at the clicked point and refreshes the layer.",
+    "applicableLayerTypes": ["fieldobspoints", "vector"],
+    "applicableEvents": ["click"],
+    "phase": "main",
+    "order": 200,
+    "pluginDependencies": ["field-obs/backend/FieldObs"],
+    "configPath": "variables.interactions.fieldObsAdd",
+    "config": {
+        "rows": [
+            {
+                "components": [
+                    {
+                        "type": "text",
+                        "name": "Observations Endpoint",
+                        "width": 6,
+                        "field": "variables.interactions.fieldObsAdd.endpoint",
+                        "default": "/api/fieldObs/observations"
+                    },
+                    {
+                        "type": "text",
+                        "name": "Note Property",
+                        "width": 3,
+                        "field": "variables.interactions.fieldObsAdd.noteProperty",
+                        "default": "name"
+                    },
+                    {
+                        "type": "text",
+                        "name": "Note Prefix",
+                        "width": 3,
+                        "field": "variables.interactions.fieldObsAdd.notePrefix",
+                        "default": "Observed"
+                    }
+                ]
+            }
+        ]
+    },
+    "paths": {
+        "FieldObsAdd": "./FieldObsAdd"
+    }
+}

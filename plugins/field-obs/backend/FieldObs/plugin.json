@@ -1,0 +1,7 @@
+{
+    "name": "FieldObs",
+    "type": "backend",
+    "version": "1.0.0",
+    "description": "Stores field observations and serves them back as GeoJSON.",
+    "routes": ["/api/fieldObs/observations"]
+}

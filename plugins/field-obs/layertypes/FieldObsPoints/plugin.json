@@ -1,0 +1,95 @@
+{
+    "name": "FieldObsPoints",
+    "type": "layertype",
+    "typeId": "fieldobspoints",
+    "extends": "vector",
+    "version": "1.0.0",
+    "tier": "community",
+    "overridable": true,
+    "color": "#4e9a06",
+    "defaultIcon": "Layers",
+    "description": "Field observations served by the FieldObs backend plugin.",
+    "pluginDependencies": [
+        "field-obs/backend/FieldObs"
+    ],
+    "capabilities": {
+        "renderers": {
+            "map": {
+                "engines": [
+                    "leaflet"
+                ]
+            }
+        },
+        "defaultInteractions": {
+            "click": {
+                "field:obs:add": {
+                    "endpoint": "/api/fieldObs/observations"
+                }
+            }
+        }
+    },
+    "supportedData": [
+        {
+            "label": "FieldObs observations",
+            "category": "vector",
+            "standards": ["GeoJSON"],
+            "formats": ["application/geo+json"],
+            "extensions": [],
+            "description": "Point observations from this plugin's own backend route."
+        }
+    ],
+    "config": {
+        "tabs": [
+            {
+                "name": "Core",
+                "rows": [
+                    {
+                        "forceHeight": "64px",
+                        "components": [
+                            {
+                                "field": "type",
+                                "name": "Layer Type",
+                                "description": "",
+                                "type": "dropdown",
+                                "width": 2,
+                                "options": [
+                                    "fieldobspoints"
+                                ]
+                            },
+                            {
+                                "field": "name",
+                                "name": "Layer Name",
+                                "description": "",
+                                "type": "textnotrim",
+                                "width": 8,
+                                "required": true
+                            },
+                            {
+                                "field": "visibility",
+                                "name": "Initially On",
+                                "description": "",
+                                "type": "checkbox",
+                                "width": 2,
+                                "defaultChecked": false
+                            }
+                        ]
+                    },
+                    {
+                        "name": "FieldObsPoints",
+                        "components": [
+                            {
+                                "field": "variables.fieldObs.endpoint",
+                                "name": "Observations Endpoint",
+                                "description": "Path to the FieldObs read route. Root-relative paths are resolved behind ROOT_PATH.",
+                                "type": "text",
+                                "width": 12,
+                                "default": "/api/fieldObs/observations"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
+    },
+    "module": "./fieldObsPoints"
+}
