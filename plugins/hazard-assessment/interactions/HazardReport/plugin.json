@@ -1,0 +1,40 @@
+{
+    "name": "HazardReport",
+    "type": "interaction",
+    "interactionId": "hazard:report",
+    "version": "1.0.0",
+    "tier": "community",
+    "description": "On clicking a candidate landing point, reports which hazards' keep-out buffers it falls inside and how far it is from the nearest buffer edge.",
+    "applicableLayerTypes": [
+        "vector",
+        "query",
+        "hazardzone"
+    ],
+    "applicableEvents": [
+        "click"
+    ],
+    "phase": "main",
+    "order": 100,
+    "pluginDependencies": [
+        "hazard-assessment/layerattachments/HazardBuffer"
+    ],
+    "configPath": "variables.interactions.hazardReport",
+    "config": {
+        "rows": [
+            {
+                "components": [
+                    {
+                        "field": "variables.interactions.hazardReport.hazardLayers",
+                        "name": "Hazard Layers",
+                        "description": "Comma-separated hazard layer names to assess against. Empty means every layer that has hazard buffers built.",
+                        "type": "text",
+                        "width": 12
+                    }
+                ]
+            }
+        ]
+    },
+    "paths": {
+        "HazardReport": "./HazardReport"
+    }
+}

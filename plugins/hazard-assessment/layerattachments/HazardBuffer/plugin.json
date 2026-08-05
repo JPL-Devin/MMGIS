@@ -1,0 +1,68 @@
+{
+    "name": "HazardBuffer",
+    "type": "layerattachment",
+    "attachmentId": "hazard_buffer",
+    "version": "1.0.0",
+    "tier": "community",
+    "overridable": true,
+    "configPath": "variables.layerAttachments.hazardBuffer",
+    "description": "Draws each hazard feature's keep-out buffer at a distance scaled by its severity and hazard class.",
+    "capabilities": {
+        "renderers": {
+            "map": {
+                "engines": [
+                    "leaflet"
+                ]
+            },
+            "globe": false
+        },
+        "host": {
+            "order": 100
+        }
+    },
+    "applicableLayerTypes": [
+        "hazardzone"
+    ],
+    "config": {
+        "tab": "Attachment - Paths",
+        "tabOrder": 100,
+        "order": 0,
+        "rows": [
+            {
+                "subname": "Hazard Keep-Out Buffers",
+                "components": [
+                    {
+                        "field": "variables.layerAttachments.hazardBuffer.enabled",
+                        "name": "Enabled",
+                        "description": "",
+                        "type": "switch",
+                        "width": 3,
+                        "defaultChecked": false
+                    },
+                    {
+                        "field": "variables.layerAttachments.hazardBuffer.severityProp",
+                        "name": "Severity Property",
+                        "description": "Leave empty to use whatever the layer type declared.",
+                        "type": "text",
+                        "width": 3
+                    },
+                    {
+                        "field": "variables.layerAttachments.hazardBuffer.classProp",
+                        "name": "Hazard Class Property",
+                        "description": "Leave empty to use whatever the layer type declared.",
+                        "type": "text",
+                        "width": 3
+                    },
+                    {
+                        "field": "variables.layerAttachments.hazardBuffer.severityScale",
+                        "name": "Buffer Scale",
+                        "description": "Multiplies every keep-out distance (1 = as the class defaults say).",
+                        "type": "number",
+                        "width": 3
+                    }
+                ]
+            }
+        ]
+    },
+    "module": "./hazardBuffer"
+}

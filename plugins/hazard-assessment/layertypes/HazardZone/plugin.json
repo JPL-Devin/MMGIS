@@ -1,0 +1,117 @@
+{
+    "name": "HazardZone",
+    "type": "layertype",
+    "typeId": "hazardzone",
+    "extends": "vector",
+    "version": "1.0.0",
+    "tier": "community",
+    "overridable": true,
+    "color": "#bd0026",
+    "defaultIcon": "Warning",
+    "description": "Landing hazard polygons (slope, rock abundance, crater rims) whose features carry a severity (0-1) and a hazard class.",
+    "capabilities": {
+        "renderers": {
+            "map": {
+                "engines": [
+                    "leaflet"
+                ]
+            }
+        },
+        "defaultAttachments": {
+            "hazard_buffer": {
+                "severityProp": "severity",
+                "classProp": "hazard_class",
+                "severityScale": 1
+            }
+        },
+        "defaultInteractions": {
+            "click": [
+                "hazard:report"
+            ]
+        }
+    },
+    "supportedData": [
+        {
+            "label": "Hazard polygons",
+            "category": "vector",
+            "standards": [
+                "GeoJSON"
+            ],
+            "formats": [
+                "application/geo+json"
+            ],
+            "extensions": [
+                "geojson",
+                "json"
+            ],
+            "description": "A FeatureCollection of polygons, each with a numeric severity and a hazard class property."
+        }
+    ],
+    "config": {
+        "tabs": [
+            {
+                "name": "Core",
+                "rows": [
+                    {
+                        "forceHeight": "64px",
+                        "components": [
+                            {
+                                "field": "type",
+                                "name": "Layer Type",
+                                "description": "",
+                                "type": "dropdown",
+                                "width": 2,
+                                "options": [
+                                    "hazardzone"
+                                ]
+                            },
+                            {
+                                "field": "name",
+                                "name": "Layer Name",
+                                "description": "",
+                                "type": "textnotrim",
+                                "width": 8,
+                                "required": true
+                            },
+                            {
+                                "field": "visibility",
+                                "name": "Initially On",
+                                "description": "",
+                                "type": "checkbox",
+                                "width": 2,
+                                "defaultChecked": false
+                            }
+                        ]
+                    },
+                    {
+                        "name": "Hazard Zones",
+                        "components": [
+                            {
+                                "field": "url",
+                                "name": "GeoJSON URL",
+                                "description": "A FeatureCollection of hazard polygons.",
+                                "type": "text",
+                                "width": 6
+                            },
+                            {
+                                "field": "variables.hazard.severityProp",
+                                "name": "Severity Property",
+                                "description": "Feature property holding the hazard severity (0-1). Defaults to 'severity'.",
+                                "type": "text",
+                                "width": 3
+                            },
+                            {
+                                "field": "variables.hazard.classProp",
+                                "name": "Hazard Class Property",
+                                "description": "Feature property holding the hazard class (slope, rock_abundance, crater_rim). Defaults to 'hazard_class'.",
+                                "type": "text",
+                                "width": 3
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
+    },
+    "module": "./hazardZone"
+}
