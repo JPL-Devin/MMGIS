@@ -1,0 +1,70 @@
+{
+    "name": "ContactTicks",
+    "type": "layerattachment",
+    "attachmentId": "contact_ticks",
+    "version": "1.0.0",
+    "tier": "community",
+    "overridable": true,
+    "configPath": "variables.layerAttachments.contactTicks",
+    "description": "Marks a host layer's contact lines with a strike/dip tick at each line's midpoint, and dashes the line by a per-feature certainty property. Meant for the geologicunits layer type, which ships it with the property names filled in.",
+    "capabilities": {
+        "renderers": {
+            "map": {
+                "engines": [
+                    "leaflet"
+                ]
+            },
+            "globe": false
+        },
+        "host": {
+            "order": 100
+        }
+    },
+    "applicableLayerTypes": [
+        "geologicunits",
+        "vector",
+        "query"
+    ],
+    "config": {
+        "tab": "Attachment - Paths",
+        "tabOrder": 40,
+        "order": 0,
+        "rows": [
+            {
+                "subname": "Contact Ticks",
+                "components": [
+                    {
+                        "field": "variables.layerAttachments.contactTicks.enabled",
+                        "name": "Enabled",
+                        "description": "Draw strike/dip ticks and certainty dashes on contact lines.",
+                        "type": "switch",
+                        "width": 3,
+                        "defaultChecked": false
+                    },
+                    {
+                        "field": "variables.layerAttachments.contactTicks.strikeProp",
+                        "name": "Strike property",
+                        "description": "Feature property (degrees) the tick is oriented by. Left empty, the tick follows the line's own direction.",
+                        "type": "text",
+                        "width": 3
+                    },
+                    {
+                        "field": "variables.layerAttachments.contactTicks.dipProp",
+                        "name": "Dip property",
+                        "description": "Feature property (degrees) shown in the tick's tooltip.",
+                        "type": "text",
+                        "width": 3
+                    },
+                    {
+                        "field": "variables.layerAttachments.contactTicks.certaintyProp",
+                        "name": "Certainty property",
+                        "description": "Feature property whose value ('approximate'/'inferred'/'concealed') dashes the contact line.",
+                        "type": "text",
+                        "width": 3
+                    }
+                ]
+            }
+        ]
+    },
+    "module": "./contactTicks"
+}

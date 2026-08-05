@@ -1,0 +1,43 @@
+{
+    "name": "ContactUnits",
+    "type": "interaction",
+    "interactionId": "contact:units",
+    "description": "On clicking a contact line, names the two geologic units it separates in a popup.",
+    "applicableLayerTypes": [
+        "geologicunits",
+        "vector",
+        "vectortile",
+        "query"
+    ],
+    "applicableEvents": [
+        "click"
+    ],
+    "phase": "main",
+    "order": 100,
+    "configPath": "variables.interactions.contactUnits",
+    "config": {
+        "rows": [
+            {
+                "components": [
+                    {
+                        "type": "text",
+                        "name": "Left-unit property",
+                        "description": "Feature property naming the unit on one side of the contact. Defaults to 'unit_left'.",
+                        "width": 6,
+                        "field": "variables.interactions.contactUnits.leftProp"
+                    },
+                    {
+                        "type": "text",
+                        "name": "Right-unit property",
+                        "description": "Feature property naming the unit on the other side. Defaults to 'unit_right'.",
+                        "width": 6,
+                        "field": "variables.interactions.contactUnits.rightProp"
+                    }
+                ]
+            }
+        ]
+    },
+    "paths": {
+        "ContactUnits": "./ContactUnits"
+    }
+}

@@ -1,0 +1,97 @@
+{
+    "name": "GeologicUnits",
+    "type": "layertype",
+    "typeId": "geologicunits",
+    "extends": "vector",
+    "version": "1.0.0",
+    "tier": "community",
+    "overridable": true,
+    "color": "#8c5a2b",
+    "defaultIcon": "Hexagon",
+    "description": "Geologic unit polygons: a vector layer styled by a unit code, with a legend derived from the data. Ships the contact-ticks attachment and the contact-units interaction so units, their contacts and their labels are one installable feature.",
+    "capabilities": {
+        "defaultAttachments": {
+            "contact_ticks": {
+                "strikeProp": "strike",
+                "dipProp": "dip",
+                "certaintyProp": "certainty",
+                "tickSizeDeg": 0.02
+            }
+        },
+        "defaultInteractions": {
+            "click": [
+                "contact:units"
+            ]
+        }
+    },
+    "supportedData": [
+        {
+            "label": "Example service",
+            "category": "vector",
+            "standards": [],
+            "formats": [],
+            "extensions": [],
+            "description": ""
+        }
+    ],
+    "config": {
+        "tabs": [
+            {
+                "name": "Core",
+                "rows": [
+                    {
+                        "forceHeight": "64px",
+                        "components": [
+                            {
+                                "field": "type",
+                                "name": "Layer Type",
+                                "description": "",
+                                "type": "dropdown",
+                                "width": 2,
+                                "options": [
+                                    "geologicunits"
+                                ]
+                            },
+                            {
+                                "field": "name",
+                                "name": "Layer Name",
+                                "description": "",
+                                "type": "textnotrim",
+                                "width": 8,
+                                "required": true
+                            },
+                            {
+                                "field": "visibility",
+                                "name": "Initially On",
+                                "description": "",
+                                "type": "checkbox",
+                                "width": 2,
+                                "defaultChecked": false
+                            }
+                        ]
+                    },
+                    {
+                        "name": "GeologicUnits",
+                        "components": [
+                            {
+                                "field": "url",
+                                "name": "GeoJSON URL",
+                                "description": "A GeoJSON FeatureCollection of unit polygons (and, optionally, contact lines).",
+                                "type": "text",
+                                "width": 9
+                            },
+                            {
+                                "field": "variables.geology.unitProp",
+                                "name": "Unit code property",
+                                "description": "Feature property holding each unit's code. The derived legend and per-unit styling read this. Defaults to 'unit'.",
+                                "type": "text",
+                                "width": 3
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
+    },
+    "module": "./geologicUnits"
+}
