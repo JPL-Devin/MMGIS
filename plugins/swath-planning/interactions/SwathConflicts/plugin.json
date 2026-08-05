@@ -1,0 +1,46 @@
+{
+    "name": "SwathConflicts",
+    "type": "interaction",
+    "interactionId": "swath:conflicts",
+    "version": "1.0.0",
+    "tier": "community",
+    "description": "On click, reports the clicked swath's overlaps with the other planned swaths currently in view.",
+    "applicableLayerTypes": [
+        "swathcatalogue"
+    ],
+    "applicableEvents": [
+        "click"
+    ],
+    "phase": "main",
+    "order": 200,
+    "configPath": "variables.interactions.swathConflicts",
+    "config": {
+        "rows": [
+            {
+                "components": [
+                    {
+                        "type": "text",
+                        "name": "Swath id property",
+                        "width": 4,
+                        "field": "variables.interactions.swathConflicts.idProp"
+                    },
+                    {
+                        "type": "text",
+                        "name": "Roll property",
+                        "width": 4,
+                        "field": "variables.interactions.swathConflicts.rollProp"
+                    },
+                    {
+                        "type": "number",
+                        "name": "Max conflicts listed",
+                        "width": 4,
+                        "field": "variables.interactions.swathConflicts.maxListed"
+                    }
+                ]
+            }
+        ]
+    },
+    "paths": {
+        "SwathConflicts": "./SwathConflicts"
+    }
+}

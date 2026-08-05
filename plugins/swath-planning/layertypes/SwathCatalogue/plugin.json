@@ -1,0 +1,124 @@
+{
+    "name": "SwathCatalogue",
+    "type": "layertype",
+    "typeId": "swathcatalogue",
+    "extends": "vector",
+    "version": "1.0.0",
+    "tier": "community",
+    "overridable": true,
+    "color": "#4e9a06",
+    "defaultIcon": "Layers",
+    "description": "Planned observation swaths from a paginated POST-only planning catalogue, re-requested as the view moves.",
+    "capabilities": {
+        "renderers": {
+            "map": {
+                "engines": [
+                    "leaflet"
+                ]
+            }
+        },
+        "defaultAttachments": {
+            "swath_look": {
+                "azimuthProp": "look_azimuth",
+                "rollProp": "roll_deg",
+                "sideProp": "look_direction",
+                "lengthDeg": 0.6
+            }
+        },
+        "defaultInteractions": {
+            "click": {
+                "swath:conflicts": {
+                    "idProp": "swath_id",
+                    "rollProp": "roll_deg"
+                }
+            }
+        }
+    },
+    "supportedData": [
+        {
+            "label": "Swath planning catalogue",
+            "category": "vector",
+            "standards": [],
+            "formats": [
+                "GeoJSON"
+            ],
+            "extensions": [],
+            "description": "A POST-only, paged catalogue of planned observation swaths, queried by viewport bbox."
+        }
+    ],
+    "config": {
+        "tabs": [
+            {
+                "name": "Core",
+                "rows": [
+                    {
+                        "forceHeight": "64px",
+                        "components": [
+                            {
+                                "field": "type",
+                                "name": "Layer Type",
+                                "description": "",
+                                "type": "dropdown",
+                                "width": 2,
+                                "options": [
+                                    "swathcatalogue"
+                                ]
+                            },
+                            {
+                                "field": "name",
+                                "name": "Layer Name",
+                                "description": "",
+                                "type": "textnotrim",
+                                "width": 8,
+                                "required": true
+                            },
+                            {
+                                "field": "visibility",
+                                "name": "Initially On",
+                                "description": "",
+                                "type": "checkbox",
+                                "width": 2,
+                                "defaultChecked": false
+                            }
+                        ]
+                    },
+                    {
+                        "name": "SwathCatalogue",
+                        "components": [
+                            {
+                                "field": "variables.swathCatalogue.endpoint",
+                                "name": "Catalogue POST endpoint",
+                                "description": "Answers POST {bbox, page, pageSize, time} with {features, pages}.",
+                                "type": "text",
+                                "width": 6
+                            },
+                            {
+                                "field": "variables.swathCatalogue.pageSize",
+                                "name": "Page size",
+                                "description": "",
+                                "type": "number",
+                                "width": 3
+                            },
+                            {
+                                "field": "variables.swathCatalogue.maxPages",
+                                "name": "Max pages per view",
+                                "description": "",
+                                "type": "number",
+                                "width": 3
+                            },
+                            {
+                                "field": "variables.dynamicExtent",
+                                "name": "Requery on view change",
+                                "description": "Defaulted on by this type.",
+                                "type": "checkbox",
+                                "width": 3,
+                                "defaultChecked": true
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
+    },
+    "module": "./swathCatalogue"
+}
