@@ -1,0 +1,44 @@
+{
+    "name": "HazardReport",
+    "type": "interaction",
+    "interactionId": "hazard:report",
+    "description": "Classifies the clicked feature's hazard severity and announces it for the HazardHUD component.",
+    "applicableLayerTypes": [
+        "hazardzone",
+        "vector"
+    ],
+    "applicableEvents": [
+        "click"
+    ],
+    "phase": "main",
+    "order": 10,
+    "configPath": "variables.interactions.hazardReport",
+    "config": {
+        "rows": [
+            {
+                "name": "HazardReport",
+                "components": [
+                    {
+                        "field": "variables.interactions.hazardReport.severityProp",
+                        "name": "Severity Property",
+                        "description": "Feature property holding the hazard severity (nominal|caution|hazard, or 0|1|2).",
+                        "type": "text",
+                        "width": 6,
+                        "default": "severity"
+                    },
+                    {
+                        "field": "variables.interactions.hazardReport.labelProp",
+                        "name": "Label Property",
+                        "description": "Feature property the HUD names the zone by.",
+                        "type": "text",
+                        "width": 6,
+                        "default": "name"
+                    }
+                ]
+            }
+        ]
+    },
+    "paths": {
+        "HazardReport": "./HazardReport"
+    }
+}

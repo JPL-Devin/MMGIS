@@ -1,0 +1,99 @@
+{
+    "name": "HazardZone",
+    "type": "layertype",
+    "typeId": "hazardzone",
+    "extends": "vector",
+    "version": "1.0.0",
+    "tier": "community",
+    "overridable": true,
+    "color": "#d63a2f",
+    "defaultIcon": "Layers",
+    "description": "A vector layer whose features carry a hazard severity, reported to the HazardHUD.",
+    "capabilities": {
+        "renderers": {
+            "map": {
+                "engines": [
+                    "leaflet"
+                ]
+            }
+        },
+        "defaultInteractions": {
+            "click": {
+                "hazard:report": {
+                    "severityProp": "severity",
+                    "labelProp": "name"
+                }
+            }
+        }
+    },
+    "supportedData": [
+        {
+            "label": "GeoJSON with a severity property",
+            "category": "vector",
+            "standards": [
+                "GeoJSON"
+            ],
+            "formats": [
+                "application/geo+json"
+            ],
+            "extensions": [
+                ".json",
+                ".geojson"
+            ],
+            "description": "Any GeoJSON whose features carry a hazard severity property."
+        }
+    ],
+    "config": {
+        "tabs": [
+            {
+                "name": "Core",
+                "rows": [
+                    {
+                        "forceHeight": "64px",
+                        "components": [
+                            {
+                                "field": "type",
+                                "name": "Layer Type",
+                                "description": "",
+                                "type": "dropdown",
+                                "width": 2,
+                                "options": [
+                                    "hazardzone"
+                                ]
+                            },
+                            {
+                                "field": "name",
+                                "name": "Layer Name",
+                                "description": "",
+                                "type": "textnotrim",
+                                "width": 8,
+                                "required": true
+                            },
+                            {
+                                "field": "visibility",
+                                "name": "Initially On",
+                                "description": "",
+                                "type": "checkbox",
+                                "width": 2,
+                                "defaultChecked": false
+                            }
+                        ]
+                    },
+                    {
+                        "name": "HazardZone",
+                        "components": [
+                            {
+                                "field": "url",
+                                "name": "URL",
+                                "description": "GeoJSON url.",
+                                "type": "text",
+                                "width": 12
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
+    },
+    "module": "./hazardzone"
+}

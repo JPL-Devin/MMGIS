@@ -1,0 +1,38 @@
+{
+    "name": "HazardHUD",
+    "type": "component",
+    "defaultIcon": "puzzle-outline",
+    "description": "A persistent heads-up readout of hazardzone layers and the last hazard reported by the hazard:report interaction.",
+    "config": {
+        "rows": [
+            {
+                "name": "HazardHUD",
+                "components": [
+                    {
+                        "field": "variables.corner",
+                        "name": "Corner",
+                        "description": "Which bottom corner the HUD sits in.",
+                        "type": "dropdown",
+                        "width": 6,
+                        "options": [
+                            "bottom-right",
+                            "bottom-left"
+                        ],
+                        "default": "bottom-right"
+                    },
+                    {
+                        "field": "variables.bottom",
+                        "name": "Bottom Offset (px)",
+                        "description": "Distance above the bottom of the page.",
+                        "type": "number",
+                        "width": 6,
+                        "default": 40
+                    }
+                ]
+            }
+        ]
+    },
+    "paths": {
+        "HazardHUD": "./HazardHUD"
+    }
+}
