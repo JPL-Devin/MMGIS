@@ -1,0 +1,95 @@
+{
+    "name": "LookDirection",
+    "type": "layerattachment",
+    "attachmentId": "look_direction",
+    "version": "1.0.0",
+    "tier": "community",
+    "overridable": true,
+    "configPath": "variables.layerAttachments.lookDirection",
+    "description": "Draws each image footprint's look direction as a wedge or bearing line from its centre, from the layer's emission/incidence/azimuth properties.",
+    "capabilities": {
+        "renderers": {
+            "map": {
+                "engines": [
+                    "leaflet"
+                ]
+            },
+            "globe": false
+        },
+        "host": {
+            "order": 60
+        }
+    },
+    "applicableLayerTypes": [
+        "imagefootprints",
+        "vector",
+        "query"
+    ],
+    "config": {
+        "tab": "Attachment - Markers",
+        "tabOrder": 12,
+        "order": 20,
+        "rows": [
+            {
+                "subname": "Look Direction",
+                "components": [
+                    {
+                        "field": "variables.layerAttachments.lookDirection.enabled",
+                        "name": "Enabled",
+                        "description": "Draw a look direction per footprint.",
+                        "type": "switch",
+                        "width": 2,
+                        "defaultChecked": false
+                    },
+                    {
+                        "field": "variables.layerAttachments.lookDirection.style",
+                        "name": "Shape",
+                        "description": "wedge (width grows with emission angle) or line",
+                        "type": "dropdown",
+                        "width": 2,
+                        "options": [
+                            "wedge",
+                            "line"
+                        ]
+                    },
+                    {
+                        "field": "variables.layerAttachments.lookDirection.lengthDeg",
+                        "name": "Length (deg)",
+                        "description": "Length of the wedge/line in degrees.",
+                        "type": "number",
+                        "width": 2
+                    },
+                    {
+                        "field": "variables.layerAttachments.lookDirection.color",
+                        "name": "Colour",
+                        "description": "",
+                        "type": "colorpicker",
+                        "width": 2
+                    },
+                    {
+                        "field": "variables.layerAttachments.lookDirection.emissionProp",
+                        "name": "Emission property",
+                        "description": "Defaults to emission_angle.",
+                        "type": "text",
+                        "width": 2
+                    },
+                    {
+                        "field": "variables.layerAttachments.lookDirection.azimuthProp",
+                        "name": "Azimuth property",
+                        "description": "Defaults to sub_spacecraft_azimuth.",
+                        "type": "text",
+                        "width": 2
+                    },
+                    {
+                        "field": "variables.layerAttachments.lookDirection.incidenceProp",
+                        "name": "Incidence property",
+                        "description": "Defaults to incidence_angle.",
+                        "type": "text",
+                        "width": 2
+                    }
+                ]
+            }
+        ]
+    },
+    "module": "./lookDirection"
+}

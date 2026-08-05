@@ -1,0 +1,117 @@
+{
+    "name": "ImageFootprints",
+    "type": "layertype",
+    "typeId": "imagefootprints",
+    "extends": "vector",
+    "version": "1.0.0",
+    "tier": "community",
+    "overridable": true,
+    "color": "#4e9a06",
+    "defaultIcon": "image-filter-center-focus",
+    "description": "Image footprints carrying viewing geometry (emission, incidence, sub-spacecraft azimuth). Draws like a vector layer; adds the stereo defaults the LookDirection attachment and StereoPairs interaction read.",
+    "capabilities": {
+        "renderers": {
+            "map": {
+                "engines": [
+                    "leaflet"
+                ]
+            }
+        },
+        "defaultInteractions": {
+            "click": [
+                "stereo:pairs"
+            ]
+        }
+    },
+    "supportedData": [
+        {
+            "label": "Footprint polygons with viewing geometry",
+            "category": "vector",
+            "standards": [
+                "GeoJSON"
+            ],
+            "formats": [
+                "GeoJSON"
+            ],
+            "extensions": [
+                ".json",
+                ".geojson"
+            ],
+            "description": "Polygon features whose properties include an emission angle, an incidence angle and a sub-spacecraft azimuth in degrees."
+        }
+    ],
+    "config": {
+        "tabs": [
+            {
+                "name": "Core",
+                "rows": [
+                    {
+                        "forceHeight": "64px",
+                        "components": [
+                            {
+                                "field": "type",
+                                "name": "Layer Type",
+                                "description": "",
+                                "type": "dropdown",
+                                "width": 2,
+                                "options": [
+                                    "imagefootprints"
+                                ]
+                            },
+                            {
+                                "field": "name",
+                                "name": "Layer Name",
+                                "description": "",
+                                "type": "textnotrim",
+                                "width": 8,
+                                "required": true
+                            },
+                            {
+                                "field": "visibility",
+                                "name": "Initially On",
+                                "description": "",
+                                "type": "checkbox",
+                                "width": 2,
+                                "defaultChecked": false
+                            }
+                        ]
+                    },
+                    {
+                        "name": "Image Footprints",
+                        "components": [
+                            {
+                                "field": "url",
+                                "name": "URL",
+                                "description": "GeoJSON of footprint polygons.",
+                                "type": "text",
+                                "width": 6
+                            },
+                            {
+                                "field": "variables.stereo.emissionProp",
+                                "name": "Emission property",
+                                "description": "Defaults to emission_angle.",
+                                "type": "text",
+                                "width": 2
+                            },
+                            {
+                                "field": "variables.stereo.azimuthProp",
+                                "name": "Azimuth property",
+                                "description": "Defaults to sub_spacecraft_azimuth.",
+                                "type": "text",
+                                "width": 2
+                            },
+                            {
+                                "field": "variables.stereo.incidenceProp",
+                                "name": "Incidence property",
+                                "description": "Defaults to incidence_angle.",
+                                "type": "text",
+                                "width": 2
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
+    },
+    "module": "./imageFootprints"
+}

@@ -1,0 +1,82 @@
+{
+    "name": "StereoPairs",
+    "type": "interaction",
+    "interactionId": "stereo:pairs",
+    "version": "1.0.0",
+    "tier": "community",
+    "description": "On clicking one footprint, highlights the overlapping footprints whose viewing geometry makes a usable stereo pair.",
+    "applicableLayerTypes": [
+        "imagefootprints",
+        "vector",
+        "query"
+    ],
+    "applicableEvents": [
+        "click"
+    ],
+    "phase": "main",
+    "order": 300,
+    "configPath": "variables.interactions.stereoPairs",
+    "config": {
+        "rows": [
+            {
+                "components": [
+                    {
+                        "type": "number",
+                        "name": "Min convergence (deg)",
+                        "width": 3,
+                        "field": "variables.interactions.stereoPairs.minConvergence"
+                    },
+                    {
+                        "type": "number",
+                        "name": "Max convergence (deg)",
+                        "width": 3,
+                        "field": "variables.interactions.stereoPairs.maxConvergence"
+                    },
+                    {
+                        "type": "number",
+                        "name": "Max emission difference (deg)",
+                        "width": 3,
+                        "field": "variables.interactions.stereoPairs.maxEmissionDifference"
+                    },
+                    {
+                        "type": "number",
+                        "name": "Max illumination difference (deg)",
+                        "width": 3,
+                        "field": "variables.interactions.stereoPairs.maxIlluminationDifference"
+                    }
+                ]
+            },
+            {
+                "components": [
+                    {
+                        "type": "colorpicker",
+                        "name": "Highlight colour",
+                        "width": 3,
+                        "field": "variables.interactions.stereoPairs.color"
+                    },
+                    {
+                        "type": "text",
+                        "name": "Emission property",
+                        "width": 3,
+                        "field": "variables.interactions.stereoPairs.emissionProp"
+                    },
+                    {
+                        "type": "text",
+                        "name": "Azimuth property",
+                        "width": 3,
+                        "field": "variables.interactions.stereoPairs.azimuthProp"
+                    },
+                    {
+                        "type": "text",
+                        "name": "Incidence property",
+                        "width": 3,
+                        "field": "variables.interactions.stereoPairs.incidenceProp"
+                    }
+                ]
+            }
+        ]
+    },
+    "paths": {
+        "StereoPairs": "./StereoPairs"
+    }
+}
