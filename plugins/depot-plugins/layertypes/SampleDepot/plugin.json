@@ -1,0 +1,113 @@
+{
+    "name": "SampleDepot",
+    "type": "layertype",
+    "typeId": "sampledepot",
+    "extends": "vector",
+    "version": "1.0.0",
+    "tier": "community",
+    "overridable": true,
+    "color": "#b8860b",
+    "defaultIcon": "Package",
+    "description": "Sample-tube depots from a depot service: vector drawing, picking and filtering inherited from `vector`, with depot inventory, depot-specific filter aggregations and a capacity ring.",
+    "capabilities": {
+        "renderers": {
+            "map": {
+                "engines": [
+                    "leaflet"
+                ]
+            }
+        },
+        "defaultAttachments": {
+            "depot_capacity": {
+                "capacityProp": "capacity",
+                "metersPerTube": 12
+            }
+        }
+    },
+    "supportedData": [
+        {
+            "label": "Depot service (GeoJSON)",
+            "category": "vector",
+            "standards": [
+                "GeoJSON",
+                "OGC API - Features"
+            ],
+            "formats": [
+                "geojson"
+            ],
+            "extensions": [
+                ".geojson"
+            ],
+            "urlSchemes": [
+                "{url_to_depot_service}"
+            ],
+            "description": "A point FeatureCollection of sample-tube depots, each with a capacity and a stowed count. Bbox-limited when the layer is dynamic-extent.",
+            "procurement": "Any endpoint returning depot points as GeoJSON."
+        }
+    ],
+    "config": {
+        "tabs": [
+            {
+                "name": "Core",
+                "rows": [
+                    {
+                        "forceHeight": "64px",
+                        "components": [
+                            {
+                                "field": "type",
+                                "name": "Layer Type",
+                                "description": "",
+                                "type": "dropdown",
+                                "width": 2,
+                                "optionsFrom": "layerTypes"
+                            },
+                            {
+                                "field": "name",
+                                "name": "Layer Name",
+                                "description": "",
+                                "type": "textnotrim",
+                                "width": 8,
+                                "required": true
+                            },
+                            {
+                                "field": "visibility",
+                                "name": "Initially On",
+                                "description": "",
+                                "type": "checkbox",
+                                "width": 2,
+                                "defaultChecked": false
+                            }
+                        ]
+                    },
+                    {
+                        "name": "Depot",
+                        "components": [
+                            {
+                                "field": "url",
+                                "name": "Depot Service URL",
+                                "description": "Endpoint returning depot points as GeoJSON. Fetched by the type's `source.fetch`.",
+                                "type": "text",
+                                "width": 12
+                            },
+                            {
+                                "field": "variables.depot.capacityProp",
+                                "name": "Capacity Property",
+                                "description": "Feature property holding total tube slots.",
+                                "type": "text",
+                                "width": 3
+                            },
+                            {
+                                "field": "variables.depot.stowedProp",
+                                "name": "Stowed Property",
+                                "description": "Feature property holding tubes currently stowed.",
+                                "type": "text",
+                                "width": 3
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
+    },
+    "module": "./sampleDepot"
+}
