@@ -1,0 +1,154 @@
+{
+    "name": "FOVWedges",
+    "type": "layerattachment",
+    "attachmentId": "fov_wedges",
+    "version": "1.0.0",
+    "tier": "community",
+    "overridable": true,
+    "configPath": "variables.markerAttachments.fovWedges",
+    "description": "An instrument field-of-view wedge at each point feature, oriented by an azimuth property and sized by a half-angle and a range — where a rover's camera was pointed, or what a science target was observed from.",
+    "capabilities": {
+        "renderers": {
+            "map": {
+                "engines": [
+                    "leaflet"
+                ]
+            },
+            "globe": false
+        },
+        "host": {
+            "order": 6
+        }
+    },
+    "applicableLayerTypes": [
+        "vector",
+        "query"
+    ],
+    "config": {
+        "tab": "Attachment - Markers",
+        "tabOrder": 12,
+        "order": 20,
+        "rows": [
+            {
+                "subname": "FOV Wedges",
+                "components": [
+                    {
+                        "field": "variables.markerAttachments.fovWedges.enabled",
+                        "name": "Enabled",
+                        "description": "Draw a field-of-view wedge at each point feature.",
+                        "type": "switch",
+                        "width": 3,
+                        "defaultChecked": false
+                    },
+                    {
+                        "field": "variables.markerAttachments.fovWedges.azimuthProp",
+                        "name": "Azimuth Property",
+                        "description": "Feature property holding the pointing azimuth, clockwise from north. Dotted paths allowed (pose.yaw). Features without it are skipped.",
+                        "type": "text",
+                        "width": 5,
+                        "default": "azimuth"
+                    },
+                    {
+                        "field": "variables.markerAttachments.fovWedges.azimuthUnit",
+                        "name": "Azimuth Unit",
+                        "type": "dropdown",
+                        "options": [
+                            "deg",
+                            "rad"
+                        ],
+                        "width": 2,
+                        "default": "deg"
+                    },
+                    {
+                        "field": "variables.markerAttachments.fovWedges.azimuthOffset",
+                        "name": "Azimuth Offset (°)",
+                        "description": "Added to every azimuth, for instruments mounted off the vehicle's heading.",
+                        "type": "number",
+                        "width": 2,
+                        "default": 0
+                    }
+                ]
+            },
+            {
+                "components": [
+                    {
+                        "field": "variables.markerAttachments.fovWedges.fovDegrees",
+                        "name": "Field of View (°)",
+                        "description": "Full angular width of the wedge. 360 draws a full circle.",
+                        "type": "slider",
+                        "min": 1,
+                        "max": 360,
+                        "step": 1,
+                        "width": 3,
+                        "default": 60
+                    },
+                    {
+                        "field": "variables.markerAttachments.fovWedges.fovProp",
+                        "name": "Field of View Property",
+                        "description": "Optional per-feature override of the field of view, in degrees.",
+                        "type": "text",
+                        "width": 3
+                    },
+                    {
+                        "field": "variables.markerAttachments.fovWedges.rangeMeters",
+                        "name": "Range (m)",
+                        "type": "number",
+                        "width": 3,
+                        "default": 25
+                    },
+                    {
+                        "field": "variables.markerAttachments.fovWedges.rangeProp",
+                        "name": "Range Property",
+                        "description": "Optional per-feature override of the range, in metres.",
+                        "type": "text",
+                        "width": 3
+                    }
+                ]
+            },
+            {
+                "components": [
+                    {
+                        "field": "variables.markerAttachments.fovWedges.color",
+                        "name": "Color",
+                        "type": "colorpicker",
+                        "width": 3,
+                        "default": "#ffcc00"
+                    },
+                    {
+                        "field": "variables.markerAttachments.fovWedges.fillOpacity",
+                        "name": "Fill Opacity",
+                        "type": "slider",
+                        "min": 0,
+                        "max": 1,
+                        "step": 0.05,
+                        "width": 3,
+                        "default": 0.2
+                    },
+                    {
+                        "field": "variables.markerAttachments.fovWedges.weight",
+                        "name": "Stroke Weight",
+                        "type": "number",
+                        "width": 2,
+                        "default": 1
+                    },
+                    {
+                        "field": "variables.markerAttachments.fovWedges.bodyRadius",
+                        "name": "Body Radius (m)",
+                        "description": "Radius of the sphere the wedge geometry is computed on. Defaults to Mars (3396190).",
+                        "type": "number",
+                        "width": 2,
+                        "default": 3396190
+                    },
+                    {
+                        "field": "variables.markerAttachments.fovWedges.segments",
+                        "name": "Arc Segments",
+                        "type": "number",
+                        "width": 2,
+                        "default": 24
+                    }
+                ]
+            }
+        ]
+    },
+    "module": "./fovWedges"
+}
