@@ -1,0 +1,102 @@
+{
+  "name": "FeatureKinship",
+  "type": "interaction",
+  "version": "core",
+  "tier": "core",
+  "overridable": true,
+  "interactionId": "feature:kinship",
+  "description": "Clicking a feature highlights every other feature on the layer that shares a property value with it and dims the rest, turning a target name, campaign id or unit code into a visible set.",
+  "applicableLayerTypes": ["vector", "vectortile", "query"],
+  "applicableEvents": ["click"],
+  "phase": "main",
+  "order": 60,
+  "configPath": "variables.interactions.featureKinship",
+  "config": {
+    "rows": [
+      {
+        "components": [
+          {
+            "type": "text",
+            "field": "variables.interactions.featureKinship.property",
+            "name": "Kinship Property",
+            "description": "Feature property whose value defines kinship (dot paths allowed, e.g. meta.campaign)",
+            "width": 6
+          },
+          {
+            "type": "dropdown",
+            "field": "variables.interactions.featureKinship.matchMode",
+            "name": "Match Mode",
+            "description": "How values are compared: exact, numeric (within tolerance), prefix (first N characters) or contains",
+            "options": ["exact", "numeric", "prefix", "contains"],
+            "default": "exact",
+            "width": 3
+          },
+          {
+            "type": "number",
+            "field": "variables.interactions.featureKinship.tolerance",
+            "name": "Tolerance",
+            "description": "Numeric mode: +/- window. Prefix mode: number of characters compared",
+            "default": 0,
+            "width": 3
+          }
+        ]
+      },
+      {
+        "components": [
+          {
+            "type": "colorpicker",
+            "field": "variables.interactions.featureKinship.highlightColor",
+            "name": "Kin Color",
+            "default": "#00ffc8",
+            "width": 3
+          },
+          {
+            "type": "slider",
+            "field": "variables.interactions.featureKinship.highlightWeight",
+            "name": "Kin Weight",
+            "min": 1,
+            "max": 12,
+            "step": 1,
+            "default": 4,
+            "width": 3
+          },
+          {
+            "type": "slider",
+            "field": "variables.interactions.featureKinship.dimOpacity",
+            "name": "Non-kin Opacity",
+            "description": "How far unrelated features are faded back",
+            "min": 0,
+            "max": 1,
+            "step": 0.05,
+            "default": 0.15,
+            "width": 3
+          },
+          {
+            "type": "number",
+            "field": "variables.interactions.featureKinship.maxFeatures",
+            "name": "Max Kin",
+            "description": "Safety cap on how many features get highlighted at once",
+            "default": 500,
+            "width": 3
+          }
+        ]
+      },
+      {
+        "components": [
+          {
+            "type": "checkbox",
+            "field": "variables.interactions.featureKinship.caseInsensitive",
+            "name": "Case-insensitive",
+            "default": true,
+            "width": 4
+          }
+        ]
+      }
+    ]
+  },
+  "paths": {
+    "FeatureKinship": "./FeatureKinship"
+  },
+  "author": "NASA-AMMOS/MMGIS",
+  "license": "Apache-2.0"
+}
