@@ -7,7 +7,11 @@
 import { test, expect } from '@playwright/test'
 // Stubs window/document so the module can be imported in Node. Must come first.
 import '../../../../../tests/helpers/browser-globals.js'
-import SpectraPoints, { spectraMeta, SPECTRA_DEFAULTS } from '../spectraPoints.js'
+import SpectraPoints, {
+    spectraMeta,
+    stampMeta,
+    SPECTRA_DEFAULTS,
+} from '../spectraPoints.js'
 import { synthesizeCollection, reflectanceCurve, wavelengthGrid } from '../synthesize.js'
 import {
     manifestOf,
@@ -34,13 +38,25 @@ test('the module declares surfaces, not renderer operations @unit', () => {
     for (const key of Object.keys(SpectraPoints)) expect(SURFACES).toContain(key)
 })
 
-test('normalize stamps the facts other plugins read off the layer @unit', () => {
+test('the facts other plugins read are stamped onto the layer @unit', () => {
     const layerObj = { name: 'S' }
-    SpectraPoints.config.normalize(layerObj)
+    stampMeta(layerObj)
     expect(layerObj.variables.spectra).toEqual(SPECTRA_DEFAULTS)
 })
 
-test('a configured property survives normalize, a cleared one does not @unit', () => {
+test('the type does not take over the config surface it inherits @unit', () => {
+    // Module inheritance is per-surface: declaring `config` here would replace
+    // Vector's entire config module, losing its `expand` (STAC) and `normalize`.
+    expect(SpectraPoints.config).toBe(undefined)
+})
+
+test('stamping keeps settings the type does not name @unit', () => {
+    const layerObj = { name: 'S', variables: { spectra: { count: 5 } } }
+    stampMeta(layerObj)
+    expect(layerObj.variables.spectra.count).toBe(5)
+})
+
+test('a configured property is honoured, a cleared one falls back @unit', () => {
     expect(spectraMeta({ variables: { spectra: { spectrumProp: 'vswir' } } }).spectrumProp).toBe('vswir')
     expect(spectraMeta({ variables: { spectra: { spectrumProp: '' } } }).spectrumProp).toBe('spectrum')
     expect(spectraMeta({ variables: { spectra: { maxSelections: '' } } }).maxSelections).toBe(4)

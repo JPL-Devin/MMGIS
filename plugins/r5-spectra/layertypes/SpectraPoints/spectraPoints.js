@@ -4,13 +4,17 @@
  * Instrument observation points that each carry a spectrum (a wavelength array
  * and a reflectance array of the same length) in one feature property.
  *
- * Surfaces declared here:
- *   config.normalize — stamps `variables.spectra` (the self-describing metadata
- *                      other plugins in this feature read: which property holds
- *                      the spectrum, its units, how many points to keep)
- *   source.fetch     — the observations. Either a GeoJSON service (`url`) whose
- *                      features already carry a spectrum, or, with no url,
- *                      synthesised points (see ./synthesize.js).
+ * The only surface declared here is `source.fetch`: the observations, either from
+ * a GeoJSON service (`url`) whose features already carry a spectrum or, with no
+ * url, synthesised (see ./synthesize.js). It also stamps `variables.spectra` —
+ * the self-describing metadata the interaction and the tool read back off the
+ * layer (which property holds the spectrum, its units, how many to compare).
+ *
+ * That stamping wants to be `config.normalize`, but module inheritance is
+ * per-surface and shallow (`LayerTypeRegistry._effectiveModules`), so declaring a
+ * `config` surface here would replace Vector's whole one and silently lose its
+ * `expand` (STAC) and `normalize`. Doing it in `fetch` is the only place an
+ * extending type can add one config fact without taking the surface over.
  *
  * Drawing, picking, filtering and both globes are inherited from `vector`.
  */
@@ -31,7 +35,8 @@ export const SPECTRA_DEFAULTS = {
  */
 export function spectraMeta(layerObj) {
     const configured = layerObj?.variables?.spectra || {}
-    const meta = { ...SPECTRA_DEFAULTS }
+    // Keep anything else configured here (bbox, count) so stamping is lossless.
+    const meta = { ...configured, ...SPECTRA_DEFAULTS }
     Object.keys(SPECTRA_DEFAULTS).forEach((k) => {
         // A cleared Configure field arrives as '', not undefined.
         if (configured[k] !== undefined && configured[k] !== '')
@@ -41,17 +46,20 @@ export function spectraMeta(layerObj) {
     return meta
 }
 
-function normalize(layerObj) {
+/**
+ * Resolves the type's facts and writes them back onto the layer, so every
+ * consumer reads the same resolved values off `layerData.variables.spectra`
+ * rather than re-deriving them.
+ */
+export function stampMeta(layerObj) {
     if (layerObj.variables == null) layerObj.variables = {}
-    // Written back onto the layer so that any consumer — the interaction, the
-    // tool, an attachment — can read the same resolved facts off layerData
-    // instead of re-deriving them.
-    layerObj.variables.spectra = spectraMeta(layerObj)
-    return layerObj
+    const meta = spectraMeta(layerObj)
+    layerObj.variables.spectra = meta
+    return meta
 }
 
 async function fetch(layerObj, ctx) {
-    const meta = spectraMeta(layerObj)
+    const meta = stampMeta(layerObj)
 
     if (ctx.url) {
         const res = await window.fetch(ctx.url, {
@@ -72,7 +80,6 @@ async function fetch(layerObj, ctx) {
 }
 
 const SpectraPoints = {
-    config: { normalize },
     source: { fetch },
 }
 
