@@ -1,0 +1,31 @@
+{
+    "name": "EventSeek",
+    "type": "interaction",
+    "interactionId": "event:seek",
+    "version": "1.0.0",
+    "tier": "community",
+    "description": "Moves the mission clock to the clicked event's own time span.",
+    "applicableLayerTypes": ["missionevents"],
+    "applicableEvents": ["click"],
+    "phase": "main",
+    "configPath": "variables.interactions.eventSeek",
+    "config": {
+        "rows": [
+            {
+                "components": [
+                    {
+                        "field": "variables.interactions.eventSeek.padSec",
+                        "name": "Window Padding (s)",
+                        "description": "Seconds of context kept on either side of the event.",
+                        "type": "number",
+                        "width": 4,
+                        "default": 300
+                    }
+                ]
+            }
+        ]
+    },
+    "paths": {
+        "EventSeek": "./EventSeek"
+    }
+}

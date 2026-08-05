@@ -1,0 +1,61 @@
+{
+    "name": "EventHalo",
+    "type": "layerattachment",
+    "attachmentId": "event_halo",
+    "version": "1.0.0",
+    "tier": "community",
+    "overridable": true,
+    "configPath": "variables.layerAttachments.eventHalo",
+    "description": "A halo around each mission event that grows with the event's progress at the playhead.",
+    "capabilities": {
+        "renderers": {
+            "map": {
+                "engines": [
+                    "leaflet"
+                ]
+            },
+            "globe": false
+        },
+        "host": {
+            "order": 100
+        }
+    },
+    "applicableLayerTypes": [
+        "missionevents"
+    ],
+    "config": {
+        "tab": "Attachment - Markers",
+        "tabOrder": 100,
+        "order": 0,
+        "rows": [
+            {
+                "subname": "Event Halo",
+                "components": [
+                    {
+                        "field": "variables.layerAttachments.eventHalo.enabled",
+                        "name": "Enabled",
+                        "description": "",
+                        "type": "switch",
+                        "width": 3,
+                        "defaultChecked": false
+                    },
+                    {
+                        "field": "variables.layerAttachments.eventHalo.durationProp",
+                        "name": "Duration Property",
+                        "description": "Feature property holding the event's duration in seconds. Left empty, the layer type's own is used.",
+                        "type": "text",
+                        "width": 4
+                    },
+                    {
+                        "field": "variables.layerAttachments.eventHalo.maxRadiusMeters",
+                        "name": "Max Radius (m)",
+                        "description": "Radius of the longest event's halo when complete.",
+                        "type": "number",
+                        "width": 3
+                    }
+                ]
+            }
+        ]
+    },
+    "module": "./eventHalo"
+}

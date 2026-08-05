@@ -1,0 +1,24 @@
+.eventTimelineTool {
+}
+.eventTimelineTool_content {
+    padding: 8px;
+}
+.eventTimelineTool_window {
+    font-size: 11px;
+    opacity: 0.7;
+    padding-bottom: 6px;
+}
+.eventTimelineTool_row {
+    display: flex;
+    justify-content: space-between;
+    padding: 4px 0;
+    border-bottom: 1px solid rgba(128, 128, 128, 0.2);
+}
+.eventTimelineTool_rowMeta {
+    font-size: 11px;
+    opacity: 0.7;
+}
+.eventTimelineTool_empty {
+    font-size: 12px;
+    opacity: 0.6;
+}

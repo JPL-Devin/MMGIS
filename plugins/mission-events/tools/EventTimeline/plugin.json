@@ -1,0 +1,13 @@
+{
+    "name": "EventTimeline",
+    "type": "tool",
+    "version": "1.0.0",
+    "tier": "community",
+    "defaultIcon": "clock-outline",
+    "description": "Lists the mission events inside the current time window.",
+    "toolbarPriority": 1050,
+    "pluginDependencies": ["mission-events/layertypes/MissionEvents"],
+    "paths": {
+        "EventTimelineTool": "./EventTimelineTool"
+    }
+}
