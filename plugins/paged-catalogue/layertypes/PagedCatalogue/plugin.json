@@ -1,0 +1,111 @@
+{
+    "name": "PagedCatalogue",
+    "type": "layertype",
+    "typeId": "pagedcatalogue",
+    "extends": "vector",
+    "version": "1.0.0",
+    "tier": "community",
+    "overridable": true,
+    "color": "#4e9a06",
+    "defaultIcon": "Layers",
+    "description": "A viewport-bound catalogue served page-by-page from a slow endpoint. Draws features as each page arrives (source.emit) and aborts in-flight pages when the view changes (source.signal). Extends vector for drawing/picking/styling.",
+    "capabilities": {
+        "renderers": {
+            "map": {
+                "engines": [
+                    "leaflet"
+                ]
+            }
+        },
+        "defaultInteractions": {
+            "click": [
+                "page:report"
+            ]
+        }
+    },
+    "supportedData": [
+        {
+            "label": "Example service",
+            "category": "vector",
+            "standards": [],
+            "formats": [],
+            "extensions": [],
+            "description": ""
+        }
+    ],
+    "config": {
+        "tabs": [
+            {
+                "name": "Core",
+                "rows": [
+                    {
+                        "forceHeight": "64px",
+                        "components": [
+                            {
+                                "field": "type",
+                                "name": "Layer Type",
+                                "description": "",
+                                "type": "dropdown",
+                                "width": 2,
+                                "options": [
+                                    "pagedcatalogue"
+                                ]
+                            },
+                            {
+                                "field": "name",
+                                "name": "Layer Name",
+                                "description": "",
+                                "type": "textnotrim",
+                                "width": 8,
+                                "required": true
+                            },
+                            {
+                                "field": "visibility",
+                                "name": "Initially On",
+                                "description": "",
+                                "type": "checkbox",
+                                "width": 2,
+                                "defaultChecked": false
+                            }
+                        ]
+                    },
+                    {
+                        "name": "PagedCatalogue",
+                        "components": [
+                            {
+                                "field": "url",
+                                "name": "Service URL",
+                                "description": "Paged endpoint taking ?bbox=&page=&limit=",
+                                "type": "text",
+                                "width": 12
+                            },
+                            {
+                                "field": "variables.pageSize",
+                                "name": "Page Size",
+                                "description": "Features per page (limit)",
+                                "type": "number",
+                                "width": 4
+                            },
+                            {
+                                "field": "variables.maxPages",
+                                "name": "Max Pages",
+                                "description": "Stop after this many pages",
+                                "type": "number",
+                                "width": 4
+                            },
+                            {
+                                "field": "variables.dynamicExtent",
+                                "name": "Viewport-bound",
+                                "description": "Refetch on pan/zoom",
+                                "type": "checkbox",
+                                "width": 4,
+                                "defaultChecked": true
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
+    },
+    "module": "./pagedCatalogue"
+}
