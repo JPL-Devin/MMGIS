@@ -1,0 +1,107 @@
+{
+    "name": "ObservationPlan",
+    "type": "layertype",
+    "typeId": "observationplan",
+    "extends": "vector",
+    "version": "1.0.0",
+    "tier": "community",
+    "overridable": true,
+    "color": "#c67f00",
+    "defaultIcon": "Layers",
+    "description": "Planned instrument observations from an observation-plan service: each feature is a pointed acquisition with an azimuth, a field of view and a range.",
+    "capabilities": {
+        "renderers": {
+            "map": {
+                "engines": ["leaflet"]
+            }
+        },
+        "defaultAttachments": {
+            "fov_footprint": {
+                "azimuthProp": "azimuth",
+                "fovProp": "fov",
+                "rangeProp": "range",
+                "idProp": "obs_id",
+                "defaultFovDeg": 30,
+                "defaultRangeMeters": 500
+            }
+        },
+        "defaultInteractions": {
+            "click": {
+                "fov:inspect": {
+                    "azimuthProp": "azimuth",
+                    "fovProp": "fov",
+                    "rangeProp": "range",
+                    "idProp": "obs_id"
+                }
+            }
+        }
+    },
+    "supportedData": [
+        {
+            "label": "Observation plan service",
+            "category": "vector",
+            "standards": ["OGC API - Features", "GeoJSON"],
+            "formats": ["GeoJSON"],
+            "extensions": [".json", ".geojson"],
+            "description": "A GeoJSON endpoint of planned pointed observations, one Point feature per acquisition."
+        }
+    ],
+    "config": {
+        "tabs": [
+            {
+                "name": "Core",
+                "rows": [
+                    {
+                        "forceHeight": "64px",
+                        "components": [
+                            {
+                                "field": "type",
+                                "name": "Layer Type",
+                                "description": "",
+                                "type": "dropdown",
+                                "width": 2,
+                                "options": ["observationplan"]
+                            },
+                            {
+                                "field": "name",
+                                "name": "Layer Name",
+                                "description": "",
+                                "type": "textnotrim",
+                                "width": 8,
+                                "required": true
+                            },
+                            {
+                                "field": "visibility",
+                                "name": "Initially On",
+                                "description": "",
+                                "type": "checkbox",
+                                "width": 2,
+                                "defaultChecked": false
+                            }
+                        ]
+                    },
+                    {
+                        "name": "Observation Plan",
+                        "components": [
+                            {
+                                "field": "url",
+                                "name": "Plan Service URL",
+                                "description": "GeoJSON endpoint returning planned observations as Point features.",
+                                "type": "text",
+                                "width": 9
+                            },
+                            {
+                                "field": "variables.observationPlan.statusProp",
+                                "name": "Status Property",
+                                "description": "Feature property holding the observation's status (planned / acquired / failed). Drives the default styling.",
+                                "type": "text",
+                                "width": 3
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
+    },
+    "module": "./observationPlan"
+}

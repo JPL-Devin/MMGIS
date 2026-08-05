@@ -1,0 +1,27 @@
+{
+    "name": "FovCoverageBar",
+    "type": "component",
+    "version": "1.0.0",
+    "tier": "community",
+    "defaultIcon": "cctv",
+    "description": "A page-level readout of the last clicked planned observation: its pointing and the other observations it overlaps.",
+    "paths": {
+        "FovCoverageBar": "./FovCoverageBar"
+    },
+    "config": {
+        "rows": [
+            {
+                "components": [
+                    {
+                        "field": "variables.position",
+                        "name": "Position",
+                        "description": "Where the readout sits over the map.",
+                        "type": "dropdown",
+                        "width": 4,
+                        "options": ["bottom-left", "bottom-right", "top-right"]
+                    }
+                ]
+            }
+        ]
+    }
+}

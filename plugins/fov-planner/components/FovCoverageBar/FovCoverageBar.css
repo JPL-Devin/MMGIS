@@ -1,0 +1,45 @@
+.fovCoverageBar {
+    position: absolute;
+    z-index: 1600; /* above #bottomFloatingBar (1500), below the toolbar (2006) */
+    min-width: 220px;
+    max-width: 380px;
+    padding: 6px 10px;
+    background: rgba(20, 20, 20, 0.85);
+    color: #eee;
+    font-size: 12px;
+    line-height: 1.5;
+    border-radius: 3px;
+    pointer-events: none;
+}
+
+.fovCoverageBar--bottom-left {
+    left: 10px;
+    bottom: 40px;
+}
+
+.fovCoverageBar--bottom-right {
+    right: 10px;
+    bottom: 40px;
+}
+
+.fovCoverageBar--top-right {
+    right: 10px;
+    top: 60px;
+}
+
+.fovCoverageBar__id {
+    font-weight: 600;
+    color: #ffb74d;
+}
+
+.fovCoverageBar__empty {
+    opacity: 0.6;
+}
+
+.fovCoverageBar__warn {
+    color: #ff8a65;
+}
+
+.fovCoverageBar__ok {
+    color: #9ccc65;
+}

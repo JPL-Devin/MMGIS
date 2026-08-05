@@ -1,0 +1,105 @@
+{
+    "name": "FovFootprint",
+    "type": "layerattachment",
+    "attachmentId": "fov_footprint",
+    "version": "1.0.0",
+    "tier": "community",
+    "overridable": true,
+    "configPath": "variables.layerAttachments.fovFootprint",
+    "description": "Draws each pointed observation's instrument field-of-view footprint on the ground as a wedge.",
+    "capabilities": {
+        "renderers": {
+            "map": {
+                "engines": ["leaflet"]
+            },
+            "globe": false
+        },
+        "host": {
+            "order": 40
+        }
+    },
+    "applicableLayerTypes": ["observationplan", "vector", "query"],
+    "config": {
+        "tab": "Attachment - Markers",
+        "tabOrder": 12,
+        "order": 20,
+        "rows": [
+            {
+                "subname": "FOV Footprints",
+                "components": [
+                    {
+                        "field": "variables.layerAttachments.fovFootprint.enabled",
+                        "name": "Enabled",
+                        "description": "",
+                        "type": "switch",
+                        "width": 2,
+                        "defaultChecked": false
+                    },
+                    {
+                        "field": "variables.layerAttachments.fovFootprint.azimuthProp",
+                        "name": "Azimuth Property",
+                        "description": "Feature property holding the boresight azimuth in degrees clockwise from north.",
+                        "type": "text",
+                        "width": 3
+                    },
+                    {
+                        "field": "variables.layerAttachments.fovFootprint.fovProp",
+                        "name": "FOV Property",
+                        "description": "Feature property holding the field of view in degrees. 360 draws a full disc.",
+                        "type": "text",
+                        "width": 3
+                    },
+                    {
+                        "field": "variables.layerAttachments.fovFootprint.rangeProp",
+                        "name": "Range Property",
+                        "description": "Feature property holding the ground range in metres.",
+                        "type": "text",
+                        "width": 2
+                    },
+                    {
+                        "field": "variables.layerAttachments.fovFootprint.color",
+                        "name": "Footprint Color",
+                        "description": "",
+                        "type": "colorpicker",
+                        "width": 2
+                    }
+                ]
+            },
+            {
+                "subname": "FOV Footprint Fallbacks",
+                "components": [
+                    {
+                        "field": "variables.layerAttachments.fovFootprint.defaultFovDeg",
+                        "name": "Default FOV (deg)",
+                        "description": "Used when a feature has no FOV property.",
+                        "type": "number",
+                        "width": 3
+                    },
+                    {
+                        "field": "variables.layerAttachments.fovFootprint.defaultRangeMeters",
+                        "name": "Default Range (m)",
+                        "description": "Used when a feature has no range property.",
+                        "type": "number",
+                        "width": 3
+                    },
+                    {
+                        "field": "variables.layerAttachments.fovFootprint.bodyRadius",
+                        "name": "Body Radius (m)",
+                        "description": "Radius of the body being mapped. Defaults to Earth's 6378137 m — set it for Mars (3396190) or the Moon (1737400).",
+                        "type": "number",
+                        "width": 3
+                    },
+                    {
+                        "field": "variables.layerAttachments.fovFootprint.initialVisibility",
+                        "name": "Initially Visible",
+                        "description": "",
+                        "type": "switch",
+                        "width": 3,
+                        "defaultChecked": true
+                    }
+                ]
+            }
+        ]
+    },
+    "module": "./fovFootprint"
+}

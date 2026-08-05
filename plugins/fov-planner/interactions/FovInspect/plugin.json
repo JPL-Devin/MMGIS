@@ -1,0 +1,52 @@
+{
+    "name": "FovInspect",
+    "type": "interaction",
+    "interactionId": "fov:inspect",
+    "version": "1.0.0",
+    "tier": "community",
+    "description": "On click, summarizes a planned observation's pointing and lists the other observations whose footprints overlap it.",
+    "applicableLayerTypes": ["observationplan"],
+    "applicableEvents": ["click"],
+    "phase": "main",
+    "order": 200,
+    "configPath": "variables.interactions.fovInspect",
+    "config": {
+        "rows": [
+            {
+                "components": [
+                    {
+                        "field": "variables.interactions.fovInspect.azimuthProp",
+                        "name": "Azimuth Property",
+                        "description": "Feature property holding the boresight azimuth in degrees.",
+                        "type": "text",
+                        "width": 3
+                    },
+                    {
+                        "field": "variables.interactions.fovInspect.fovProp",
+                        "name": "FOV Property",
+                        "description": "Feature property holding the field of view in degrees.",
+                        "type": "text",
+                        "width": 3
+                    },
+                    {
+                        "field": "variables.interactions.fovInspect.rangeProp",
+                        "name": "Range Property",
+                        "description": "Feature property holding the ground range in metres.",
+                        "type": "text",
+                        "width": 3
+                    },
+                    {
+                        "field": "variables.interactions.fovInspect.idProp",
+                        "name": "Observation ID Property",
+                        "description": "Feature property naming the observation in the coverage bar.",
+                        "type": "text",
+                        "width": 3
+                    }
+                ]
+            }
+        ]
+    },
+    "paths": {
+        "FovInspect": "./FovInspect"
+    }
+}
