@@ -1,0 +1,55 @@
+{
+    "name": "Handover",
+    "type": "interaction",
+    "interactionId": "dsn:handover",
+    "version": "1.0.0",
+    "tier": "community",
+    "description": "On clicking a ground station, reports which other stations' coverage overlaps it and could hand a spacecraft over.",
+    "applicableLayerTypes": [
+        "groundstation"
+    ],
+    "applicableEvents": [
+        "click"
+    ],
+    "phase": "main",
+    "order": 100,
+    "configPath": "variables.interactions.dsnHandover",
+    "pluginDependencies": [
+        "dsn-coverage/layertypes/GroundStation"
+    ],
+    "config": {
+        "rows": [
+            {
+                "components": [
+                    {
+                        "type": "number",
+                        "field": "variables.interactions.dsnHandover.altitudeKm",
+                        "name": "Spacecraft Altitude (km)",
+                        "description": "Altitude the overlap is computed for.",
+                        "width": 4,
+                        "default": 700
+                    },
+                    {
+                        "type": "number",
+                        "field": "variables.interactions.dsnHandover.scale",
+                        "name": "Coverage Scale",
+                        "description": "Should match the horizon mask attachment's scale.",
+                        "width": 4,
+                        "default": 1
+                    },
+                    {
+                        "type": "switch",
+                        "field": "variables.interactions.dsnHandover.requireSameBand",
+                        "name": "Same Band Only",
+                        "description": "Only count stations sharing the clicked station's band.",
+                        "width": 4,
+                        "defaultChecked": false
+                    }
+                ]
+            }
+        ]
+    },
+    "paths": {
+        "Handover": "./Handover"
+    }
+}

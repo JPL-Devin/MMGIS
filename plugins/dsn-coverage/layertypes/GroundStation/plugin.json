@@ -1,0 +1,130 @@
+{
+    "name": "GroundStation",
+    "type": "layertype",
+    "typeId": "groundstation",
+    "extends": "vector",
+    "version": "1.0.0",
+    "tier": "community",
+    "overridable": true,
+    "color": "#4e9a06",
+    "defaultIcon": "satellite-uplink",
+    "description": "Ground stations tracking a spacecraft: point features carrying an antenna diameter, a mask elevation and a band.",
+    "capabilities": {
+        "renderers": {
+            "map": {
+                "engines": [
+                    "leaflet"
+                ]
+            }
+        },
+        "defaultAttachments": {
+            "horizon_mask": {
+                "diameterProp": "antenna_diameter_m",
+                "maskElevationProp": "mask_elevation_deg",
+                "bandProp": "band",
+                "nameProp": "name",
+                "scale": 1,
+                "altitudeKm": 700
+            }
+        },
+        "defaultInteractions": {
+            "click": [
+                "dsn:handover"
+            ]
+        }
+    },
+    "supportedData": [
+        {
+            "label": "Ground station GeoJSON",
+            "category": "vector",
+            "standards": [
+                "GeoJSON"
+            ],
+            "formats": [
+                "application/geo+json"
+            ],
+            "extensions": [
+                ".json",
+                ".geojson"
+            ],
+            "description": "Point features, one per station, with antenna diameter (m), mask elevation (deg) and band properties."
+        }
+    ],
+    "config": {
+        "tabs": [
+            {
+                "name": "Core",
+                "rows": [
+                    {
+                        "forceHeight": "64px",
+                        "components": [
+                            {
+                                "field": "type",
+                                "name": "Layer Type",
+                                "description": "",
+                                "type": "dropdown",
+                                "width": 2,
+                                "options": [
+                                    "groundstation"
+                                ]
+                            },
+                            {
+                                "field": "name",
+                                "name": "Layer Name",
+                                "description": "",
+                                "type": "textnotrim",
+                                "width": 8,
+                                "required": true
+                            },
+                            {
+                                "field": "visibility",
+                                "name": "Initially On",
+                                "description": "",
+                                "type": "checkbox",
+                                "width": 2,
+                                "defaultChecked": false
+                            }
+                        ]
+                    },
+                    {
+                        "name": "Ground Stations",
+                        "components": [
+                            {
+                                "field": "url",
+                                "name": "Stations GeoJSON URL",
+                                "description": "Point features, one per ground station.",
+                                "type": "text",
+                                "width": 12
+                            },
+                            {
+                                "field": "variables.groundStation.diameterProp",
+                                "name": "Antenna Diameter Property",
+                                "description": "Feature property holding the dish diameter in metres.",
+                                "type": "text",
+                                "width": 4,
+                                "default": "antenna_diameter_m"
+                            },
+                            {
+                                "field": "variables.groundStation.maskElevationProp",
+                                "name": "Mask Elevation Property",
+                                "description": "Feature property holding the minimum usable elevation in degrees.",
+                                "type": "text",
+                                "width": 4,
+                                "default": "mask_elevation_deg"
+                            },
+                            {
+                                "field": "variables.groundStation.bandProp",
+                                "name": "Band Property",
+                                "description": "Feature property holding the station's band (S, X, Ka…).",
+                                "type": "text",
+                                "width": 4,
+                                "default": "band"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
+    },
+    "module": "./groundStation"
+}

@@ -1,0 +1,75 @@
+{
+    "name": "HorizonMask",
+    "type": "layerattachment",
+    "attachmentId": "horizon_mask",
+    "version": "1.0.0",
+    "tier": "community",
+    "overridable": true,
+    "configPath": "variables.layerAttachments.horizonMask",
+    "description": "The horizon-mask coverage ring of each ground station, sized from that station's antenna diameter and mask elevation and a settings-level scale.",
+    "capabilities": {
+        "renderers": {
+            "map": {
+                "engines": [
+                    "leaflet"
+                ]
+            },
+            "globe": {
+                "engines": [
+                    "lithosphere"
+                ]
+            }
+        },
+        "host": {
+            "order": 40
+        }
+    },
+    "applicableLayerTypes": [
+        "groundstation"
+    ],
+    "pluginDependencies": [
+        "dsn-coverage/layertypes/GroundStation"
+    ],
+    "config": {
+        "tab": "Attachment - Markers",
+        "tabOrder": 12,
+        "order": 9,
+        "rows": [
+            {
+                "subname": "Horizon Mask",
+                "components": [
+                    {
+                        "field": "variables.layerAttachments.horizonMask.enabled",
+                        "name": "Enabled",
+                        "description": "Draws each station's horizon-mask coverage ring.",
+                        "type": "switch",
+                        "width": 3,
+                        "defaultChecked": false
+                    },
+                    {
+                        "field": "variables.layerAttachments.horizonMask.scale",
+                        "name": "Scale",
+                        "description": "Multiplies every ring's radius. Empty means whatever the layer type declared.",
+                        "type": "number",
+                        "width": 3
+                    },
+                    {
+                        "field": "variables.layerAttachments.horizonMask.altitudeKm",
+                        "name": "Spacecraft Altitude (km)",
+                        "description": "Altitude the mask is computed for.",
+                        "type": "number",
+                        "width": 3
+                    },
+                    {
+                        "field": "variables.layerAttachments.horizonMask.color",
+                        "name": "Ring Colour",
+                        "description": "",
+                        "type": "colorpicker",
+                        "width": 3
+                    }
+                ]
+            }
+        ]
+    },
+    "module": "./horizonMask"
+}
