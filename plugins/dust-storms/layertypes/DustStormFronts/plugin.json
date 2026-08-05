@@ -1,0 +1,140 @@
+{
+    "name": "DustStormFronts",
+    "type": "layertype",
+    "typeId": "duststormfronts",
+    "extends": "vector",
+    "version": "1.0.0",
+    "tier": "community",
+    "overridable": true,
+    "color": "#4e9a06",
+    "defaultIcon": "Layers",
+    "description": "Dust storm extents at each observation time, showing the storms of the current time window.",
+    "capabilities": {
+        "renderers": {
+            "map": {
+                "engines": [
+                    "leaflet"
+                ]
+            }
+        },
+        "time": {
+            "histogram": true
+        },
+        "defaultAttachments": {
+            "storm_motion": {
+                "speedProp": "speed_kmh",
+                "headingProp": "heading_deg",
+                "intensityProp": "intensity",
+                "scale": 1
+            }
+        },
+        "defaultInteractions": {
+            "click": [
+                "storm:track"
+            ]
+        }
+    },
+    "supportedData": [
+        {
+            "label": "Dust storm front observations",
+            "category": "vector",
+            "standards": [
+                "GeoJSON"
+            ],
+            "formats": [
+                "GeoJSON"
+            ],
+            "extensions": [
+                ".json",
+                ".geojson"
+            ],
+            "description": "One polygon per storm per observation time, with a storm id, an observation timestamp, and speed/heading/intensity properties."
+        }
+    ],
+    "config": {
+        "tabs": [
+            {
+                "name": "Core",
+                "rows": [
+                    {
+                        "forceHeight": "64px",
+                        "components": [
+                            {
+                                "field": "type",
+                                "name": "Layer Type",
+                                "description": "",
+                                "type": "dropdown",
+                                "width": 2,
+                                "options": [
+                                    "duststormfronts"
+                                ]
+                            },
+                            {
+                                "field": "name",
+                                "name": "Layer Name",
+                                "description": "",
+                                "type": "textnotrim",
+                                "width": 8,
+                                "required": true
+                            },
+                            {
+                                "field": "visibility",
+                                "name": "Initially On",
+                                "description": "",
+                                "type": "checkbox",
+                                "width": 2,
+                                "defaultChecked": false
+                            }
+                        ]
+                    },
+                    {
+                        "name": "DustStormFronts",
+                        "components": [
+                            {
+                                "field": "url",
+                                "name": "Service URL",
+                                "description": "GeoJSON of every storm observation.",
+                                "type": "text",
+                                "width": 12
+                            }
+                        ]
+                    },
+                    {
+                        "name": "Storm Properties",
+                        "components": [
+                            {
+                                "field": "variables.dustStorms.idProp",
+                                "name": "Storm ID Property",
+                                "description": "Property identifying the same storm across observations.",
+                                "type": "text",
+                                "width": 3
+                            },
+                            {
+                                "field": "variables.dustStorms.speedProp",
+                                "name": "Speed Property",
+                                "description": "Property holding the storm's speed in km/h.",
+                                "type": "text",
+                                "width": 3
+                            },
+                            {
+                                "field": "variables.dustStorms.headingProp",
+                                "name": "Heading Property",
+                                "description": "Property holding the storm's heading in degrees clockwise from north.",
+                                "type": "text",
+                                "width": 3
+                            },
+                            {
+                                "field": "variables.dustStorms.intensityProp",
+                                "name": "Intensity Property",
+                                "description": "Property holding the storm's intensity.",
+                                "type": "text",
+                                "width": 3
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
+    },
+    "module": "./dustStormFronts"
+}

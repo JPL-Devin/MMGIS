@@ -1,0 +1,36 @@
+{
+    "name": "StormTrack",
+    "type": "interaction",
+    "interactionId": "storm:track",
+    "description": "Follow the clicked dust storm forwards or backwards in time to its next extent.",
+    "applicableLayerTypes": [
+        "duststormfronts"
+    ],
+    "configPath": "variables.interactions.stormTrack",
+    "config": {
+        "rows": [
+            {
+                "components": [
+                    {
+                        "type": "dropdown",
+                        "name": "Direction",
+                        "width": 4,
+                        "field": "variables.interactions.stormTrack.direction",
+                        "options": [
+                            "forward",
+                            "backward"
+                        ]
+                    }
+                ]
+            }
+        ]
+    },
+    "applicableEvents": [
+        "click"
+    ],
+    "phase": "main",
+    "order": 100,
+    "paths": {
+        "StormTrack": "./StormTrack"
+    }
+}
