@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react'
 import {
     Checkbox,
     ColorRampPicker,
-    IconButton,
+    IconTextButton,
     InputWithUnit,
     Select,
     Slider,
@@ -166,13 +166,14 @@ function DynamicStyleRule({ layer, api, rule, index }) {
             <div className='layerSettings_ruleHeader'>
                 <Checkbox
                     checked={rule.enabled !== false}
+                    showCheck
                     onCheckedChange={(checked) =>
                         commit({ enabled: checked === true })
                     }
                     aria-label={`Enable ${rulePropertyLabel(rule)}`}
                 />
                 <Tooltip content={rulePropertyLabel(rule)}>
-                    <span>
+                    <span className='layerSettings_ruleIdentity'>
                         {ATTRIBUTE_LABELS[attribute] || attribute} ←{' '}
                         <code className='layerSettings_property'>
                             {rulePropertyLabel(rule)}
@@ -429,15 +430,18 @@ export function DynamicStyleSection({ layer, api }) {
                     index={index}
                 />
             ))}
-            <Tooltip content='Style this layer the way it was configured again, undoing the changes made here.'>
-                <IconButton
-                    size='sm'
-                    aria-label='Reset dynamic style'
-                    onClick={reset}
-                >
-                    <i className='mdi mdi-restore mdi-18px' />
-                </IconButton>
-            </Tooltip>
+            <div className='layerSettings_dynamicReset'>
+                <Tooltip content='Style this layer the way it was configured again, undoing the changes made here.'>
+                    <IconTextButton
+                        size='sm'
+                        aria-label='Reset dynamic style'
+                        icon={<i className='mdi mdi-restore mdi-18px' />}
+                        onClick={reset}
+                    >
+                        Reset dynamic style
+                    </IconTextButton>
+                </Tooltip>
+            </div>
         </div>
     )
 }

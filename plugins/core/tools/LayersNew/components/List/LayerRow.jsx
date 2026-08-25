@@ -61,15 +61,28 @@ function LayerRow({
         .map((entry) => entry?.color || entry?.strokecolor)
         .filter(Boolean)
     const legendStyle =
-        legendColors.length > 1
+        legendColors.length > 1 &&
+        legendEntries.some((entry) => entry?.shape === 'continuous')
             ? {
                   background: `linear-gradient(to right, ${legendColors.join(
                       ', '
                   )})`,
               }
-            : legendColors.length === 1
-              ? { background: legendColors[0] }
-              : null
+            : legendColors.length > 1
+              ? {
+                    background: `linear-gradient(to right, ${legendColors
+                        .slice(0, 5)
+                        .map(
+                            (entryColor, index, colors) =>
+                                `${entryColor} ${(index / colors.length) * 100}% ${
+                                    ((index + 1) / colors.length) * 100
+                                }%`
+                        )
+                        .join(', ')})`,
+                }
+              : legendColors.length === 1
+                ? { background: legendColors[0] }
+                : null
 
     if (row.structural)
         return (

@@ -19,11 +19,13 @@
     min-width: 0;
 }
 
-.layerSettings_ruleHeader > :nth-child(2) {
+.layerSettings_ruleIdentity {
     min-width: 0;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+    font-size: 12px;
+    font-weight: 600;
 }
 
 .layerSettings_property {
@@ -31,6 +33,12 @@
     background: var(--color-a2);
     color: var(--color-a5);
     font-size: 10px;
+    font-family: monospace;
+}
+
+.layerSettings_dynamicReset {
+    display: flex;
+    justify-content: flex-end;
 }
 
 .layerSettings_rampTicks {
