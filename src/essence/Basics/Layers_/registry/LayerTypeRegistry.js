@@ -90,6 +90,14 @@ const LayerTypeRegistry = {
     getGlobe(typeId, engine) {
         return _effectiveModules(typeId)?.globe?.[engine]
     },
+    /** Settings module for a type, when it declares one. */
+    getSettings(typeId) {
+        return _effectiveModules(typeId)?.settings
+    },
+    /** True when a type declares or inherits a settings module. */
+    hasSettings(typeId) {
+        return this.getSettings(typeId) != null
+    },
     /** Full plugin manifest for a type. */
     getConfig(typeId) {
         return _load().layerTypeConfigs?.[typeId]

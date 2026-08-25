@@ -1,0 +1,40 @@
+{
+    "uuid": "87f6f637-8a68-4ff4-bc2a-d8a24dc9536c",
+    "id": "core-layers-new",
+    "version": "core",
+    "type": "tool",
+    "tier": "core",
+    "overridable": true,
+    "defaultIcon": "layers-triple",
+    "description": "React LayersTool implementation with type-owned settings.",
+    "hasVars": true,
+    "name": "LayersNew",
+    "toolbarPriority": 5,
+    "paths": {
+        "LayersNewTool": "./LayersNewTool"
+    },
+    "expandable": true,
+    "config": {
+        "rows": [
+            {
+                "components": [
+                    {
+                        "field": "variables.expanded",
+                        "name": "Expanded",
+                        "description": "Whether all layer groupings default to being expanded.",
+                        "type": "checkbox",
+                        "width": 3,
+                        "defaultChecked": false
+                    }
+                ]
+            }
+        ]
+    },
+    "author": "NASA-AMMOS/MMGIS",
+    "license": "Apache-2.0",
+    "repository": "https://github.com/NASA-AMMOS/MMGIS",
+    "pluginDependencies": [
+        "core/backend/Geodatasets",
+        "core/backend/Utils"
+    ]
+}

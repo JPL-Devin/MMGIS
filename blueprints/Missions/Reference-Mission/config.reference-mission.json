@@ -4020,6 +4020,14 @@
       }
     },
     {
+      "name": "LayersNew",
+      "icon": "layers-triple",
+      "js": "LayersNewTool",
+      "variables": {
+        "expanded": true
+      }
+    },
+    {
       "name": "Legend",
       "icon": "map-legend",
       "js": "LegendTool",

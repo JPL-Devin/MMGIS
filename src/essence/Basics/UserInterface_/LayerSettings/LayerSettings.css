@@ -1,0 +1,155 @@
+.layerSettings_control {
+    display: grid;
+    gap: 8px;
+    padding: 8px;
+}
+
+.layerSettings_rule {
+    display: grid;
+    gap: 8px;
+    padding: 8px;
+    border: 1px solid var(--color-a3);
+    border-radius: 3px;
+}
+
+.layerSettings_ruleHeader {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    min-width: 0;
+}
+
+.layerSettings_ruleIdentity {
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.layerSettings_property {
+    padding: 2px 4px;
+    background: var(--color-a2);
+    color: var(--color-a5);
+    font-size: 10px;
+    font-family: monospace;
+}
+
+.layerSettings_dynamicReset {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.layerSettings_rampTicks {
+    display: flex;
+    justify-content: space-between;
+    color: var(--color-a4);
+    font-family: monospace;
+    font-size: 10px;
+}
+
+.layerSettings_rampToggle {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 6px;
+    color: var(--color-a4);
+    font-size: 11px;
+}
+
+.layerSettings_rampPreview {
+    height: 14px;
+    border-radius: 2px;
+    border: 1px solid var(--color-a2);
+}
+
+.layerSettings_rangeControl {
+    display: grid;
+    gap: 6px;
+    min-width: 0;
+}
+
+.layerSettings_rangeInputs {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 6px;
+}
+
+.layerSettings_row,
+.layerSettings_attachmentRow,
+.layerSettings_statRow {
+    display: grid;
+    grid-template-columns: 92px minmax(0, 1fr);
+    align-items: center;
+    gap: 6px;
+}
+
+.layerSettings_row > :first-child,
+.layerSettings_attachmentRow > :first-child {
+    min-width: 0;
+    color: var(--color-a4);
+    font-size: 11px;
+    white-space: nowrap;
+}
+
+.layerSettings_row > :last-child,
+.layerSettings_attachmentRow > :last-child {
+    min-width: 0;
+}
+
+.layerSettings_hint {
+    color: var(--color-a4);
+    font-size: 11px;
+    line-height: 1.35;
+}
+
+.layerSettings_warning {
+    color: var(--color-yellow);
+    font-size: 11px;
+}
+
+.layerSettings_readOnly,
+.layerSettings_stats,
+.layerSettings_attachments {
+    display: grid;
+    gap: 6px;
+    padding: 8px;
+}
+
+.layerSettings_statRow {
+    font-size: 11px;
+}
+
+.layerSettings_statRow > :first-child {
+    color: var(--color-a4);
+}
+
+.layerSettings_statProperty {
+    padding-top: 6px;
+    border-top: 1px solid var(--color-a8);
+}
+
+.layerSettings_attachmentRow {
+    min-width: 0;
+}
+
+.layerSettings_attachmentControls {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    min-width: 150px;
+}
+
+.layerSettings_attachmentControls select {
+    min-width: 0;
+    max-width: 125px;
+}
+
+.layerSettings_mapping {
+    display: flex;
+    justify-content: space-between;
+    gap: 8px;
+    color: var(--color-a4);
+    font-size: 11px;
+}

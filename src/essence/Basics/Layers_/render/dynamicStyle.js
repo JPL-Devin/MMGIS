@@ -35,6 +35,9 @@ export const STYLE_ATTRIBUTES = [...COLOR_ATTRIBUTES, ...NUMERIC_ATTRIBUTES]
 export const DEFAULT_ATTRIBUTE = 'fillColor'
 export const DEFAULT_RAMP = 'viridis'
 
+/** The named ramps offered by the runtime style editors. */
+export { RUNTIME_RAMPS } from './rampUtils'
+
 /** The statistics a geodataset reports for each group of features. */
 export const GROUP_STATS = ['avg', 'min', 'max', 'sum', 'stddev']
 export const DEFAULT_GROUP_STAT = 'avg'

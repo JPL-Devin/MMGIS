@@ -1,7 +1,11 @@
 import React, { useCallback, useEffect, useRef, useState } from "react";
 
 import ColorRampPicker from "@design/components/ColorRampPicker/ColorRampPicker";
-import { normalizeStops, rampStops } from "@basics/Layers_/render/dynamicStyle";
+import {
+  normalizeStops,
+  rampStops,
+  RUNTIME_RAMPS,
+} from "@basics/Layers_/render/dynamicStyle";
 import { formatValue } from "@basics/Layers_/render/dynamicStyle";
 import {
   hexToRgb,
@@ -15,35 +19,7 @@ import {
 
 import "./DynamicStyleRamp.css";
 
-/**
- * The colour ramps offered at runtime: the perceptual, sequential and diverging
- * matplotlib maps that are actually legible for data, rather than all ~170 of
- * them. A layer configured with something else keeps it - the list is what's
- * easy to reach for, not what's allowed.
- */
-export const RUNTIME_RAMPS = [
-  "viridis",
-  "plasma",
-  "inferno",
-  "magma",
-  "cividis",
-  "turbo",
-  "Blues",
-  "Greens",
-  "Oranges",
-  "Reds",
-  "Purples",
-  "YlGnBu",
-  "YlOrRd",
-  "RdYlGn",
-  "RdYlBu",
-  "RdBu",
-  "BrBG",
-  "PiYG",
-  "coolwarm",
-  "Spectral",
-  "Greys",
-];
+export { RUNTIME_RAMPS } from "@basics/Layers_/render/dynamicStyle";
 
 /** Beyond this the bins are narrower than the boundaries drawn between them. */
 const MAX_BINS = 20;
