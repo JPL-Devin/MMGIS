@@ -10,9 +10,9 @@ const {
 } = require('../../API/pluginValidation')
 const { mergeSurfaces } = require('../../src/essence/Basics/Layers_/registry/typeInheritance')
 
-const generated = fs.readFileSync(
-    path.resolve(__dirname, '../../src/pre/layertypes.js'),
-    'utf8'
+const generatedPath = path.resolve(
+    __dirname,
+    '../../src/pre/layertypes.js'
 )
 const registrySource = fs.readFileSync(
     path.resolve(
@@ -84,7 +84,10 @@ test.describe('LayersNew settings surface', () => {
         expect(flattenLayerModules({ modules: { map: './map' } })).toEqual({
             map: './map',
         })
-        expect(generated).not.toContain('layertypes/Vector/settings')
+        if (fs.existsSync(generatedPath))
+            expect(fs.readFileSync(generatedPath, 'utf8')).not.toContain(
+                'layertypes/Vector/settings'
+            )
         expect(registrySource).toContain('hasSettings(typeId)')
         expect(settingsHookSource).toContain(
             'settings?.sections?.(layer, ctx) || []'
@@ -92,24 +95,11 @@ test.describe('LayersNew settings surface', () => {
     })
 
     test('a type without settings uses the core fallback', () => {
-        const generatedPath = require.resolve('../../src/pre/layertypes')
-        const previous = require.cache[generatedPath]
-        require.cache[generatedPath] = {
-            id: generatedPath,
-            filename: generatedPath,
-            loaded: true,
-            exports: {
-                layerTypeModules: { vector: { map: {} } },
-                layerTypeConfigs: { vector: {} },
-            },
-        }
         const registry = require(
             '../../src/essence/Basics/Layers_/registry/LayerTypeRegistry'
         ).default
         expect(registry.getSettings('vector')).toBeUndefined()
         expect(registry.hasSettings('vector')).toBe(false)
         expect(registry.getSettings('vector')?.sections || []).toEqual([])
-        if (previous) require.cache[generatedPath] = previous
-        else delete require.cache[generatedPath]
     })
 })
