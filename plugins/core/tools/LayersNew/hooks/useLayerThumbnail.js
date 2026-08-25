@@ -6,6 +6,26 @@ import { useLayersNewStore } from '../store'
 const thumbnailCache = new Map()
 const RASTER_TYPES = new Set(['tile', 'image', 'data', 'velocity'])
 
+async function hasVisiblePixels(blob) {
+    if (typeof createImageBitmap !== 'function') return true
+    const bitmap = await createImageBitmap(blob)
+    try {
+        const size = 32
+        const canvas = document.createElement('canvas')
+        canvas.width = size
+        canvas.height = size
+        const context = canvas.getContext('2d', { willReadFrequently: true })
+        context.drawImage(bitmap, 0, 0, size, size)
+        const pixels = context.getImageData(0, 0, size, size).data
+        let visiblePixels = 0
+        for (let index = 3; index < pixels.length; index += 4)
+            if (pixels[index] > 16) visiblePixels += 1
+        return visiblePixels >= size * size * 0.03
+    } finally {
+        bitmap.close()
+    }
+}
+
 function getCandidate(name, adapter, signal) {
     const layer = adapter.getLayerData(name)
     if (!layer || !RASTER_TYPES.has(layer.type)) return null
@@ -71,6 +91,11 @@ export function useLayerThumbnail(nameOrAdapter, maybeAdapter) {
                           if (!response.ok) throw new Error('thumbnail fetch failed')
                           return response.blob()
                       })
+                      .then(async (blob) => {
+                          if (!(await hasVisiblePixels(blob)))
+                              throw new Error('thumbnail is blank')
+                          return blob
+                      })
                       .then((blob) => URL.createObjectURL(blob))
                 : Promise.resolve(candidate)
         valuePromise
@@ -79,7 +104,10 @@ export function useLayerThumbnail(nameOrAdapter, maybeAdapter) {
                 thumbnailCache.set(name, value)
                 setThumbnail(value)
             })
-            .catch(() => {})
+            .catch(() => {
+                if (!disposed && !controller.signal.aborted)
+                    thumbnailCache.set(name, null)
+            })
         return () => {
             disposed = true
             controller.abort()
@@ -87,4 +115,12 @@ export function useLayerThumbnail(nameOrAdapter, maybeAdapter) {
     }, [adapter, name])
 
     return legacy ? stableLegacyValue : thumbnail
+}
+
+export function markLayerThumbnailFailed(name) {
+    if (!name) return
+    const previous = thumbnailCache.get(name)
+    if (typeof previous === 'string' && previous.startsWith('blob:'))
+        URL.revokeObjectURL(previous)
+    thumbnailCache.set(name, null)
 }

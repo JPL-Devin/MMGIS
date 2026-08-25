@@ -10,6 +10,7 @@ const {
 } = require('../../plugins/core/tools/LayersNew/adapters/timeAdapter')
 const {
     createLayersAdapter,
+    resolveLayerOpacity,
 } = require('../../plugins/core/tools/LayersNew/adapters/layersAdapter')
 const {
     createAttachmentsAdapter,
@@ -23,6 +24,18 @@ const {
 } = require('../../plugins/core/tools/LayersNew/store')
 
 test.describe('LayersNew adapters', () => {
+    test('resolves configured opacity when the runtime layer is absent', () => {
+        const layers = {
+            layers: {
+                layer: {},
+                opacity: { off: 0.65, missing: 'invalid' },
+            },
+            getLayerOpacity: () => 0,
+        }
+        expect(resolveLayerOpacity(layers, 'off')).toBe(0.65)
+        expect(resolveLayerOpacity(layers, 'missing')).toBe(1)
+    })
+
     test('normalizes feature payloads and delegates export conversion', () => {
         const converted = { converted: true }
         const adapter = createExportAdapter({

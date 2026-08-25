@@ -120,16 +120,22 @@ export function setLayerOpacity(L_, name, newOpacity) {
 
 export function getLayerOpacity(L_, name) {
     var l = L_.layers.layer[name]
-
-    if (l == null) return 0
-
     var opacity
-    try {
-        opacity = l.options?.style.opacity
-    } catch (error) {
-        opacity = l.options?.opacity
+    if (l != null) {
+        try {
+            opacity = l.options?.style.opacity
+        } catch (error) {
+            opacity = l.options?.opacity
+        }
     }
-    return opacity
+    if (opacity != null && Number.isFinite(Number(opacity)))
+        return Number(opacity)
+    if (
+        L_.layers.opacity?.[name] != null &&
+        Number.isFinite(Number(L_.layers.opacity[name]))
+    )
+        return Number(L_.layers.opacity[name])
+    return 1
 }
 
 export function setLayerFilter(L_, name, filter, value) {
@@ -213,7 +219,7 @@ export function resetLayerFills(L_, onlyThisLayerName) {
     // Regular Layers
     for (let key in L_.layers.layer) {
         const s = key.split('_')
-        const onId = s[1] != 'master' ? parseInt(s[1]) : s[1]
+        const onId = s[1] !== 'master' ? parseInt(s[1]) : s[1]
 
         if (onlyThisLayerName != null && onlyThisLayerName !== key) continue
 
@@ -228,9 +234,9 @@ export function resetLayerFills(L_, onlyThisLayerName) {
         ) {
             if (
                 L_.layers.layer.hasOwnProperty(key) &&
-                L_.layers.layer[key] != undefined &&
+                L_.layers.layer[key] !== undefined &&
                 L_.layers.data.hasOwnProperty(key) &&
-                L_.layers.data[key].style != undefined
+                L_.layers.data[key].style !== undefined
             ) {
                 L_.layers.layer[key].eachLayer((layer) => {
                     const savedOptions = layer.options

@@ -15,6 +15,19 @@ function browserBaseUrl() {
     )}`
 }
 
+export function resolveLayerOpacity(layers, name) {
+    const runtime = layers.layers?.layer?.[name]
+    const runtimeOpacity = runtime
+        ? Number(layers.getLayerOpacity(name))
+        : Number.NaN
+    if (runtime && Number.isFinite(runtimeOpacity)) return runtimeOpacity
+    const configuredOpacity = Number(layers.layers?.opacity?.[name])
+    return layers.layers?.opacity?.[name] != null &&
+        Number.isFinite(configuredOpacity)
+        ? configuredOpacity
+        : 1
+}
+
 function tileCoordinates(layer, invertTms = true) {
     const bounds = layer.boundingBox
     const zoom = Math.max(
@@ -146,7 +159,7 @@ export function createLayersAdapter({
         getLayerRuntime: (name) => layers.layers?.layer?.[name],
         getLayerState: (name) => ({
             on: layers.layers?.on?.[name] === true,
-            opacity: layers.getLayerOpacity(name) ?? 0,
+            opacity: resolveLayerOpacity(layers, name),
             loading: layers.layers?.loading?.[name] === true,
             refreshFailed: layers.layers?.refreshFailed?.[name] === true,
         }),
@@ -155,7 +168,7 @@ export function createLayersAdapter({
             return Object.fromEntries(
                 names.map((name) => [name, {
                     on: layers.layers?.on?.[name] === true,
-                    opacity: layers.getLayerOpacity(name) ?? 0,
+                    opacity: resolveLayerOpacity(layers, name),
                     loading: layers.layers?.loading?.[name] === true,
                     refreshFailed: layers.layers?.refreshFailed?.[name] === true,
                 }])
@@ -181,6 +194,10 @@ export function createLayersAdapter({
             return layer ? layers.toggleLayer(layer) : undefined
         },
         setOpacity: (name, value) => layers.setLayerOpacity(name, value),
+        setVisibility: (name, value) => {
+            if (layers.layers?.on?.[name] === (value === true)) return
+            return layers.toggleLayer(layerData(name))
+        },
         setGlobalLoading: (name) => layers.setGlobalLoading(name),
         setGlobalLoaded: (name) => layers.setGlobalLoaded(name),
         set: (name, path, value) => {
