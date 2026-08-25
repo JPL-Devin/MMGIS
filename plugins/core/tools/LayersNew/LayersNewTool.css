@@ -1,0 +1,9 @@
+.layersNewTool {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+.layersNewTool_content {
+    padding: 8px;
+    color: var(--color-a5);
+}

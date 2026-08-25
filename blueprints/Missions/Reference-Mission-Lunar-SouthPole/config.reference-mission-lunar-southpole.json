@@ -196,6 +196,11 @@
       "js": "LayersTool"
     },
     {
+      "name": "LayersNew",
+      "icon": "layers-triple",
+      "js": "LayersNewTool"
+    },
+    {
       "name": "Legend",
       "icon": "format-list-bulleted-type",
       "js": "LegendTool",

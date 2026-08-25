@@ -79,6 +79,14 @@ const FILTER_OPS = ["getAggregations", "filter"];
 const TIME_OPS = ["format", "applyTimeParams", "availability"];
 const SOURCE_OPS = ["fetch"];
 const LEGEND_OPS = ["derive"];
+const SETTINGS_OPS = [
+  "sections",
+  "tabs",
+  "rowExtras",
+  "thumbnail",
+  "actions",
+  "summary",
+];
 
 /**
  * A layer attachment is a single renderable that may straddle both engines (an
@@ -112,6 +120,7 @@ const SURFACES = {
   time: { ops: TIME_OPS, requiresMake: false },
   source: { ops: SOURCE_OPS, requiresMake: false },
   legend: { ops: LEGEND_OPS, requiresMake: false },
+  settings: { ops: SETTINGS_OPS, requiresMake: false },
   attachment: { ops: ATTACHMENT_OPS, requiresMake: true },
   // An attachment that only decorates its host (a bearing turns its host's
   // markers) adds nothing to the map of its own, so it has nothing to `make`.
@@ -1911,6 +1920,7 @@ module.exports = {
   TIME_OPS,
   SOURCE_OPS,
   LEGEND_OPS,
+  SETTINGS_OPS,
   SURFACES,
   OP_PHASES,
   MAKE_EXTRA_PHASES,

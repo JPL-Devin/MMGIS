@@ -357,7 +357,9 @@ function findStaleRegistrations(plugins, state) {
             const target = path.join(__dirname, "..", m[1]);
             const resolves =
                 fs.existsSync(`${target}.js`) ||
+                fs.existsSync(`${target}.jsx`) ||
                 fs.existsSync(path.join(target, "index.js")) ||
+                fs.existsSync(path.join(target, "index.jsx")) ||
                 fs.existsSync(target);
             if (!resolves)
                 messages.push(`src/pre/${path.basename(preFileFor(type))}: imports ${m[1]} which no longer exists`);
@@ -404,7 +406,10 @@ function activate({ expectChanges = false, silent = false } = {}) {
         const origLog = console.log;
         const origError = console.error;
         try {
-            process.stdout.write = (chunk) => (capture(chunk), true);
+            process.stdout.write = (chunk) => {
+                capture(chunk);
+                return true;
+            };
             console.log = (...args) => capture(args.join(" "));
             console.error = (...args) => capture(args.join(" "));
 
@@ -426,6 +431,10 @@ function activate({ expectChanges = false, silent = false } = {}) {
             console.error = origError;
         }
 
+        const ansiEscape = new RegExp(
+            String.fromCharCode(27) + "\\[[0-9;]*m",
+            "g"
+        );
         const droppedMessages = captured
             .join("\n")
             .split("\n")
@@ -433,9 +442,9 @@ function activate({ expectChanges = false, silent = false } = {}) {
             .map((line) => {
                 // The logger writes structured JSON; the author wants the msg.
                 try {
-                    return JSON.parse(line.replace(/\u001b\[[0-9;]*m/g, "")).msg;
+                    return JSON.parse(line.replace(ansiEscape, "")).msg;
                 } catch {
-                    return line.replace(/\u001b\[[0-9;]*m/g, "").trim();
+                    return line.replace(ansiEscape, "").trim();
                 }
             });
 
@@ -1623,13 +1632,23 @@ function cmdValidate() {
         for (const [key, rel] of Object.entries(flattenLayerModules(p.manifest))) {
             if (typeof rel !== "string") continue;
             const surface = surfaceOfModuleKey(key, pType, p.manifest);
-            const modPath = path.join(p.pluginPath, `${rel}.js`);
+            const candidates = [
+                path.join(p.pluginPath, rel),
+                path.join(p.pluginPath, `${rel}.js`),
+                path.join(p.pluginPath, `${rel}.jsx`),
+                path.join(p.pluginPath, rel, "index.js"),
+                path.join(p.pluginPath, rel, "index.jsx"),
+            ];
+            const modPath = candidates.find((candidate) =>
+                fs.existsSync(candidate)
+            );
             let src;
             try {
+                if (!modPath) throw new Error("module not found");
                 src = fs.readFileSync(modPath, "utf8");
             } catch {
-                pluginErrors.push(`renderer module '${key}' not found at ${rel}.js`);
-                if (!FLAG_JSON) console.error(`  ${c.red("✗")} ${c.cyan(prefix)}: ${c.red(`renderer module '${key}' not found at ${rel}.js`)}`);
+                pluginErrors.push(`renderer module '${key}' not found at ${rel}`);
+                if (!FLAG_JSON) console.error(`  ${c.red("✗")} ${c.cyan(prefix)}: ${c.red(`renderer module '${key}' not found at ${rel}`)}`);
                 errors++;
                 continue;
             }
