@@ -2,7 +2,12 @@ import React from 'react'
 
 import { Checkbox, Dropdown, IconButton, Tooltip } from '@design/components'
 import { useLayersNewStore } from '../../store'
-import { useLayerThumbnail } from '../../hooks/useLayerThumbnail'
+import {
+    markLayerThumbnailFailed,
+    useLayerThumbnail,
+} from '../../hooks/useLayerThumbnail'
+import { deriveLegend, derivesLegend } from '@basics/Layers_/legend/LayerLegend'
+import { badgeText } from './layerRowHelpers'
 
 function Action({ label, icon, onClick, disabled = false }) {
     return (
@@ -44,6 +49,27 @@ function LayerRow({
         !row.structural && adapter.getLayerRuntime(row.name) == null
     const color = `var(--color-${row.type}, var(--color-a4))`
     const thumbnail = useLayerThumbnail(row.name, adapter)
+    const [thumbnailFailed, setThumbnailFailed] = React.useState(false)
+    const rasterType = ['tile', 'image', 'data', 'velocity'].includes(row.type)
+    const layerData = adapter.getLayerData(row.name)
+    const legend = layerData?._legend || layerData?.variables?.legend
+    if (layerData && !legend && derivesLegend(layerData)) deriveLegend(layerData)
+    const legendEntries = Array.isArray(layerData?._legend)
+        ? layerData._legend
+        : []
+    const legendColors = legendEntries
+        .map((entry) => entry?.color || entry?.strokecolor)
+        .filter(Boolean)
+    const legendStyle =
+        legendColors.length > 1
+            ? {
+                  background: `linear-gradient(to right, ${legendColors.join(
+                      ', '
+                  )})`,
+              }
+            : legendColors.length === 1
+              ? { background: legendColors[0] }
+              : null
 
     if (row.structural)
         return (
@@ -65,17 +91,15 @@ function LayerRow({
                     <i
                         className={`mdi mdi-chevron-${
                             row.expanded ? 'down' : 'right'
-                        } mdi-20px`}
+                        } mdi-16px`}
                     />
                 </button>
                 <span className='layersNewTool_dragHandle'>
                     <i className='mdi mdi-drag-vertical mdi-14px' />
                 </span>
-                <span className='layersNewTool_headerName'>
-                    {row.displayName}
-                </span>
+                <span className='layersNewTool_headerName'>{row.displayName}</span>
                 <span className='layersNewTool_count'>
-                    {row.visibleChildCount ?? row.childCount}
+                    {row.visibleChildCount ?? 0}/{row.childCount ?? 0}
                 </span>
                 <Tooltip content='Toggle group layers'>
                     <IconButton
@@ -109,18 +133,29 @@ function LayerRow({
                 onCheckedChange={() => toggleLayer(row.name)}
                 aria-label={`Toggle ${row.displayName}`}
             />
-            {thumbnail ? (
+            {thumbnail && !thumbnailFailed ? (
                 <img
                     className='layersNewTool_thumbnail'
                     src={thumbnail}
                     alt=''
+                    onError={() => {
+                        markLayerThumbnailFailed(row.name)
+                        setThumbnailFailed(true)
+                    }}
                 />
-            ) : (
+            ) : legendStyle ? (
                 <span
-                    className='layersNewTool_typeSwatch'
+                    className='layersNewTool_legendSwatch'
+                    style={legendStyle}
                     aria-hidden='true'
                 />
-            )}
+            ) : rasterType ? (
+                <span
+                    className='layersNewTool_legendSwatch layersNewTool_typeFallback'
+                    style={{ background: color }}
+                    aria-label='Thumbnail unavailable'
+                />
+            ) : null}
             <button
                 className='layersNewTool_name'
                 onClick={() => selectLayer(row.name)}
@@ -150,16 +185,14 @@ function LayerRow({
                     <i className='mdi mdi-clock-outline mdi-14px' />
                 </span>
             )}
-            {(row.tags || []).length > 0 && (
+            {badgeText(row.tags) && (
                 <span
                     className='layersNewTool_badges'
                     title={(row.tags || []).join(', ')}
                 >
-                    {(row.tags || []).slice(0, 2).map((tag) => (
-                        <span className='layersNewTool_badge' key={tag}>
-                            {tag}
-                        </span>
-                    ))}
+                    <span className='layersNewTool_badge'>
+                        {badgeText(row.tags)}
+                    </span>
                 </span>
             )}
             <span className='layersNewTool_actions'>

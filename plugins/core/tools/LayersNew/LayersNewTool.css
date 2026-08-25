@@ -37,7 +37,8 @@
 }
 .layersNewTool_toolbarActions,
 .layersNewTool_typeFilters,
-.layersNewTool_stateFilters {
+.layersNewTool_stateFilters,
+.layersNewTool_filterBlock {
     display: flex;
     gap: 4px;
     flex-wrap: wrap;
@@ -46,24 +47,22 @@
 .layersNewTool_toolbarActions {
     margin-top: 5px;
 }
-.layersNewTool_typeFilters {
-    margin-top: 5px;
-}
 .layersNewTool_filterArea {
-    display: flex;
-    flex-direction: column;
+    margin-top: 6px;
+}
+.layersNewTool_filterBlock {
     gap: 5px;
-    margin-top: 5px;
+    align-items: center;
 }
 .layersNewTool_filterChip {
-    height: 24px;
+    height: 26px;
     padding: 0 8px;
     border: 1px solid var(--color-a3);
     border-radius: 12px;
     background: var(--color-a1);
-    color: var(--color-a4);
-    font-size: 10px;
-    line-height: 22px;
+    color: var(--color-a5);
+    font-size: 11px;
+    line-height: 24px;
     text-transform: none;
     letter-spacing: 0;
 }
@@ -72,19 +71,38 @@
     background: var(--color-accent-active);
     color: var(--color-f);
 }
-.layersNewTool_stateFilters {
-    padding-top: 2px;
-    border-top: 1px solid var(--color-a3);
+.layersNewTool_filterDot {
+    width: 7px;
+    height: 7px;
+    display: inline-block;
+    margin-right: 5px;
+    border-radius: 50%;
+    background: var(--filter-type-color);
+}
+.layersNewTool_stateChip {
+    border-color: var(--color-a4);
+    color: var(--color-a4);
+}
+.layersNewTool_stateChip i {
+    margin-right: 3px;
+}
+.layersNewTool_filterCount {
+    margin-left: auto;
+    color: var(--color-a4);
+    font-size: 11px;
+    white-space: nowrap;
 }
 .layersNewTool_headerMain {
     display: flex;
     align-items: baseline;
+    justify-content: space-between;
     gap: 8px;
     min-width: 0;
 }
-.layersNewTool_headerClose {
+.layersNewTool_headerActions {
     display: flex;
     align-items: center;
+    gap: 2px;
 }
 .layersNewTool_listRows {
     display: flex;
@@ -111,6 +129,15 @@
     background: var(--color-a1);
     font-weight: 600;
 }
+.layersNewTool_headerName {
+    color: var(--color-a5);
+    font-size: 11px;
+    letter-spacing: .06em;
+    text-transform: uppercase;
+}
+.layersNewTool_header .layersNewTool_count {
+    margin-left: auto;
+}
 .layersNewTool_headerToggle,
 .layersNewTool_name {
     border: 0;
@@ -136,8 +163,8 @@
     min-width: 0;
 }
 .layersNewTool_name {
-    flex: 1;
-    min-width: 40px;
+    flex: 1 1 auto;
+    min-width: 90px;
 }
 .layersNewTool_count,
 .layersNewTool_badge {
@@ -150,10 +177,10 @@
 }
 .layersNewTool_badges {
     display: flex;
-    flex: 0 1 58px;
+    flex: 0 0 auto;
     gap: 2px;
     min-width: 0;
-    max-width: 58px;
+    max-width: 80px;
     overflow: hidden;
 }
 .layersNewTool_badge {
@@ -191,12 +218,13 @@
 }
 .layersNewTool_settingsDrawer {
     position: relative;
-    width: 100%;
+    width: calc(100% - 34px);
     height: 100%;
-    margin: 0;
+    margin-left: auto;
     box-sizing: border-box;
     overflow: auto;
     background: var(--color-a1);
+    border-left: 1px solid var(--color-a3);
     box-shadow: -4px 0 14px rgb(0 0 0 / 30%);
     animation: layersNewTool_settingsIn 180ms ease-out;
 }
@@ -206,12 +234,21 @@
     min-width: 0;
     overflow: auto;
 }
+.layersNewTool_settingsView [role='tabpanel'] {
+    display: flex;
+    min-height: 100%;
+    flex-direction: column;
+}
 .layersNewTool_settingsHeader {
     display: flex;
     align-items: center;
     gap: 7px;
     padding: 8px;
     border-bottom: 1px solid var(--color-a3);
+    position: sticky;
+    top: 0;
+    z-index: 2;
+    background: var(--color-a1);
 }
 .layersNewTool_settingsHeader h2 {
     margin: 0;
@@ -224,6 +261,29 @@
     height: 30px;
     background: var(--layer-type-color);
 }
+.layersNewTool_settingsIdentity {
+    min-width: 0;
+    flex: 1 1 auto;
+}
+.layersNewTool_settingsBreadcrumb {
+    color: var(--color-a4);
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: .06em;
+}
+.layersNewTool_settingsType {
+    flex: 0 0 auto;
+    border: 1px solid var(--layer-type-color);
+    border-radius: 3px;
+    padding: 3px 6px;
+    color: var(--layer-type-color);
+    font-size: 10px;
+    letter-spacing: .06em;
+    text-transform: uppercase;
+}
+.layersNewTool_settingsReload {
+    flex: 0 0 auto;
+}
 .layersNewTool_settingsSummary {
     max-width: 260px;
     overflow: hidden;
@@ -232,10 +292,23 @@
     text-overflow: ellipsis;
     white-space: nowrap;
 }
+.layersNewTool_tabBadge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 15px;
+    height: 15px;
+    margin-left: 4px;
+    padding: 0 4px;
+    border-radius: 8px;
+    background: var(--color-a2);
+    color: var(--color-a5);
+    font-size: 9px;
+}
 .layersNewTool_settingControl,
 .layersNewTool_timeSection,
 .layersNewTool_attachments {
-    padding: 8px;
+    padding: 0;
 }
 .layersNewTool_settingHeading,
 .layersNewTool_attachment {
@@ -254,6 +327,54 @@
 .layersNewTool_sectionError {
     padding: 10px;
     color: var(--color-b);
+}
+.layersNewTool_sectionTrigger {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    box-sizing: border-box;
+    padding: 7px 8px;
+    border: 0;
+    border-bottom: 1px solid var(--color-a3);
+    background: var(--color-a1);
+    color: var(--color-a4);
+    font-size: 11px;
+    letter-spacing: .06em;
+    text-align: left;
+    text-transform: uppercase;
+}
+.layersNewTool_sectionChevron {
+    font-size: 14px;
+    transition: transform 160ms ease;
+}
+.layersNewTool_sectionChevron.is-open {
+    transform: rotate(90deg);
+}
+.layersNewTool_sectionBadge {
+    margin-left: auto;
+}
+.layersNewTool_sectionContent {
+    padding: 8px;
+}
+.layersNewTool_sectionOwner {
+    margin-left: 6px;
+    border: 1px dashed var(--color-a4);
+    padding: 2px 4px;
+    color: var(--color-a4);
+    font-size: 9px;
+    letter-spacing: 0;
+    text-transform: none;
+}
+.layersNewTool_sectionOwner.is-type {
+    border-style: solid;
+    border-color: var(--layer-type-color);
+    color: var(--layer-type-color);
+}
+.layersNewTool_settingsReset {
+    margin-top: auto;
+    padding: 10px 8px;
+    border-top: 1px solid var(--color-a3);
 }
 .layersNewTool_reset {
     margin: 8px;
@@ -277,15 +398,30 @@
     flex: 0 0 auto;
 }
 .layersNewTool_thumbnail {
-    width: 30px;
-    height: 24px;
+    width: 34px;
+    height: 26px;
+    border: 1px solid var(--color-a3);
+    border-radius: 2px;
     object-fit: cover;
     background: var(--color-a2);
     flex: 0 0 auto;
 }
+.layersNewTool_legendSwatch {
+    width: 34px;
+    height: 26px;
+    box-sizing: border-box;
+    flex: 0 0 auto;
+    border: 1px solid var(--color-a3);
+    border-radius: 2px;
+}
 .layersNewTool_name mark {
     padding: 0 1px;
-    background: var(--color-a2) !important;
-    color: var(--color-a7) !important;
-    box-shadow: inset 0 -1px 0 var(--color-a4);
+    background: color-mix(in srgb, var(--color-mmgis) 25%, transparent);
+    color: inherit;
+    box-shadow: none;
+}
+@media (max-width: 380px) {
+    .layersNewTool_badges {
+        display: none;
+    }
 }

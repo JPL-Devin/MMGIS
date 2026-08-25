@@ -3,20 +3,9 @@ import Sortable from 'sortablejs'
 
 import LayerRow from './LayerRow'
 import LayerToolbar from './LayerToolbar'
-
-function getVisibleChildCount(row, allRows, visibleRows) {
-    const visibleNames = new Set(visibleRows.map((value) => value.name))
-    const byName = new Map(allRows.map((value) => [value.name, value]))
-    return allRows.filter((value) => {
-        if (value.structural || !visibleNames.has(value.name)) return false
-        let parent = value.parent
-        while (parent) {
-            if (parent === row.name) return true
-            parent = byName.get(parent)?.parent
-        }
-        return false
-    }).length
-}
+import { getChildCounts } from './layerRowHelpers'
+import { rowMatchesSearch } from '../../hooks/useLayerTree'
+import { useLayersNewStore } from '../../store'
 
 function LayerList({
     rows,
@@ -25,13 +14,24 @@ function LayerList({
     toggleLayer,
     onToggleHeader,
     onToggleGroupPower,
-    onExpandAll,
-    onCollapseAll,
-    onRestoreExpansion,
     onSort,
     onOpenSettings,
 }) {
     const listRef = useRef(null)
+    const search = useLayersNewStore((state) => state.search)
+    const typeFilters = useLayersNewStore((state) => state.typeFilters)
+    const visibleOnly = useLayersNewStore((state) => state.visibleOnly)
+    const activeFilterOnly = useLayersNewStore(
+        (state) => state.activeFilterOnly
+    )
+    const matchingRows = allRows.filter(
+        (row) =>
+            !row.structural &&
+            (typeFilters.length === 0 || typeFilters.includes(row.type)) &&
+            (!visibleOnly || row.on === true) &&
+            (!activeFilterOnly || row.filtered === true) &&
+            rowMatchesSearch(row, search)
+    )
     useEffect(() => {
         if (!listRef.current) return undefined
         const sortable = Sortable.create(listRef.current, {
@@ -51,9 +51,6 @@ function LayerList({
         <div className='layersNewTool_list'>
             <LayerToolbar
                 rows={allRows}
-                onExpandAll={onExpandAll}
-                onCollapseAll={onCollapseAll}
-                onRestoreExpansion={onRestoreExpansion}
             />
             <div className='layersNewTool_listRows' ref={listRef}>
                 {rows.map((row) => (
@@ -63,12 +60,16 @@ function LayerList({
                             row.structural
                                 ? {
                                       ...row,
-                                      visibleChildCount:
-                                          getVisibleChildCount(
-                                              row,
-                                              allRows,
-                                              rows
-                                          ),
+                                      childCount: getChildCounts(
+                                          row,
+                                          allRows,
+                                          matchingRows
+                                      ).total,
+                                      visibleChildCount: getChildCounts(
+                                          row,
+                                          allRows,
+                                          matchingRows
+                                      ).on,
                                   }
                                 : row
                         }

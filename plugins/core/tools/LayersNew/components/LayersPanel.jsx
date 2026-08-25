@@ -140,15 +140,27 @@ const LayersPanel = ({ onClose, adapters = layersNewAdapters }) => {
     return (
         <div className='layersNewTool'>
             <div className='mmgisToolHeader'>
-                <div>
-                    <div className='layersNewTool_headerMain'>
-                        <div className='mmgisToolTitle'>LayersNew</div>
-                        <span className='layersNewTool_count'>
-                            {rows.length} layers
-                        </span>
-                    </div>
-                    <div className='layersNewTool_headerClose'>
-                        <IconButton size='sm' onClick={onClose} title='Close Tool'>
+                <div className='layersNewTool_headerMain'>
+                    <div className='mmgisToolTitle'>LayersNew</div>
+                    <div className='layersNewTool_headerActions'>
+                        <IconButton size='sm' aria-label='Expand all groups'
+                            title='Expand all groups'
+                            onClick={() => setAllHeaders(true)}>
+                            <i className='mdi mdi-arrow-expand mdi-14px' />
+                        </IconButton>
+                        <IconButton size='sm' aria-label='Collapse all groups'
+                            title='Collapse all groups'
+                            onClick={() => setAllHeaders(false)}>
+                            <i className='mdi mdi-arrow-collapse mdi-14px' />
+                        </IconButton>
+                        <IconButton size='sm'
+                            aria-label='Restore configured expansion'
+                            title='Restore configured expansion'
+                            onClick={restoreExpansion}>
+                            <i className='mdi mdi-restore mdi-14px' />
+                        </IconButton>
+                        <IconButton size='sm' onClick={onClose} title='Close Tool'
+                            aria-label='Close Tool'>
                             <i className='mdi mdi-close mdi-18px' />
                         </IconButton>
                     </div>
@@ -172,9 +184,6 @@ const LayersPanel = ({ onClose, adapters = layersNewAdapters }) => {
                                 toggleLayer={toggleLayer}
                                 onToggleHeader={onToggleHeader}
                                 onToggleGroupPower={onToggleGroupPower}
-                                onExpandAll={() => setAllHeaders(true)}
-                                onCollapseAll={() => setAllHeaders(false)}
-                                onRestoreExpansion={restoreExpansion}
                                 onSort={onSort}
                                 onOpenSettings={onOpenSettings}
                             />
@@ -192,9 +201,6 @@ const LayersPanel = ({ onClose, adapters = layersNewAdapters }) => {
                         toggleLayer={toggleLayer}
                         onToggleHeader={onToggleHeader}
                         onToggleGroupPower={onToggleGroupPower}
-                        onExpandAll={() => setAllHeaders(true)}
-                        onCollapseAll={() => setAllHeaders(false)}
-                        onRestoreExpansion={restoreExpansion}
                         onSort={onSort}
                         onOpenSettings={onOpenSettings}
                     />

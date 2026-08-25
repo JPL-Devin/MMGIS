@@ -12,6 +12,10 @@ const {
     orderedLeafNames,
     replayOrderingHistory,
 } = require('../../plugins/core/tools/LayersNew/ordering')
+const {
+    getChildCounts,
+    badgeText,
+} = require('../../plugins/core/tools/LayersNew/components/List/layerRowHelpers')
 
 function adapter(data, filters = {}) {
     return {
@@ -24,6 +28,21 @@ function adapter(data, filters = {}) {
 }
 
 test.describe('LayersNew tree helpers', () => {
+    test('computes group on/total counts and compact tag badges', () => {
+        const rows = [
+            { name: 'group', parent: null, structural: true },
+            { name: 'one', parent: 'group', structural: false, on: true },
+            { name: 'two', parent: 'group', structural: false, on: false },
+        ]
+        expect(getChildCounts(rows[0], rows, rows)).toEqual({
+            on: 1,
+            total: 2,
+        })
+        expect(badgeText(['terrain'])).toBe('terrain')
+        expect(badgeText(['a', 'b'])).toBe('#2')
+        expect(badgeText([])).toBe(null)
+    })
+
     test('flattens nested groups with depth and indentation source data', () => {
         const rows = flattenLayerTree(
             [

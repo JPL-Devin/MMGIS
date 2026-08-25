@@ -2,14 +2,13 @@ import React from 'react'
 
 import {
     IconButton,
-    IconTextButton,
     Toggle,
     Tooltip,
 } from '@design/components'
 import { getAvailableLayerTypes } from '../../hooks/useLayerTree'
 import { useLayersNewStore } from '../../store'
 
-const TYPE_LABELS = {
+export const TYPE_LABELS = {
     vector: 'Vector',
     vectortile: 'Vector tiles',
     tile: 'Raster',
@@ -22,9 +21,6 @@ const TYPE_LABELS = {
 
 function LayerToolbar({
     rows,
-    onExpandAll,
-    onCollapseAll,
-    onRestoreExpansion,
 }) {
     const search = useLayersNewStore((state) => state.search)
     const typeFilters = useLayersNewStore((state) => state.typeFilters)
@@ -67,35 +63,8 @@ function LayerToolbar({
                     </Tooltip>
                 )}
             </div>
-            <div className='layersNewTool_toolbarActions'>
-                <Tooltip content='Expand all groups'>
-                    <IconTextButton
-                        size='sm'
-                        icon={<i className='mdi mdi-arrow-expand mdi-14px' />}
-                        aria-label='Expand all groups'
-                        onClick={onExpandAll}
-                    />
-                </Tooltip>
-                <Tooltip content='Collapse all groups'>
-                    <IconTextButton
-                        size='sm'
-                        icon={<i className='mdi mdi-arrow-collapse mdi-14px' />}
-                        aria-label='Collapse all groups'
-                        onClick={onCollapseAll}
-                    />
-                </Tooltip>
-                <Tooltip content='Restore configured expansion'>
-                    <IconButton
-                        size='sm'
-                        aria-label='Restore configured expansion'
-                        onClick={onRestoreExpansion}
-                    >
-                        <i className='mdi mdi-restore mdi-14px' />
-                    </IconButton>
-                </Tooltip>
-            </div>
             <div className='layersNewTool_filterArea' aria-label='Layer filters'>
-                <div className='layersNewTool_typeFilters'>
+                <div className='layersNewTool_filterBlock'>
                     {types.map((type) => (
                         <Toggle
                             className='layersNewTool_filterChip'
@@ -104,23 +73,28 @@ function LayerToolbar({
                             onPressedChange={() => toggleType(type)}
                             aria-label={`Filter ${TYPE_LABELS[type] || type}`}
                         >
+                            <span
+                                className='layersNewTool_filterDot'
+                                style={{
+                                    '--filter-type-color': `var(--color-${type}, var(--color-a4))`,
+                                }}
+                            />
                             {TYPE_LABELS[type] || type}
                         </Toggle>
                     ))}
-                </div>
-                <div className='layersNewTool_stateFilters'>
                     <Toggle
-                        className='layersNewTool_filterChip'
+                        className='layersNewTool_filterChip layersNewTool_stateChip'
                         pressed={visibleOnly}
                         onPressedChange={(value) =>
                             useLayersNewStore.getState().setVisibleOnly(value)
                         }
                         aria-label='Visible layers only'
                     >
+                        <i className='mdi mdi-eye-outline mdi-14px' />
                         Visible
                     </Toggle>
                     <Toggle
-                        className='layersNewTool_filterChip'
+                        className='layersNewTool_filterChip layersNewTool_stateChip'
                         pressed={activeFilterOnly}
                         onPressedChange={(value) =>
                             useLayersNewStore
@@ -129,8 +103,12 @@ function LayerToolbar({
                         }
                         aria-label='Layers with active filters only'
                     >
+                        <i className='mdi mdi-filter-outline mdi-14px' />
                         Filtered
                     </Toggle>
+                    <span className='layersNewTool_filterCount'>
+                        {rows.filter((row) => !row.structural).length} layers
+                    </span>
                 </div>
             </div>
             <datalist id='layersNewTags'>
