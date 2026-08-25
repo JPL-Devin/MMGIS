@@ -4,11 +4,12 @@ import { useLayerTree } from '../hooks/useLayerTree'
 import { useLayerVisibility } from '../hooks/useLayerVisibility'
 import { useRefreshStatus } from '../hooks/useRefreshStatus'
 import { useRestyled } from '../hooks/useRestyled'
+import { layersNewAdapters } from '../adapters/runtimeAdapters'
 import { IconButton } from '@design/components'
 
-const LayersPanel = ({ onClose }) => {
-    const rows = useLayerTree()
-    useLayerVisibility()
+const LayersPanel = ({ onClose, adapters = layersNewAdapters }) => {
+    const rows = useLayerTree(adapters.layers)
+    useLayerVisibility(adapters.layers)
     useRefreshStatus()
     useRestyled()
 

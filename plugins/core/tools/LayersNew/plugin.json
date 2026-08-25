@@ -9,7 +9,7 @@
     "description": "React LayersTool implementation with type-owned settings.",
     "hasVars": true,
     "name": "LayersNew",
-    "toolbarPriority": 2,
+    "toolbarPriority": 5,
     "paths": {
         "LayersNewTool": "./LayersNewTool"
     },

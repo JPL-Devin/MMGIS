@@ -1,21 +1,23 @@
 import { useCallback, useEffect } from 'react'
 
-import layersAdapter from '../adapters/layersAdapter'
 import { useLayersNewStore } from '../store'
 
-export function useLayerVisibility(adapter = layersAdapter) {
+export function useLayerVisibility(adapter) {
     useEffect(() => {
         const handle = (name, isOn) => {
             useLayersNewStore.getState().setLayerState(name, { on: isOn })
         }
-        const unsubscribe = adapter.subscribeOnLayerToggle(handle)
+        const unsubscribe = adapter.subscribeOnLayerToggle(
+            handle,
+            'LayersNewVisibility'
+        )
         const onDocumentToggle = (event) => {
             const { layerName, isOn } = event.detail || {}
             if (layerName != null) handle(layerName, isOn)
         }
         document.addEventListener('layerVisibilityChange', onDocumentToggle)
         return () => {
-            unsubscribe?.()
+            unsubscribe()
             document.removeEventListener(
                 'layerVisibilityChange',
                 onDocumentToggle

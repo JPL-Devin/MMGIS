@@ -1,30 +1,16 @@
-function runtimeDependencies() {
-    return {
-        layers: require('@basics/Layers_/Layers_').default,
-        map: require('@basics/Map_/Map_').default,
-        globe: require('@basics/Globe_/Globe_').default,
-        filtering: require('@basics/Layers_/Filtering/Filtering').default,
-        registry: require('@basics/Layers_/registry/LayerTypeRegistry').default,
-    }
-}
-
-export function createLayersAdapter(dependencies = {}) {
-    const defaults =
-        dependencies.layers &&
-        dependencies.map &&
-        dependencies.filtering &&
-        dependencies.registry
-            ? {}
-            : runtimeDependencies()
-    const {
-        layers,
-        map,
-        globe,
-        filtering,
-        registry,
-    } = { ...defaults, ...dependencies }
+export function createLayersAdapter({
+    layers,
+    map,
+    globe,
+    formulae,
+    filtering,
+    registry,
+    resetDynamicStyle,
+    restyleDynamicStyle,
+    toast,
+}) {
     const layerData = (name) => {
-        const uuid = layers.asLayerUUID?.(name) || name
+        const uuid = layers.asLayerUUID(name) || name
         return layers.layers?.data?.[uuid] || layers.layers?.data?.[name]
     }
 
@@ -34,7 +20,7 @@ export function createLayersAdapter(dependencies = {}) {
         getLayerRuntime: (name) => layers.layers?.layer?.[name],
         getLayerState: (name) => ({
             on: layers.layers?.on?.[name] === true,
-            opacity: layers.getLayerOpacity?.(name) ?? 0,
+            opacity: layers.getLayerOpacity(name) ?? 0,
             loading: layers.layers?.loading?.[name] === true,
         }),
         getLayerStates: () => {
@@ -42,13 +28,13 @@ export function createLayersAdapter(dependencies = {}) {
             return Object.fromEntries(
                 names.map((name) => [name, {
                     on: layers.layers?.on?.[name] === true,
-                    opacity: layers.getLayerOpacity?.(name) ?? 0,
+                    opacity: layers.getLayerOpacity(name) ?? 0,
                     loading: layers.layers?.loading?.[name] === true,
                 }])
             )
         },
         getOrderedNames: () => [...(layers._layersOrdered || [])],
-        getToolVars: () => layers.getToolVars?.('layersnew') || {},
+        getToolVars: () => layers.getToolVars('layersnew') || {},
         isStructural: (typeId) => registry.isStructural(typeId),
         getTypeConfig: (typeId) => registry.getConfig(typeId),
         isFilterable: (name) => filtering.isFilterable(name),
@@ -72,35 +58,48 @@ export function createLayersAdapter(dependencies = {}) {
             )
             target[last] = value
         },
-        resetSettings: (name, scope) =>
-            layers.resetLayerSettings?.(name, scope),
-        restyle: (layer) => layers.restyleLayer?.(layer),
-        notify: (kind, message) => layers.notify?.(kind, message),
+        resetSettings: (name) => {
+            layers.setLayerOpacity(name, 1)
+            layers.setLayerFilter(name, 'clear')
+            resetDynamicStyle(layerData(name), null)
+        },
+        restyle: (layer) => restyleDynamicStyle(layer),
+        notify: (kind, message) => {
+            if (kind === 'error') return toast.error(message, 3000)
+            return toast.info(message)
+        },
         reorder: (ordered) => layers.reorderLayers(ordered),
+        applyOrderingHistory: (history) => {
+            const ordered = [...(layers._layersOrdered || [])]
+            history.forEach(([oldIndex, newIndex]) => {
+                if (
+                    oldIndex < 0 ||
+                    oldIndex >= ordered.length ||
+                    newIndex < 0 ||
+                    newIndex >= ordered.length
+                )
+                    return
+                const [name] = ordered.splice(oldIndex, 1)
+                ordered.splice(newIndex, 0, name)
+            })
+            layers.reorderLayers(ordered)
+            map.orderedBringToFront()
+            return ordered
+        },
         orderedBringToFront: () => map.orderedBringToFront(),
         refreshLayer: (layer) => map.refreshLayer(layer),
         fitBounds: (bounds) => map.map?.fitBounds(bounds),
         globe: () => globe,
+        getSafeName: (name) => formulae.getSafeName(name),
+        escapeHtml: (value) => formulae.escapeHtml(value),
+        getDynamicProps: (name) => layers.getDynamicProps(name),
+        getAggregations: (name, context) =>
+            filtering.getAggregations(name, context),
+        applyFilter: (name, context) => filtering.applyFilter(name, context),
         initializeFiltering: () => filtering.initialize(),
-        subscribeOnLayerToggle: (callback) => {
-            layers.subscribeOnLayerToggle('LayersNew', callback)
-            return () => layers.unsubscribeOnLayerToggle('LayersNew')
+        subscribeOnLayerToggle: (callback, subscriptionId = 'LayersNew') => {
+            layers.subscribeOnLayerToggle(subscriptionId, callback)
+            return () => layers.unsubscribeOnLayerToggle(subscriptionId)
         },
     }
 }
-
-let defaultAdapter
-const getDefaultAdapter = () => {
-    if (!defaultAdapter) defaultAdapter = createLayersAdapter()
-    return defaultAdapter
-}
-
-const layersAdapter = new Proxy(
-    {},
-    {
-        get: (_, property) => (...args) =>
-            getDefaultAdapter()[property](...args),
-    }
-)
-
-export default layersAdapter

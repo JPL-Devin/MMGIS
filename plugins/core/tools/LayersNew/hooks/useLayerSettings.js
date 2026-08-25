@@ -1,11 +1,9 @@
 import { useMemo } from 'react'
 
 import LayerTypeRegistry from '@basics/Layers_/registry/LayerTypeRegistry'
-import layersAdapter from '../adapters/layersAdapter'
-import legendAdapter from '../adapters/legendAdapter'
 import { useLayersNewStore } from '../store'
 
-export function createLayerSettingsApi(layer, layerName, adapter = layersAdapter) {
+export function createLayerSettingsApi(layer, layerName, adapter, legend) {
     return {
         get: (path) =>
             path.split('.').reduce((value, key) => value?.[key], layer),
@@ -21,7 +19,7 @@ export function createLayerSettingsApi(layer, layerName, adapter = layersAdapter
         setOpacity: (value) => adapter.setOpacity(layerName, value),
         restyle: () => adapter.restyle(layer),
         refreshLayer: () => adapter.refreshLayer(layer),
-        refreshLegend: () => legendAdapter.refresh(layer),
+        refreshLegend: () => legend.refresh(layer),
         resetSettings: (scope) => adapter.resetSettings(layerName, scope),
         notify: (kind, message) => adapter.notify(kind, message),
         runtime: () => adapter.getLayerRuntime(layerName),
@@ -34,18 +32,18 @@ export function createLayerSettingsApi(layer, layerName, adapter = layersAdapter
     }
 }
 
-export function useLayerSettings(adapter = layersAdapter) {
+export function useLayerSettings({ layers, legend }) {
     const layerName = useLayersNewStore((state) => state.selectedLayer)
     return useMemo(() => {
         if (!layerName) return null
-        const layer = adapter.getLayerData(layerName)
+        const layer = layers.getLayerData(layerName)
         if (!layer) return null
         const settings = LayerTypeRegistry.getSettings(layer.type)
         const ctx = {
             capabilities: LayerTypeRegistry.capabilities(layer.type),
-            api: createLayerSettingsApi(layer, layerName, adapter),
-            isOn: adapter.getLayerState(layerName).on,
-            runtime: adapter.getLayerRuntime(layerName),
+            api: createLayerSettingsApi(layer, layerName, layers, legend),
+            isOn: layers.getLayerState(layerName).on,
+            runtime: layers.getLayerRuntime(layerName),
             vars: layer.variables || {},
         }
         return {
@@ -55,5 +53,5 @@ export function useLayerSettings(adapter = layersAdapter) {
             sections: settings?.sections?.(layer, ctx) || [],
             tabs: settings?.tabs?.(layer, ctx) || null,
         }
-    }, [adapter, layerName])
+    }, [layers, legend, layerName])
 }

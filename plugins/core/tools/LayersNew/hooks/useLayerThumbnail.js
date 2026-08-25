@@ -1,10 +1,9 @@
 import { useMemo } from 'react'
 
 import LayerTypeRegistry from '@basics/Layers_/registry/LayerTypeRegistry'
-import layersAdapter from '../adapters/layersAdapter'
 import { useLayersNewStore } from '../store'
 
-export function useLayerThumbnail(adapter = layersAdapter) {
+export function useLayerThumbnail(adapter) {
     const layerName = useLayersNewStore((state) => state.selectedLayer)
     return useMemo(() => {
         if (!layerName) return null

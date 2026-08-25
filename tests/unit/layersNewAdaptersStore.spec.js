@@ -28,9 +28,9 @@ test.describe('LayersNew adapters', () => {
         const adapter = createExportAdapter({
             layers: {
                 layers: { on: { a: true }, data: { a: { name: 'a' } } },
-                convertGeoJSONLngLatsToPrimaryCoordinates: () => converted,
             },
             api: { api: () => 'request' },
+            convert: () => converted,
         })
         expect(normalizeFeatures({ Features: [1] })).toEqual({
             type: 'FeatureCollection',
@@ -89,6 +89,7 @@ test.describe('LayersNew adapters', () => {
             getLayerOpacity: () => 0.5,
             toggleLayer: (layer) => calls.push(['toggle', layer.name]),
             setLayerOpacity: (...args) => calls.push(['opacity', ...args]),
+            setLayerFilter: (...args) => calls.push(['filter', ...args]),
             setGlobalLoading: (name) => calls.push(['loading', name]),
             setGlobalLoaded: (name) => calls.push(['loaded', name]),
             reorderLayers: (names) => calls.push(['reorder', names]),
@@ -101,6 +102,16 @@ test.describe('LayersNew adapters', () => {
             map: { orderedBringToFront: () => calls.push(['front']) },
             registry: { isStructural: () => false },
             filtering: {},
+            formulae: {},
+            globe: {},
+            resetDynamicStyle: (...args) =>
+                calls.push(['resetDynamicStyle', ...args]),
+            restyleDynamicStyle: (...args) =>
+                calls.push(['restyleDynamicStyle', ...args]),
+            toast: {
+                error: (...args) => calls.push(['error', ...args]),
+                info: (...args) => calls.push(['info', ...args]),
+            },
         })
         await adapter.toggleLayer('a')
         adapter.setOpacity('a', 0.4)
@@ -109,6 +120,58 @@ test.describe('LayersNew adapters', () => {
             'toggle',
             'opacity',
             'reorder',
+        ])
+
+        const unsubscribe = adapter.subscribeOnLayerToggle(
+            () => {},
+            'LayersNewTree'
+        )
+        unsubscribe()
+        expect(calls).toEqual(
+            expect.arrayContaining([
+                ['subscribe', 'LayersNewTree', expect.any(Function)],
+                ['unsubscribe', 'LayersNewTree'],
+            ])
+        )
+    })
+
+    test('delegates reset, restyle, and error notification to real APIs', () => {
+        const calls = []
+        const adapter = createLayersAdapter({
+            layers: {
+                layers: { data: { a: { name: 'a' } } },
+                asLayerUUID: (name) => name,
+                getLayerOpacity: () => 1,
+                setLayerOpacity: (...args) =>
+                    calls.push(['opacity', ...args]),
+                setLayerFilter: (...args) => calls.push(['filter', ...args]),
+            },
+            map: { orderedBringToFront: () => {} },
+            globe: {},
+            formulae: {},
+            filtering: {},
+            registry: {},
+            resetDynamicStyle: (...args) =>
+                calls.push(['resetDynamicStyle', ...args]),
+            restyleDynamicStyle: (...args) =>
+                calls.push(['restyleDynamicStyle', ...args]),
+            toast: {
+                error: (...args) => calls.push(['error', ...args]),
+                info: (...args) => calls.push(['info', ...args]),
+            },
+        })
+
+        const layer = { name: 'a' }
+        adapter.resetSettings('a')
+        adapter.restyle(layer)
+        adapter.notify('error', 'Layer failed')
+
+        expect(calls).toEqual([
+            ['opacity', 'a', 1],
+            ['filter', 'a', 'clear'],
+            ['resetDynamicStyle', layer, null],
+            ['restyleDynamicStyle', layer],
+            ['error', 'Layer failed', 3000],
         ])
     })
 })

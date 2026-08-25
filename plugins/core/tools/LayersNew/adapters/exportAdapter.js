@@ -7,47 +7,13 @@ export function normalizeFeatures(data) {
     return { type: 'FeatureCollection', features: [] }
 }
 
-function runtimeDependencies() {
-    const layers = require('@basics/Layers_/Layers_').default
-    return {
-        layers,
-        api: require('@pre/calls').default,
-        convert: layers.convertGeoJSONLngLatsToPrimaryCoordinates,
-    }
-}
-
-export function createExportAdapter(dependencies = {}) {
-    const defaults =
-        dependencies.layers && dependencies.api ? {} : runtimeDependencies()
-    const { layers, api, convert } = {
-        ...defaults,
-        ...dependencies,
-    }
-    const coordinateConverter =
-        convert || layers?.convertGeoJSONLngLatsToPrimaryCoordinates
+export function createExportAdapter({ layers, api, convert }) {
     return {
         isLayerOn: (name) => layers.layers?.on?.[name] === true,
         getLayerData: (name) => layers.layers?.data?.[name],
         getApi: () => api,
-        fetchGeodataset: (params) => api.api?.('geodatasets_get', params),
+        fetchGeodataset: (params) => api.api('geodatasets_get', params),
         normalizeFeatures,
-        convertCoordinates: (geojson) =>
-            coordinateConverter?.(geojson) || geojson,
+        convertCoordinates: (geojson) => convert(geojson),
     }
 }
-
-let defaultAdapter
-const getDefaultAdapter = () => {
-    if (!defaultAdapter) defaultAdapter = createExportAdapter()
-    return defaultAdapter
-}
-
-const exportAdapter = new Proxy(
-    {},
-    {
-        get: (_, property) => (...args) =>
-            getDefaultAdapter()[property](...args),
-    }
-)
-
-export default exportAdapter

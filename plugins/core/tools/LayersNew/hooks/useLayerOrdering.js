@@ -1,12 +1,11 @@
 import { useCallback } from 'react'
 
-import layersAdapter from '../adapters/layersAdapter'
 import {
     orderingHistoryString,
     useLayersNewStore,
 } from '../store'
 
-export function useLayerOrdering(adapter = layersAdapter) {
+export function useLayerOrdering(adapter) {
     const reorder = useCallback(
         (ordered, oldIndex, newIndex, headerState) => {
             adapter.reorder(ordered)

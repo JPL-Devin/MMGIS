@@ -4,10 +4,7 @@ export function timestamp(value) {
     return Number.isFinite(result) ? result : null
 }
 
-export function createTimeAdapter(dependencies = {}) {
-    const timeUI =
-        dependencies.timeUI ||
-        require('@basics/TimeControl_/TimeUI').default
+export function createTimeAdapter({ timeUI }) {
     return {
         updateTimes: (start, end, current) =>
             timeUI.updateTimes(start, end, current),
@@ -20,19 +17,3 @@ export function createTimeAdapter(dependencies = {}) {
         },
     }
 }
-
-let defaultAdapter
-const getDefaultAdapter = () => {
-    if (!defaultAdapter) defaultAdapter = createTimeAdapter()
-    return defaultAdapter
-}
-
-const timeAdapter = new Proxy(
-    {},
-    {
-        get: (_, property) => (...args) =>
-            getDefaultAdapter()[property](...args),
-    }
-)
-
-export default timeAdapter

@@ -21,6 +21,13 @@ const registrySource = fs.readFileSync(
     ),
     'utf8'
 )
+const settingsHookSource = fs.readFileSync(
+    path.resolve(
+        __dirname,
+        '../../plugins/core/tools/LayersNew/hooks/useLayerSettings.js'
+    ),
+    'utf8'
+)
 
 test.describe('LayersNew settings surface', () => {
     test('defines the fixed settings operation contract', () => {
@@ -77,9 +84,32 @@ test.describe('LayersNew settings surface', () => {
         expect(flattenLayerModules({ modules: { map: './map' } })).toEqual({
             map: './map',
         })
-        expect(generated).toMatch(
-            /ltp_vector__settings from .*layertypes\/Vector\/settings/
+        expect(generated).not.toContain('layertypes/Vector/settings')
+        expect(registrySource).toContain('hasSettings(typeId)')
+        expect(settingsHookSource).toContain(
+            'settings?.sections?.(layer, ctx) || []'
         )
-        expect(generated).toMatch(/["']settings["']\s*:\s*ltp_vector__settings/)
+    })
+
+    test('a type without settings uses the core fallback', () => {
+        const generatedPath = require.resolve('../../src/pre/layertypes')
+        const previous = require.cache[generatedPath]
+        require.cache[generatedPath] = {
+            id: generatedPath,
+            filename: generatedPath,
+            loaded: true,
+            exports: {
+                layerTypeModules: { vector: { map: {} } },
+                layerTypeConfigs: { vector: {} },
+            },
+        }
+        const registry = require(
+            '../../src/essence/Basics/Layers_/registry/LayerTypeRegistry'
+        ).default
+        expect(registry.getSettings('vector')).toBeUndefined()
+        expect(registry.hasSettings('vector')).toBe(false)
+        expect(registry.getSettings('vector')?.sections || []).toEqual([])
+        if (previous) require.cache[generatedPath] = previous
+        else delete require.cache[generatedPath]
     })
 })

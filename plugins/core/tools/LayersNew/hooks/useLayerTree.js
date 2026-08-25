@@ -1,9 +1,9 @@
 import { useEffect, useMemo } from 'react'
 
-import layersAdapter from '../adapters/layersAdapter'
+import { RESTYLED_EVENT } from '@basics/Layers_/render/dynamicStyleRuntime'
 import { useLayersNewStore } from '../store'
 
-export function flattenLayerTree(tree, adapter = layersAdapter) {
+export function flattenLayerTree(tree, adapter) {
     const rows = []
     const visit = (nodes, parent = null, depth = 0) => {
         ;(Array.isArray(nodes) ? nodes : []).forEach((node) => {
@@ -44,7 +44,7 @@ export function rowMatchesSearch(row, search) {
         .includes(value)
 }
 
-export function useLayerTree(adapter = layersAdapter) {
+export function useLayerTree(adapter) {
     const tree = useLayersNewStore((state) => state.layerTree)
     const search = useLayersNewStore((state) => state.search)
 
@@ -58,12 +58,27 @@ export function useLayerTree(adapter = layersAdapter) {
             )
         }
         refresh()
+        const unsubscribe = adapter.subscribeOnLayerToggle(
+            refresh,
+            'LayersNewTree'
+        )
         document.addEventListener('layersToolHeaderStateChange', refresh)
-        return () =>
+        document.addEventListener('layerVisibilityChange', refresh)
+        document.addEventListener('layerRefreshStatusChanged', refresh)
+        document.addEventListener(RESTYLED_EVENT, refresh)
+        return () => {
+            unsubscribe()
             document.removeEventListener(
                 'layersToolHeaderStateChange',
                 refresh
             )
+            document.removeEventListener('layerVisibilityChange', refresh)
+            document.removeEventListener(
+                'layerRefreshStatusChanged',
+                refresh
+            )
+            document.removeEventListener(RESTYLED_EVENT, refresh)
+        }
     }, [adapter])
 
     return useMemo(
