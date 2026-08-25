@@ -15,6 +15,12 @@ eleven alternative directions for the same two invariants: different answers to 
 live*, *what the list is for*, and *what each one asks the layer-type contract for*. Image **17**
 puts all twelve side by side.
 
+**Chosen direction → [`LayersNew-devin-prompt.md`](./LayersNew-devin-prompt.md)**: the
+implementation prompt for a new core tool `LayersNew`, taking 02's tabbed full-height settings,
+06's slide-over drawer, 11's raster thumbnails and an enhanced (not search-first) list search. It
+carries the `settings` registry-surface contract and a complete parity matrix of the current
+tool's behavior.
+
 Everything is drawn in MMGIS's existing dark theme tokens (`src/design-system/themes.js`,
 `--color-a*`, `--color-<type>`) and composed from components that already exist in
 `src/design-system/components/` — the few genuinely new shared pieces are called out per image
