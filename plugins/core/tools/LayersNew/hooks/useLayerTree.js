@@ -31,7 +31,9 @@ export function flattenLayerTree(tree, adapter) {
                 filtered: adapter.isFilterable?.(name)
                     ? layerHasActiveFilter(name, adapter)
                     : false,
-                timeEnabled: Boolean(data.time || node.time),
+                timeEnabled: Boolean(
+                    data.time?.enabled === true || node.time?.enabled === true
+                ),
                 defaultExpanded:
                     toolVars.expanded === true ||
                     data.variables?.expanded === true ||

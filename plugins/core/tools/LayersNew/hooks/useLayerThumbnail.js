@@ -16,7 +16,8 @@ function getCandidate(name, adapter, signal) {
         layer.thumbnail ||
         layer.thumbnailUrl ||
         layer.preview ||
-        settings?.thumbnail
+        settings?.thumbnail ||
+        adapter.getLayerThumbnailUrl(name)
     return typeof candidate === 'function'
         ? candidate(layer, adapter.getLayerRuntime(name), signal)
         : candidate

@@ -4,6 +4,20 @@ import Sortable from 'sortablejs'
 import LayerRow from './LayerRow'
 import LayerToolbar from './LayerToolbar'
 
+function getVisibleChildCount(row, allRows, visibleRows) {
+    const visibleNames = new Set(visibleRows.map((value) => value.name))
+    const byName = new Map(allRows.map((value) => [value.name, value]))
+    return allRows.filter((value) => {
+        if (value.structural || !visibleNames.has(value.name)) return false
+        let parent = value.parent
+        while (parent) {
+            if (parent === row.name) return true
+            parent = byName.get(parent)?.parent
+        }
+        return false
+    }).length
+}
+
 function LayerList({
     rows,
     allRows,
@@ -45,7 +59,19 @@ function LayerList({
                 {rows.map((row) => (
                     <LayerRow
                         key={row.name}
-                        row={row}
+                        row={
+                            row.structural
+                                ? {
+                                      ...row,
+                                      visibleChildCount:
+                                          getVisibleChildCount(
+                                              row,
+                                              allRows,
+                                              rows
+                                          ),
+                                  }
+                                : row
+                        }
                         adapter={adapter}
                         toggleLayer={toggleLayer}
                         onToggleHeader={onToggleHeader}

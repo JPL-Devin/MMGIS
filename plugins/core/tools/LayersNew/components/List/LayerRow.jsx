@@ -75,7 +75,7 @@ function LayerRow({
                     {row.displayName}
                 </span>
                 <span className='layersNewTool_count'>
-                    {row.childCount}
+                    {row.visibleChildCount ?? row.childCount}
                 </span>
                 <Tooltip content='Toggle group layers'>
                     <IconButton
@@ -124,7 +124,11 @@ function LayerRow({
             <button
                 className='layersNewTool_name'
                 onClick={() => selectLayer(row.name)}
-                title={row.description}
+                title={
+                    row.description
+                        ? `${row.displayName} — ${row.description}`
+                        : row.displayName
+                }
             >
                 {highlight(row.displayName, search)}
             </button>
@@ -146,11 +150,18 @@ function LayerRow({
                     <i className='mdi mdi-clock-outline mdi-14px' />
                 </span>
             )}
-            {(row.tags || []).slice(0, 2).map((tag) => (
-                <span className='layersNewTool_badge' key={tag}>
-                    {tag}
+            {(row.tags || []).length > 0 && (
+                <span
+                    className='layersNewTool_badges'
+                    title={(row.tags || []).join(', ')}
+                >
+                    {(row.tags || []).slice(0, 2).map((tag) => (
+                        <span className='layersNewTool_badge' key={tag}>
+                            {tag}
+                        </span>
+                    ))}
                 </span>
-            ))}
+            )}
             <span className='layersNewTool_actions'>
                 <Action
                     label='Settings'

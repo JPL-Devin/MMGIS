@@ -7,7 +7,6 @@ function OpacitySection({ api }) {
     const value = api.opacity()
     return (
         <div className='layersNewTool_settingControl'>
-            <label>Opacity</label>
             <Slider
                 value={[value]}
                 min={0}

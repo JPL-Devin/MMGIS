@@ -10,8 +10,14 @@ import { getAvailableLayerTypes } from '../../hooks/useLayerTree'
 import { useLayersNewStore } from '../../store'
 
 const TYPE_LABELS = {
+    vector: 'Vector',
     vectortile: 'Vector tiles',
     tile: 'Raster',
+    query: 'Query',
+    data: 'Data',
+    model: 'Model',
+    image: 'Image',
+    velocity: 'Velocity',
 }
 
 function LayerToolbar({
@@ -61,7 +67,7 @@ function LayerToolbar({
                     </Tooltip>
                 )}
             </div>
-            <div className='layersNewTool_filters' aria-label='Layer filters'>
+            <div className='layersNewTool_toolbarActions'>
                 <Tooltip content='Expand all groups'>
                     <IconTextButton
                         size='sm'
@@ -87,6 +93,8 @@ function LayerToolbar({
                         <i className='mdi mdi-restore mdi-14px' />
                     </IconButton>
                 </Tooltip>
+            </div>
+            <div className='layersNewTool_typeFilters' aria-label='Layer filters'>
                 {types.map((type) => (
                     <Toggle
                         key={type}

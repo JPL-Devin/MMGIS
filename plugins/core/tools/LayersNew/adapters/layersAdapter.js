@@ -2,6 +2,113 @@ import {
     orderedLeafNames,
     replayOrderingHistory,
 } from '../ordering'
+import { transformStacUrl } from '@basics/Layers_/LayerUtils'
+
+const RASTER_TYPES = new Set(['tile', 'image', 'data', 'velocity'])
+
+function browserBaseUrl() {
+    return `${window.location.origin}${(window.location.pathname || '').replace(
+        /\/$/g,
+        ''
+    )}`
+}
+
+function tileCoordinates(layer) {
+    const bounds = layer.boundingBox
+    const zoom = Math.max(
+        0,
+        Math.min(
+            Number(layer.previewZoom) || Number(layer.minZoom) || 3,
+            18
+        )
+    )
+    if (!Array.isArray(bounds) || bounds.length < 4) return [zoom, 0, 0]
+    const longitude = (Number(bounds[0]) + Number(bounds[2])) / 2
+    const latitude = Math.max(-85.0511, Math.min(85.0511, (Number(bounds[1]) + Number(bounds[3])) / 2))
+    const scale = 2 ** zoom
+    const x = Math.floor(((longitude + 180) / 360) * scale)
+    const y = Math.floor(
+        ((1 -
+            Math.log(
+                Math.tan((latitude * Math.PI) / 180) +
+                    1 / Math.cos((latitude * Math.PI) / 180)
+            ) /
+                Math.PI) /
+            2) *
+            scale
+    )
+    const tileY = layer.tileformat === 'tms' || layer.tms === true ? scale - 1 - y : y
+    return [zoom, Math.max(0, Math.min(scale - 1, x)), Math.max(0, Math.min(scale - 1, tileY))]
+}
+
+function fillTileTemplate(url, layer) {
+    const [z, x, y] = tileCoordinates(layer)
+    return url
+        .replace(/\{z\}/gi, z)
+        .replace(/\{x\}/gi, x)
+        .replace(/\{y\}/gi, y)
+        .replace(/\{s\}/gi, 'a')
+        .replace(/\{time\}/gi, layer.time?.end || '')
+}
+
+function missionRasterSource(layers, formulae, source) {
+    let value = source || ''
+    if (value.startsWith('COG:')) value = value.slice(4)
+    if (formulae.isUrlAbsolute(value)) return value
+    value = `${layers.missionPath || ''}${value}`
+    if (formulae.isUrlAbsolute(value)) return value
+    return `/${value}`
+}
+
+function getRasterPreviewUrl(layers, formulae, layer) {
+    if (!layer || !RASTER_TYPES.has(layer.type)) return null
+    const source = layer.url || layer.demtileurl || ''
+    const sourceType = layer.sourceType || layer.demSourceType || ''
+    const isCog =
+        source.startsWith('COG:') ||
+        (sourceType.toLowerCase() === 'cog' && !source.startsWith('http')) ||
+        (layer.type === 'image' && /\.(tif|tiff)$/i.test(source))
+    const isStac =
+        source.startsWith('stac-collection:') ||
+        sourceType.toLowerCase() === 'stac-collection'
+    if (isCog) {
+        const query = new URLSearchParams({
+            url: missionRasterSource(layers, formulae, source),
+        })
+        if (layer.cogColormap) query.set('colormap_name', layer.cogColormap)
+        if (layer.cogMin != null && layer.cogMax != null)
+            query.set('rescale', `[${layer.cogMin},${layer.cogMax}]`)
+        if (layer.cogBands?.[0] != null)
+            query.set('bidx', layer.cogBands[0])
+        if (layer.demparser === 'terrarium')
+            query.set('algorithm', 'terrarium')
+        if (layer.demparser === 'terrainrgb')
+            query.set('algorithm', 'terrainrgb')
+        return fillTileTemplate(
+            `${browserBaseUrl()}/titiler/cog/tiles/${
+                layer.tileMatrixSet || 'WebMercatorQuad'
+            }/{z}/{x}/{y}.png?${query.toString()}`,
+            layer
+        )
+    }
+    if (isStac) {
+        const normalized = source.startsWith('stac-collection:')
+            ? source
+            : `stac-collection:${source}`
+        const endpoint = layer.type === 'data' ? 'preview' : 'tiles'
+        const transformed = transformStacUrl(
+            normalized,
+            layer,
+            endpoint,
+            window.location
+        )
+        return endpoint === 'tiles' ? fillTileTemplate(transformed, layer) : transformed
+    }
+    if (!source.includes('{z}') || !source.includes('{x}') || !source.includes('{y}'))
+        return null
+    const resolved = layers.getUrl(layer.type, source, layer)
+    return fillTileTemplate(resolved, layer)
+}
 
 export function createLayersAdapter({
     layers,
@@ -52,6 +159,8 @@ export function createLayersAdapter({
         isMobile: () => layers.UserInterface_?.isMobile === true,
         isStructural: (typeId) => registry.isStructural(typeId),
         getTypeConfig: (typeId) => registry.getConfig(typeId),
+        getLayerThumbnailUrl: (name) =>
+            getRasterPreviewUrl(layers, formulae, layerData(name)),
         isFilterable: (name) => filtering.isFilterable(name),
         getFilters: () => filtering.filters,
         toggleLayer: (name) => {

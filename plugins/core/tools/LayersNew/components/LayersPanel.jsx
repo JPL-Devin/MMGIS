@@ -141,14 +141,18 @@ const LayersPanel = ({ onClose, adapters = layersNewAdapters }) => {
         <div className='layersNewTool'>
             <div className='mmgisToolHeader'>
                 <div>
-                    <div className='mmgisToolTitle'>LayersNew</div>
-                    <div className='layersNewTool_count'>
-                        {rows.length} layers
+                    <div>
+                        <div className='mmgisToolTitle'>LayersNew</div>
+                        <div className='layersNewTool_count'>
+                            {rows.length} layers
+                        </div>
+                    </div>
+                    <div>
+                        <IconButton size='sm' onClick={onClose} title='Close Tool'>
+                            <i className='mdi mdi-close mdi-18px' />
+                        </IconButton>
                     </div>
                 </div>
-                <IconButton size='sm' onClick={onClose} title='Close Tool'>
-                    <i className='mdi mdi-close mdi-18px' />
-                </IconButton>
             </div>
             <div className='layersNewTool_content'>
                 {selectedLayer && settings ? (
