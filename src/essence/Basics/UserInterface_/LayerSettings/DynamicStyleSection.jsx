@@ -134,6 +134,13 @@ function sliderBounds(range, stats, attribute) {
     return bounds
 }
 
+export function rampTicks(stats) {
+    const min = Number(stats?.min)
+    const max = Number(stats?.max)
+    if (!Number.isFinite(min) || !Number.isFinite(max)) return []
+    return [min, min + (max - min) / 2, max]
+}
+
 function DynamicStyleRule({ layer, api, rule, index }) {
     const attribute = attributeOf(rule) || DEFAULT_ATTRIBUTE
     const options = styleableAttributes(rule).map((value) => ({
@@ -141,6 +148,7 @@ function DynamicStyleRule({ layer, api, rule, index }) {
         label: ATTRIBUTE_LABELS[value] || value,
     }))
     const domain = api.getDynamicStyleStats(rulePropertyPath(rule))
+    const ticks = rampTicks(domain)
     const range = numericRange(rule, attribute)
     const bounds = sliderBounds(range, domain, attribute)
     const commit = (patch) => {
@@ -155,10 +163,7 @@ function DynamicStyleRule({ layer, api, rule, index }) {
         : []
     return (
         <div className='layerSettings_rule'>
-            <div className='layerSettings_row'>
-                <Tooltip content={rulePropertyLabel(rule)}>
-                    <strong>{rulePropertyLabel(rule)}</strong>
-                </Tooltip>
+            <div className='layerSettings_ruleHeader'>
                 <Checkbox
                     checked={rule.enabled !== false}
                     onCheckedChange={(checked) =>
@@ -166,6 +171,14 @@ function DynamicStyleRule({ layer, api, rule, index }) {
                     }
                     aria-label={`Enable ${rulePropertyLabel(rule)}`}
                 />
+                <Tooltip content={rulePropertyLabel(rule)}>
+                    <span>
+                        {ATTRIBUTE_LABELS[attribute] || attribute} ←{' '}
+                        <code className='layerSettings_property'>
+                            {rulePropertyLabel(rule)}
+                        </code>
+                    </span>
+                </Tooltip>
             </div>
             <div className='layerSettings_row'>
                 <span>Style attribute</span>
@@ -205,65 +218,80 @@ function DynamicStyleRule({ layer, api, rule, index }) {
             )}
             {!isCategoricalRule(rule) &&
                 !COLOR_ATTRIBUTES.includes(attribute) && (
-                    <div className='layerSettings_control'>
+                    <div className='layerSettings_row'>
                         <span>Range</span>
-                        <Slider
-                            value={range}
-                            min={bounds[0]}
-                            max={bounds[1]}
-                            step='any'
-                            onValueChange={(value) =>
-                                commit({ range: value })
-                            }
-                        />
-                        <div className='layerSettings_row'>
-                            <InputWithUnit
-                                type='number'
-                                value={range[0]}
+                        <div className='layerSettings_rangeControl'>
+                            <Slider
+                                value={range}
+                                min={bounds[0]}
+                                max={bounds[1]}
                                 step='any'
-                                aria-label='Range minimum'
-                                onChange={(event) =>
-                                    commit({
-                                        range: [
-                                            Number(event.target.value),
-                                            range[1],
-                                        ],
-                                    })
+                                onValueChange={(value) =>
+                                    commit({ range: value })
                                 }
                             />
-                            <InputWithUnit
-                                type='number'
-                                value={range[1]}
-                                step='any'
-                                aria-label='Range maximum'
-                                onChange={(event) =>
-                                    commit({
-                                        range: [
-                                            range[0],
-                                            Number(event.target.value),
-                                        ],
-                                    })
-                                }
-                            />
+                            <div className='layerSettings_rangeInputs'>
+                                <InputWithUnit
+                                    type='number'
+                                    value={range[0]}
+                                    step='any'
+                                    aria-label='Range minimum'
+                                    onChange={(event) =>
+                                        commit({
+                                            range: [
+                                                Number(event.target.value),
+                                                range[1],
+                                            ],
+                                        })
+                                    }
+                                />
+                                <InputWithUnit
+                                    type='number'
+                                    value={range[1]}
+                                    step='any'
+                                    aria-label='Range maximum'
+                                    onChange={(event) =>
+                                        commit({
+                                            range: [
+                                                range[0],
+                                                Number(event.target.value),
+                                            ],
+                                        })
+                                    }
+                                />
+                            </div>
                         </div>
                     </div>
                 )}
             {!isCategoricalRule(rule) && COLOR_ATTRIBUTES.includes(attribute) && (
                 <div className='layerSettings_control'>
-                    <span>Color ramp</span>
-                    <ColorRampPicker
-                        value={
-                            Array.isArray(rule.ramp)
-                                ? CUSTOM_RAMP
-                                : rule.ramp || DEFAULT_RAMP
-                        }
-                        ramps={rampsFor(rule.ramp || DEFAULT_RAMP)}
-                        portal
-                        onValueChange={(value) => {
-                            if (value !== CUSTOM_RAMP)
-                                commit({ ramp: value })
-                        }}
-                    />
+                    <div className='layerSettings_row'>
+                        <span>Color ramp</span>
+                        <div>
+                            <ColorRampPicker
+                                value={
+                                    Array.isArray(rule.ramp)
+                                        ? CUSTOM_RAMP
+                                        : rule.ramp || DEFAULT_RAMP
+                                }
+                                ramps={rampsFor(rule.ramp || DEFAULT_RAMP)}
+                                portal
+                                onValueChange={(value) => {
+                                    if (value !== CUSTOM_RAMP)
+                                        commit({ ramp: value })
+                                }}
+                            />
+                            {ticks.length > 0 && (
+                                <div className='layerSettings_rampTicks'>
+                                    {ticks.map((tick) => (
+                                        <span key={tick}>
+                                            {formatValue(tick)}
+                                        </span>
+                                    ))}
+                                </div>
+                            )}
+                        </div>
+                    </div>
                     <div className='layerSettings_row'>
                         <span>Bins</span>
                         <InputWithUnit

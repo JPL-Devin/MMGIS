@@ -1,12 +1,30 @@
 import React from 'react'
 
-import { Checkbox, IconButton, Slider, Tooltip } from '@design/components'
+import {
+    Checkbox,
+    IconButton,
+    IconTextButton,
+    Slider,
+    Switch,
+    Tooltip,
+} from '@design/components'
 import FilterMount from './FilterMount'
 
 function OpacitySection({ api }) {
     const value = api.opacity()
+    const on = api.isOn()
     return (
         <div className='layersNewTool_settingControl'>
+            <div className='layerSettings_row'>
+                <span>Visible</span>
+                <Switch
+                    checked={on}
+                    onCheckedChange={() => api.setVisibility(!on)}
+                    aria-label='Toggle layer visibility'
+                />
+            </div>
+            <div className='layerSettings_row'>
+                <span>Opacity</span>
             <Slider
                 value={[value]}
                 min={0}
@@ -18,6 +36,7 @@ function OpacitySection({ api }) {
                 }
                 onValueChange={(next) => api.setOpacity(next[0])}
             />
+            </div>
         </div>
     )
 }
@@ -118,14 +137,14 @@ function TimeSection({ layer, adapters }) {
 function ResetSection({ api }) {
     return (
         <Tooltip content='Reset all layer settings'>
-            <IconButton
+            <IconTextButton
                 size='sm'
-                aria-label='Reset all layer settings'
-                className='layersNewTool_reset'
+                aria-label='Reset layer settings'
+                icon={<i className='mdi mdi-restore mdi-18px' />}
                 onClick={() => api.resetSettings()}
             >
-                <i className='mdi mdi-restore mdi-18px' />
-            </IconButton>
+                Reset layer settings
+            </IconTextButton>
         </Tooltip>
     )
 }
@@ -134,9 +153,10 @@ export function universalSections(layer, layerName, adapters) {
     const sections = [
         {
             id: 'opacity',
-            label: 'Opacity',
+            label: 'Display',
             tab: 'settings',
             Component: OpacitySection,
+            owner: 'core',
         },
         {
             id: 'filter',
@@ -146,6 +166,7 @@ export function universalSections(layer, layerName, adapters) {
                 <FilterSection layerName={layerName} adapters={adapters} />
             ),
             hidden: !adapters.layers.isFilterable(layerName),
+            owner: 'core',
         },
         {
             id: 'attachments',
@@ -160,6 +181,7 @@ export function universalSections(layer, layerName, adapters) {
             hidden: Object.keys(
                 adapters.attachments.getAttachments(layerName)
             ).length === 0,
+            owner: 'core',
         },
         {
             id: 'time',
@@ -167,12 +189,14 @@ export function universalSections(layer, layerName, adapters) {
             tab: 'time',
             Component: () => <TimeSection layer={layer} adapters={adapters} />,
             hidden: layer.time?.enabled !== true,
+            owner: 'core',
         },
         {
             id: 'reset',
             label: 'Reset',
             tab: 'settings',
             Component: ({ api }) => <ResetSection api={api} />,
+            owner: 'core',
         },
     ]
     return sections

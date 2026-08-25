@@ -1,29 +1,78 @@
 .layerSettings_control {
     display: grid;
     gap: 8px;
-    padding: 8px 0;
+    padding: 8px;
 }
 
 .layerSettings_rule {
     display: grid;
     gap: 8px;
-    padding: 8px 0;
-    border-top: 1px solid var(--color-a8);
+    padding: 8px;
+    border: 1px solid var(--color-a3);
+    border-radius: 3px;
+}
+
+.layerSettings_ruleHeader {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    min-width: 0;
+}
+
+.layerSettings_ruleHeader > :nth-child(2) {
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.layerSettings_property {
+    padding: 2px 4px;
+    background: var(--color-a2);
+    color: var(--color-a5);
+    font-size: 10px;
+}
+
+.layerSettings_rampTicks {
+    display: flex;
+    justify-content: space-between;
+    color: var(--color-a4);
+    font-family: monospace;
+    font-size: 10px;
+}
+
+.layerSettings_rangeControl {
+    display: grid;
+    gap: 6px;
+    min-width: 0;
+}
+
+.layerSettings_rangeInputs {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 6px;
 }
 
 .layerSettings_row,
 .layerSettings_attachmentRow,
 .layerSettings_statRow {
-    display: flex;
+    display: grid;
+    grid-template-columns: 92px minmax(0, 1fr);
     align-items: center;
-    justify-content: space-between;
-    gap: 8px;
+    gap: 6px;
+}
+
+.layerSettings_row > :first-child,
+.layerSettings_attachmentRow > :first-child {
+    min-width: 0;
+    color: var(--color-a4);
+    font-size: 11px;
+    white-space: nowrap;
 }
 
 .layerSettings_row > :last-child,
 .layerSettings_attachmentRow > :last-child {
     min-width: 0;
-    flex: 1;
 }
 
 .layerSettings_hint {
@@ -42,7 +91,7 @@
 .layerSettings_attachments {
     display: grid;
     gap: 6px;
-    padding: 8px 0;
+    padding: 8px;
 }
 
 .layerSettings_statRow {
@@ -59,7 +108,7 @@
 }
 
 .layerSettings_attachmentRow {
-    flex-wrap: wrap;
+    min-width: 0;
 }
 
 .layerSettings_attachmentControls {

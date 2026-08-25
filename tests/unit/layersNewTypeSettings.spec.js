@@ -72,6 +72,14 @@ test.describe('LayersNew type settings surfaces', () => {
         expect(source).toContain('value !== CUSTOM_RAMP')
     })
 
+    test('computes numeric ramp ticks from finite statistics', () => {
+        const { rampTicks } = require(
+            '../../src/essence/Basics/UserInterface_/LayerSettings/DynamicStyleSection'
+        )
+        expect(rampTicks({ min: 2, max: 10 })).toEqual([2, 6, 10])
+        expect(rampTicks({ min: 2 })).toEqual([])
+    })
+
     test('statistics omit absent values', () => {
         const source = fs.readFileSync(
             'src/essence/Basics/UserInterface_/LayerSettings/StatisticsSection.jsx',

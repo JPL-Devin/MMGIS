@@ -13,6 +13,7 @@ export function createLayerSettingsApi(layer, layerName, adapters) {
             layers.set(layerName, path, value)
         },
         isOn: () => layers.getLayerState(layerName).on,
+        setVisibility: (value) => layers.setVisibility(layerName, value),
         ensureOn: async () => {
             if (!layers.getLayerState(layerName).on)
                 await layers.toggleLayer(layerName)
@@ -30,6 +31,17 @@ export function createLayerSettingsApi(layer, layerName, adapters) {
             layers.getDynamicStyleStats(layer, property),
         ensureFieldStats: () => layers.ensureDynamicStyleFieldStats(layer),
         getStatsFields: () => layers.getDynamicStyleStatsFields(layer),
+        getActiveFilterCount: () => {
+            const filter = layers.getFilters?.()?.[layerName]
+            return (
+                (filter?.values || []).filter(
+                    (value) => value && !value.isGroup && value.type != null
+                ).length + (filter?.spatial?.center != null ? 1 : 0)
+            )
+        },
+        getAttachmentCount: () =>
+            Object.values(adapters.attachments.getAttachments(layerName))
+                .filter((attachment) => attachment !== false).length,
         overrideDynamicStyle: (override) =>
             layers.overrideDynamicStyle(layer, override),
         overrideDynamicStyleRule: (index, patch) =>
@@ -70,7 +82,12 @@ export function useLayerSettings(adapters) {
         }
         let typeSections = []
         try {
-            typeSections = settings?.sections?.(layer, ctx) || []
+            typeSections = (settings?.sections?.(layer, ctx) || []).map(
+                (section) => ({
+                    ...section,
+                    owner: section.owner || layer.type,
+                })
+            )
         } catch (error) {
             typeSections = [
                 {
@@ -131,6 +148,19 @@ export function useLayerSettings(adapters) {
                 settings && typeof settings.summary === 'function'
                     ? settings.summary(layer, ctx)
                     : '',
+            parentPath: findParentPath(layers.getTree?.() || [], layerName),
         }
     }, [adapters, layers, layerName, settingsTab])
+}
+
+function findParentPath(nodes, target, parents = []) {
+    for (const node of Array.isArray(nodes) ? nodes : []) {
+        if (node.name === target) return parents
+        const found = findParentPath(node.sublayers, target, [
+            ...parents,
+            node.display_name || node.name,
+        ])
+        if (found) return found
+    }
+    return []
 }
