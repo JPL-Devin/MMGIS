@@ -22,6 +22,7 @@ import {
     rulePropertyLabel,
     rulePropertyPath,
     ruleStatOf,
+    RUNTIME_RAMPS,
     styleableAttributes,
 } from '@basics/Layers_/render/dynamicStyle'
 import {
@@ -39,7 +40,6 @@ import {
     data as colormapData,
     evaluate_cmap,
 } from '@external/js-colormaps/js-colormaps.js'
-import { RUNTIME_RAMPS } from '../../../../../plugins/core/tools/Layers/components/DynamicStyleRamp'
 import './LayerSettings.css'
 
 const ATTRIBUTE_LABELS = {
@@ -259,7 +259,10 @@ function DynamicStyleRule({ layer, api, rule, index }) {
                         }
                         ramps={rampsFor(rule.ramp || DEFAULT_RAMP)}
                         portal
-                        onValueChange={(value) => commit({ ramp: value })}
+                        onValueChange={(value) => {
+                            if (value !== CUSTOM_RAMP)
+                                commit({ ramp: value })
+                        }}
                     />
                     <div className='layerSettings_row'>
                         <span>Bins</span>

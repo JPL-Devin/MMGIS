@@ -64,8 +64,12 @@ test.describe('LayersNew type settings surfaces', () => {
         expect(source).not.toContain(
             "require('@external/js-colormaps/js-colormaps.js')"
         )
+        expect(source).not.toContain(
+            "plugins/core/tools/Layers/components/DynamicStyleRamp"
+        )
         expect(source).toContain("Array.isArray(rule.ramp)")
         expect(source).toContain("? CUSTOM_RAMP")
+        expect(source).toContain('value !== CUSTOM_RAMP')
     })
 
     test('statistics omit absent values', () => {
