@@ -23,6 +23,18 @@ export function createLayerSettingsApi(layer, layerName, adapters) {
         refreshLayer: () => layers.refreshLayer(layerName),
         refreshLegend: () => legend.refresh(layer),
         resetSettings: () => layers.resetSettings(layerName),
+        getDynamicStyle: () => layers.getDynamicStyle(layer),
+        getDynamicStyleRules: () => layers.getDynamicStyleRules(layer),
+        getDynamicStyleDomain: () => layers.getDynamicStyleDomain(layer),
+        getDynamicStyleStats: (property) =>
+            layers.getDynamicStyleStats(layer, property),
+        ensureFieldStats: () => layers.ensureDynamicStyleFieldStats(layer),
+        getStatsFields: () => layers.getDynamicStyleStatsFields(layer),
+        overrideDynamicStyle: (override) =>
+            layers.overrideDynamicStyle(layer, override),
+        overrideDynamicStyleRule: (index, patch) =>
+            layers.overrideDynamicStyleRule(layer, index, patch),
+        attachments: adapters.attachments,
         notify: (kind, message) => layers.notify(kind, message),
         runtime: () => layers.getLayerRuntime(layerName),
         globe: () => layers.globe(),
@@ -70,13 +82,15 @@ export function useLayerSettings(adapters) {
                 },
             ]
         }
+        const universal = universalSections(
+            layer,
+            layerName,
+            universalAdapters,
+            ctx
+        )
+        const typeIds = new Set(typeSections.map((section) => section.id))
         const sections = [
-            ...universalSections(
-                layer,
-                layerName,
-                universalAdapters,
-                ctx
-            ),
+            ...universal.filter((section) => !typeIds.has(section.id)),
             ...typeSections,
         ].filter((section) => section.hidden !== true)
         let configuredTabs = null

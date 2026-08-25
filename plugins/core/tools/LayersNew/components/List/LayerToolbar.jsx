@@ -94,37 +94,44 @@ function LayerToolbar({
                     </IconButton>
                 </Tooltip>
             </div>
-            <div className='layersNewTool_typeFilters' aria-label='Layer filters'>
-                {types.map((type) => (
+            <div className='layersNewTool_filterArea' aria-label='Layer filters'>
+                <div className='layersNewTool_typeFilters'>
+                    {types.map((type) => (
+                        <Toggle
+                            className='layersNewTool_filterChip'
+                            key={type}
+                            pressed={typeFilters.includes(type)}
+                            onPressedChange={() => toggleType(type)}
+                            aria-label={`Filter ${TYPE_LABELS[type] || type}`}
+                        >
+                            {TYPE_LABELS[type] || type}
+                        </Toggle>
+                    ))}
+                </div>
+                <div className='layersNewTool_stateFilters'>
                     <Toggle
-                        key={type}
-                        pressed={typeFilters.includes(type)}
-                        onPressedChange={() => toggleType(type)}
-                        aria-label={`Filter ${TYPE_LABELS[type] || type}`}
+                        className='layersNewTool_filterChip'
+                        pressed={visibleOnly}
+                        onPressedChange={(value) =>
+                            useLayersNewStore.getState().setVisibleOnly(value)
+                        }
+                        aria-label='Visible layers only'
                     >
-                        {TYPE_LABELS[type] || type}
+                        Visible
                     </Toggle>
-                ))}
-                <Toggle
-                    pressed={visibleOnly}
-                    onPressedChange={(value) =>
-                        useLayersNewStore.getState().setVisibleOnly(value)
-                    }
-                    aria-label='Visible layers only'
-                >
-                    Visible
-                </Toggle>
-                <Toggle
-                    pressed={activeFilterOnly}
-                    onPressedChange={(value) =>
-                        useLayersNewStore
-                            .getState()
-                            .setActiveFilterOnly(value)
-                    }
-                    aria-label='Layers with active filters only'
-                >
-                    Filtered
-                </Toggle>
+                    <Toggle
+                        className='layersNewTool_filterChip'
+                        pressed={activeFilterOnly}
+                        onPressedChange={(value) =>
+                            useLayersNewStore
+                                .getState()
+                                .setActiveFilterOnly(value)
+                        }
+                        aria-label='Layers with active filters only'
+                    >
+                        Filtered
+                    </Toggle>
+                </div>
             </div>
             <datalist id='layersNewTags'>
                 {[...new Set(rows.flatMap((row) => row.tags || []))].map(

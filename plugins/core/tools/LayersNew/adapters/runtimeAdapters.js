@@ -30,7 +30,18 @@ function runtimeDependencies() {
     const {
         overrideDynamicStyle,
         restyleLayerDynamically,
+        overrideDynamicStyleRuleOf,
     } = require('@basics/Layers_/render/dynamicStyleRuntime')
+    const {
+        getDynamicStyle,
+        getViewedRules,
+        getDomainMode,
+    } = require('@basics/Layers_/render/layerDynamicStyle')
+    const {
+        propertyStats,
+        ensureFieldStats,
+    } = require('@basics/Layers_/render/dynamicStyleRuntime')
+    const { getStatsFields } = require('@basics/Layers_/render/layerDynamicStyle')
     const Toast = require('@design/components/Toast/Toast').default
     const calls = require('@pre/calls').default
     return {
@@ -48,6 +59,13 @@ function runtimeDependencies() {
         derivesLegend,
         overrideDynamicStyle,
         restyleLayerDynamically,
+        overrideDynamicStyleRuleOf,
+        getDynamicStyle,
+        getViewedRules,
+        getDomainMode,
+        propertyStats,
+        ensureFieldStats,
+        getStatsFields,
         Toast,
         calls,
     }
@@ -70,6 +88,13 @@ function getRuntimeAdapters() {
             derivesLegend,
             overrideDynamicStyle,
             restyleLayerDynamically,
+            overrideDynamicStyleRuleOf,
+            getDynamicStyle,
+            getViewedRules,
+            getDomainMode,
+            propertyStats,
+            ensureFieldStats,
+            getStatsFields,
             Toast,
             calls,
         } = runtimeDependencies()
@@ -82,6 +107,13 @@ function getRuntimeAdapters() {
             registry: LayerTypeRegistry,
             resetDynamicStyle: overrideDynamicStyle,
             restyleDynamicStyle: restyleLayerDynamically,
+            dynamicStyle: getDynamicStyle,
+            viewedDynamicStyleRules: getViewedRules,
+            dynamicStyleDomain: getDomainMode,
+            dynamicStylePropertyStats: propertyStats,
+            ensureDynamicStyleFieldStats: ensureFieldStats,
+            dynamicStyleStatsFields: getStatsFields,
+            overrideDynamicStyleRule: overrideDynamicStyleRuleOf,
             toast: Toast,
             info: LayerInfoModal,
         })
@@ -102,6 +134,7 @@ function getRuntimeAdapters() {
         const attachmentsAdapter = createAttachmentsAdapter({
             layers: L_,
             registry: LayerAttachmentRegistry,
+            map: Map_,
         })
         runtimeAdapters = {
             layers: layersAdapter,

@@ -1,4 +1,4 @@
-export function createAttachmentsAdapter({ layers, registry }) {
+export function createAttachmentsAdapter({ layers, registry, map }) {
     return {
         describe: (id) => registry.describe(id),
         idForSublayerKey: (key) => registry.idForSublayerKey(key),
@@ -8,5 +8,11 @@ export function createAttachmentsAdapter({ layers, registry }) {
             layers.setAttachmentVisibility(host, sublayer, visible),
         setOpacity: (host, sublayer, opacity) =>
             layers.setSublayerOpacity(host, sublayer, opacity),
+        setDropdown: (host, sublayer, value) => {
+            const attachment = layers.layers?.attachments?.[host]?.[sublayer]
+            const callback = attachment?.layer?.dropdownFunc
+            if (typeof callback === 'function')
+                callback(host, sublayer, map, value)
+        },
     }
 }

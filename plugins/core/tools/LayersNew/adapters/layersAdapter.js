@@ -1,3 +1,5 @@
+import $ from 'jquery'
+
 import {
     orderedLeafNames,
     replayOrderingHistory,
@@ -119,6 +121,13 @@ export function createLayersAdapter({
     registry,
     resetDynamicStyle,
     restyleDynamicStyle,
+    dynamicStyle,
+    viewedDynamicStyleRules,
+    dynamicStyleDomain,
+    dynamicStylePropertyStats,
+    ensureDynamicStyleFieldStats,
+    dynamicStyleStatsFields,
+    overrideDynamicStyleRule,
     toast,
     info,
 }) {
@@ -187,6 +196,18 @@ export function createLayersAdapter({
             layers.setLayerFilter(name, 'clear')
             resetDynamicStyle(layerData(name), null)
         },
+        getDynamicStyle: (layer) => dynamicStyle(layer),
+        getDynamicStyleRules: (layer) => viewedDynamicStyleRules(layer),
+        getDynamicStyleDomain: (layer) => dynamicStyleDomain(layer),
+        getDynamicStyleStats: (layer, property) =>
+            dynamicStylePropertyStats(layer, property),
+        ensureDynamicStyleFieldStats: (layer) =>
+            ensureDynamicStyleFieldStats(layer),
+        getDynamicStyleStatsFields: (layer) => dynamicStyleStatsFields(layer),
+        overrideDynamicStyle: (layer, override) =>
+            resetDynamicStyle(layer, override),
+        overrideDynamicStyleRule: (layer, index, patch) =>
+            overrideDynamicStyleRule(layer, index, patch),
         restyle: (layer) => restyleDynamicStyle(layer),
         notify: (kind, message) => {
             if (kind === 'error') return toast.error(message, 3000)
@@ -224,7 +245,8 @@ export function createLayersAdapter({
         getAggregations: (name, context) =>
             filtering.getAggregations(name, context),
         applyFilter: (name, context) => filtering.applyFilter(name, context),
-        mountFilter: (container, name) => filtering.make(container, name),
+        mountFilter: (container, name) =>
+            filtering.make($(container), name),
         destroyFilter: () => filtering.destroy(),
         locate: (name) => {
             const data = layerData(name)

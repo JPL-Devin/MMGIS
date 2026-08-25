@@ -1,0 +1,83 @@
+.layerSettings_control {
+    display: grid;
+    gap: 8px;
+    padding: 8px 0;
+}
+
+.layerSettings_rule {
+    display: grid;
+    gap: 8px;
+    padding: 8px 0;
+    border-top: 1px solid var(--color-a8);
+}
+
+.layerSettings_row,
+.layerSettings_attachmentRow,
+.layerSettings_statRow {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+}
+
+.layerSettings_row > :last-child,
+.layerSettings_attachmentRow > :last-child {
+    min-width: 0;
+    flex: 1;
+}
+
+.layerSettings_hint {
+    color: var(--color-a4);
+    font-size: 11px;
+    line-height: 1.35;
+}
+
+.layerSettings_warning {
+    color: var(--color-yellow);
+    font-size: 11px;
+}
+
+.layerSettings_readOnly,
+.layerSettings_stats,
+.layerSettings_attachments {
+    display: grid;
+    gap: 6px;
+    padding: 8px 0;
+}
+
+.layerSettings_statRow {
+    font-size: 11px;
+}
+
+.layerSettings_statRow > :first-child {
+    color: var(--color-a4);
+}
+
+.layerSettings_statProperty {
+    padding-top: 6px;
+    border-top: 1px solid var(--color-a8);
+}
+
+.layerSettings_attachmentRow {
+    flex-wrap: wrap;
+}
+
+.layerSettings_attachmentControls {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    min-width: 150px;
+}
+
+.layerSettings_attachmentControls select {
+    min-width: 0;
+    max-width: 125px;
+}
+
+.layerSettings_mapping {
+    display: flex;
+    justify-content: space-between;
+    gap: 8px;
+    color: var(--color-a4);
+    font-size: 11px;
+}

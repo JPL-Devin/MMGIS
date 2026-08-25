@@ -80,12 +80,12 @@ test.describe('LayersNew settings surface', () => {
         expect(registrySource).toContain('if (mods.module == null) return mods')
     })
 
-    test('missing settings modules are safe and registry exposes settings', () => {
+    test('settings modules are generated and registry exposes settings', () => {
         expect(flattenLayerModules({ modules: { map: './map' } })).toEqual({
             map: './map',
         })
         if (fs.existsSync(generatedPath))
-            expect(fs.readFileSync(generatedPath, 'utf8')).not.toContain(
+            expect(fs.readFileSync(generatedPath, 'utf8')).toContain(
                 'layertypes/Vector/settings'
             )
         expect(registrySource).toContain('hasSettings(typeId)')
@@ -98,8 +98,8 @@ test.describe('LayersNew settings surface', () => {
         const registry = require(
             '../../src/essence/Basics/Layers_/registry/LayerTypeRegistry'
         ).default
-        expect(registry.getSettings('vector')).toBeUndefined()
-        expect(registry.hasSettings('vector')).toBe(false)
-        expect(registry.getSettings('vector')?.sections || []).toEqual([])
+        expect(registry.getSettings('video')).toBeUndefined()
+        expect(registry.hasSettings('video')).toBe(false)
+        expect(registry.getSettings('video')?.sections || []).toEqual([])
     })
 })
