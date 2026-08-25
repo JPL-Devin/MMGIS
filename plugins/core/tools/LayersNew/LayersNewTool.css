@@ -8,6 +8,7 @@
     color: var(--color-a5);
     overflow: auto;
     flex: 1;
+    position: relative;
 }
 .layersNewTool_list {
     min-width: 0;
@@ -110,6 +111,102 @@
     display: flex;
     align-items: center;
     margin-left: auto;
+}
+.layersNewTool_settingsOverlay {
+    position: absolute;
+    inset: 0;
+    z-index: 3;
+    display: flex;
+}
+.layersNewTool_settingsDim {
+    position: absolute;
+    inset: 0;
+    border: 0;
+    background: rgb(0 0 0 / 45%);
+    cursor: default;
+}
+.layersNewTool_settingsDrawer {
+    position: relative;
+    width: min(100%, 390px);
+    height: 100%;
+    margin-left: auto;
+    overflow: auto;
+    background: var(--color-a1);
+    box-shadow: -4px 0 14px rgb(0 0 0 / 30%);
+    animation: layersNewTool_settingsIn 180ms ease-out;
+}
+.layersNewTool_settingsPage,
+.layersNewTool_settingsView {
+    height: 100%;
+    overflow: auto;
+}
+.layersNewTool_settingsHeader {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    padding: 8px;
+    border-bottom: 1px solid var(--color-a3);
+}
+.layersNewTool_settingsHeader h2 {
+    margin: 0;
+    color: var(--color-a5);
+    font-size: 15px;
+    font-weight: 500;
+}
+.layersNewTool_settingsColor {
+    width: 5px;
+    height: 30px;
+    background: var(--layer-type-color);
+}
+.layersNewTool_settingsSummary {
+    max-width: 260px;
+    overflow: hidden;
+    color: var(--color-a4);
+    font-size: 11px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.layersNewTool_settingControl,
+.layersNewTool_timeSection,
+.layersNewTool_attachments {
+    padding: 8px;
+}
+.layersNewTool_settingControl label {
+    display: block;
+    margin-bottom: 6px;
+}
+.layersNewTool_settingHeading,
+.layersNewTool_attachment {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+}
+.layersNewTool_timeExtent {
+    display: grid;
+    gap: 4px;
+}
+.layersNewTool_timeExtent .layersNewTool_settingHeading {
+    margin-bottom: 7px;
+}
+.layersNewTool_sectionError {
+    padding: 10px;
+    color: var(--color-b);
+}
+.layersNewTool_reset {
+    margin: 8px;
+    border: 1px solid var(--color-a3);
+    padding: 6px 9px;
+    color: var(--color-a5);
+    background: var(--color-a2);
+    cursor: pointer;
+}
+@keyframes layersNewTool_settingsIn {
+    from { transform: translateX(100%); }
+    to { transform: translateX(0); }
+}
+@media (prefers-reduced-motion: reduce) {
+    .layersNewTool_settingsDrawer { animation: none; }
 }
 .layersNewTool_typeSwatch {
     width: 7px;

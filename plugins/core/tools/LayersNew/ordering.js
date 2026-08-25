@@ -12,7 +12,20 @@ export function canDropRows(rows, oldIndex, newIndex) {
     return !(newIndex > oldIndex && newIndex < end)
 }
 
-export function moveRows(rows, oldIndex, newIndex, depth) {
+export function dropDepth(rows, oldIndex, newIndex, afterHeader = 0) {
+    const end = subtreeEnd(rows, oldIndex)
+    const next = [...rows.slice(0, oldIndex), ...rows.slice(end)]
+    const insertion = Math.max(0, Math.min(newIndex, next.length))
+    const previous = next[insertion - 1]
+    if (!previous) return 0
+    if (previous.structural && afterHeader === 2)
+        return previous.depth + 1
+    if (previous.structural && afterHeader === 1)
+        return previous.depth
+    return previous.depth
+}
+
+export function moveRows(rows, oldIndex, newIndex, afterHeader = 0) {
     if (
         oldIndex < 0 ||
         oldIndex >= rows.length ||
@@ -27,10 +40,7 @@ export function moveRows(rows, oldIndex, newIndex, depth) {
     const next = [...rows.slice(0, oldIndex), ...rows.slice(end)]
     let insertion = newIndex
     insertion = Math.max(0, Math.min(insertion, next.length))
-    const nextDepth =
-        Number.isFinite(depth) && depth >= 0
-            ? depth
-            : block[0].depth
+    const nextDepth = dropDepth(rows, oldIndex, newIndex, afterHeader)
     const delta = nextDepth - block[0].depth
     const moved = block.map((row) => ({
         ...row,
@@ -42,8 +52,8 @@ export function moveRows(rows, oldIndex, newIndex, depth) {
 
 export function replayOrderingHistory(rows, history) {
     return (history || []).reduce(
-        (current, [oldIndex, newIndex, depth]) =>
-            moveRows(current, oldIndex, newIndex, depth),
+        (current, [oldIndex, newIndex, afterHeader]) =>
+            moveRows(current, oldIndex, newIndex, afterHeader),
         rows
     )
 }

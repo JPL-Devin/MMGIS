@@ -2,28 +2,30 @@ import { useMemo } from 'react'
 
 import LayerTypeRegistry from '@basics/Layers_/registry/LayerTypeRegistry'
 import { useLayersNewStore } from '../store'
+import { universalSections } from '../components/Settings/UniversalSections'
 
-export function createLayerSettingsApi(layer, layerName, adapter, legend) {
+export function createLayerSettingsApi(layer, layerName, adapters) {
+    const { layers, legend } = adapters
     return {
         get: (path) =>
             path.split('.').reduce((value, key) => value?.[key], layer),
         set: (path, value) => {
-            adapter.set(layerName, path, value)
+            layers.set(layerName, path, value)
         },
-        isOn: () => adapter.getLayerState(layerName).on,
+        isOn: () => layers.getLayerState(layerName).on,
         ensureOn: async () => {
-            if (!adapter.getLayerState(layerName).on)
-                await adapter.toggleLayer(layerName)
+            if (!layers.getLayerState(layerName).on)
+                await layers.toggleLayer(layerName)
         },
-        opacity: () => adapter.getLayerState(layerName).opacity,
-        setOpacity: (value) => adapter.setOpacity(layerName, value),
-        restyle: () => adapter.restyle(layer),
-        refreshLayer: () => adapter.refreshLayer(layer),
+        opacity: () => layers.getLayerState(layerName).opacity,
+        setOpacity: (value) => layers.setOpacity(layerName, value),
+        restyle: () => layers.restyle(layer),
+        refreshLayer: () => layers.refreshLayer(layerName),
         refreshLegend: () => legend.refresh(layer),
-        resetSettings: (scope) => adapter.resetSettings(layerName, scope),
-        notify: (kind, message) => adapter.notify(kind, message),
-        runtime: () => adapter.getLayerRuntime(layerName),
-        globe: () => adapter.globe(),
+        resetSettings: () => layers.resetSettings(layerName),
+        notify: (kind, message) => layers.notify(kind, message),
+        runtime: () => layers.getLayerRuntime(layerName),
+        globe: () => layers.globe(),
         vars: () => layer.variables || {},
         capabilities: () => LayerTypeRegistry.capabilities(layer.type),
         withTitiler:
@@ -32,26 +34,89 @@ export function createLayerSettingsApi(layer, layerName, adapter, legend) {
     }
 }
 
-export function useLayerSettings({ layers, legend }) {
+export function useLayerSettings(adapters) {
+    const { layers } = adapters
     const layerName = useLayersNewStore((state) => state.selectedLayer)
+    const settingsTab = useLayersNewStore((state) => state.settingsTab)
     return useMemo(() => {
         if (!layerName) return null
         const layer = layers.getLayerData(layerName)
         if (!layer) return null
         const settings = LayerTypeRegistry.getSettings(layer.type)
+        const universalAdapters = {
+            layers,
+            attachments: adapters.attachments,
+            time: adapters.time,
+        }
         const ctx = {
             capabilities: LayerTypeRegistry.capabilities(layer.type),
-            api: createLayerSettingsApi(layer, layerName, layers, legend),
+            api: createLayerSettingsApi(layer, layerName, adapters),
             isOn: layers.getLayerState(layerName).on,
             runtime: layers.getLayerRuntime(layerName),
             vars: layer.variables || {},
+            settingsTab,
         }
+        let typeSections = []
+        try {
+            typeSections = settings?.sections?.(layer, ctx) || []
+        } catch (error) {
+            typeSections = [
+                {
+                    id: 'type-settings-error',
+                    label: 'Type settings',
+                    Component: () => {
+                        throw error
+                    },
+                },
+            ]
+        }
+        const sections = [
+            ...universalSections(
+                layer,
+                layerName,
+                universalAdapters,
+                ctx
+            ),
+            ...typeSections,
+        ].filter((section) => section.hidden !== true)
+        let configuredTabs = null
+        try {
+            configuredTabs = settings?.tabs?.(layer, ctx) || null
+        } catch {
+            configuredTabs = null
+        }
+        const tabIds = [
+            ...new Set(
+                sections.map((section) => section.tab || 'settings')
+            ),
+        ]
+        const tabs = [
+            ...(configuredTabs || []),
+            ...tabIds
+                .filter(
+                    (id) =>
+                        !(configuredTabs || []).some(
+                            (tab) => (tab.id || tab.value) === id
+                        )
+                )
+                .map((id) => ({
+                    id,
+                    label: id.charAt(0).toUpperCase() + id.slice(1),
+                })),
+        ].map((tab) => ({
+            value: tab.id || tab.value,
+            label: tab.label,
+        }))
         return {
             layer,
             layerName,
             ctx,
-            sections: settings?.sections?.(layer, ctx) || [],
-            tabs: settings?.tabs?.(layer, ctx) || null,
+            sections,
+            tabs,
+            summary:
+                settings && typeof settings.summary === 'function'
+                    ? settings.summary(layer, ctx)
+                    : '',
         }
-    }, [layers, legend, layerName])
+    }, [adapters, layers, layerName, settingsTab])
 }

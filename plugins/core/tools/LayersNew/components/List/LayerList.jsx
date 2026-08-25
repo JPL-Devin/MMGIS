@@ -15,6 +15,7 @@ function LayerList({
     onCollapseAll,
     onRestoreExpansion,
     onSort,
+    onOpenSettings,
 }) {
     const listRef = useRef(null)
     useEffect(() => {
@@ -49,6 +50,7 @@ function LayerList({
                         toggleLayer={toggleLayer}
                         onToggleHeader={onToggleHeader}
                         onToggleGroupPower={onToggleGroupPower}
+                        onOpenSettings={onOpenSettings}
                     />
                 ))}
             </div>

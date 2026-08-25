@@ -49,6 +49,7 @@ export function createLayersAdapter({
                     .map((layer) => layer.type)
             )],
         getToolVars: () => layers.getToolVars('layersnew') || {},
+        isMobile: () => layers.UserInterface_?.isMobile === true,
         isStructural: (typeId) => registry.isStructural(typeId),
         getTypeConfig: (typeId) => registry.getConfig(typeId),
         isFilterable: (name) => filtering.isFilterable(name),
@@ -114,6 +115,8 @@ export function createLayersAdapter({
         getAggregations: (name, context) =>
             filtering.getAggregations(name, context),
         applyFilter: (name, context) => filtering.applyFilter(name, context),
+        mountFilter: (container, name) => filtering.make(container, name),
+        destroyFilter: () => filtering.destroy(),
         locate: (name) => {
             const data = layerData(name)
             const runtime = layers.layers?.layer?.[name]
@@ -147,7 +150,6 @@ export function createLayersAdapter({
             }
         },
         openInfo: (name) => info.open(name),
-        openTime: () => document.getElementById('timeUI')?.click(),
         refreshFailed: (name) => layers.layers?.refreshFailed?.[name] === true,
         initializeFiltering: () => filtering.initialize(),
         subscribeOnLayerToggle: (callback, subscriptionId = 'LayersNew') => {

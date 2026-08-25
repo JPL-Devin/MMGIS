@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { Checkbox, IconButton, Tooltip } from '@design/components'
+import { Checkbox, Dropdown, IconButton, Tooltip } from '@design/components'
 import { useLayersNewStore } from '../../store'
 import { useLayerThumbnail } from '../../hooks/useLayerThumbnail'
 
@@ -19,12 +19,20 @@ function Action({ label, icon, onClick, disabled = false }) {
     )
 }
 
+function menuKeyDown(event) {
+    if (event.key === 'Enter' || event.key === ' ') {
+        event.preventDefault()
+        event.currentTarget.click()
+    }
+}
+
 function LayerRow({
     row,
     adapter,
     toggleLayer,
     onToggleHeader,
     onToggleGroupPower,
+    onOpenSettings,
 }) {
     const selectLayer = useLayersNewStore((state) => state.selectLayer)
     const search = useLayersNewStore((state) => state.search)
@@ -147,13 +155,9 @@ function LayerRow({
                 <Action
                     label='Settings'
                     icon='tune'
-                    onClick={() => selectLayer(row.name)}
-                    disabled={unavailable}
-                />
-                <Action
-                    label='Export'
-                    icon='download'
-                    onClick={() => adapter.notify('info', 'Export coming soon.')}
+                    onClick={(event) =>
+                        onOpenSettings(row.name, event.currentTarget)
+                    }
                     disabled={unavailable}
                 />
                 <Action
@@ -162,24 +166,53 @@ function LayerRow({
                     onClick={() => adapter.locate(row.name)}
                     disabled={busy}
                 />
-                <Action
-                    label='Information'
-                    icon='information-outline'
-                    onClick={() => adapter.openInfo(row.name)}
-                />
-                {row.timeEnabled && (
-                    <Action
-                        label='Time'
-                        icon='clock-outline'
-                        onClick={() => adapter.openTime()}
-                    />
-                )}
-                <Action
-                    label='Reload'
-                    icon='refresh'
-                    onClick={() => adapter.refreshLayer(row.name)}
-                    disabled={busy || unavailable}
-                />
+                <Dropdown
+                    trigger={
+                        <IconButton
+                            size='sm'
+                            aria-label='More layer actions'
+                        >
+                            <i className='mdi mdi-dots-vertical mdi-16px' />
+                        </IconButton>
+                    }
+                >
+                    <Dropdown.Item tabIndex={0} onKeyDown={menuKeyDown}
+                        onClick={() =>
+                            adapter.notify('info', 'Export coming soon.')
+                        }
+                    >
+                        <i className='mdi mdi-download mdi-14px' /> Export
+                    </Dropdown.Item>
+                    <Dropdown.Item tabIndex={0} onKeyDown={menuKeyDown}
+                        onClick={() => adapter.openInfo(row.name)}>
+                        <i className='mdi mdi-information-outline mdi-14px' /> Information
+                    </Dropdown.Item>
+                    {row.timeEnabled && (
+                        <Dropdown.Item tabIndex={0} onKeyDown={menuKeyDown}
+                            onClick={(event) =>
+                                onOpenSettings(
+                                    row.name,
+                                    event.currentTarget,
+                                    'time'
+                                )
+                            }
+                        >
+                            <i className='mdi mdi-clock-outline mdi-14px' /> Time
+                        </Dropdown.Item>
+                    )}
+                    <Dropdown.Item
+                        tabIndex={busy || unavailable ? -1 : 0}
+                        onKeyDown={menuKeyDown}
+                        aria-disabled={busy || unavailable}
+                        onClick={
+                            busy || unavailable
+                                ? undefined
+                                : () => adapter.refreshLayer(row.name)
+                        }
+                    >
+                        <i className='mdi mdi-refresh mdi-14px' /> Reload
+                    </Dropdown.Item>
+                </Dropdown>
             </span>
         </div>
     )

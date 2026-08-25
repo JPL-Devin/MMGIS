@@ -10,6 +10,12 @@ import LayerList from './List/LayerList'
 import { useLayersNewStore } from '../store'
 import { moveRows } from '../ordering'
 import { groupTogglePlan } from '../groups'
+import { useLayerSettings } from '../hooks/useLayerSettings'
+import SettingsDrawer from './Settings/SettingsDrawer'
+import SettingsPage from './Settings/SettingsPage'
+import { getSettingsPresentation } from './settingsPresentation'
+
+export { getSettingsPresentation }
 
 const LayersPanel = ({ onClose, adapters = layersNewAdapters }) => {
     const rows = useLayerTree(adapters.layers)
@@ -20,11 +26,43 @@ const LayersPanel = ({ onClose, adapters = layersNewAdapters }) => {
     const setHeaderVisibility = useLayersNewStore(
         (state) => state.setHeaderVisibility
     )
+    const selectLayer = useLayersNewStore((state) => state.selectLayer)
+    const setSettingsTab = useLayersNewStore((state) => state.setSettingsTab)
+    const setSettingsInvoker = useLayersNewStore(
+        (state) => state.setSettingsInvoker
+    )
+    const selectedLayer = useLayersNewStore((state) => state.selectedLayer)
+    const selectSettingsLayer = useLayersNewStore(
+        (state) => state.selectLayer
+    )
+    const setSettingsPresentation = useLayersNewStore(
+        (state) => state.setSettingsPresentation
+    )
+    const settings = useLayerSettings(adapters)
     useRefreshStatus()
     useRestyled()
 
     const onToggleHeader = (header) =>
         setHeaderState(header.name, !header.expanded)
+    const onOpenSettings = (name, invoker, tab = 'settings') => {
+        setSettingsInvoker(invoker)
+        setSettingsTab(tab)
+        setSettingsPresentation(
+            getSettingsPresentation(
+                adapters.layers.isMobile(),
+                typeof window !== 'undefined' &&
+                    window.matchMedia('(max-width: 600px)').matches
+            )
+        )
+        selectLayer(name)
+    }
+    const onCloseSettings = useCallback(() => {
+        const invoker = useLayersNewStore.getState().settingsInvoker
+        selectSettingsLayer(null)
+        setSettingsPresentation('list')
+        useLayersNewStore.getState().setSettingsInvoker(null)
+        if (invoker && typeof invoker.focus === 'function') invoker.focus()
+    }, [selectSettingsLayer, setSettingsPresentation])
     const onToggleGroupPower = async (header) => {
         const states = Object.fromEntries(
             allRows.map((row) => [
@@ -67,12 +105,23 @@ const LayersPanel = ({ onClose, adapters = layersNewAdapters }) => {
     const onSort = useCallback((item, target) => {
         const oldIndex = allRows.findIndex((row) => row.name === item.name)
         const newIndex = allRows.findIndex((row) => row.name === target.name)
-        const depth =
-            target.structural && target.name !== item.name
-                ? target.depth + 1
-                : target.depth
+        const targetIndex = allRows.findIndex(
+            (row) => row.name === target.name
+        )
+        const afterHeader = target.structural
+            ? allRows
+                  .slice(targetIndex + 1)
+                  .some(
+                      (row) =>
+                          row.depth > target.depth &&
+                          !row.structural &&
+                          row.on === true
+                  )
+                ? 2
+                : 1
+            : 0
         if (oldIndex < 0 || newIndex < 0) return
-        const nextRows = moveRows(allRows, oldIndex, newIndex, depth)
+        const nextRows = moveRows(allRows, oldIndex, newIndex, afterHeader)
         if (nextRows === allRows) return
         const ordered = nextRows
             .filter((row) => !row.structural)
@@ -84,7 +133,7 @@ const LayersPanel = ({ onClose, adapters = layersNewAdapters }) => {
             .getState()
             .setOrderingHistory([
                 ...useLayersNewStore.getState().orderingHistory,
-                [oldIndex, newIndex, depth],
+                [oldIndex, newIndex, afterHeader],
             ])
     }, [adapters, allRows, setLayerTree])
 
@@ -102,18 +151,50 @@ const LayersPanel = ({ onClose, adapters = layersNewAdapters }) => {
                 </IconButton>
             </div>
             <div className='layersNewTool_content'>
-                <LayerList
-                    rows={rows}
-                    allRows={allRows}
-                    adapter={adapters.layers}
-                    toggleLayer={toggleLayer}
-                    onToggleHeader={onToggleHeader}
-                    onToggleGroupPower={onToggleGroupPower}
-                    onExpandAll={() => setAllHeaders(true)}
-                    onCollapseAll={() => setAllHeaders(false)}
-                    onRestoreExpansion={restoreExpansion}
-                    onSort={onSort}
-                />
+                {selectedLayer && settings ? (
+                    adapters.layers.isMobile() ||
+                    (typeof window !== 'undefined' &&
+                        window.matchMedia('(max-width: 600px)').matches) ? (
+                        <SettingsPage
+                            settings={settings}
+                            onClose={onCloseSettings}
+                        />
+                    ) : (
+                        <>
+                            <LayerList
+                                rows={rows}
+                                allRows={allRows}
+                                adapter={adapters.layers}
+                                toggleLayer={toggleLayer}
+                                onToggleHeader={onToggleHeader}
+                                onToggleGroupPower={onToggleGroupPower}
+                                onExpandAll={() => setAllHeaders(true)}
+                                onCollapseAll={() => setAllHeaders(false)}
+                                onRestoreExpansion={restoreExpansion}
+                                onSort={onSort}
+                                onOpenSettings={onOpenSettings}
+                            />
+                            <SettingsDrawer
+                                settings={settings}
+                                onClose={onCloseSettings}
+                            />
+                        </>
+                    )
+                ) : (
+                    <LayerList
+                        rows={rows}
+                        allRows={allRows}
+                        adapter={adapters.layers}
+                        toggleLayer={toggleLayer}
+                        onToggleHeader={onToggleHeader}
+                        onToggleGroupPower={onToggleGroupPower}
+                        onExpandAll={() => setAllHeaders(true)}
+                        onCollapseAll={() => setAllHeaders(false)}
+                        onRestoreExpansion={restoreExpansion}
+                        onSort={onSort}
+                        onOpenSettings={onOpenSettings}
+                    />
+                )}
             </div>
         </div>
     )

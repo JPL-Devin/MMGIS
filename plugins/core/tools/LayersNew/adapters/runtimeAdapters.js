@@ -41,7 +41,7 @@ export const exportAdapter = createExportAdapter({
     convert: L_.convertGeoJSONLngLatsToPrimaryCoordinates.bind(L_),
 })
 
-export const timeAdapter = createTimeAdapter({ timeUI: TimeUI })
+export const timeAdapter = createTimeAdapter({ timeUI: TimeUI, toast: Toast })
 
 export const legendAdapter = createLegendAdapter({
     legend: LegendTool,
