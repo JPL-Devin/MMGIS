@@ -4,6 +4,19 @@ import LayerTypeRegistry from '@basics/Layers_/registry/LayerTypeRegistry'
 import { useLayersNewStore } from '../store'
 import { universalSections } from '../components/Settings/UniversalSections'
 
+export function countActiveFilters(filter) {
+    return (
+        (filter?.values || []).filter(
+            (value) =>
+                value &&
+                !value.isGroup &&
+                (value.type != null ||
+                    value.key != null ||
+                    value.value != null)
+        ).length + (filter?.spatial?.center != null ? 1 : 0)
+    )
+}
+
 export function createLayerSettingsApi(layer, layerName, adapters) {
     const { layers, legend } = adapters
     return {
@@ -33,11 +46,7 @@ export function createLayerSettingsApi(layer, layerName, adapters) {
         getStatsFields: () => layers.getDynamicStyleStatsFields(layer),
         getActiveFilterCount: () => {
             const filter = layers.getFilters?.()?.[layerName]
-            return (
-                (filter?.values || []).filter(
-                    (value) => value && !value.isGroup && value.type != null
-                ).length + (filter?.spatial?.center != null ? 1 : 0)
-            )
+            return countActiveFilters(filter)
         },
         getAttachmentCount: () =>
             Object.values(adapters.attachments.getAttachments(layerName))

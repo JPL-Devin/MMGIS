@@ -4,6 +4,7 @@ const fs = require('fs')
 const { createTimeAdapter } = require('../../plugins/core/tools/LayersNew/adapters/timeAdapter')
 const {
     createLayerSettingsApi,
+    countActiveFilters,
 } = require('../../plugins/core/tools/LayersNew/hooks/useLayerSettings')
 const {
     moveRows,
@@ -43,6 +44,17 @@ test.describe('LayersNew settings', () => {
             'utf8'
         )
         expect(source).not.toContain('ctx.api.ensureOn()')
+    })
+
+    test('counts initial filters without a resolved value type', () => {
+        expect(
+            countActiveFilters({
+                values: [
+                    { key: 'status', op: '=', value: 'active' },
+                    { isGroup: true, type: 'and' },
+                ],
+            })
+        ).toBe(1)
     })
 
     test('keeps settings sections collapsible and default-open', () => {
