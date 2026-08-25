@@ -5,6 +5,11 @@ import {
     replayOrderingHistory,
 } from '../ordering'
 import { transformStacUrl } from '@basics/Layers_/LayerUtils'
+import {
+    evaluate_cmap,
+    data as colormapData,
+} from '@external/js-colormaps/js-colormaps.js'
+import { velocityRange } from '@basics/UserInterface_/LayerSettings/typeSettings'
 
 const RASTER_TYPES = new Set(['tile', 'image', 'data', 'velocity'])
 
@@ -26,6 +31,16 @@ export function resolveLayerOpacity(layers, name) {
         Number.isFinite(configuredOpacity)
         ? configuredOpacity
         : 1
+}
+
+function resolveRasterColormap(value, fallback) {
+    let name = value || fallback
+    const reverse = name.toLowerCase().endsWith('_r')
+    if (reverse) name = name.slice(0, -2)
+    const key = Object.keys(colormapData).find(
+        (candidate) => candidate.toLowerCase() === name.toLowerCase()
+    )
+    return { name: key || fallback, reverse }
 }
 
 function tileCoordinates(layer, invertTms = true) {
@@ -147,13 +162,14 @@ export function createLayersAdapter({
     overrideDynamicStyleRule,
     toast,
     info,
+    legend,
 }) {
     const layerData = (name) => {
         const uuid = layers.asLayerUUID(name) || name
         return layers.layers?.data?.[uuid] || layers.layers?.data?.[name]
     }
 
-    return {
+    const adapter = {
         getTree: () => layers.configData?.layers || [],
         getLayerData: layerData,
         getLayerRuntime: (name) => layers.layers?.layer?.[name],
@@ -188,7 +204,10 @@ export function createLayersAdapter({
         getLayerThumbnailUrl: (name) =>
             getRasterPreviewUrl(layers, formulae, layerData(name)),
         isFilterable: (name) => filtering.isFilterable(name),
-        getFilters: () => filtering.filters,
+        getFilters: (name) =>
+            name
+                ? layers.layers?.filters?.[name] || {}
+                : filtering.filters,
         toggleLayer: (name) => {
             const layer = layerData(name)
             return layer ? layers.toggleLayer(layer) : undefined
@@ -214,9 +233,140 @@ export function createLayersAdapter({
         },
         resetSettings: (name) => {
             layers.setLayerOpacity(name, 1)
-            layers.setLayerFilter(name, 'clear')
+            if (layers.layers?.filters) adapter.setFilter(name, 'clear')
+            else layers.setLayerFilter(name, 'clear')
             resetDynamicStyle(layerData(name), null)
         },
+        setFilter: (name, filter, value) => {
+            const runtime = layers.layers?.layer?.[name]
+            if (runtime) return layers.setLayerFilter(name, filter, value)
+            layers.layers.filters = layers.layers.filters || {}
+            layers.layers.filters[name] = layers.layers.filters[name] || {}
+            if (filter === 'clear') layers.layers.filters[name] = {}
+            else layers.layers.filters[name][filter] = value
+        },
+        updateRange: (name, min, max, type) => {
+            const layer = layerData(name)
+            const runtime = layers.layers?.layer?.[layer?.name || name]
+            if (!layer || !runtime) return
+            if (type === 'velocity') {
+                const range = velocityRange(
+                    runtime.options?.minVelocity,
+                    runtime.options?.maxVelocity,
+                    min,
+                    max
+                )
+                layer.currentCogMin = range.min
+                layer.currentCogMax = range.max
+                runtime.options.minVelocity = range.min
+                runtime.options.maxVelocity = range.max
+                map.map?.removeLayer(runtime)
+                runtime.addTo?.(map.map)
+            } else if (type === 'image') {
+                layer.currentCogMin = min
+                layer.currentCogMax = max
+                const georaster = runtime.options?.georaster
+                if (!georaster?.numberOfRasters || georaster.numberOfRasters !== 1)
+                    return
+                const { name: cmap, reverse } = resolveRasterColormap(
+                    layer.cogColormap,
+                    'binary'
+                )
+                const hideNoData = layer.variables?.hideNoDataValue === true
+                const fillMinMax = layer.variables?.image?.fillMinMax === true
+                runtime.options.pixelValuesToColorFn = (values) => {
+                    const pixel = values[0]
+                    if (georaster.noDataValue != null && pixel === georaster.noDataValue)
+                        return hideNoData ? null : [0, 0, 0]
+                    let scaled = (pixel - min) / (max - min)
+                    if (scaled < 0 || scaled > 1) {
+                        if (!fillMinMax) return null
+                        scaled = Math.max(0, Math.min(1, scaled))
+                    }
+                    return evaluate_cmap(scaled, cmap, reverse)
+                }
+                runtime.clearCache?.()
+                runtime.updateColors?.(runtime.options.pixelValuesToColorFn)
+            } else {
+                layer.currentCogMin = min
+                layer.currentCogMax = max
+                runtime.refresh?.(null, true, {
+                    currentCogMin: min,
+                    currentCogMax: max,
+                })
+                globe?.litho?.updateLayerCogParameters?.(layer.name, {
+                    currentCogMin: min,
+                    currentCogMax: max,
+                })
+            }
+            legend?.refreshLegends?.()
+        },
+        updateColormap: (name, value, type) => {
+            const layer = layerData(name)
+            if (!layer) return
+            if (type === 'velocity')
+                layer.variables = {
+                    ...layer.variables,
+                    streamlines: {
+                        ...layer.variables?.streamlines,
+                        colorScale: value,
+                    },
+                }
+            else layer.cogColormap = value
+            const min = layer.currentCogMin ?? layer.cogMin ?? 0
+            const max = layer.currentCogMax ?? layer.cogMax ?? 1
+            return adapter.updateRange(name, min, max, type)
+        },
+        updateExpression: (name, value) => {
+            const layer = layerData(name)
+            const runtime = layers.layers?.layer?.[layer?.name || name]
+            if (!layer || !runtime) return
+            layer.currentCogExpression = value
+            runtime.refresh?.(null, true, { currentCogExpression: value })
+            globe?.litho?.updateLayerCogParameters?.(layer.name, {
+                currentCogExpression: value,
+            })
+        },
+        discoverStac: async (name) => {
+            const layer = layerData(name)
+            const source = layer?.url || ''
+            if (!source.startsWith('stac-collection:')) return []
+            const preview = transformStacUrl(
+                source,
+                layer,
+                'preview',
+                typeof window !== 'undefined' ? window.location : null
+            )
+            const infoUrl = preview.replace(/\/preview(?:\?.*)?$/, '/info')
+            const response = await fetch(infoUrl)
+            if (!response.ok) throw new Error(`STAC discovery failed (${response.status})`)
+            const info = await response.json()
+            const assets = Object.keys(info.assets || {}).map((asset) => ({
+                value: asset,
+                label: asset,
+            }))
+            const bands = (info.bands || []).map((band, index) => {
+                const value = band?.common_name || band?.name || index + 1
+                return { value: String(value), label: String(value) }
+            })
+            return { assets, bands }
+        },
+        resetTypeSettings: (name, type) => {
+            const layer = layerData(name)
+            if (!layer) return
+            layer.currentCogMin = null
+            layer.currentCogMax = null
+            layer.currentCogExpression = null
+            adapter.setFilter(name, 'clear')
+            if (type !== 'velocity') map.refreshLayer?.(layer)
+            legend?.refreshLegends?.()
+        },
+        populateCogScale: (name) =>
+            layers.populateCogScale?.(name) ||
+            (typeof window !== 'undefined' &&
+                window.ToolController_?.getTool?.('LayersTool')?.populateCogScale?.(name)),
+        videoElement: (name) =>
+            layers.layers?.layer?.[name]?.getElement?.() || null,
         getDynamicStyle: (layer) => dynamicStyle(layer),
         getDynamicStyleRules: (layer) => viewedDynamicStyleRules(layer),
         getDynamicStyleDomain: (layer) => dynamicStyleDomain(layer),
@@ -320,4 +470,5 @@ export function createLayersAdapter({
             return () => layers.unsubscribeOnLayerToggle(subscriptionId)
         },
     }
+    return adapter
 }

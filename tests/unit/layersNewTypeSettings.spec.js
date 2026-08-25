@@ -39,7 +39,16 @@ test.describe('LayersNew type settings surfaces', () => {
     })
 
     test('uses one JavaScript settings module per type', () => {
-        for (const type of ['Vector', 'VectorTile', 'Query']) {
+        for (const type of [
+            'Vector',
+            'VectorTile',
+            'Tile',
+            'Data',
+            'Image',
+            'Velocity',
+            'Video',
+            'Query',
+        ]) {
             expect(
                 fs.existsSync(
                     `plugins/core/layertypes/${type}/settings.jsx`
@@ -49,8 +58,63 @@ test.describe('LayersNew type settings surfaces', () => {
                 fs.existsSync(
                     `plugins/core/layertypes/${type}/settings.js`
                 )
-            ).toBe(type !== 'Query')
+                ).toBe(type !== 'Query')
         }
+    })
+
+    test('remaining manifests expose settings surfaces', () => {
+        for (const type of ['Tile', 'Data', 'Image', 'Velocity', 'Video']) {
+            const manifest = require(
+                `../../plugins/core/layertypes/${type}/plugin.json`
+            )
+            expect(manifest.modules.settings).toBe('./settings')
+        }
+    })
+
+    test('colormap lookup and reversal are normalized', () => {
+        const { resolveColormap } = require(
+            '../../src/essence/Basics/UserInterface_/LayerSettings/typeSettings'
+        )
+        expect(resolveColormap('Viridis_r', 'binary', { Viridis: true })).toEqual(
+            { name: 'Viridis', reverse: true }
+        )
+        expect(resolveColormap('', 'binary')).toEqual({
+            name: 'binary',
+            reverse: false,
+        })
+    })
+
+    test('range helper orders finite bounds', () => {
+        const { safeRange } = require(
+            '../../src/essence/Basics/UserInterface_/LayerSettings/typeSettings'
+        )
+        expect(safeRange(8, 2)).toEqual({ min: 2, max: 8 })
+        expect(safeRange('bad', 4)).toEqual({ min: 0, max: 4 })
+    })
+
+    test('velocity range math keeps bounds ordered', () => {
+        const { velocityRange } = require(
+            '../../src/essence/Basics/UserInterface_/LayerSettings/typeSettings'
+        )
+        expect(velocityRange(1, 9, 12, 4)).toEqual({ min: 4, max: 12 })
+    })
+
+    test('COG expression helpers preserve configured and reset values', () => {
+        const { nextCogExpression, resolveCogExpression } = require(
+            '../../src/essence/Basics/UserInterface_/LayerSettings/typeSettings'
+        )
+        expect(resolveCogExpression('b1', null)).toBe('b1')
+        expect(resolveCogExpression('b1', 'b2')).toBe('b2')
+        expect(nextCogExpression(null, 'b1')).toBeNull()
+        expect(nextCogExpression('b3', 'b1')).toBe('b3')
+    })
+
+    test('video time formatting handles invalid and minute values', () => {
+        const { formatVideoTime } = require(
+            '../../src/essence/Basics/UserInterface_/LayerSettings/typeSettings'
+        )
+        expect(formatVideoTime(65.4)).toBe('1:05')
+        expect(formatVideoTime(Infinity)).toBe('0:00')
     })
 
     test('dynamic style controls preserve imported ramps and custom arrays', () => {

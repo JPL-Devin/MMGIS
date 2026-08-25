@@ -124,6 +124,7 @@ function getRuntimeAdapters() {
             overrideDynamicStyleRule: overrideDynamicStyleRuleOf,
             toast: Toast,
             info: LayerInfoModal,
+            legend: LegendTool,
         })
         const exportAdapter = createExportAdapter({
             layers: L_,

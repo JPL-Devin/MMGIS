@@ -33,6 +33,19 @@ export function createLayerSettingsApi(layer, layerName, adapters) {
         },
         opacity: () => layers.getLayerState(layerName).opacity,
         setOpacity: (value) => layers.setOpacity(layerName, value),
+        getFilters: () => layers.getFilters?.(layerName) || {},
+        setFilter: (filter, value) => layers.setFilter?.(layerName, filter, value),
+        updateRange: (min, max, type) =>
+            layers.updateRange?.(layerName, min, max, type),
+        updateColormap: (value, type) =>
+            layers.updateColormap?.(layerName, value, type),
+        updateExpression: (value) =>
+            layers.updateExpression?.(layerName, value),
+        discoverStac: () => layers.discoverStac?.(layerName),
+        resetTypeSettings: (type) =>
+            layers.resetTypeSettings?.(layerName, type),
+        populateCogScale: (name) => layers.populateCogScale?.(name),
+        videoElement: () => layers.videoElement?.(layerName),
         restyle: () => layers.restyle(layer),
         refreshLayer: () => layers.refreshLayer(layerName),
         refreshLegend: () => legend.refresh(layer),
