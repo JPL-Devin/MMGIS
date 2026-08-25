@@ -17,6 +17,19 @@ const {
 } = require('../../plugins/core/tools/LayersNew/components/Settings/SettingsDrawer')
 
 test.describe('LayersNew settings', () => {
+    test('imports the tool and runtime adapters without browser globals', () => {
+        const previousCss = require.extensions['.css']
+        require.extensions['.css'] = () => {}
+        expect(() => {
+            require('../../plugins/core/tools/LayersNew/adapters/runtimeAdapters')
+            require('../../plugins/core/tools/LayersNew/LayersNewTool')
+        }).not.toThrow()
+        if (previousCss) require.extensions['.css'] = previousCss
+        else delete require.extensions['.css']
+        expect(typeof window).toBe('undefined')
+        expect(typeof document).toBe('undefined')
+    })
+
     test('switches to a page on mobile or narrow panels', () => {
         expect(getSettingsPresentation(false, false)).toBe('drawer')
         expect(getSettingsPresentation(true, false)).toBe('page')

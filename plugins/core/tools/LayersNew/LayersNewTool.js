@@ -1,10 +1,6 @@
 import React from 'react'
 import { createRoot } from 'react-dom/client'
 
-import L_ from '@basics/Layers_/Layers_'
-import ToolController_ from '@basics/ToolController_/ToolController_'
-
-import Filtering from '@basics/Layers_/Filtering/Filtering'
 import { layersNewAdapters } from './adapters/runtimeAdapters'
 import LayersPanel from './components/LayersPanel'
 import {
@@ -14,7 +10,20 @@ import {
 
 import './LayersNewTool.css'
 
+function getLayers() {
+    return require('@basics/Layers_/Layers_').default
+}
+
+function getToolController() {
+    return require('@basics/ToolController_/ToolController_').default
+}
+
+function getFiltering() {
+    return require('@basics/Layers_/Filtering/Filtering').default
+}
+
 function restoreOrderingHistory(toolName, history) {
+    const L_ = getLayers()
     const futures = L_.FUTURES?.tools || []
     const entry = futures.find((value) => {
         const name = String(value).split('$')[0]
@@ -40,6 +49,7 @@ const LayersNewTool = {
     _root: null,
 
     initialize() {
+        const L_ = getLayers()
         this.vars = L_.getToolVars('layersnew') || {}
         this.width = this.vars.width || 350
 
@@ -60,7 +70,7 @@ const LayersNewTool = {
         }
         this._root.render(
             <LayersPanel
-                onClose={() => ToolController_.closeActiveTool()}
+                onClose={() => getToolController().closeActiveTool()}
                 adapters={layersNewAdapters}
             />
         )
@@ -75,6 +85,7 @@ const LayersNewTool = {
     },
 
     finalize() {
+        const Filtering = getFiltering()
         restoreOrderingHistory('LayersNewTool', this.orderingHistory)
         useLayersNewStore
             .getState()
