@@ -16,8 +16,9 @@ live*, *what the list is for*, and *what each one asks the layer-type contract f
 puts all twelve side by side.
 
 **Chosen direction → [`LayersNew-devin-prompt.md`](./LayersNew-devin-prompt.md)**: the
-implementation prompt for a new core tool `LayersNew`, taking 02's tabbed full-height settings,
-06's slide-over drawer, 11's raster thumbnails and an enhanced (not search-first) list search. It
+implementation prompt for a new core tool `LayersNew`, taking 06's full-height slide-over drawer
+as the settings presentation, 02's tabbed settings content inside it, 11's raster thumbnails and
+an enhanced (not search-first) list search. It
 carries the `settings` registry-surface contract and a complete parity matrix of the current
 tool's behavior.
 

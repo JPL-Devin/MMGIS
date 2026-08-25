@@ -1,9 +1,10 @@
 # Devin prompt — build `LayersNew`, a React LayersTool with type-owned settings
 
 This file is a **ready-to-paste prompt** for a future Devin session, plus the audit
-that backs it. It follows the mockups in this directory: `02-settings-vector.png`
-(tabs + full-height settings), `06-drawer.png` (slide-over), `11-compositor.png`
-(raster thumbnails), `01-layer-list.png` (enhanced, non-primary search).
+that backs it. It follows the mockups in this directory: `06-drawer.png` (settings
+as a full-height slide-over — the primary presentation), `02-settings-vector.png`
+(the tabbed settings content inside it), `11-compositor.png` (raster thumbnails),
+`01-layer-list.png` (enhanced, non-primary search).
 
 Read it in this order:
 
@@ -31,14 +32,16 @@ Read it in this order:
 >
 > - Layer list is the home view: rows with visibility checkbox, type color/drag
 >   handle, name, badges, and row actions; groups nest and expand/collapse.
-> - Opening a layer's settings **replaces the whole tool panel** with a
->   full-height settings view; a back arrow at the top-left of the settings
->   header returns to the list, and the panel title becomes the layer name.
+> - Opening a layer's settings **slides a full-height drawer over the list**
+>   inside the tool panel (mockup `06-drawer.png`): the drawer covers the list
+>   area but not the panel title bar, the list stays mounted and dimmed behind
+>   it, and a back arrow at the top-left of the drawer header — plus `Esc` and a
+>   click on the dim — returns to the list. The drawer header shows the layer
+>   name and its type color. This is the primary presentation, not a fallback.
 > - Inside settings, sections are grouped into **tabs** (design-system `Tabs`).
-> - On mobile / narrow layouts (and when the tool is opened from a row action
->   while the panel is unavailable), the same settings view renders as a
->   **slide-over drawer** over the list rather than a page swap. One component
->   tree, two presentations.
+> - Where a drawer cannot work — narrow/mobile layouts and the `width: 'full'`
+>   mobile mode — the same settings tree renders as a **full-panel page swap**
+>   instead. One component tree, two presentations, chosen by layout.
 > - Raster layers (`tile`, `image`, `data`, `velocity`) show a **thumbnail** in
 >   their list row when one can be derived; graceful text/color fallback
 >   otherwise.
@@ -341,8 +344,9 @@ plugins/core/tools/LayersNew/
     List/GroupRow.jsx          # header row: expand, group power, count
     List/RowActions.jsx        # settings, info, time, reload, locate, export
     List/Thumbnail.jsx
-    Settings/SettingsView.jsx  # full-height: header(back, name, summary) + Tabs + sections
-    Settings/SettingsDrawer.jsx# same tree in a slide-over
+    Settings/SettingsView.jsx  # presentation-agnostic: header(back, name, summary) + Tabs + sections
+    Settings/SettingsDrawer.jsx# primary: slide-over host (dim, focus trap, Esc) wrapping SettingsView
+    Settings/SettingsPage.jsx  # fallback: full-panel page swap wrapping SettingsView
     Settings/SectionHost.jsx   # error boundary + Collapsible + registry-driven render
     Settings/UniversalSections.jsx  # opacity, filter mount, attachments, reset
     Export/ExportDialog.jsx
@@ -457,7 +461,7 @@ fallback · **D** deferred (§9).
 
 | Old behavior | Owner | Notes |
 | --- | --- | --- |
-| Inline `.settingsmain*` block per type, built by string concat | C | replaced by full-height view + `Tabs` + `SectionHost` |
+| Inline `.settingsmain*` block per type, built by string concat | C | replaced by the full-height slide-over drawer + `Tabs` + `SectionHost` |
 | Opening settings turns the layer on when required | C | |
 | Universal opacity slider | C | `Slider` + `L_.setLayerOpacity` |
 | Raster brightness / contrast / saturation / blend mode | S (`RasterAdjustSection`) | declared by `tile`, `image`, `data`, `velocity` |
@@ -603,11 +607,13 @@ format commands), its own unit tests, and a commit.
 5. **List view.** Rows, groups, indentation, badges, type colors, row actions,
    loading/not-found states, search + type filters, expand/collapse.
    → **Open the PR here.**
-6. **Settings shell.** Full-height view with back navigation, `Tabs`,
+6. **Settings shell as a drawer.** `SettingsDrawer` (slide-over: dim, focus
+   trap, `Esc`/back, animation that respects `prefers-reduced-motion`) hosting
+   `SettingsView` — header with back arrow + layer name + summary, `Tabs`,
    `SectionHost` with error boundary, universal sections (opacity, filter mount,
    attachments, reset), core fallback for types with no module.
-7. **Drawer presentation.** Same tree in `SettingsDrawer`, chosen by
-   viewport/mobile; overlay, focus trap, escape/back.
+7. **Page-swap fallback.** `SettingsPage` renders the same `SettingsView`
+   full-panel for narrow/mobile layouts; presentation chosen in `LayersPanel`.
 8. **Shared sections.** `src/essence/Basics/Layers_/settings/sections.js`:
    dynamic style (incl. moving `DynamicStyleRamp` in), color ramp, rescale,
    expression, raster adjust, video transport, data-shader bridge.
@@ -632,9 +638,11 @@ format commands), its own unit tests, and a commit.
 2. `LayersNew` contains **no** `layerObj.type` string comparisons for settings
    dispatch; deleting a type's `settings.jsx` degrades that type to the core
    fallback with no error.
-3. Settings open full-height with tabs and a back arrow that returns to the list
-   with the previous scroll position and focus restored; on a narrow viewport the
-   same settings render as a slide-over drawer.
+3. Settings open as a full-height slide-over drawer over the list, with tabs, and
+   a back arrow (plus `Esc` and dim-click) that returns to the list with its
+   previous scroll position and focus restored; the list stays mounted behind the
+   drawer. On narrow/mobile layouts the identical settings tree renders as a
+   full-panel page swap.
 4. Raster rows show thumbnails where derivable and fall back cleanly otherwise.
 5. Search matches names, descriptions and `#tags` with autocomplete and
    highlighting, auto-expands groups, and is never the primary/only entry point.
@@ -674,8 +682,9 @@ Co-locate in `plugins/core/tools/LayersNew/tests/` (tag pure tests `@unit` so
 - Settings rendering: sections → tabs, badges, error boundary isolates a
   throwing section, core fallback renders universal sections only.
 - Lifecycle: `make`/`destroy` leaves no listeners, intervals or roots.
-- E2E: open tool → toggle → group collapse → search → open settings → change
-  opacity → back → drawer at mobile viewport → export a vector layer.
+- E2E: open tool → toggle → group collapse → search → open settings drawer →
+  change opacity → `Esc` and back-arrow both return to the list with scroll
+  preserved → page-swap presentation at a mobile viewport → export a vector layer.
 - **Do not modify existing tests.** If one fails, the implementation is wrong or
   the failure is pre-existing on `development` — prove which.
 
