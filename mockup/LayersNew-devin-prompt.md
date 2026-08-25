@@ -468,7 +468,13 @@ fallback · **D** deferred (§9).
 | Per-type settings (vector, vectortile, query, data, model, velocity, image, video, tile) | T (+S) | one `settings.jsx` per type under `plugins/core/layertypes/<Type>/` |
 | Reset settings | C | `api.resetSettings('all')` restores configured values; per-section reset via section id |
 | Settings panel lifecycle (build on open, tear down on close) | C | mount/unmount of `SettingsView`; sections must clean up in `useEffect` returns |
-| Configure-page mirror sections ("Layer Configuration") | — | **Decided: do not build.** `LayersNew` shows session state only; the layer's configured definition stays on the Configure page. Do not add a `Config`/JSON tab, and do not surface `layerTypeConfigs` fields as read-only settings. The one exception is where the old tool already contrasts configured vs current values (COG rescale, expression, velocity range) — that stays, since it exists to make "reset" meaningful. |
+
+**Not in scope, and not a gap:** `LayersNew` shows *session* state only, the same as
+the old tool. Do not add a `Config`/JSON tab or surface `layerTypeConfigs` fields as
+read-only settings — a layer's configured definition stays on the Configure page. The
+only configured values that appear are the ones the old tool already contrasts against
+current state (COG rescale, COG expression, velocity range), because that contrast is
+what makes "reset" meaningful.
 
 ### 5.7 Dynamic style
 
@@ -692,9 +698,7 @@ Co-locate in `plugins/core/tools/LayersNew/tests/` (tag pure tests `@unit` so
 
 ## 9. Explicitly deferred
 
-Deferrals must be re-stated in the PR body; nothing else may be dropped. One old-tool
-behavior is **decided against** rather than deferred — the Configure-page mirror
-sections; see the last row of §5.6.
+Deferrals must be re-stated in the PR body; nothing else may be dropped.
 
 | Deferred | Reason | Acceptance criteria for the follow-up |
 | --- | --- | --- |

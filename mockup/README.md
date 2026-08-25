@@ -324,10 +324,10 @@ don't reduce to existing primitives.
 
 ## Open questions
 
-- **Where do "Layer Configuration (Configure Page)" sections go?** Today the tool exposes
-  read-only mirrors of the Configure-page config. Keeping them means a second, admin-flavoured
-  settings surface inside the same panel — a `Config` tab rendered from `layerTypeConfigs`, or
-  dropped from the tool entirely.
+- ~~**Should a layer's configured definition (Configure page) appear in the tool?**~~
+  **Resolved: no.** The tool is about session state, which is what it does today; a `Config` /
+  raw-JSON tab is out of scope. The only configured values shown remain the ones that exist to
+  make "reset" meaningful (COG rescale, COG expression, velocity range).
 - **Migration order.** The shell (list + navigation + core sections) can land before any type
   ships a `settings` module, as long as core falls back to today's markup for types that don't;
   or the vector type goes first as the proof and the rest follow.
