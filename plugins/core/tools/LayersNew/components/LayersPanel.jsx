@@ -14,6 +14,7 @@ import { useLayerSettings } from '../hooks/useLayerSettings'
 import SettingsDrawer from './Settings/SettingsDrawer'
 import SettingsPage from './Settings/SettingsPage'
 import { getSettingsPresentation } from './settingsPresentation'
+import ExportDialog from './Export/ExportDialog'
 
 export { getSettingsPresentation }
 
@@ -39,6 +40,10 @@ const LayersPanel = ({ onClose, adapters = layersNewAdapters }) => {
         (state) => state.setSettingsPresentation
     )
     const settings = useLayerSettings(adapters)
+    const [exportLayer, setExportLayer] = React.useState(null)
+    const onOpenExport = (name) => {
+        if (adapters.export?.canExport?.(name)) setExportLayer(name)
+    }
     useRefreshStatus()
     useRestyled()
 
@@ -186,6 +191,7 @@ const LayersPanel = ({ onClose, adapters = layersNewAdapters }) => {
                                 onToggleGroupPower={onToggleGroupPower}
                                 onSort={onSort}
                                 onOpenSettings={onOpenSettings}
+                                onOpenExport={onOpenExport}
                             />
                             <SettingsDrawer
                                 settings={settings}
@@ -203,9 +209,15 @@ const LayersPanel = ({ onClose, adapters = layersNewAdapters }) => {
                         onToggleGroupPower={onToggleGroupPower}
                         onSort={onSort}
                         onOpenSettings={onOpenSettings}
+                        onOpenExport={onOpenExport}
                     />
                 )}
             </div>
+            <ExportDialog
+                layerName={exportLayer}
+                adapter={adapters.export}
+                onClose={() => setExportLayer(null)}
+            />
         </div>
     )
 }

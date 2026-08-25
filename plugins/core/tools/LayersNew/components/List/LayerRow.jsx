@@ -38,6 +38,7 @@ function LayerRow({
     onToggleHeader,
     onToggleGroupPower,
     onOpenSettings,
+    onOpenExport,
 }) {
     const selectLayer = useLayersNewStore((state) => state.selectLayer)
     const search = useLayersNewStore((state) => state.search)
@@ -234,9 +235,7 @@ function LayerRow({
                     }
                 >
                     <Dropdown.Item tabIndex={0} onKeyDown={menuKeyDown}
-                        onClick={() =>
-                            adapter.notify('info', 'Export coming soon.')
-                        }
+                        onClick={() => onOpenExport(row.name)}
                     >
                         <i className='mdi mdi-download mdi-14px' /> Export
                     </Dropdown.Item>

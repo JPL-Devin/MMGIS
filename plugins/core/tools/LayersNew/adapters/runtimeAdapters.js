@@ -42,6 +42,10 @@ function runtimeDependencies() {
         ensureFieldStats,
     } = require('@basics/Layers_/render/dynamicStyleRuntime')
     const { getStatsFields } = require('@basics/Layers_/render/layerDynamicStyle')
+    const {
+        fetchKmlAsGeoJSON,
+        isKmlUrl,
+    } = require('@basics/Layers_/capture/LayerCapturer')
     const Toast = require('@design/components/Toast/Toast').default
     const calls = require('@pre/calls').default
     return {
@@ -68,6 +72,8 @@ function runtimeDependencies() {
         getStatsFields,
         Toast,
         calls,
+        fetchKmlAsGeoJSON,
+        isKmlUrl,
     }
 }
 
@@ -97,6 +103,8 @@ function getRuntimeAdapters() {
             getStatsFields,
             Toast,
             calls,
+            fetchKmlAsGeoJSON,
+            isKmlUrl,
         } = runtimeDependencies()
         const layersAdapter = createLayersAdapter({
             layers: L_,
@@ -121,6 +129,12 @@ function getRuntimeAdapters() {
             layers: L_,
             api: calls,
             convert: L_.convertGeoJSONLngLatsToPrimaryCoordinates.bind(L_),
+            formulae: F_,
+            fetchKml: fetchKmlAsGeoJSON,
+            isKml: isKmlUrl,
+            coordinateType: L_.Coordinates.mainType,
+            customCRS: window.mmgisglobal?.customCRS,
+            toast: Toast,
         })
         const timeAdapter = createTimeAdapter({
             timeUI: TimeUI,

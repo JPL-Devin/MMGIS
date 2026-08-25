@@ -1,0 +1,30 @@
+.layersNewTool_exportDialog {
+    display: grid;
+    min-width: 280px;
+    gap: 12px;
+    padding-top: 8px;
+}
+
+.layersNewTool_exportDialog label {
+    display: grid;
+    gap: 5px;
+    color: var(--color-a4);
+    font-size: 11px;
+}
+
+.layersNewTool_exportDialog label > span {
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+}
+
+.layersNewTool_exportError {
+    color: var(--color-red, #e57373);
+    font-size: 11px;
+}
+
+.layersNewTool_exportActions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 6px;
+    padding-top: 4px;
+}

@@ -16,6 +16,7 @@ function LayerList({
     onToggleGroupPower,
     onSort,
     onOpenSettings,
+    onOpenExport,
 }) {
     const listRef = useRef(null)
     const search = useLayersNewStore((state) => state.search)
@@ -78,6 +79,7 @@ function LayerList({
                         onToggleHeader={onToggleHeader}
                         onToggleGroupPower={onToggleGroupPower}
                         onOpenSettings={onOpenSettings}
+                        onOpenExport={onOpenExport}
                     />
                 ))}
             </div>
