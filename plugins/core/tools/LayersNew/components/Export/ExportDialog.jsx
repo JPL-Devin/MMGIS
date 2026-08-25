@@ -1,11 +1,6 @@
 import React from 'react'
 
-import {
-    Checkbox,
-    IconTextButton,
-    Modal,
-    Select,
-} from '@design/components'
+import { IconTextButton, Modal, Select } from '@design/components'
 
 import './ExportDialog.css'
 
@@ -34,9 +29,6 @@ function ExportDialog({ layerName, adapter, onClose }) {
         setError('')
     }, [layerName, options])
 
-    const includeProperties = extent === 'raw-extent'
-    const onPropertiesChange = (checked) =>
-        setExtent(checked ? 'raw-extent' : 'local')
     const exportLayer = async () => {
         setBusy(true)
         setError('')
@@ -81,17 +73,6 @@ function ExportDialog({ layerName, adapter, onClose }) {
                             onValueChange={setExtent}
                         />
                     </label>
-                )}
-                {options.extents.some(
-                    (option) => option.value === 'raw-extent'
-                ) && (
-                    <Checkbox
-                        checked={includeProperties}
-                        showCheck
-                        onCheckedChange={onPropertiesChange}
-                    >
-                        Current extent with properties
-                    </Checkbox>
                 )}
                 {options.coordinates.length > 1 && (
                     <label>

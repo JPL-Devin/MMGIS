@@ -42,7 +42,11 @@ test.describe('LayersNew adapters', () => {
         const converted = { converted: true }
         const adapter = createExportAdapter({
             layers: {
-                layers: { on: { a: true }, data: { a: { name: 'a' } } },
+                layers: {
+                    on: { a: true },
+                    layer: { a: {} },
+                    data: { a: { name: 'a' } },
+                },
             },
             api: { api: () => 'request' },
             convert: () => converted,
@@ -66,6 +70,26 @@ test.describe('LayersNew adapters', () => {
         expect(adapter.isLayerOn('a')).toBe(true)
         expect(adapter.convertCoordinates({})).toBe(converted)
         expect(adapter.fetchGeodataset({ id: 'a' })).toBe('request')
+    })
+
+    test('rejects export when configured on but runtime layer is absent', async () => {
+        const warnings = []
+        const adapter = createExportAdapter({
+            layers: {
+                layers: {
+                    on: { a: true },
+                    layer: {},
+                    data: { a: { name: 'a', type: 'vector' } },
+                },
+            },
+            api: { api: () => ({ Features: [] }) },
+            toast: { warning: (message) => warnings.push(message) },
+        })
+        await expect(adapter.exportLayer('a')).rejects.toMatchObject({
+            message: 'Please turn layer on before exporting.',
+            toastHandled: true,
+        })
+        expect(warnings).toEqual(['Please turn layer on before exporting.'])
     })
 
     test('limits export scopes to dynamic extent capabilities', () => {

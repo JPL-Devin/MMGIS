@@ -153,7 +153,11 @@ export function createExportAdapter({
     }
 
     return {
-        isLayerOn: (name) => layers.layers?.on?.[name] === true,
+        isLayerOn: (name) => {
+            const uuid = layers.asLayerUUID?.(name) || name
+            const runtime = layers.layers?.layer?.[uuid]
+            return runtime != null && layers.layers?.on?.[uuid] === true
+        },
         getLayerData: getLayer,
         getOptions: (name) => exportOptions(getLayer(name), coordinateType),
         canExport: (name) =>
