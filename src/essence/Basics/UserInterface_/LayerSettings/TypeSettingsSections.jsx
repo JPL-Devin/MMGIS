@@ -12,6 +12,7 @@ import {
     formatRangeTick,
     formatVideoTime,
     commitRange,
+    orderedRange,
     rangeTicks,
     resolveColormap,
 } from './typeSettings'
@@ -142,13 +143,20 @@ function RampPicker({ value, onChange, fallback }) {
     )
 }
 
-export function RasterSettingsSection({ layer, api, type = 'tile' }) {
+export function RasterSettingsSection({
+    layer,
+    api,
+    adapterType,
+    fallback = 'viridis',
+    hasCog = false,
+    includeFilters = true,
+    includeBlend = false,
+    allowExpression = false,
+    discoverStac = false,
+    normalizeRange = orderedRange,
+    resetLabel = 'COG settings',
+}) {
     const runtime = api.runtime?.()
-    const hasCog =
-        type === 'tile' || type === 'image'
-            ? layer.cogTransform === true &&
-              typeof layer.url === 'string'
-            : layer.kind === 'streamlines'
     const initialMin =
         layer.currentCogMin ??
         layer.cogMin ??
@@ -163,7 +171,6 @@ export function RasterSettingsSection({ layer, api, type = 'tile' }) {
     const [max, setMax] = useState(initialMax)
     const [draftMin, setDraftMin] = useState(String(initialMin))
     const [draftMax, setDraftMax] = useState(String(initialMax))
-    const fallback = type === 'tile' ? 'viridis' : 'binary'
     const colormap =
         layer.cogColormap || layer.variables?.streamlines?.colorScale || fallback
     const [expression, setExpression] = useState(
@@ -172,7 +179,7 @@ export function RasterSettingsSection({ layer, api, type = 'tile' }) {
     const [stacAssets, setStacAssets] = useState([])
     const [stacBands, setStacBands] = useState([])
     useEffect(() => {
-        if (type !== 'tile' || !layer.url?.startsWith('stac-collection:')) return
+        if (!discoverStac || !layer.url?.startsWith('stac-collection:')) return
         let active = true
         api.discoverStac?.()
             .then((result) => {
@@ -189,23 +196,33 @@ export function RasterSettingsSection({ layer, api, type = 'tile' }) {
         return () => {
             active = false
         }
-    }, [api, layer.url, type])
+    }, [api, discoverStac, layer.url])
     const applyRange = (nextMin, nextMax) => {
-        const range = commitRange(min, max, nextMin, nextMax, type)
+        const range = commitRange(
+            min,
+            max,
+            nextMin,
+            nextMax,
+            normalizeRange
+        )
         if (range == null) return
         setMin(range.min)
         setMax(range.max)
         setDraftMin(String(range.min))
         setDraftMax(String(range.max))
-        api.updateRange?.(range.min, range.max, type)
+        api.updateRange?.(range.min, range.max, adapterType)
     }
     const commitDraftRange = () => applyRange(draftMin, draftMax)
     const units =
         layer.cogUnits || layer.variables?.streamlines?.units || ''
     return (
         <div className='layerSettings_control'>
-            {type !== 'velocity' && (
-                <FilterRows api={api} layer={layer} includeBlend={type === 'tile'} />
+            {includeFilters && (
+                <FilterRows
+                    api={api}
+                    layer={layer}
+                    includeBlend={includeBlend}
+                />
             )}
             {hasCog && (
                 <>
@@ -248,10 +265,12 @@ export function RasterSettingsSection({ layer, api, type = 'tile' }) {
                         <RampPicker
                             value={colormap}
                             fallback={fallback}
-                            onChange={(value) => api.updateColormap?.(value, type)}
+                            onChange={(value) =>
+                                api.updateColormap?.(value, adapterType)
+                            }
                         />
                     </Field>
-                    {(type === 'tile' || type === 'image') &&
+                    {allowExpression &&
                         layer.cogExpressionEditable === true && (
                             <Field label='Band math'>
                                 <div className='layerSettings_expression'>
@@ -308,9 +327,11 @@ export function RasterSettingsSection({ layer, api, type = 'tile' }) {
                         <IconTextButton
                             size='sm'
                             icon={<i className='mdi mdi-restore mdi-16px' />}
-                            onClick={() => api.resetTypeSettings?.(type)}
+                            onClick={() =>
+                                api.resetTypeSettings?.(adapterType)
+                            }
                         >
-                            Reset {type === 'velocity' ? 'color' : 'COG'} settings
+                            Reset {resetLabel}
                         </IconTextButton>
                     </div>
                 </>

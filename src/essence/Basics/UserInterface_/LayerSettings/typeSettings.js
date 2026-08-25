@@ -47,7 +47,17 @@ export function velocityRange(currentMin, currentMax, nextMin, nextMax) {
     }
 }
 
-export function commitRange(currentMin, currentMax, nextMin, nextMax, type) {
+export function orderedRange(_currentMin, _currentMax, nextMin, nextMax) {
+    return safeRange(nextMin, nextMax)
+}
+
+export function commitRange(
+    currentMin,
+    currentMax,
+    nextMin,
+    nextMax,
+    normalize = orderedRange
+) {
     if (
         String(nextMin).trim() === '' ||
         String(nextMax).trim() === '' ||
@@ -55,9 +65,7 @@ export function commitRange(currentMin, currentMax, nextMin, nextMax, type) {
         !Number.isFinite(Number(nextMax))
     )
         return null
-    return type === 'velocity'
-        ? velocityRange(currentMin, currentMax, nextMin, nextMax)
-        : safeRange(nextMin, nextMax)
+    return normalize(currentMin, currentMax, nextMin, nextMax)
 }
 
 export function resolveCogExpression(configured, current) {

@@ -17,7 +17,15 @@ const dataSettings = {
                 React.createElement(RasterSettingsSection, {
                     layer,
                     api,
-                    type: 'tile',
+                    adapterType: 'tile',
+                    fallback: 'viridis',
+                    hasCog:
+                        layer.cogTransform === true &&
+                        typeof layer.url === 'string',
+                    includeFilters: true,
+                    includeBlend: true,
+                    allowExpression: true,
+                    discoverStac: true,
                 }),
         },
     ],

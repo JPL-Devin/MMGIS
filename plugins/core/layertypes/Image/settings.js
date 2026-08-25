@@ -11,7 +11,13 @@ const imageSettings = {
                 React.createElement(RasterSettingsSection, {
                     layer,
                     api,
-                    type: 'image',
+                    adapterType: 'image',
+                    fallback: 'binary',
+                    hasCog:
+                        layer.cogTransform === true &&
+                        typeof layer.url === 'string',
+                    includeFilters: true,
+                    allowExpression: true,
                 }),
         },
     ],

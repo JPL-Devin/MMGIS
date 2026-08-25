@@ -106,15 +106,15 @@ test.describe('LayersNew type settings surfaces', () => {
     })
 
     test('range commits ignore drafts until both values are finite', () => {
-        const { commitRange } = require(
+        const { commitRange, velocityRange } = require(
             '../../src/essence/Basics/UserInterface_/LayerSettings/typeSettings'
         )
-        expect(commitRange(0, 10, '1', '', 'tile')).toBeNull()
-        expect(commitRange(0, 10, '15', '1', 'tile')).toEqual({
+        expect(commitRange(0, 10, '1', '')).toBeNull()
+        expect(commitRange(0, 10, '15', '1')).toEqual({
             min: 1,
             max: 15,
         })
-        expect(commitRange(1, 9, 12, 4, 'velocity')).toEqual({
+        expect(commitRange(1, 9, 12, 4, velocityRange)).toEqual({
             min: 4,
             max: 12,
         })
