@@ -7,6 +7,7 @@ import LayerTypeRegistry from '@basics/Layers_/registry/LayerTypeRegistry'
 import LayerAttachmentRegistry from '@basics/Layers_/registry/LayerAttachmentRegistry'
 import TimeUI from '@basics/TimeControl_/TimeUI'
 import LegendTool from '../../Legend/LegendTool'
+import LayerInfoModal from '../../Layers/LayerInfoModal/LayerInfoModal'
 import { deriveLegend, derivesLegend } from '@basics/Layers_/legend/LayerLegend'
 import {
     overrideDynamicStyle,
@@ -31,6 +32,7 @@ export const layersAdapter = createLayersAdapter({
     resetDynamicStyle: overrideDynamicStyle,
     restyleDynamicStyle: restyleLayerDynamically,
     toast: Toast,
+    info: LayerInfoModal,
 })
 
 export const exportAdapter = createExportAdapter({

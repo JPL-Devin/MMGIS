@@ -5,6 +5,7 @@ export const initialLayersNewState = {
     layerState: {},
     loading: {},
     headerStates: {},
+    headerVisibility: {},
     search: '',
     typeFilters: [],
     visibleOnly: false,
@@ -32,6 +33,13 @@ export const useLayersNewStore = create((set) => ({
         set((state) => ({
             headerStates: { ...state.headerStates, [name]: expanded },
         })),
+    setHeaderVisibility: (name, children) =>
+        set((state) => ({
+            headerVisibility: {
+                ...state.headerVisibility,
+                [name]: children,
+            },
+        })),
     setSearch: (search) => set({ search }),
     setTypeFilters: (typeFilters) => set({ typeFilters }),
     setVisibleOnly: (visibleOnly) => set({ visibleOnly }),
@@ -46,6 +54,13 @@ export const useLayersNewStore = create((set) => ({
             layerTree: [],
             layerState: {},
             loading: {},
+            headerStates: {},
+            headerVisibility: {},
+            search: '',
+            typeFilters: [],
+            visibleOnly: false,
+            activeFilterOnly: false,
+            orderingHistory: [],
             selectedLayer: null,
             settingsPresentation: 'list',
             cogScaleLayer: null,

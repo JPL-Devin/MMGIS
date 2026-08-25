@@ -7,14 +7,15 @@ import {
 
 export function useLayerOrdering(adapter) {
     const reorder = useCallback(
-        (ordered, oldIndex, newIndex, headerState) => {
+        (ordered, oldIndex, newIndex, depth) => {
             adapter.reorder(ordered)
+            adapter.orderedBringToFront()
             const history = [
                 ...useLayersNewStore.getState().orderingHistory,
                 [
                 oldIndex,
                 newIndex,
-                headerState,
+                depth,
                 ],
             ]
             useLayersNewStore.getState().setOrderingHistory(history)

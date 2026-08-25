@@ -1,0 +1,203 @@
+import React from 'react'
+
+import { Checkbox, IconButton, Tooltip } from '@design/components'
+import { useLayersNewStore } from '../../store'
+import { useLayerThumbnail } from '../../hooks/useLayerThumbnail'
+
+function Action({ label, icon, onClick, disabled = false }) {
+    return (
+        <Tooltip content={label}>
+            <IconButton
+                size='sm'
+                aria-label={label}
+                disabled={disabled}
+                onClick={onClick}
+            >
+                <i className={`mdi mdi-${icon} mdi-16px`} />
+            </IconButton>
+        </Tooltip>
+    )
+}
+
+function LayerRow({
+    row,
+    adapter,
+    toggleLayer,
+    onToggleHeader,
+    onToggleGroupPower,
+}) {
+    const selectLayer = useLayersNewStore((state) => state.selectLayer)
+    const search = useLayersNewStore((state) => state.search)
+    const storeLoading = useLayersNewStore(
+        (state) => state.loading[row.name] === true
+    )
+    const busy = row.loading === true || storeLoading
+    const unavailable =
+        !row.structural && adapter.getLayerRuntime(row.name) == null
+    const color = `var(--color-${row.type}, var(--color-a4))`
+    const thumbnail = useLayerThumbnail(row.name, adapter)
+
+    if (row.structural)
+        return (
+            <div
+                className='layersNewTool_row layersNewTool_header'
+                style={{
+                    '--layer-indent': `${row.depth * 13}px`,
+                    '--layer-type-color': color,
+                }}
+                data-layer-name={row.name}
+            >
+                <button
+                    className='layersNewTool_headerToggle'
+                    aria-label={`${row.expanded ? 'Collapse' : 'Expand'} ${
+                        row.displayName
+                    }`}
+                    onClick={() => onToggleHeader(row)}
+                >
+                    <i
+                        className={`mdi mdi-chevron-${
+                            row.expanded ? 'down' : 'right'
+                        } mdi-20px`}
+                    />
+                </button>
+                <span className='layersNewTool_dragHandle'>
+                    <i className='mdi mdi-drag-vertical mdi-14px' />
+                </span>
+                <span className='layersNewTool_headerName'>
+                    {row.displayName}
+                </span>
+                <span className='layersNewTool_count'>
+                    {row.childCount}
+                </span>
+                <Tooltip content='Toggle group layers'>
+                    <IconButton
+                        size='sm'
+                        aria-label={`Toggle ${row.displayName}`}
+                        onClick={() => onToggleGroupPower(row)}
+                    >
+                        <i className='mdi mdi-power mdi-16px' />
+                    </IconButton>
+                </Tooltip>
+            </div>
+        )
+
+    return (
+        <div
+            className={`layersNewTool_row layersNewTool_layer ${
+                busy ? 'is-loading' : ''
+            } ${unavailable ? 'is-unavailable' : ''}`}
+            style={{
+                '--layer-indent': `${row.depth * 13}px`,
+                '--layer-type-color': color,
+            }}
+            data-layer-name={row.name}
+        >
+            <span className='layersNewTool_dragHandle'>
+                <i className='mdi mdi-drag-vertical mdi-14px' />
+            </span>
+            <Checkbox
+                checked={row.on}
+                disabled={busy || unavailable}
+                onCheckedChange={() => toggleLayer(row.name)}
+                aria-label={`Toggle ${row.displayName}`}
+            />
+            {thumbnail ? (
+                <img
+                    className='layersNewTool_thumbnail'
+                    src={thumbnail}
+                    alt=''
+                />
+            ) : (
+                <span
+                    className='layersNewTool_typeSwatch'
+                    aria-hidden='true'
+                />
+            )}
+            <button
+                className='layersNewTool_name'
+                onClick={() => selectLayer(row.name)}
+                title={row.description}
+            >
+                {highlight(row.displayName, search)}
+            </button>
+            {unavailable && (
+                <span className='layersNewTool_unavailable'>Unavailable</span>
+            )}
+            {row.refreshFailed && (
+                <span title='Layer refresh failed'>
+                    <i className='mdi mdi-alert-outline mdi-14px' />
+                </span>
+            )}
+            {row.filtered && (
+                <span title='Active filter'>
+                    <i className='mdi mdi-filter mdi-14px' />
+                </span>
+            )}
+            {row.timeEnabled && (
+                <span title='Time enabled'>
+                    <i className='mdi mdi-clock-outline mdi-14px' />
+                </span>
+            )}
+            {(row.tags || []).slice(0, 2).map((tag) => (
+                <span className='layersNewTool_badge' key={tag}>
+                    {tag}
+                </span>
+            ))}
+            <span className='layersNewTool_actions'>
+                <Action
+                    label='Settings'
+                    icon='tune'
+                    onClick={() => selectLayer(row.name)}
+                    disabled={unavailable}
+                />
+                <Action
+                    label='Export'
+                    icon='download'
+                    onClick={() => adapter.notify('info', 'Export coming soon.')}
+                    disabled={unavailable}
+                />
+                <Action
+                    label='Locate'
+                    icon='crosshairs-gps'
+                    onClick={() => adapter.locate(row.name)}
+                    disabled={busy}
+                />
+                <Action
+                    label='Information'
+                    icon='information-outline'
+                    onClick={() => adapter.openInfo(row.name)}
+                />
+                {row.timeEnabled && (
+                    <Action
+                        label='Time'
+                        icon='clock-outline'
+                        onClick={() => adapter.openTime()}
+                    />
+                )}
+                <Action
+                    label='Reload'
+                    icon='refresh'
+                    onClick={() => adapter.refreshLayer(row.name)}
+                    disabled={busy || unavailable}
+                />
+            </span>
+        </div>
+    )
+}
+
+function highlight(value, search) {
+    const text = String(value || '')
+    const query = String(search || '').trim()
+    if (!query || query.startsWith('#')) return text
+    const index = text.toLowerCase().indexOf(query.toLowerCase())
+    if (index < 0) return text
+    return (
+        <>
+            {text.slice(0, index)}
+            <mark>{text.slice(index, index + query.length)}</mark>
+            {text.slice(index + query.length)}
+        </>
+    )
+}
+
+export default LayerRow
