@@ -76,11 +76,47 @@ test.describe('LayersNew type settings surfaces', () => {
             '../../src/essence/Basics/UserInterface_/LayerSettings/typeSettings'
         )
         expect(resolveColormap('Viridis_r', 'binary', { Viridis: true })).toEqual(
-            { name: 'Viridis', reverse: true }
+            { colormap: 'Viridis', reverse: true }
         )
         expect(resolveColormap('', 'binary')).toEqual({
-            name: 'binary',
+            colormap: 'binary',
             reverse: false,
+        })
+    })
+
+    test('colormap ramps preserve reversal and use curated names', () => {
+        const {
+            buildColormapRamps,
+            RUNTIME_RAMPS,
+        } = require('../../src/essence/Basics/Layers_/render/rampUtils')
+        const { evaluate_cmap } = require(
+            '../../src/external/js-colormaps/js-colormaps.js'
+        )
+        const ramps = buildColormapRamps('rdylbu_r')
+        expect(ramps.length).toBeLessThanOrEqual(RUNTIME_RAMPS.length + 1)
+        expect(ramps[0].name).toBe('rdylbu_r')
+        expect(ramps[0].colors[0]).toEqual(
+            evaluate_cmap(0, 'RdYlBu', true).map((value) => value / 255)
+        )
+        expect(buildColormapRamps('viridis')).not.toEqual(
+            expect.arrayContaining([
+                expect.objectContaining({ name: 'winter' }),
+            ])
+        )
+    })
+
+    test('range commits ignore drafts until both values are finite', () => {
+        const { commitRange } = require(
+            '../../src/essence/Basics/UserInterface_/LayerSettings/typeSettings'
+        )
+        expect(commitRange(0, 10, '1', '', 'tile')).toBeNull()
+        expect(commitRange(0, 10, '15', '1', 'tile')).toEqual({
+            min: 1,
+            max: 15,
+        })
+        expect(commitRange(1, 9, 12, 4, 'velocity')).toEqual({
+            min: 4,
+            max: 12,
         })
     })
 
@@ -123,7 +159,7 @@ test.describe('LayersNew type settings surfaces', () => {
             'utf8'
         )
         expect(source).toContain(
-            "data as colormapData,\n    evaluate_cmap"
+            "buildColormapRamps } from '@basics/Layers_/render/rampUtils'"
         )
         expect(source).not.toContain(
             "require('@external/js-colormaps/js-colormaps.js')"

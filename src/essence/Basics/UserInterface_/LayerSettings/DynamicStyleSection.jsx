@@ -22,7 +22,6 @@ import {
     rulePropertyLabel,
     rulePropertyPath,
     ruleStatOf,
-    RUNTIME_RAMPS,
     styleableAttributes,
 } from '@basics/Layers_/render/dynamicStyle'
 import {
@@ -36,11 +35,10 @@ import {
     interpolateMultipleColors,
     parseRgb,
 } from '@basics/Layers_/render/gradientUtils'
-import {
-    data as colormapData,
-    evaluate_cmap,
-} from '@external/js-colormaps/js-colormaps.js'
 import './LayerSettings.css'
+import { buildColormapRamps } from '@basics/Layers_/render/rampUtils'
+import { RampDomainTicks } from './TypeSettingsSections'
+import { rangeTicks } from './typeSettings'
 
 const ATTRIBUTE_LABELS = {
     fillColor: 'Fill Color',
@@ -52,6 +50,10 @@ const ATTRIBUTE_LABELS = {
 }
 
 const CUSTOM_RAMP = 'custom'
+
+export function rampTicks(stats) {
+    return rangeTicks(stats?.min, stats?.max)
+}
 
 function customRampColors(ramp) {
     const stops = rampStops(ramp, false)
@@ -73,27 +75,7 @@ function customRampColors(ramp) {
 
 function rampsFor(current) {
     const custom = Array.isArray(current) ? customRampColors(current) : null
-    const names = RUNTIME_RAMPS.includes(current)
-        ? RUNTIME_RAMPS
-        : [current, ...RUNTIME_RAMPS]
-    const ramps = names
-        .map((name) => {
-            const colors = []
-            const cmap = colormapData?.[name]
-            if (!cmap) return null
-            for (let index = 0; index < 16; index++) {
-                const [r, g, b] = evaluate_cmap(
-                    index / 15,
-                    name,
-                    false
-                )
-                colors.push([r / 255, g / 255, b / 255])
-            }
-            return { name, label: name, colors }
-        })
-        .filter(Boolean)
-    if (custom == null) return ramps
-    return [{ name: CUSTOM_RAMP, label: 'Custom', colors: custom }, ...ramps]
+    return buildColormapRamps(current, DEFAULT_RAMP, custom)
 }
 
 function numericRange(rule, attribute) {
@@ -134,13 +116,6 @@ function sliderBounds(range, stats, attribute) {
     return bounds
 }
 
-export function rampTicks(stats) {
-    const min = Number(stats?.min)
-    const max = Number(stats?.max)
-    if (!Number.isFinite(min) || !Number.isFinite(max)) return []
-    return [min, min + (max - min) / 2, max]
-}
-
 function DynamicStyleRule({ layer, api, rule, index }) {
     const attribute = attributeOf(rule) || DEFAULT_ATTRIBUTE
     const options = styleableAttributes(rule).map((value) => ({
@@ -148,7 +123,7 @@ function DynamicStyleRule({ layer, api, rule, index }) {
         label: ATTRIBUTE_LABELS[value] || value,
     }))
     const domain = api.getDynamicStyleStats(rulePropertyPath(rule))
-    const ticks = rampTicks(domain)
+    const ticks = rangeTicks(domain?.min, domain?.max)
     const range = numericRange(rule, attribute)
     const bounds = sliderBounds(range, domain, attribute)
     const commit = (patch) => {
@@ -282,15 +257,7 @@ function DynamicStyleRule({ layer, api, rule, index }) {
                                         commit({ ramp: value })
                                 }}
                             />
-                            {ticks.length > 0 && (
-                                <div className='layerSettings_rampTicks'>
-                                    {ticks.map((tick) => (
-                                        <span key={tick}>
-                                            {formatValue(tick)}
-                                        </span>
-                                    ))}
-                                </div>
-                            )}
+                            <RampDomainTicks values={ticks} />
                         </div>
                     </div>
                     <div className='layerSettings_row'>

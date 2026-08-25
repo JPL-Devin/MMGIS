@@ -1,3 +1,5 @@
+/* global globalThis */
+
 import { test, expect } from '@playwright/test'
 
 const {
@@ -36,6 +38,29 @@ test.describe('LayersNew adapters', () => {
         }
         expect(resolveLayerOpacity(layers, 'off')).toBe(0.65)
         expect(resolveLayerOpacity(layers, 'missing')).toBe(1)
+    })
+
+    test('keeps the legacy populateCogScale fallback available', () => {
+        const previousWindow = globalThis.window
+        globalThis.window = {
+            ToolController_: {
+                getTool: () => ({
+                    populateCogScale: (name) => `legacy:${name}`,
+                }),
+            },
+        }
+        try {
+            const adapter = createLayersAdapter({
+                layers: { layers: {} },
+                map: {},
+            })
+            expect(adapter.populateCogScale('reference')).toBe(
+                'legacy:reference'
+            )
+        } finally {
+            if (previousWindow === undefined) delete globalThis.window
+            else globalThis.window = previousWindow
+        }
     })
 
     test('normalizes feature payloads and delegates export conversion', () => {

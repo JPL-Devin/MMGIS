@@ -6,17 +6,16 @@ import {
     InputWithUnit,
     Select,
     Slider,
+    Switch,
 } from '@design/components'
 import {
-    data as colormapData,
-    evaluate_cmap,
-} from '@external/js-colormaps/js-colormaps.js'
-import {
+    formatRangeTick,
     formatVideoTime,
+    commitRange,
+    rangeTicks,
     resolveColormap,
-    safeRange,
-    velocityRange,
 } from './typeSettings'
+import { buildColormapRamps } from '@basics/Layers_/render/rampUtils'
 
 function Field({ label, children }) {
     return (
@@ -76,30 +75,70 @@ function FilterRows({ api, layer, includeBlend = false }) {
     )
 }
 
-function RampPicker({ value, onChange, fallback }) {
-    const ramps = useMemo(
-        () =>
-            Object.entries(colormapData).map(([name, entry]) => ({
-                name,
-                label: name,
-                colors: Array.from({ length: 16 }, (_, index) => {
-                    const [r, g, b] = evaluate_cmap(
-                        index / 15,
-                        name,
-                        false
-                    )
-                    return [r / 255, g / 255, b / 255]
-                }),
-            })),
-        []
-    )
-    const selected = resolveColormap(value || fallback, fallback)
+export function RampDomainTicks({ values, units = '' }) {
+    if (!values?.length) return null
     return (
-        <ColorRampPicker
-            value={selected.name}
-            ramps={ramps}
-            onValueChange={(name) => onChange(name)}
+        <div className='layerSettings_rampTicks'>
+            {values.map((value) => (
+                <span key={value}>{formatRangeTick(value, units)}</span>
+            ))}
+        </div>
+    )
+}
+
+function RampPreview({ value, fallback }) {
+    const selectedValue = value || fallback
+    const selected = resolveColormap(selectedValue, fallback)
+    const ramps = useMemo(
+        () => buildColormapRamps(selectedValue, fallback),
+        [fallback, selectedValue]
+    )
+    const ramp =
+        ramps.find(({ name }) => name === selectedValue) ||
+        ramps.find(({ name }) => name === selected.colormap)
+    if (!ramp) return null
+    const colors = ramp.colors
+        .map(([r, g, b]) => `rgb(${r * 255}, ${g * 255}, ${b * 255})`)
+        .join(', ')
+    return (
+        <div
+            className='layerSettings_rampPreview'
+            style={{ background: `linear-gradient(to right, ${colors})` }}
+            aria-label={`${selectedValue} color ramp preview`}
         />
+    )
+}
+
+function RampPicker({ value, onChange, fallback }) {
+    const selectedValue = value || fallback
+    const selected = resolveColormap(selectedValue, fallback)
+    const [reverse, setReverse] = useState(selected.reverse)
+    useEffect(() => setReverse(selected.reverse), [selected.reverse])
+    const ramps = useMemo(
+        () => buildColormapRamps(selectedValue, fallback),
+        [fallback, selectedValue]
+    )
+    const commit = (nextReverse, nextName = selected.colormap) =>
+        onChange(`${nextName}${nextReverse ? '_r' : ''}`)
+    return (
+        <div>
+            <ColorRampPicker
+                value={selectedValue}
+                ramps={ramps}
+                onValueChange={(name) => commit(reverse, name)}
+            />
+            <div className='layerSettings_rampToggle'>
+                <span>Reverse</span>
+                <Switch
+                    checked={reverse}
+                    onCheckedChange={(checked) => {
+                        setReverse(checked)
+                        commit(checked)
+                    }}
+                    aria-label='Reverse color ramp'
+                />
+            </div>
+        </div>
     )
 }
 
@@ -110,15 +149,20 @@ export function RasterSettingsSection({ layer, api, type = 'tile' }) {
             ? layer.cogTransform === true &&
               typeof layer.url === 'string'
             : layer.kind === 'streamlines'
-    const [min, setMin] = useState(
-        layer.currentCogMin ?? layer.cogMin ?? layer.variables?.streamlines?.minVelocity ?? 0
-    )
-    const [max, setMax] = useState(
+    const initialMin =
+        layer.currentCogMin ??
+        layer.cogMin ??
+        layer.variables?.streamlines?.minVelocity ??
+        0
+    const initialMax =
         layer.currentCogMax ??
-            layer.cogMax ??
-            layer.variables?.streamlines?.maxVelocity ??
-            15
-    )
+        layer.cogMax ??
+        layer.variables?.streamlines?.maxVelocity ??
+        15
+    const [min, setMin] = useState(initialMin)
+    const [max, setMax] = useState(initialMax)
+    const [draftMin, setDraftMin] = useState(String(initialMin))
+    const [draftMax, setDraftMax] = useState(String(initialMax))
     const fallback = type === 'tile' ? 'viridis' : 'binary'
     const colormap =
         layer.cogColormap || layer.variables?.streamlines?.colorScale || fallback
@@ -147,14 +191,17 @@ export function RasterSettingsSection({ layer, api, type = 'tile' }) {
         }
     }, [api, layer.url, type])
     const applyRange = (nextMin, nextMax) => {
-        const range =
-            type === 'velocity'
-                ? velocityRange(min, max, nextMin, nextMax)
-                : safeRange(nextMin, nextMax)
+        const range = commitRange(min, max, nextMin, nextMax, type)
+        if (range == null) return
         setMin(range.min)
         setMax(range.max)
+        setDraftMin(String(range.min))
+        setDraftMax(String(range.max))
         api.updateRange?.(range.min, range.max, type)
     }
+    const commitDraftRange = () => applyRange(draftMin, draftMax)
+    const units =
+        layer.cogUnits || layer.variables?.streamlines?.units || ''
     return (
         <div className='layerSettings_control'>
             {type !== 'velocity' && (
@@ -167,21 +214,34 @@ export function RasterSettingsSection({ layer, api, type = 'tile' }) {
                             <div className='layerSettings_rangeInputs'>
                                 <InputWithUnit
                                     type='number'
-                                    value={min}
-                                    unit={layer.cogUnits || layer.variables?.streamlines?.units || ''}
-                                    onChange={(e) => applyRange(e.target.value, max)}
+                                    value={draftMin}
+                                    unit={units}
+                                    onChange={(e) => setDraftMin(e.target.value)}
+                                    onBlur={commitDraftRange}
+                                    onKeyDown={(e) => {
+                                        if (e.key === 'Enter') commitDraftRange()
+                                    }}
                                 />
                                 <InputWithUnit
                                     type='number'
-                                    value={max}
-                                    unit={layer.cogUnits || layer.variables?.streamlines?.units || ''}
-                                    onChange={(e) => applyRange(min, e.target.value)}
+                                    value={draftMax}
+                                    unit={units}
+                                    onChange={(e) => setDraftMax(e.target.value)}
+                                    onBlur={commitDraftRange}
+                                    onKeyDown={(e) => {
+                                        if (e.key === 'Enter') commitDraftRange()
+                                    }}
                                 />
                             </div>
                             <span className='layerSettings_hint'>
                                 Configured: {layer.cogMin ?? layer.variables?.streamlines?.minVelocity ?? 'auto'} –{' '}
                                 {layer.cogMax ?? layer.variables?.streamlines?.maxVelocity ?? 'auto'}
                             </span>
+                            <RampPreview value={colormap} fallback={fallback} />
+                            <RampDomainTicks
+                                values={rangeTicks(min, max)}
+                                units={units}
+                            />
                         </div>
                     </Field>
                     <Field label='Color ramp'>

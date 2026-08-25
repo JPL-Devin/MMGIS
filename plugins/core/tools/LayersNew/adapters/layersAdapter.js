@@ -5,9 +5,9 @@ import {
     replayOrderingHistory,
 } from '../ordering'
 import { transformStacUrl } from '@basics/Layers_/LayerUtils'
+import { resolveJsColormap } from '@basics/Layers_/render/rampUtils'
 import {
     evaluate_cmap,
-    data as colormapData,
 } from '@external/js-colormaps/js-colormaps.js'
 import { velocityRange } from '@basics/UserInterface_/LayerSettings/typeSettings'
 
@@ -34,13 +34,7 @@ export function resolveLayerOpacity(layers, name) {
 }
 
 function resolveRasterColormap(value, fallback) {
-    let name = value || fallback
-    const reverse = name.toLowerCase().endsWith('_r')
-    if (reverse) name = name.slice(0, -2)
-    const key = Object.keys(colormapData).find(
-        (candidate) => candidate.toLowerCase() === name.toLowerCase()
-    )
-    return { name: key || fallback, reverse }
+    return resolveJsColormap(value, fallback)
 }
 
 function tileCoordinates(layer, invertTms = true) {
@@ -268,7 +262,7 @@ export function createLayersAdapter({
                 const georaster = runtime.options?.georaster
                 if (!georaster?.numberOfRasters || georaster.numberOfRasters !== 1)
                     return
-                const { name: cmap, reverse } = resolveRasterColormap(
+                const { colormap: cmap, reverse } = resolveRasterColormap(
                     layer.cogColormap,
                     'binary'
                 )

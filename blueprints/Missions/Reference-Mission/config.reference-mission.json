@@ -3021,7 +3021,126 @@
         {
           "name": "Image Layers",
           "uuid": "242eaa9f-a79e-4946-91ba-d35f644db12f",
-          "sublayers": [],
+          "sublayers": [
+            {
+              "name": "Reference COG Image",
+              "uuid": "a63d5f2f-ec75-4d4a-b3f9-1b2ea7a2df7c",
+              "type": "image",
+              "visibility": false,
+              "url": "Data/DEMs/USGS_13_n38w123_20250826_SFHill.tif",
+              "initialOpacity": 0.85,
+              "minZoom": 9,
+              "maxNativeZoom": 14,
+              "maxZoom": 18,
+              "boundingBox": [
+                -122.5072,
+                37.7098,
+                -122.4143,
+                37.7811
+              ],
+              "cogTransform": true,
+              "cogMin": 0,
+              "cogMax": 800,
+              "cogUnits": "m",
+              "cogColormap": "RdYlBu_r",
+              "cogExpressionEditable": true,
+              "variables": {
+                "hideNoDataValue": true,
+                "image": {
+                  "fillMinMax": true
+                }
+              },
+              "time": {
+                "enabled": false,
+                "type": "requery",
+                "compositeTile": false,
+                "refreshIntervalEnabled": false
+              },
+              "description": "Reference single-band COG image for LayersNew pixel coloring, no-data, cache, and reorder behavior."
+            }
+          ],
+          "type": "header",
+          "expanded": false,
+          "description": ""
+        },
+        {
+          "name": "Velocity Layers",
+          "uuid": "b8a0fdc6-d2a5-4c24-81ec-18c0d1b11db6",
+          "sublayers": [
+            {
+              "name": "Reference Wind Velocity",
+              "uuid": "f2ee5d04-7a61-48ea-a1fb-217ae322e5a1",
+              "type": "velocity",
+              "kind": "streamlines",
+              "visibility": false,
+              "url": "https://raw.githubusercontent.com/onaci/leaflet-velocity/master/demo/wind-global.json",
+              "initialOpacity": 0.8,
+              "minZoom": 0,
+              "maxZoom": 18,
+              "boundingBox": [
+                -180,
+                -90,
+                180,
+                90
+              ],
+              "variables": {
+                "streamlines": {
+                  "minVelocity": 0,
+                  "maxVelocity": 15,
+                  "colorScale": "rdylbu_r",
+                  "units": "m/s",
+                  "velocityScale": 0.005,
+                  "particleAge": 90,
+                  "particleMultiplier": 0.0005,
+                  "lineWidth": 1,
+                  "frameRate": 15
+                }
+              },
+              "time": {
+                "enabled": false,
+                "type": "requery",
+                "compositeTile": false,
+                "refreshIntervalEnabled": false
+              },
+              "description": "Public leaflet-velocity wind sample for LayersNew range and remove/re-add behavior."
+            }
+          ],
+          "type": "header",
+          "expanded": false,
+          "description": ""
+        },
+        {
+          "name": "Video Layers",
+          "uuid": "e4791314-4fdd-45fb-80e4-4132138a4c7f",
+          "sublayers": [
+            {
+              "name": "Reference Map Video",
+              "uuid": "c3a2c82a-51f5-41d6-a9cf-2be213b3b4bb",
+              "type": "video",
+              "visibility": false,
+              "url": "https://labs.mapbox.com/bites/00188/patricia_nasa.mp4",
+              "boundingBox": [
+                -122.5072,
+                37.7098,
+                -122.4143,
+                37.7811
+              ],
+              "initialOpacity": 0.8,
+              "variables": {
+                "video": {
+                  "autoplay": false,
+                  "loop": true
+                }
+              },
+              "time": {
+                "enabled": false,
+                "type": "requery",
+                "compositeTile": false,
+                "refreshIntervalEnabled": false
+              },
+              "description": "Public map video sample for LayersNew transport controls and lifecycle cleanup."
+            }
+          ],
           "type": "header",
           "expanded": false,
           "description": ""

@@ -36,29 +36,7 @@ export const DEFAULT_ATTRIBUTE = 'fillColor'
 export const DEFAULT_RAMP = 'viridis'
 
 /** The named ramps offered by the runtime style editors. */
-export const RUNTIME_RAMPS = [
-    'viridis',
-    'plasma',
-    'inferno',
-    'magma',
-    'cividis',
-    'turbo',
-    'Blues',
-    'Greens',
-    'Oranges',
-    'Reds',
-    'Purples',
-    'YlGnBu',
-    'YlOrRd',
-    'RdYlGn',
-    'RdYlBu',
-    'RdBu',
-    'BrBG',
-    'PiYG',
-    'coolwarm',
-    'Spectral',
-    'Greys',
-]
+export { RUNTIME_RAMPS } from './rampUtils'
 
 /** The statistics a geodataset reports for each group of features. */
 export const GROUP_STATS = ['avg', 'min', 'max', 'sum', 'stddev']
