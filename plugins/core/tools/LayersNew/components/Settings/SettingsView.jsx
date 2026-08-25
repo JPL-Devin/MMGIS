@@ -15,9 +15,6 @@ function SettingsView({ settings, onBack }) {
     )
 
     useEffect(() => {
-        ctx.api.ensureOn()
-    }, [ctx.api])
-    useEffect(() => {
         if (settings.tabs.some((tab) => tab.value === settingsTab))
             setSelectedTab(settingsTab)
     }, [settings.tabs, settingsTab])

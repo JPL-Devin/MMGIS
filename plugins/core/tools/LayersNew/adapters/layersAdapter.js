@@ -15,7 +15,7 @@ function browserBaseUrl() {
     )}`
 }
 
-function tileCoordinates(layer) {
+function tileCoordinates(layer, invertTms = true) {
     const bounds = layer.boundingBox
     const zoom = Math.max(
         0,
@@ -39,12 +39,15 @@ function tileCoordinates(layer) {
             2) *
             scale
     )
-    const tileY = layer.tileformat === 'tms' || layer.tms === true ? scale - 1 - y : y
+    const tileY =
+        invertTms && (layer.tileformat === 'tms' || layer.tms === true)
+            ? scale - 1 - y
+            : y
     return [zoom, Math.max(0, Math.min(scale - 1, x)), Math.max(0, Math.min(scale - 1, tileY))]
 }
 
-function fillTileTemplate(url, layer) {
-    const [z, x, y] = tileCoordinates(layer)
+function fillTileTemplate(url, layer, invertTms = true) {
+    const [z, x, y] = tileCoordinates(layer, invertTms)
     return url
         .replace(/\{z\}/gi, z)
         .replace(/\{x\}/gi, x)
@@ -90,7 +93,8 @@ function getRasterPreviewUrl(layers, formulae, layer) {
             `${browserBaseUrl()}/titiler/cog/tiles/${
                 layer.tileMatrixSet || 'WebMercatorQuad'
             }/{z}/{x}/{y}.png?${query.toString()}`,
-            layer
+            layer,
+            false
         )
     }
     if (isStac) {

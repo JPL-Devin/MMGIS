@@ -1,12 +1,9 @@
-import React, { useState } from 'react'
+import React from 'react'
 
 import { Checkbox, Select, Slider, Tooltip } from '@design/components'
-import { DynamicStyleSection } from './DynamicStyleSection'
-import { StatisticsSection } from './StatisticsSection'
 import './LayerSettings.css'
 
 function AttachmentControls({ layer, api, name, attachment }) {
-    const [value, setValue] = useState(attachment.layer?.dropdownValue || '')
     const description = api.attachments.describe(
         api.attachments.idForSublayerKey(name)
     )
@@ -20,13 +17,12 @@ function AttachmentControls({ layer, api, name, attachment }) {
             <div className='layerSettings_attachmentControls'>
                 {Array.isArray(dropdown) && (
                     <Select
-                        value={value}
+                        value={attachment.layer?.dropdownValue || dropdown[0] || ''}
                         options={dropdown.map((option) => ({
                             value: option,
                             label: option,
                         }))}
                         onValueChange={(next) => {
-                            setValue(next)
                             api.attachments.setDropdown(layer.name, name, next)
                         }}
                     />
@@ -68,23 +64,14 @@ export function CompositeLayersSection({ layer, api }) {
     return (
         <div className='layerSettings_attachments'>
             {entries.map(([name, attachment]) => (
-                <React.Fragment key={name}>
+                <div key={name}>
                     <AttachmentControls
                         layer={layer}
                         api={api}
                         name={name}
                         attachment={attachment}
                     />
-                    {attachment.layer?.dynamicStyle && (
-                        <DynamicStyleSection
-                            layer={attachment.layer}
-                            api={api}
-                        />
-                    )}
-                    {attachment.layer?.dynamicStyle && (
-                        <StatisticsSection layer={attachment.layer} api={api} />
-                    )}
-                </React.Fragment>
+                </div>
             ))}
         </div>
     )

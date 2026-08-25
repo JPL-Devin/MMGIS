@@ -1,4 +1,5 @@
 import { test, expect } from '@playwright/test'
+const fs = require('fs')
 
 const { createTimeAdapter } = require('../../plugins/core/tools/LayersNew/adapters/timeAdapter')
 const {
@@ -34,6 +35,25 @@ test.describe('LayersNew settings', () => {
         expect(getSettingsPresentation(false, false)).toBe('drawer')
         expect(getSettingsPresentation(true, false)).toBe('page')
         expect(getSettingsPresentation(false, true)).toBe('page')
+    })
+
+    test('does not enable a layer merely by opening settings', () => {
+        const source = fs.readFileSync(
+            'plugins/core/tools/LayersNew/components/Settings/SettingsView.jsx',
+            'utf8'
+        )
+        expect(source).not.toContain('ctx.api.ensureOn()')
+    })
+
+    test('keeps settings sections collapsible and default-open', () => {
+        const source = fs.readFileSync(
+            'plugins/core/tools/LayersNew/components/Settings/SectionHost.jsx',
+            'utf8'
+        )
+        expect(source).toContain(
+            'useState(section.defaultOpen !== false)'
+        )
+        expect(source).toContain('onOpenChange={setOpen}')
     })
 
     test('closes on Escape and traps focus at the drawer edges', () => {

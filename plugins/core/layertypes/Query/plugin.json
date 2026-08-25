@@ -1094,7 +1094,6 @@
   "modules": {
     "map": "./map",
     "config": "./config",
-    "filter": "./filter",
-    "settings": "./settings"
+    "filter": "./filter"
   }
 }

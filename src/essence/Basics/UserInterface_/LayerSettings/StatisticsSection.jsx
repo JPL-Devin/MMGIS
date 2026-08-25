@@ -52,12 +52,18 @@ export function StatisticsSection({ layer, api }) {
                         <strong>{label}</strong>
                         <span>{SCOPE_LABELS[stats.scope] || stats.scope}</span>
                     </div>
-                    {STATISTICS.map(([name, key]) => (
+                    {STATISTICS.filter(([, key]) => {
+                        const value = stats[key]
+                        return (
+                            value != null &&
+                            value !== '' &&
+                            Number.isFinite(Number(value))
+                        )
+                    }).map(([name, key]) => (
                         <div className='layerSettings_statRow' key={key}>
                             <span>{name}</span>
                             <span>
-                                {formatValue(Number(stats[key])) ||
-                                    String(stats[key] ?? '')}
+                                {formatValue(Number(stats[key]))}
                             </span>
                         </div>
                     ))}

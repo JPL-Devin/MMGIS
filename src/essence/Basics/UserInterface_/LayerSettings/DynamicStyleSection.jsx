@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react'
 import {
     Checkbox,
     ColorRampPicker,
+    IconButton,
     InputWithUnit,
     Select,
     Slider,
@@ -16,6 +17,7 @@ import {
     attributeOf,
     formatValue,
     isCategoricalRule,
+    rampStops,
     ruleMappings,
     rulePropertyLabel,
     rulePropertyPath,
@@ -28,6 +30,16 @@ import {
     getViewedRules,
 } from '@basics/Layers_/render/layerDynamicStyle'
 import { RESTYLED_EVENT } from '@basics/Layers_/render/dynamicStyleRuntime'
+import {
+    hexToRgb,
+    interpolateMultipleColors,
+    parseRgb,
+} from '@basics/Layers_/render/gradientUtils'
+import {
+    data as colormapData,
+    evaluate_cmap,
+} from '@external/js-colormaps/js-colormaps.js'
+import { RUNTIME_RAMPS } from '../../../../../plugins/core/tools/Layers/components/DynamicStyleRamp'
 import './LayerSettings.css'
 
 const ATTRIBUTE_LABELS = {
@@ -39,43 +51,39 @@ const ATTRIBUTE_LABELS = {
     radius: 'Radius',
 }
 
-const RUNTIME_RAMPS = [
-    'viridis',
-    'plasma',
-    'inferno',
-    'magma',
-    'cividis',
-    'turbo',
-    'Blues',
-    'Greens',
-    'Oranges',
-    'Reds',
-    'Purples',
-    'YlGnBu',
-    'YlOrRd',
-    'RdYlGn',
-    'RdYlBu',
-    'RdBu',
-    'BrBG',
-    'PiYG',
-    'coolwarm',
-    'Spectral',
-    'Greys',
-]
+const CUSTOM_RAMP = 'custom'
+
+function customRampColors(ramp) {
+    const stops = rampStops(ramp, false)
+    if (stops.length === 0) return null
+    const colors = []
+    for (let index = 0; index < 16; index++) {
+        const color = interpolateMultipleColors(
+            stops,
+            index / 15,
+            0,
+            1
+        )
+        const rgb = hexToRgb(color) || parseRgb(color)
+        if (rgb == null) return null
+        colors.push([rgb.r / 255, rgb.g / 255, rgb.b / 255])
+    }
+    return colors
+}
 
 function rampsFor(current) {
-    const colormaps = require('@external/js-colormaps/js-colormaps.js')
+    const custom = Array.isArray(current) ? customRampColors(current) : null
     const names = RUNTIME_RAMPS.includes(current)
         ? RUNTIME_RAMPS
         : [current, ...RUNTIME_RAMPS]
-    return names
+    const ramps = names
         .map((name) => {
             const colors = []
-            const cmap = colormaps.data?.[name]
+            const cmap = colormapData?.[name]
             if (!cmap) return null
-            for (let index = 0; index < 12; index++) {
-                const [r, g, b] = colormaps.evaluate_cmap(
-                    index / 11,
+            for (let index = 0; index < 16; index++) {
+                const [r, g, b] = evaluate_cmap(
+                    index / 15,
                     name,
                     false
                 )
@@ -84,6 +92,8 @@ function rampsFor(current) {
             return { name, label: name, colors }
         })
         .filter(Boolean)
+    if (custom == null) return ramps
+    return [{ name: CUSTOM_RAMP, label: 'Custom', colors: custom }, ...ramps]
 }
 
 function numericRange(rule, attribute) {
@@ -98,6 +108,32 @@ function numericRange(rule, attribute) {
     return defaults[attribute] || [0, 1]
 }
 
+function sliderBounds(range, stats, attribute) {
+    const defaults = {
+        fillOpacity: [0, 1],
+        opacity: [0, 1],
+        weight: [0, 10],
+        radius: [0, 20],
+    }
+    const fallback = defaults[attribute] || [0, 1]
+    const min = Number(stats?.min)
+    const max = Number(stats?.max)
+    const currentMin = Number.isFinite(range[0]) ? range[0] : fallback[0]
+    const currentMax = Number.isFinite(range[1]) ? range[1] : fallback[1]
+    const bounds = [
+        Math.min(
+            Number.isFinite(min) ? min : fallback[0],
+            currentMin
+        ),
+        Math.max(
+            Number.isFinite(max) ? max : fallback[1],
+            currentMax
+        ),
+    ]
+    if (bounds[0] === bounds[1]) bounds[1] = bounds[0] + 1
+    return bounds
+}
+
 function DynamicStyleRule({ layer, api, rule, index }) {
     const attribute = attributeOf(rule) || DEFAULT_ATTRIBUTE
     const options = styleableAttributes(rule).map((value) => ({
@@ -106,6 +142,7 @@ function DynamicStyleRule({ layer, api, rule, index }) {
     }))
     const domain = api.getDynamicStyleStats(rulePropertyPath(rule))
     const range = numericRange(rule, attribute)
+    const bounds = sliderBounds(range, domain, attribute)
     const commit = (patch) => {
         const before = api.getStatsFields()
         api.overrideDynamicStyleRule(index, patch)
@@ -172,8 +209,8 @@ function DynamicStyleRule({ layer, api, rule, index }) {
                         <span>Range</span>
                         <Slider
                             value={range}
-                            min={range[0]}
-                            max={range[1] === range[0] ? range[0] + 1 : range[1]}
+                            min={bounds[0]}
+                            max={bounds[1]}
                             step='any'
                             onValueChange={(value) =>
                                 commit({ range: value })
@@ -215,7 +252,11 @@ function DynamicStyleRule({ layer, api, rule, index }) {
                 <div className='layerSettings_control'>
                     <span>Color ramp</span>
                     <ColorRampPicker
-                        value={Array.isArray(rule.ramp) ? undefined : rule.ramp || DEFAULT_RAMP}
+                        value={
+                            Array.isArray(rule.ramp)
+                                ? CUSTOM_RAMP
+                                : rule.ramp || DEFAULT_RAMP
+                        }
                         ramps={rampsFor(rule.ramp || DEFAULT_RAMP)}
                         portal
                         onValueChange={(value) => commit({ ramp: value })}
@@ -357,9 +398,15 @@ export function DynamicStyleSection({ layer, api }) {
                     index={index}
                 />
             ))}
-            <button type='button' onClick={reset}>
-                Reset dynamic style
-            </button>
+            <Tooltip content='Style this layer the way it was configured again, undoing the changes made here.'>
+                <IconButton
+                    size='sm'
+                    aria-label='Reset dynamic style'
+                    onClick={reset}
+                >
+                    <i className='mdi mdi-restore mdi-18px' />
+                </IconButton>
+            </Tooltip>
         </div>
     )
 }

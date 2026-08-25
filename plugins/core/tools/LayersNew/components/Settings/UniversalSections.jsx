@@ -117,13 +117,16 @@ function TimeSection({ layer, adapters }) {
 
 function ResetSection({ api }) {
     return (
-        <button
-            type='button'
-            className='layersNewTool_reset'
-            onClick={() => api.resetSettings()}
-        >
-            Reset settings
-        </button>
+        <Tooltip content='Reset all layer settings'>
+            <IconButton
+                size='sm'
+                aria-label='Reset all layer settings'
+                className='layersNewTool_reset'
+                onClick={() => api.resetSettings()}
+            >
+                <i className='mdi mdi-restore mdi-18px' />
+            </IconButton>
+        </Tooltip>
     )
 }
 

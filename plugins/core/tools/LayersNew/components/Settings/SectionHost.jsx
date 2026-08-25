@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 
 import { Collapsible } from '@design/components'
 
@@ -25,9 +25,10 @@ class SectionBoundary extends React.Component {
 
 function SectionHost({ section, layer, layerName, ctx }) {
     const Component = section.Component
+    const [open, setOpen] = useState(section.defaultOpen !== false)
     return (
         <SectionBoundary>
-            <Collapsible open={true}>
+            <Collapsible open={open} onOpenChange={setOpen}>
                 <Collapsible.Trigger>
                     <span>{section.label}</span>
                     {section.badge != null && <span>{section.badge}</span>}
