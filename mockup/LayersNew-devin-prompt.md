@@ -468,7 +468,7 @@ fallback · **D** deferred (§9).
 | Per-type settings (vector, vectortile, query, data, model, velocity, image, video, tile) | T (+S) | one `settings.jsx` per type under `plugins/core/layertypes/<Type>/` |
 | Reset settings | C | `api.resetSettings('all')` restores configured values; per-section reset via section id |
 | Settings panel lifecycle (build on open, tear down on close) | C | mount/unmount of `SettingsView`; sections must clean up in `useEffect` returns |
-| Configure-page mirror sections | D | see §9 — open question from the mockup phase |
+| Configure-page mirror sections ("Layer Configuration") | — | **Decided: do not build.** `LayersNew` shows session state only; the layer's configured definition stays on the Configure page. Do not add a `Config`/JSON tab, and do not surface `layerTypeConfigs` fields as read-only settings. The one exception is where the old tool already contrasts configured vs current values (COG rescale, expression, velocity range) — that stays, since it exists to make "reset" meaningful. |
 
 ### 5.7 Dynamic style
 
@@ -692,13 +692,14 @@ Co-locate in `plugins/core/tools/LayersNew/tests/` (tag pure tests `@unit` so
 
 ## 9. Explicitly deferred
 
-Deferrals must be re-stated in the PR body; nothing else may be dropped.
+Deferrals must be re-stated in the PR body; nothing else may be dropped. One old-tool
+behavior is **decided against** rather than deferred — the Configure-page mirror
+sections; see the last row of §5.6.
 
 | Deferred | Reason | Acceptance criteria for the follow-up |
 | --- | --- | --- |
 | Replacing/removing the old `LayersTool` | needs a cutover decision + mission-config migration | old tool deleted, `LayersNew` renamed `Layers`, mission configs migrated, `tree.js`/`mmgisAPI`/`DataShaders` name checks updated |
 | Rewriting `Filtering` in React | ~900 lines of jQuery with its own sortable + spatial map layer; out of scope | `Filtering` re-implemented as components, `FilterMount` deleted |
 | Native React `DataShaders` settings | shader HTML is generated in a shared service used elsewhere | `DataShaderSection` renders components; `getHTML`/`attachEvents` no longer used by the tool |
-| Configure-page mirror sections ("Layer Configuration") | product question from the mockup phase: a `Config` tab vs dropping them from the tool | decision recorded, then either a `config`-driven tab or explicit removal |
 | List virtualization | only matters at very large layer counts; adds complexity to dnd | 1,000-layer mission scrolls at 60 fps with dnd intact |
 | Thumbnails for non-raster types | needs a rendering/caching strategy per type | `thumbnail()` implemented for vector/query with a cache |
