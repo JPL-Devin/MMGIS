@@ -257,7 +257,18 @@ export function createLayersAdapter({
             return ordered
         },
         orderedBringToFront: () => map.orderedBringToFront(),
-        refreshLayer: (name) => map.refreshLayer(layerData(name)),
+        refreshLayer: (name) => {
+            const layer = layerData(name)
+            if (!layer) return
+            const runtime = layers.layers?.layer?.[layer.name || name]
+            if (runtime === null || layer.type === 'tile') return
+            if (layer.controlled === true) return
+            try {
+                return map.refreshLayer(layer)
+            } catch (error) {
+                return undefined
+            }
+        },
         fitBounds: (bounds) => map.map?.fitBounds(bounds),
         globe: () => globe,
         getSafeName: (name) => formulae.getSafeName(name),
