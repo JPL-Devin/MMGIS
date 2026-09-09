@@ -1,0 +1,44 @@
+{
+    "name": "Graticule",
+    "type": "tool",
+    "tier": "core",
+    "defaultIcon": "grid",
+    "description": "Overlays a configurable lat/lon or local metric coordinate grid on the 2D map.",
+    "descriptionFull": {
+        "title": "Draws a graticule over the map that redraws on pan/zoom. Supports lat/lon spacing (auto or fixed degrees) or a local metric grid (every N km) about the map center using the mission's planetary radius, with edge labels, color and opacity controls.",
+        "example": {
+            "defaultMode": "latlon || metric",
+            "defaultColor": "#ffffff"
+        }
+    },
+    "hasVars": true,
+    "paths": {
+        "GraticuleTool": "./GraticuleTool"
+    },
+    "config": {
+        "rows": [
+            {
+                "components": [
+                    {
+                        "field": "variables.defaultMode",
+                        "name": "Default Mode",
+                        "description": "Grid mode when the tool opens.",
+                        "type": "dropdown",
+                        "width": 4,
+                        "options": ["latlon", "metric"]
+                    },
+                    {
+                        "field": "variables.defaultColor",
+                        "name": "Default Line Color",
+                        "description": "Hex color of grid lines and labels (e.g. #ffffff).",
+                        "type": "text",
+                        "width": 4
+                    }
+                ]
+            }
+        ]
+    },
+    "author": "NASA-AMMOS/MMGIS",
+    "license": "Apache-2.0",
+    "repository": "https://github.com/NASA-AMMOS/MMGIS"
+}
