@@ -1,0 +1,115 @@
+{
+  "uuid": "7f2c1e04-6a3b-4d2f-9c31-8b5a0f6d4e21",
+  "id": "core-layerattachment-heatmap",
+  "name": "Heatmap",
+  "type": "layerattachment",
+  "attachmentId": "heatmap",
+  "version": "core",
+  "tier": "core",
+  "overridable": false,
+  "configPath": "variables.layerAttachments.heatmap",
+  "description": "A density heatmap of the host's point features, drawn as a canvas overlay. Points may be weighted by a feature property and colored through a configurable gradient. Toggleable beside its host, so a layer can show its markers, its heatmap, or both.",
+  "capabilities": {
+    "renderers": {
+      "map": {
+        "engines": ["leaflet"]
+      },
+      "globe": false
+    },
+    "host": {
+      "order": 3
+    }
+  },
+  "applicableLayerTypes": ["vector", "query"],
+  "config": {
+    "tab": "Attachment - Markers",
+    "tabOrder": 12,
+    "order": 5,
+    "rows": [
+      {
+        "subname": "Heatmap",
+        "components": [
+          {
+            "field": "variables.layerAttachments.heatmap.enabled",
+            "name": "Enabled",
+            "description": "Renders a density heatmap of this layer's point features. Useful with 'Miscellaneous -> Hide Main Features'.",
+            "type": "switch",
+            "width": 3,
+            "defaultChecked": false
+          },
+          {
+            "field": "variables.layerAttachments.heatmap.initialVisibility",
+            "name": "Initially Visible",
+            "description": "Whether the heatmap is shown when its layer is turned on.",
+            "type": "checkbox",
+            "width": 3,
+            "defaultChecked": true
+          },
+          {
+            "field": "variables.layerAttachments.heatmap.opacity",
+            "name": "Opacity",
+            "description": "Overall heatmap opacity from 0 to 1.",
+            "type": "number",
+            "min": 0,
+            "max": 1,
+            "step": 0.05,
+            "width": 3
+          }
+        ]
+      },
+      {
+        "components": [
+          {
+            "field": "variables.layerAttachments.heatmap.radius",
+            "name": "Radius",
+            "description": "Point influence radius in pixels.",
+            "type": "number",
+            "min": 1,
+            "width": 2
+          },
+          {
+            "field": "variables.layerAttachments.heatmap.blur",
+            "name": "Blur",
+            "description": "Falloff width in pixels within the radius. Larger is smoother.",
+            "type": "number",
+            "min": 0,
+            "width": 2
+          },
+          {
+            "field": "variables.layerAttachments.heatmap.gradient",
+            "name": "Gradient",
+            "description": "Array of css colors from least to most dense. Defaults to blue-cyan-lime-yellow-red.",
+            "type": "textarray",
+            "width": 8
+          }
+        ]
+      },
+      {
+        "components": [
+          {
+            "field": "variables.layerAttachments.heatmap.weightProp",
+            "name": "Weight Property",
+            "description": "Prop path to a numeric property to weight each point by. Unset weights every point equally.",
+            "type": "text",
+            "width": 4
+          },
+          {
+            "field": "variables.layerAttachments.heatmap.minIntensity",
+            "name": "Min Intensity",
+            "description": "Weight mapped to the gradient's first color. Defaults to the layer's minimum weight.",
+            "type": "number",
+            "width": 4
+          },
+          {
+            "field": "variables.layerAttachments.heatmap.maxIntensity",
+            "name": "Max Intensity",
+            "description": "Weight mapped to the gradient's last color. Defaults to the layer's maximum weight.",
+            "type": "number",
+            "width": 4
+          }
+        ]
+      }
+    ]
+  },
+  "module": "./heatmap"
+}
