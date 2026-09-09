@@ -58,6 +58,9 @@ export const intensityRange = (points, options) => {
         if (min == null) min = weights.length ? Math.min(...weights) : 0
         if (max == null) max = weights.length ? Math.max(...weights) : 1
     }
+    // Uniformly weighted points have no range to spread across, so they all
+    // count fully rather than all sitting at the transparent floor.
+    if (max === min) min = 0
     return { min, max, span: max - min || 1 }
 }
 
