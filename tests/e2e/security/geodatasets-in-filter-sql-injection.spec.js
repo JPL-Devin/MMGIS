@@ -109,15 +109,15 @@ test.describe.serial("Geodatasets `in` filter — SQL injection", () => {
     expect(falsy).toHaveLength(0);
   });
 
-  test("exact reported control/false/true payloads all return zero rows", async () => {
+  test("control/false/true placeholder-name payloads all return zero rows", async () => {
     test.skip(!adminReady, "SKIP: admin access unavailable");
 
-    const reported = [
-      "VNOMATCH$VNOMATCH_ 2",
-      "VNOMATCH$VNOMATCH) OR (SELECT 1)=0 LIMIT 1 -- ",
-      "VNOMATCH$VNOMATCH) OR (SELECT 1)=1 LIMIT 1 -- ",
+    const probes = [
+      "ZZNOPE$ZZNOPE_ 7",
+      "ZZNOPE$ZZNOPE) OR (SELECT 2)=3 LIMIT 1 -- ",
+      "ZZNOPE$ZZNOPE) OR (SELECT 2)=2 LIMIT 1 -- ",
     ];
-    for (const value of reported) {
+    for (const value of probes) {
       expect(await getFeatures("name", "string", value)).toHaveLength(0);
     }
   });
