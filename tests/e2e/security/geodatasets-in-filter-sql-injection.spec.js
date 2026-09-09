@@ -109,6 +109,19 @@ test.describe.serial("Geodatasets `in` filter — SQL injection", () => {
     expect(falsy).toHaveLength(0);
   });
 
+  test("exact reported control/false/true payloads all return zero rows", async () => {
+    test.skip(!adminReady, "SKIP: admin access unavailable");
+
+    const reported = [
+      "VNOMATCH$VNOMATCH_ 2",
+      "VNOMATCH$VNOMATCH) OR (SELECT 1)=0 LIMIT 1 -- ",
+      "VNOMATCH$VNOMATCH) OR (SELECT 1)=1 LIMIT 1 -- ",
+    ];
+    for (const value of reported) {
+      expect(await getFeatures("name", "string", value)).toHaveLength(0);
+    }
+  });
+
   test("injected UNION / stacked statements do not alter results", async () => {
     test.skip(!adminReady, "SKIP: admin access unavailable");
 
@@ -130,6 +143,16 @@ test.describe.serial("Geodatasets `in` filter — SQL injection", () => {
 
     const features = await getFeatures("n", "number", "1$3");
     expect(features.map((f) => f.properties.n).sort()).toEqual([1, 3]);
+  });
+
+  test("oversized `in` lists are capped rather than rejected", async () => {
+    test.skip(!adminReady, "SKIP: admin access unavailable");
+
+    const list = ["alpha", ...Array(600).fill("x")].join("$");
+    expect(names(await getFeatures("name", "string", list))).toEqual(["alpha"]);
+
+    const long = `alpha$${"y".repeat(5000)}`;
+    expect(names(await getFeatures("name", "string", long))).toEqual(["alpha"]);
   });
 
   test("numeric `in` with an injected value is not executed", async () => {
