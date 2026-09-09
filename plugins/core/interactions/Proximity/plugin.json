@@ -1,0 +1,61 @@
+{
+    "name": "Proximity",
+    "type": "interaction",
+    "interactionId": "proximity",
+    "description": "On click, finds features across visible vector layers within a radius (planet meters) of the clicked feature, rings them on the map and lists them ranked by distance in a floating panel.",
+    "applicableLayerTypes": [
+        "vector",
+        "query"
+    ],
+    "applicableEvents": [
+        "click"
+    ],
+    "phase": "main",
+    "order": 150,
+    "configPath": "variables.interactions.proximity",
+    "config": {
+        "rows": [
+            {
+                "components": [
+                    {
+                        "type": "number",
+                        "name": "Radius (m)",
+                        "description": "Search radius in meters, measured on the mission's planetary radius.",
+                        "width": 3,
+                        "default": 500,
+                        "min": 1,
+                        "field": "variables.interactions.proximity.radius"
+                    },
+                    {
+                        "type": "number",
+                        "name": "Max Results",
+                        "width": 3,
+                        "default": 25,
+                        "min": 1,
+                        "field": "variables.interactions.proximity.maxResults"
+                    },
+                    {
+                        "type": "text",
+                        "name": "Name Property",
+                        "description": "Feature property to show as the row label.",
+                        "width": 3,
+                        "default": "name",
+                        "field": "variables.interactions.proximity.nameProp"
+                    },
+                    {
+                        "type": "text",
+                        "name": "Included Layers",
+                        "description": "Comma-separated layer names to search. Empty searches all visible vector layers.",
+                        "width": 3,
+                        "field": "variables.interactions.proximity.layers"
+                    }
+                ]
+            }
+        ]
+    },
+    "paths": {
+        "Proximity": "./Proximity"
+    },
+    "author": "NASA-AMMOS/MMGIS",
+    "license": "Apache-2.0"
+}

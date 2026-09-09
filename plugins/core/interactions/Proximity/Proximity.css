@@ -1,0 +1,81 @@
+#proximityPanel {
+    position: absolute;
+    right: 50px;
+    top: 50px;
+    z-index: 1200;
+    width: 320px;
+    max-height: 60vh;
+    display: flex;
+    flex-direction: column;
+    background: var(--color-a, #1b1b1b);
+    color: var(--color-f, #eee);
+    font-size: 13px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+    border-left: 3px solid #ffd166;
+}
+#proximityPanel .proxHeader {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 8px;
+    font-weight: bold;
+    background: var(--color-a1, #262626);
+}
+#proximityPanel .proxSub {
+    flex: 1;
+    font-weight: normal;
+    font-size: 11px;
+    opacity: 0.7;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+#proximityPanel .proxClear {
+    cursor: pointer;
+    opacity: 0.7;
+}
+#proximityPanel .proxClear:hover {
+    opacity: 1;
+}
+#proximityPanel ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    overflow-y: auto;
+}
+#proximityPanel li {
+    display: flex;
+    gap: 8px;
+    padding: 5px 8px;
+    cursor: pointer;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+#proximityPanel li:hover {
+    background: rgba(255, 209, 102, 0.15);
+}
+#proximityPanel .proxRank {
+    width: 18px;
+    opacity: 0.6;
+}
+#proximityPanel .proxName {
+    flex: 1;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+#proximityPanel .proxLayer {
+    opacity: 0.6;
+    font-size: 11px;
+    max-width: 90px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+#proximityPanel .proxDist {
+    color: #ffd166;
+    font-variant-numeric: tabular-nums;
+}
+#proximityPanel .proxEmpty {
+    cursor: default;
+    opacity: 0.6;
+}
