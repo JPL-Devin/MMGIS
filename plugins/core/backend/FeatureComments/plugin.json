@@ -1,0 +1,20 @@
+{
+  "uuid": "b2fdaeca-2dc5-41ac-8475-206a59983fe8",
+  "id": "core-featurecomments",
+  "name": "FeatureComments",
+  "display_name": "Feature Comments",
+  "aliases": [
+    "featurecomments"
+  ],
+  "version": "core",
+  "type": "backend",
+  "tier": "core",
+  "overridable": true,
+  "routes": {
+    "prefix": "/api/featurecomments",
+    "auth": "user"
+  },
+  "author": "NASA-AMMOS/MMGIS",
+  "license": "Apache-2.0",
+  "repository": "https://github.com/NASA-AMMOS/MMGIS"
+}

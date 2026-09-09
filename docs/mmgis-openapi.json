@@ -6163,6 +6163,65 @@
         }
       }
     },
+    "/api/featurecomments/create": {
+      "post": {
+        "summary": "Create a comment or reply on a feature",
+        "description": "Requires a logged-in user; the author is taken from the session. Pass `parent_id` to reply to an existing comment on the same feature.",
+        "tags": ["FeatureComments"],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["mission", "layer", "feature", "body"],
+                "properties": {
+                  "mission": { "type": "string" },
+                  "layer": { "type": "string", "description": "Layer name." },
+                  "feature": { "type": "string", "description": "Feature id/key." },
+                  "body": { "type": "string", "maxLength": 4000 },
+                  "parent_id": { "type": "integer", "description": "Id of the comment being replied to." }
+                }
+              }
+            }
+          }
+        },
+        "responses": { "200": { "description": "`{ status, comment }`" } }
+      }
+    },
+    "/api/featurecomments/list": {
+      "get": {
+        "summary": "List threaded comments for a feature",
+        "tags": ["FeatureComments"],
+        "parameters": [
+          { "in": "query", "name": "mission", "required": true, "schema": { "type": "string" } },
+          { "in": "query", "name": "layer", "required": true, "schema": { "type": "string" } },
+          { "in": "query", "name": "feature", "required": true, "schema": { "type": "string" } }
+        ],
+        "responses": { "200": { "description": "`{ status, total, threads: [{ ...comment, replies: [] }] }`" } }
+      }
+    },
+    "/api/featurecomments/counts": {
+      "get": {
+        "summary": "Comment counts per feature for a layer (for badges)",
+        "tags": ["FeatureComments"],
+        "parameters": [
+          { "in": "query", "name": "mission", "required": true, "schema": { "type": "string" } },
+          { "in": "query", "name": "layer", "required": true, "schema": { "type": "string" } }
+        ],
+        "responses": { "200": { "description": "`{ status, counts: { <feature>: <number> } }`" } }
+      }
+    },
+    "/api/featurecomments/delete/{id}": {
+      "delete": {
+        "summary": "Delete own comment and its replies; admins may delete any",
+        "tags": ["FeatureComments"],
+        "parameters": [
+          { "in": "path", "name": "id", "required": true, "schema": { "type": "integer" } }
+        ],
+        "responses": { "200": { "description": "`{ status, deleted }`" } }
+      }
+    },
     "/api/broadcast/layerUpdate": {
       "post": {
         "summary": "Broadcast a layer refresh notification",
