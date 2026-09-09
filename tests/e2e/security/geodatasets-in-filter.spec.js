@@ -1,14 +1,9 @@
 import { test, expect, request as apiRequest } from "@playwright/test";
 
 /**
- * Regression tests for SQL injection through the `in` filter operator of
- * GET /api/geodatasets/get (reachable without a session in every AUTH mode).
- *
- * Each `$`-separated value used to be embedded in the *name* of a Sequelize
- * replacement placeholder. Sequelize only consumes `\w+` of a placeholder
- * name, so the remainder of the value landed verbatim in the SQL. The classic
- * boolean oracle was: `abc$abc) OR (SELECT 1)=1 --` returned every row while
- * `abc$abc) OR (SELECT 1)=0 --` returned none.
+ * Tests for the `in` filter operator of GET /api/geodatasets/get: every
+ * `$`-separated value must be treated strictly as a bound literal and the
+ * list must be bounded in size.
  *
  * Requires an admin session to create the fixture dataset (AUTH=local via
  * global-setup); skips gracefully when unavailable. Under AUTH=local anonymous
@@ -16,9 +11,9 @@ import { test, expect, request as apiRequest } from "@playwright/test";
  * construction under test is identical either way.
  */
 
-test.describe.serial("Geodatasets `in` filter — SQL injection", () => {
+test.describe.serial("Geodatasets `in` filter value handling", () => {
   const baseURL = process.env.TEST_BASE_URL || "http://localhost:18888";
-  const layerName = `test_in_sqli_${Date.now()}`;
+  const layerName = `test_in_filter_${Date.now()}`;
 
   let api;
   let adminReady = false;
@@ -92,7 +87,7 @@ test.describe.serial("Geodatasets `in` filter — SQL injection", () => {
     expect(await getFeatures("name", "string", "nomatch")).toHaveLength(0);
   });
 
-  test("boolean-oracle payloads are treated as literal values", async () => {
+  test("values with special characters are treated as literals", async () => {
     test.skip(!adminReady, "SKIP: admin access unavailable");
 
     const truthy = await getFeatures(
@@ -109,7 +104,7 @@ test.describe.serial("Geodatasets `in` filter — SQL injection", () => {
     expect(falsy).toHaveLength(0);
   });
 
-  test("control/false/true placeholder-name payloads all return zero rows", async () => {
+  test("non-matching values with punctuation return zero rows", async () => {
     test.skip(!adminReady, "SKIP: admin access unavailable");
 
     const probes = [
@@ -122,7 +117,7 @@ test.describe.serial("Geodatasets `in` filter — SQL injection", () => {
     }
   });
 
-  test("injected UNION / stacked statements do not alter results", async () => {
+  test("values containing SQL-like text do not alter results", async () => {
     test.skip(!adminReady, "SKIP: admin access unavailable");
 
     const payloads = [
@@ -155,7 +150,7 @@ test.describe.serial("Geodatasets `in` filter — SQL injection", () => {
     expect(names(await getFeatures("name", "string", long))).toEqual(["alpha"]);
   });
 
-  test("numeric `in` with an injected value is not executed", async () => {
+  test("numeric `in` with a non-numeric value is not matched", async () => {
     test.skip(!adminReady, "SKIP: admin access unavailable");
 
     const features = await getFeatures("n", "number", "1$1) OR (SELECT 1)=1 --");
