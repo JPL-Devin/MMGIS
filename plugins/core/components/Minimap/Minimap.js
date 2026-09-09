@@ -199,8 +199,15 @@ const Minimap = {
         this.state.collapsed = !this.state.collapsed
         this.state.container.classList.toggle('collapsed', this.state.collapsed)
         if (!this.state.collapsed && this.state.map) {
-            this.state.map.invalidateSize()
-            this.update()
+            // Wait for the CSS size transition before re-measuring the map
+            this.state.container.addEventListener(
+                'transitionend',
+                () => {
+                    this.state.map.invalidateSize()
+                    this.update()
+                },
+                { once: true }
+            )
         }
     },
 }
