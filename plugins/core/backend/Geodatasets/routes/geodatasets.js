@@ -426,11 +426,11 @@ function get(reqtype, req, res, next, options) {
                   else currentGroup.push(qNull);
                   return;
                 } else if (op === "IN") {
-                  const valueSplit = f.value.split("$");
+                  const valueSplit = String(f.value ?? "").split("$");
                   const values = [];
-                  valueSplit.forEach((v) => {
-                    replacements[`filter_value_${i}_${v}`] = v;
-                    values.push(`:filter_value_${i}_${v}`);
+                  valueSplit.forEach((v, j) => {
+                    replacements[`filter_value_${i}_${j}`] = v;
+                    values.push(`:filter_value_${i}_${j}`);
                   });
                   value = `(${values.join(",")})`;
                 } else if (op === "LIKE") {
