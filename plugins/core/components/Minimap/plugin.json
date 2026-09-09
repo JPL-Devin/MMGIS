@@ -1,0 +1,97 @@
+{
+    "name": "Minimap",
+    "type": "component",
+    "tier": "core",
+    "overridable": true,
+    "description": "Overview inset map showing the main map's viewport as a draggable rectangle over the base tile layer",
+    "descriptionFull": {
+        "title": "Minimap",
+        "example": {
+            "enabled": true,
+            "corner": "bottomright",
+            "zoomOffset": 5,
+            "width": 200,
+            "height": 150,
+            "startCollapsed": false
+        }
+    },
+    "defaultIcon": "map-outline",
+    "hasVars": true,
+    "paths": {
+        "Minimap": "./Minimap"
+    },
+    "config": {
+        "rows": [
+            {
+                "name": "Minimap Settings",
+                "description": "Position and zoom of the overview inset map.",
+                "components": [
+                    {
+                        "field": "variables.enabled",
+                        "name": "Enabled",
+                        "description": "Show the minimap on the 2D map.",
+                        "type": "switch",
+                        "width": 4,
+                        "default": true
+                    },
+                    {
+                        "field": "variables.corner",
+                        "name": "Corner",
+                        "description": "Which corner of the map the minimap sits in.",
+                        "type": "dropdown",
+                        "width": 4,
+                        "default": "bottomright",
+                        "options": [
+                            "bottomright",
+                            "bottomleft",
+                            "topright",
+                            "topleft"
+                        ]
+                    },
+                    {
+                        "field": "variables.zoomOffset",
+                        "name": "Zoom Offset",
+                        "description": "How many zoom levels below the main map the minimap renders.",
+                        "type": "number",
+                        "width": 4,
+                        "default": 5,
+                        "min": 1,
+                        "max": 12,
+                        "step": 1
+                    },
+                    {
+                        "field": "variables.width",
+                        "name": "Width (px)",
+                        "type": "number",
+                        "width": 4,
+                        "default": 200,
+                        "min": 80,
+                        "max": 600,
+                        "step": 10
+                    },
+                    {
+                        "field": "variables.height",
+                        "name": "Height (px)",
+                        "type": "number",
+                        "width": 4,
+                        "default": 150,
+                        "min": 60,
+                        "max": 600,
+                        "step": 10
+                    },
+                    {
+                        "field": "variables.startCollapsed",
+                        "name": "Start Collapsed",
+                        "description": "Begin with the minimap collapsed to its toggle button.",
+                        "type": "switch",
+                        "width": 4,
+                        "default": false
+                    }
+                ]
+            }
+        ]
+    },
+    "author": "NASA-AMMOS/MMGIS",
+    "license": "Apache-2.0",
+    "repository": "https://github.com/NASA-AMMOS/MMGIS"
+}
