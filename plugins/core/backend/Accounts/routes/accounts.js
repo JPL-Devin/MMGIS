@@ -143,8 +143,9 @@ router.post("/update", function (req, res, next) {
   if (req.body.permission === "001") {
     toUpdateTo.missions_managing = null;
   }
-  // Handle missions_viewing field (applies to admins and users alike)
+  // Only SuperAdmins may change what a user can view
   if (
+    req.session.permission === "111" &&
     req.body.hasOwnProperty("missions_viewing") &&
     (req.body.missions_viewing === null ||
       Array.isArray(req.body.missions_viewing))

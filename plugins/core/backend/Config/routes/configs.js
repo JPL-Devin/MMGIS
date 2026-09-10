@@ -1104,28 +1104,30 @@ if (fullAccess)
                   );
                 });
 
-                // Mission-manager permissions are stored as mission names, so
-                // they must follow the rename or the manager loses access.
+                // Per-user mission permissions are stored as mission names, so
+                // they must follow the rename or the user loses access.
+                const renameIn = (list) =>
+                  list.map((m) => (m === missionName ? newName : m));
                 const permissionUpdate = User.findAll({
                   transaction: t,
                 }).then((users) => {
-                  const affected = (users || []).filter(
-                    (u) =>
+                  const updates = [];
+                  (users || []).forEach((u) => {
+                    const fields = {};
+                    if (
                       Array.isArray(u.missions_managing) &&
                       u.missions_managing.includes(missionName)
-                  );
-                  return Promise.all(
-                    affected.map((u) =>
-                      u.update(
-                        {
-                          missions_managing: u.missions_managing.map((m) =>
-                            m === missionName ? newName : m
-                          ),
-                        },
-                        { transaction: t }
-                      )
                     )
-                  );
+                      fields.missions_managing = renameIn(u.missions_managing);
+                    if (
+                      Array.isArray(u.missions_viewing) &&
+                      u.missions_viewing.includes(missionName)
+                    )
+                      fields.missions_viewing = renameIn(u.missions_viewing);
+                    if (Object.keys(fields).length > 0)
+                      updates.push(u.update(fields, { transaction: t }));
+                  });
+                  return Promise.all(updates);
                 });
 
                 return Promise.all([...configUpdates, permissionUpdate]);

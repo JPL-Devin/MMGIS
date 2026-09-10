@@ -41,7 +41,9 @@ export default {
             mmgisglobal.MAIN_MISSION != '' &&
             mmgisglobal.MAIN_MISSION != 'undefined' &&
             typeof mmgisglobal.MAIN_MISSION === 'string' &&
-            mmgisglobal.MAIN_MISSION.length > 0
+            mmgisglobal.MAIN_MISSION.length > 0 &&
+            (mmgisglobal.AUTH !== 'local' ||
+                missions.includes(mmgisglobal.MAIN_MISSION))
         ) {
             missionUrl = mmgisglobal.MAIN_MISSION
         }
