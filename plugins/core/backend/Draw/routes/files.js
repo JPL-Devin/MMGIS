@@ -45,9 +45,18 @@ router.post("/", function (req, res, next) {
 
 /**
  * Gets all owned or public files
+ * {
+ *  mission: <string> (optional) only return files of this mission (plus NULL-mission/master files per flags)
+ *  showNullMissionFiles: <bool> (optional, default true) also include files with no mission
+ *  showMasterFiles: <bool> (optional, default true) also include master files
+ * }
  */
 router.post("/getfiles", function (req, res, next) {
   let Table = req.body.test === "true" ? UserfilesTEST : Userfiles;
+
+  const isFalse = (v) => v === false || v === "false";
+  const showNullMissionFiles = !isFalse(req.body.showNullMissionFiles);
+  const showMasterFiles = !isFalse(req.body.showMasterFiles);
 
   const orWhere = [
     {
@@ -63,11 +72,19 @@ router.post("/getfiles", function (req, res, next) {
           : "1",
     },
   ];
+  const andWhere = [{ hidden: "0" }, { [Sequelize.Op.or]: orWhere }];
+
+  if (req.body.mission != null) {
+    const missionOr = [{ mission: req.body.mission }];
+    if (showNullMissionFiles) missionOr.push({ mission: null });
+    if (showMasterFiles) missionOr.push({ is_master: true });
+    andWhere.push({ [Sequelize.Op.or]: missionOr });
+  }
+  if (!showMasterFiles) andWhere.push({ is_master: { [Sequelize.Op.ne]: true } });
+
   Table.findAll({
     where: {
-      //file_owner is req.user or public is '0'
-      hidden: "0",
-      [Sequelize.Op.or]: orWhere,
+      [Sequelize.Op.and]: andWhere,
     },
   })
     .then((files) => {
@@ -114,6 +131,7 @@ router.post("/getfile", getfile);
  * 	file_description: <string> (optional)
  *  intent: <string> (optional)
  *  geojson: <object> (optional) -- geojson to initialize file from
+ *  mission: <string> (optional) -- mission this file belongs to
  * }
  */
 router.post("/make", function (req, res, next) {
@@ -146,6 +164,7 @@ router.post("/make", function (req, res, next) {
     publicity_type: "read_only",
     hidden: "0",
     template: req.body.template ? JSON.parse(req.body.template) : null,
+    mission: req.body.mission || null,
   };
 
   // Insert new userfile into the user_files table

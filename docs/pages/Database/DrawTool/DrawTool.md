@@ -39,6 +39,7 @@ The `user_files` table stores an entry for each file a user created via the Draw
 - `template`: A JSON defining rules that each feature's metadata must comply to. Templates can be set on files at creation or through an existing file's information modal.
 - `publicity_type`: If the file is public, how public? Read-only, list out other users who can draw and edit in it, all users can draw and edit in it.
 - `public_editors`: If the file is public and the publicity type is "list-editors", this is the list of usernames who can draw and edit in this file.
+- `mission`: The name of the mission the file was created in. Files are only listed in the Draw Tool of their mission. `NULL` for files created before mission scoping existed; whether those legacy files are listed is controlled per mission by the Draw Tool's `showNullMissionFiles` variable (default `true`). Master (Lead) files are shown in every mission unless the Draw Tool's `showMasterFiles` variable is `false`.
 
 ### file_histories
 
