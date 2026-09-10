@@ -205,21 +205,57 @@ function checkMissionViewingPermission(req, res, next) {
     });
 }
 
-// Middleware guarding /Missions/<mission>/... static files by missions_viewing
+// Cached per-user set of viewable mission folder names (msv.missionFolderName)
+const VIEWABLE_FOLDERS_TTL = 10 * 1000;
+const viewableFoldersCache = new Map();
+function clearViewableFoldersCache(uid) {
+  if (uid == null) viewableFoldersCache.clear();
+  else viewableFoldersCache.delete(String(uid));
+}
+
+// Resolves to null (unrestricted) or a Set of /Missions folder names the user may read
+function getViewableMissionFolders(req) {
+  const uid = req.session ? req.session.uid : null;
+  const cached = uid != null ? viewableFoldersCache.get(String(uid)) : null;
+  if (cached && Date.now() - cached.ts < VIEWABLE_FOLDERS_TTL)
+    return Promise.resolve(cached.folders);
+
+  return getViewableMissions(req).then((viewable) => {
+    if (viewable == null) return null;
+    return Config.findAll({
+      where: { mission: viewable },
+      attributes: ["mission", "config"],
+      order: [["id", "DESC"]],
+    }).then((configs) => {
+      const folders = new Set(viewable);
+      const seen = new Set();
+      (configs || []).forEach((c) => {
+        if (seen.has(c.mission)) return;
+        seen.add(c.mission);
+        const folder = c.config && c.config.msv && c.config.msv.missionFolderName;
+        if (typeof folder === "string" && folder.length > 0) folders.add(folder);
+      });
+      if (uid != null)
+        viewableFoldersCache.set(String(uid), { ts: Date.now(), folders });
+      return folders;
+    });
+  });
+}
+
+// Middleware guarding /Missions/<folder>/... static files by missions_viewing
 function checkMissionFileViewingPermission(req, res, next) {
   if (process.env.AUTH !== "local") return next();
-  let mission = null;
+  let folder = null;
   try {
-    mission = decodeURIComponent(req.path.split("?")[0])
+    folder = decodeURIComponent(req.path.split("?")[0])
       .split("/")
       .filter((s) => s.length > 0)[0];
   } catch (err) {
     return res.sendStatus(404);
   }
-  getViewableMissions(req)
-    .then((viewable) => {
-      if (viewable == null || mission == null || viewable.includes(mission))
-        next();
+  getViewableMissionFolders(req)
+    .then((folders) => {
+      if (folders == null || folder == null || folders.has(folder)) next();
       else res.sendStatus(403);
     })
     .catch((err) => {
@@ -804,6 +840,7 @@ function upsert(req, res, next, cb, info) {
 
 if (fullAccess)
   router.post("/upsert", checkMissionPermission, function (req, res, next) {
+    clearViewableFoldersCache();
     upsert(req, res, next);
   });
 
@@ -1012,6 +1049,7 @@ const renameLockKeys = (name) => {
 
 if (fullAccess)
   router.post("/rename", checkMissionPermission, function (req, res, next) {
+    clearViewableFoldersCache();
     const missionName = req.body.mission;
     const newName = req.body.newName;
 
@@ -1251,6 +1289,7 @@ if (fullAccess)
 
 if (fullAccess)
   router.post("/destroy", checkMissionPermission, function (req, res, next) {
+    clearViewableFoldersCache();
     const missionName = req.body.mission;
     if (!missionName || !/^[A-Za-z0-9_ -]+$/.test(missionName)) {
       logger("error", "Invalid mission name in destroy request.", req.originalUrl, req);
@@ -2092,3 +2131,4 @@ module.exports = router;
 module.exports.checkMissionPermission = checkMissionPermission;
 module.exports.checkMissionFileViewingPermission =
   checkMissionFileViewingPermission;
+module.exports.clearViewableFoldersCache = clearViewableFoldersCache;

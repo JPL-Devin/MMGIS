@@ -217,6 +217,40 @@ test.describe.serial("missions_viewing permissions", () => {
     ).toBe(200);
   });
 
+  test("static files honor msv.missionFolderName", async () => {
+    const folder = `test_view_folder_${stamp}`;
+    fs.mkdirSync(path.join(missionsDir, folder, "Data"), { recursive: true });
+    fs.writeFileSync(path.join(missionsDir, folder, assetRel), "{}");
+    const full = await json(
+      await superadmin.get(`/api/configure/get?mission=${missionA}&full=true`),
+    );
+    const cfg = full.config;
+    cfg.msv.missionFolderName = folder;
+    try {
+      const up = await json(
+        await superadmin.post("/api/configure/upsert", {
+          data: { mission: missionA, config: cfg },
+        }),
+      );
+      expect(up?.status).toBe("success");
+
+      await setViewing(userIds[userName], [missionB]);
+      expect((await user.get(`/Missions/${folder}/${assetRel}`)).status()).toBe(
+        403,
+      );
+      await setViewing(userIds[userName], [missionA]);
+      expect((await user.get(`/Missions/${folder}/${assetRel}`)).status()).toBe(
+        200,
+      );
+    } finally {
+      delete cfg.msv.missionFolderName;
+      await superadmin.post("/api/configure/upsert", {
+        data: { mission: missionA, config: cfg },
+      });
+      fs.rmSync(path.join(missionsDir, folder), { recursive: true, force: true });
+    }
+  });
+
   test("empty missions_viewing sees no missions", async () => {
     await setViewing(userIds[userName], []);
     expect(await listMissions(user)).toEqual([]);

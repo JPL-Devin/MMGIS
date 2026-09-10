@@ -8,6 +8,7 @@ const crypto = require("crypto");
 
 const logger = require("../../../../../API/logger");
 const userModel = require("../../Users/models/user");
+const { clearViewableFoldersCache } = require("../../Config/routes/configs");
 const User = userModel.User;
 
 router.get("/entries", function (req, res) {
@@ -169,6 +170,7 @@ router.post("/update", function (req, res, next) {
 
   User.update(toUpdateTo, updateObj)
     .then(() => {
+      clearViewableFoldersCache(id);
       res.send({
         status: "success",
         message: `Successfully updated user with id: '${id}'.`,
