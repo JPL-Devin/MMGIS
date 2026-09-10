@@ -249,7 +249,7 @@
     cursor: default;
 }
 .landingPage .main h1 span {
-    color: var(--lp-accent);
+    color: var(--color-mmgis, #08aeea);
 }
 .landingPage .main .sub {
     font-size: 15px;
