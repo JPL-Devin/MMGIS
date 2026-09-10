@@ -1,4 +1,6 @@
 import { test, expect, request as apiRequest } from "@playwright/test";
+import fs from "fs";
+import path from "path";
 
 /**
  * Per-user mission viewing permissions (users.missions_viewing).
@@ -9,6 +11,7 @@ import { test, expect, request as apiRequest } from "@playwright/test";
  *   - missions_viewing = [...] -> only those (Admins also get missions_managing)
  *   - SuperAdmins (111) always see everything
  *   - GET /api/configure/get is rejected for non-viewable missions
+ *   - GET /Missions/<mission>/... static files are rejected for non-viewable missions
  * Under any other AUTH mode the field is ignored and all missions are visible.
  */
 
@@ -23,6 +26,8 @@ const missionB = `test_view_b_${stamp}`;
 const missionC = `test_view_c_${stamp}`;
 const userName = `test_view_user_${stamp}`;
 const adminName = `test_view_admin_${stamp}`;
+const missionsDir = path.resolve(process.cwd(), "Missions");
+const assetRel = "Data/viewing-test.json";
 
 test.describe.serial("missions_viewing permissions", () => {
   let superadmin;
@@ -81,9 +86,12 @@ test.describe.serial("missions_viewing permissions", () => {
 
     for (const m of [missionA, missionB, missionC]) {
       const body = await json(
-        await superadmin.post("/api/configure/add", { data: { mission: m } }),
+        await superadmin.post("/api/configure/add", {
+          data: { mission: m, makedir: true },
+        }),
       );
       if (body?.status !== "success") return;
+      fs.writeFileSync(path.join(missionsDir, m, assetRel), `{"m":"${m}"}`);
     }
     for (const u of [userName, adminName]) {
       const body = await json(
@@ -182,6 +190,33 @@ test.describe.serial("missions_viewing permissions", () => {
     expect(denied?.message).toContain("Unauthorized");
   });
 
+  test("static mission files follow missions_viewing", async () => {
+    await setViewing(userIds[userName], [missionA]);
+    expect((await user.get(`/Missions/${missionA}/${assetRel}`)).status()).toBe(
+      200,
+    );
+    expect((await user.get(`/Missions/${missionB}/${assetRel}`)).status()).toBe(
+      403,
+    );
+    expect(
+      (await user.get(`/Missions/${missionA}/../${missionB}/${assetRel}`)).status(),
+    ).toBe(403);
+    expect(
+      (await user.get(`/Missions/${missionB.replace("_", "%5F")}/${assetRel}`)).status(),
+    ).toBe(403);
+
+    await setViewing(userIds[userName], null);
+    expect((await user.get(`/Missions/${missionB}/${assetRel}`)).status()).toBe(
+      200,
+    );
+    expect((await admin.get(`/Missions/${missionC}/${assetRel}`)).status()).toBe(
+      200,
+    );
+    expect(
+      (await superadmin.get(`/Missions/${missionB}/${assetRel}`)).status(),
+    ).toBe(200);
+  });
+
   test("empty missions_viewing sees no missions", async () => {
     await setViewing(userIds[userName], []);
     expect(await listMissions(user)).toEqual([]);
@@ -215,6 +250,9 @@ test.describe.serial("missions_viewing permissions", () => {
     expect(rename?.status).toBe("success");
     try {
       expect(await listMissions(user)).toEqual([renamed]);
+      expect((await user.get(`/Missions/${renamed}/${assetRel}`)).status()).toBe(
+        200,
+      );
       const relogin = await loginAs(userName);
       await relogin.dispose();
     } finally {

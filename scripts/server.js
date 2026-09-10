@@ -50,6 +50,9 @@ const WebSocket = require("isomorphic-ws");
 const chalk = require("chalk");
 
 const middleware = require("./middleware").middleware;
+const {
+  checkMissionFileViewingPermission,
+} = require("../plugins/core/backend/Config/routes/configs");
 
 const isDevEnv = process.env.NODE_ENV === "development";
 
@@ -754,6 +757,7 @@ setups.getBackendSetups(function (setups) {
   app.use(
     `${ROOT_PATH}/Missions`,
     ensureUser(),
+    checkMissionFileViewingPermission,
     middleware.missions(ROOT_PATH),
     express.static(path.join(rootDir, "/Missions")),
   );

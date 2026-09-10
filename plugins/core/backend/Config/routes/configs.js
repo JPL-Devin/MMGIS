@@ -205,6 +205,35 @@ function checkMissionViewingPermission(req, res, next) {
     });
 }
 
+// Middleware guarding /Missions/<mission>/... static files by missions_viewing
+function checkMissionFileViewingPermission(req, res, next) {
+  if (process.env.AUTH !== "local") return next();
+  let mission = null;
+  try {
+    mission = decodeURIComponent(req.path.split("?")[0])
+      .split("/")
+      .filter((s) => s.length > 0)[0];
+  } catch (err) {
+    return res.sendStatus(404);
+  }
+  getViewableMissions(req)
+    .then((viewable) => {
+      if (viewable == null || mission == null || viewable.includes(mission))
+        next();
+      else res.sendStatus(403);
+    })
+    .catch((err) => {
+      logger(
+        "error",
+        "Failed to check mission file viewing permissions.",
+        req.originalUrl,
+        req,
+        err
+      );
+      res.sendStatus(500);
+    });
+}
+
 function get(req, res, next, cb, options) {
   const qMission = (options && options.mission) || req.query.mission;
   const qFull = (options && options.full) || req.query.full;
@@ -2061,3 +2090,5 @@ router.post("/reference-mission/save-to-base", checkMissionPermission, function 
 
 module.exports = router;
 module.exports.checkMissionPermission = checkMissionPermission;
+module.exports.checkMissionFileViewingPermission =
+  checkMissionFileViewingPermission;
