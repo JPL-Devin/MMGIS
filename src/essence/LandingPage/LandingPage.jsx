@@ -32,6 +32,7 @@ export function getCardFields(missionName, missionsMeta) {
             ? resolveImageUrl(card.imageurl, missionName)
             : null,
         subtext: str(card.subtext),
+        description: str(card.description),
         body: str(card.body),
         dotColor: DOT_COLORS[card.dotColor] || null,
         archived: card.archived === true,
@@ -172,20 +173,27 @@ function MissionCard({ missionName, fields, onOpen }) {
                 )}
             </div>
             <div className="body">
-                <h3>{fields.title}</h3>
+                <div className="titlerow">
+                    <h3>{fields.title}</h3>
+                    {(fields.dotColor || fields.body) && (
+                        <div className="meta">
+                            {fields.dotColor && (
+                                <span
+                                    className="dot"
+                                    style={{ '--dot': fields.dotColor }}
+                                />
+                            )}
+                            {fields.body && (
+                                <span className="bodyname">
+                                    {fields.body}
+                                </span>
+                            )}
+                        </div>
+                    )}
+                </div>
                 {fields.subtext && <p>{fields.subtext}</p>}
-                {(fields.dotColor || fields.body) && (
-                    <div className="meta">
-                        {fields.dotColor && (
-                            <span
-                                className="dot"
-                                style={{ '--dot': fields.dotColor }}
-                            />
-                        )}
-                        {fields.body && (
-                            <span className="bodyname">{fields.body}</span>
-                        )}
-                    </div>
+                {fields.description && (
+                    <p className="description">{fields.description}</p>
                 )}
             </div>
         </div>

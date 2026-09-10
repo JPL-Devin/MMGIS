@@ -102,10 +102,17 @@
         },
         {
           "field": "look.card.subtext",
-          "name": "Card Subtext",
+          "name": "Card Subtitle",
           "description": "Short line shown under the mission title on the landing page card. Leave blank to omit.",
           "type": "text",
           "width": 3
+        },
+        {
+          "field": "look.card.description",
+          "name": "Card Description",
+          "description": "Longer description shown below the subtext on the landing page card (clamped to three lines). Leave blank to omit.",
+          "type": "text",
+          "width": 6
         },
         {
           "field": "look.card.body",
