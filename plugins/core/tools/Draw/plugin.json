@@ -223,8 +223,8 @@
                     },
                     {
                         "field": "variables.showMasterFiles",
-                        "name": "Show Master Files",
-                        "description": "Show the shared Lead master files (ROI, CAMPAIGN, etc.) in this mission regardless of mission scoping.",
+                        "name": "Show Lead Files",
+                        "description": "Show the shared Lead files (ROI, CAMPAIGN, etc.) in this mission regardless of mission scoping.",
                         "type": "checkbox",
                         "width": 6,
                         "defaultChecked": true
