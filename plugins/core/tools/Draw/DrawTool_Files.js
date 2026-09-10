@@ -85,6 +85,8 @@ var Files = {
 
         Files.recalculateFolderCounts()
 
+        $('#drawToolMaster').toggle(DrawTool.files.some((f) => f.is_master))
+
         //Master Header
         $('.drawToolMasterHeaderLeftLeft').off('click')
         $('.drawToolMasterHeaderLeftLeft').on('click', function () {
