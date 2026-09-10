@@ -44,9 +44,9 @@
     --lp-border-2: rgba(255, 255, 255, 0.14);
     --lp-hover: rgba(255, 255, 255, 0.06);
     --lp-nav-bg: rgba(18, 20, 20, 0.8);
-    --lp-card-bg: #1c1f1f;
+    --lp-card-bg: #0b0d0d;
     --lp-banner: #2a2f2e;
-    --lp-shadow: rgba(0, 0, 0, 0.5);
+    --lp-shadow: rgba(0, 0, 0, 0.6);
     --lp-topo-filter: none;
     --lp-topo-blend: screen;
     --lp-topo-opacity: 0.55;
