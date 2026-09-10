@@ -130,22 +130,14 @@
     width: 128px;
     height: 26px;
 }
-/* Matches .LoadingPage #title img (index.html) until docked into the nav */
+/* Same position/size as .LoadingPage #title img (index.html) so the two crossfade as one */
 .landingPage .nav .logo img {
     position: absolute;
-    top: 45px;
-    left: 44px;
-    height: 44px;
-    display: block;
-    filter: var(--lp-logo-filter);
-    transition: top 0.6s cubic-bezier(0.4, 0, 0.2, 1),
-        left 0.6s cubic-bezier(0.4, 0, 0.2, 1),
-        height 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-}
-.landingPage.docked .nav .logo img {
     top: 17px;
     left: 40px;
     height: 26px;
+    display: block;
+    filter: var(--lp-logo-filter);
 }
 .landingPage .nav .links {
     margin-left: auto;
@@ -480,12 +472,27 @@
 
 /* Footer */
 .landingPage .foot {
-    height: 48px;
+    position: relative;
+    align-self: stretch;
     flex-shrink: 0;
     display: flex;
     align-items: center;
     justify-content: center;
     gap: 24px;
+    margin-top: auto;
+    padding-top: 40px;
+}
+.landingPage .foot .github {
+    position: absolute;
+    right: 0;
+    bottom: -4px;
+    opacity: 0.35;
+    color: var(--lp-text-3);
+    transition: opacity 0.2s ease-in;
+}
+.landingPage .foot .github:hover {
+    opacity: 1;
+    color: var(--lp-text);
 }
 .landingPage .foot span,
 .landingPage .foot a,
@@ -501,30 +508,6 @@
 .landingPage .foot .version:hover,
 .landingPage .foot a:hover {
     color: var(--lp-accent);
-}
-
-#configIcon,
-#docsIcon {
-    position: absolute;
-    bottom: 12px;
-    cursor: pointer;
-    color: var(--lp-text-4);
-    transition: color 0.2s ease-in;
-    z-index: 100;
-}
-#configIcon:hover,
-#docsIcon:hover {
-    background: var(--lp-hover);
-}
-#configIcon {
-    right: 56px;
-}
-#docsIcon {
-    right: 16px;
-}
-#configIcon:hover,
-#docsIcon:hover {
-    color: var(--lp-text);
 }
 
 #notfound {
@@ -610,11 +593,8 @@
     .landingPage .nav {
         padding: 0 16px;
     }
-    .landingPage .nav .logo img,
-    .landingPage.docked .nav .logo img {
+    .landingPage .nav .logo img {
         position: static;
-        height: 26px;
-        transition: none;
     }
     .landingPage .nav .links {
         gap: 12px;
@@ -646,10 +626,6 @@
     }
     .landingPage .card {
         text-align: center;
-    }
-    .landingPage #configIcon,
-    .landingPage #docsIcon {
-        display: none;
     }
     .landingPage .foot .imagecredit {
         display: none;

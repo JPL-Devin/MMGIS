@@ -62,6 +62,22 @@ const config = {
           width: 3,
         },
         {
+          field: "temp.generalOptions.landingPage.creditText",
+          name: "Footer Credit Text",
+          description:
+            "Credit link text shown in the landing page footer. Defaults to 'NASA/JPL-Caltech'.",
+          type: "text",
+          width: 3,
+        },
+        {
+          field: "temp.generalOptions.landingPage.creditUrl",
+          name: "Footer Credit URL",
+          description:
+            "Where the footer credit links to. Defaults to 'https://www.jpl.nasa.gov/'.",
+          type: "text",
+          width: 4,
+        },
+        {
           field: "temp.generalOptions.landingPage.hideSearch",
           name: "Hide Search & Grouping",
           description:

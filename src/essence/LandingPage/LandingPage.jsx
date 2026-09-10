@@ -1,16 +1,16 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import Login from '../Basics/UserInterface_/components/Login/Login'
 import Button from '../../design-system/components/Button/Button'
-import IconButton from '../../design-system/components/IconButton/IconButton'
 import Tooltip from '../../design-system/components/Tooltip/Tooltip'
 import Toggle from '../../design-system/components/Toggle/Toggle'
 
-export const DOCS_URL = 'https://nasa-ammos.github.io/MMGIS/'
-const ABOUT_URL = 'https://github.com/NASA-AMMOS/MMGIS'
+const GITHUB_URL = 'https://github.com/NASA-AMMOS/MMGIS'
 const MMGIS_LOGO_URL = 'public/images/logos/mmgis.png'
 
 const DEFAULT_HEADING = 'Mapping *Better Worlds*'
 const DEFAULT_SUBHEADING = 'Select a mission to start exploring geospatial data'
+const DEFAULT_CREDIT_TEXT = 'NASA/JPL-Caltech'
+const DEFAULT_CREDIT_URL = 'https://www.jpl.nasa.gov/'
 
 // Renders *text* segments of the heading as the accent color
 function Heading({ text }) {
@@ -77,6 +77,8 @@ function getLandingOptions() {
         backgroundImageUrl: bg || null,
         hideArchived: o.hideArchived === true || o.hideArchived === 'true',
         hideSearch: o.hideSearch === true || o.hideSearch === 'true',
+        creditText: str(o.creditText, DEFAULT_CREDIT_TEXT),
+        creditUrl: str(o.creditUrl, DEFAULT_CREDIT_URL),
     }
 }
 
@@ -204,12 +206,6 @@ function Nav() {
                 <img src={MMGIS_LOGO_URL} alt="MMGIS logo" />
             </div>
             <div className="links">
-                <a href={DOCS_URL} target="_blank" rel="noreferrer">
-                    Documentation
-                </a>
-                <a href={ABOUT_URL} target="_blank" rel="noreferrer">
-                    About
-                </a>
                 {window.mmgisglobal.AUTH !== 'off' && <UserArea />}
             </div>
         </div>
@@ -420,7 +416,7 @@ function Missions({ missions, missionsMeta, onOpen, hideArchived, query, groupBy
     )
 }
 
-function Footer() {
+function Footer({ creditText, creditUrl }) {
     const version = window.mmgisglobal.version
     const clearance = window.mmgisglobal.CLEARANCE_NUMBER
     return (
@@ -438,42 +434,25 @@ function Footer() {
                 className="imagecredit"
                 target="_blank"
                 rel="noreferrer"
-                href="https://www.jpl.nasa.gov/"
+                href={creditUrl}
             >
-                NASA/JPL-Caltech
+                {creditText}
             </a>
             {clearance && clearance !== 'undefined' && (
                 <span className="clearance">{clearance}</span>
             )}
-        </div>
-    )
-}
-
-function DevIcons() {
-    const goConfigure = () => {
-        const base = window.location.href.split('?')[0]
-        window.location.href =
-            base + (window.mmgisglobal.SERVER === 'node' ? 'configure' : 'config')
-    }
-    return (
-        <>
-            <Tooltip content="Configure" placement="top">
-                <IconButton id="configIcon" size="lg" onClick={goConfigure}>
-                    <i className="mdi mdi-tune mdi-24px" />
-                </IconButton>
-            </Tooltip>
-            <Tooltip content="Documentation" placement="top">
-                <IconButton
-                    id="docsIcon"
-                    size="lg"
-                    onClick={() => {
-                        window.location.href = DOCS_URL
-                    }}
+            <Tooltip content="MMGIS on GitHub" placement="top">
+                <a
+                    className="github"
+                    href={GITHUB_URL}
+                    target="_blank"
+                    rel="noreferrer"
+                    aria-label="MMGIS on GitHub"
                 >
-                    <i className="mdi mdi-book-open mdi-24px" />
-                </IconButton>
+                    <i className="mdi mdi-github mdi-24px" />
+                </a>
             </Tooltip>
-        </>
+        </div>
     )
 }
 
@@ -482,18 +461,12 @@ export default function LandingPage({ missions, missionsMeta, onSelectMission })
     const opts = useMemo(getLandingOptions, [])
     const [visible, setVisible] = useState(false)
     const [leaving, setLeaving] = useState(false)
-    // Logo starts where the loading screen's logo sits, then docks into the nav
-    const [docked, setDocked] = useState(false)
     const [query, setQuery] = useState('')
     const [groupBy, setGroupBy] = useState('alpha')
 
     useEffect(() => {
         const id = requestAnimationFrame(() => setVisible(true))
-        const t = setTimeout(() => setDocked(true), 1000)
-        return () => {
-            cancelAnimationFrame(id)
-            clearTimeout(t)
-        }
+        return () => cancelAnimationFrame(id)
     }, [])
 
     const open = useCallback(
@@ -508,7 +481,6 @@ export default function LandingPage({ missions, missionsMeta, onSelectMission })
     const classes = ['landingPage', opts.theme]
     if (opts.backgroundImageUrl) classes.push('hasBackgroundImage')
     if (visible && !leaving) classes.push('visible')
-    if (docked) classes.push('docked')
 
     return (
         <div className={classes.join(' ')}>
@@ -543,10 +515,12 @@ export default function LandingPage({ missions, missionsMeta, onSelectMission })
                         query={query}
                         groupBy={groupBy}
                     />
+                    <Footer
+                        creditText={opts.creditText}
+                        creditUrl={opts.creditUrl}
+                    />
                 </div>
-                <Footer />
             </div>
-            {window.mmgisglobal.NODE_ENV === 'development' && <DevIcons />}
         </div>
     )
 }
