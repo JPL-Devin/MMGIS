@@ -208,9 +208,17 @@ function checkMissionViewingPermission(req, res, next) {
 // Cached per-user set of viewable mission folder names (msv.missionFolderName)
 const VIEWABLE_FOLDERS_TTL = 10 * 1000;
 const viewableFoldersCache = new Map();
+let viewableFoldersGeneration = 0;
 function clearViewableFoldersCache(uid) {
+  viewableFoldersGeneration++;
   if (uid == null) viewableFoldersCache.clear();
   else viewableFoldersCache.delete(String(uid));
+}
+// Clears the cache again once a mission mutation's response has been sent
+function clearViewableFoldersCacheAfter(req, res, next) {
+  clearViewableFoldersCache();
+  res.on("finish", () => clearViewableFoldersCache());
+  next();
 }
 
 // Resolves to null (unrestricted) or a Set of /Missions folder names the user may read
@@ -220,6 +228,7 @@ function getViewableMissionFolders(req) {
   if (cached && Date.now() - cached.ts < VIEWABLE_FOLDERS_TTL)
     return Promise.resolve(cached.folders);
 
+  const generation = viewableFoldersGeneration;
   return getViewableMissions(req).then((viewable) => {
     if (viewable == null) return null;
     return Config.findAll({
@@ -235,7 +244,7 @@ function getViewableMissionFolders(req) {
         const folder = c.config && c.config.msv && c.config.msv.missionFolderName;
         if (typeof folder === "string" && folder.length > 0) folders.add(folder);
       });
-      if (uid != null)
+      if (uid != null && generation === viewableFoldersGeneration)
         viewableFoldersCache.set(String(uid), { ts: Date.now(), folders });
       return folders;
     });
@@ -839,8 +848,7 @@ function upsert(req, res, next, cb, info) {
 }
 
 if (fullAccess)
-  router.post("/upsert", checkMissionPermission, function (req, res, next) {
-    clearViewableFoldersCache();
+  router.post("/upsert", checkMissionPermission, clearViewableFoldersCacheAfter, function (req, res, next) {
     upsert(req, res, next);
   });
 
@@ -1048,8 +1056,7 @@ const renameLockKeys = (name) => {
 };
 
 if (fullAccess)
-  router.post("/rename", checkMissionPermission, function (req, res, next) {
-    clearViewableFoldersCache();
+  router.post("/rename", checkMissionPermission, clearViewableFoldersCacheAfter, function (req, res, next) {
     const missionName = req.body.mission;
     const newName = req.body.newName;
 
@@ -1288,8 +1295,7 @@ if (fullAccess)
   });
 
 if (fullAccess)
-  router.post("/destroy", checkMissionPermission, function (req, res, next) {
-    clearViewableFoldersCache();
+  router.post("/destroy", checkMissionPermission, clearViewableFoldersCacheAfter, function (req, res, next) {
     const missionName = req.body.mission;
     if (!missionName || !/^[A-Za-z0-9_ -]+$/.test(missionName)) {
       logger("error", "Invalid mission name in destroy request.", req.originalUrl, req);
