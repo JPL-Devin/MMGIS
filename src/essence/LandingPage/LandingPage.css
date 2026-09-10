@@ -10,8 +10,9 @@
     --lp-hover: rgba(0, 0, 0, 0.04);
     --lp-nav-bg: rgba(255, 255, 255, 0.8);
     --lp-card-bg: #fff;
-    --lp-banner: #e4e9e7;
-    --lp-banner-2: #f3f5f4;
+    --lp-banner: #0d6e57;
+    --lp-banner-2: #3ec99a;
+    --lp-banner-3: #9fe6c9;
     --lp-shadow: rgba(0, 0, 0, 0.08);
     --lp-topo-filter: invert(1);
     --lp-topo-blend: multiply;
@@ -45,8 +46,9 @@
     --lp-hover: rgba(255, 255, 255, 0.06);
     --lp-nav-bg: rgba(18, 20, 20, 0.8);
     --lp-card-bg: #1c1f1f;
-    --lp-banner: #2a2f2e;
-    --lp-banner-2: #363c3b;
+    --lp-banner: #0b3a31;
+    --lp-banner-2: #178a66;
+    --lp-banner-3: #46c69a;
     --lp-shadow: rgba(0, 0, 0, 0.5);
     --lp-topo-filter: none;
     --lp-topo-blend: screen;
@@ -254,12 +256,12 @@
     border-radius: 16px;
     border: 1px solid var(--lp-border);
     cursor: pointer;
-    transition: box-shadow 0.2s, transform 0.12s ease-out;
+    transition: box-shadow 0.2s, transform 0.08s linear;
     outline: none;
     overflow: hidden;
     --rx: 0deg;
     --ry: 0deg;
-    transform: perspective(900px) rotateX(var(--rx)) rotateY(var(--ry));
+    transform: perspective(700px) rotateX(var(--rx)) rotateY(var(--ry));
     transform-style: preserve-3d;
     will-change: transform;
 }
@@ -267,7 +269,7 @@
 .landingPage .card:focus-visible {
     box-shadow: 0 12px 32px var(--lp-shadow);
     transform: perspective(900px) rotateX(var(--rx)) rotateY(var(--ry))
-        translateY(-4px) scale(1.01);
+        translateY(-6px) scale(1.03);
 }
 .landingPage .card:not(:hover) {
     transition: box-shadow 0.2s, transform 0.4s ease;
@@ -278,8 +280,16 @@
 .landingPage .card .banner {
     width: 100%;
     height: 110px;
-    background-color: var(--lp-banner);
-    background-image: linear-gradient(135deg, var(--lp-banner) 0%, var(--lp-banner-2) 100%);
+    background-color: var(--lp-banner-2);
+    background-image: linear-gradient(
+            160deg,
+            rgba(255, 255, 255, 0.3) 0%,
+            rgba(255, 255, 255, 0.04) 45%,
+            rgba(255, 255, 255, 0) 60%
+        ),
+        radial-gradient(circle at 100% 0%, var(--lp-banner-3) 0%, transparent 55%),
+        radial-gradient(circle at 0% 100%, var(--lp-banner) 0%, transparent 65%),
+        linear-gradient(135deg, var(--lp-banner) 0%, var(--lp-banner-2) 100%);
 }
 .landingPage .card .banner.glass {
     box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.45),

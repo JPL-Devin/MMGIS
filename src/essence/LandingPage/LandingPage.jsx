@@ -23,7 +23,7 @@ function Heading({ text }) {
     )
 }
 
-const MAX_TILT = 6
+const MAX_TILT = 14
 
 // Admin-selectable preset colors for the card body dot
 export const DOT_COLORS = {
