@@ -30,6 +30,22 @@ const config = {
           width: 3,
         },
         {
+          field: "temp.generalOptions.landingPage.heading",
+          name: "Heading",
+          description:
+            "Main landing page heading. Wrap words in asterisks to highlight them in the accent color, e.g. 'Mapping *Better Worlds*'. Leave blank for the default.",
+          type: "text",
+          width: 4,
+        },
+        {
+          field: "temp.generalOptions.landingPage.subheading",
+          name: "Subheading",
+          description:
+            "Text shown under the heading. Leave blank for the default ('Select a mission to start exploring geospatial data').",
+          type: "text",
+          width: 5,
+        },
+        {
           field: "temp.generalOptions.landingPage.backgroundImageUrl",
           name: "Background Image URL",
           description:

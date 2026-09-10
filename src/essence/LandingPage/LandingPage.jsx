@@ -8,6 +8,21 @@ export const DOCS_URL = 'https://nasa-ammos.github.io/MMGIS/'
 const ABOUT_URL = 'https://github.com/NASA-AMMOS/MMGIS'
 const MMGIS_LOGO_URL = 'public/images/logos/mmgis.png'
 
+const DEFAULT_HEADING = 'Mapping *Better Worlds*'
+const DEFAULT_SUBHEADING = 'Select a mission to start exploring geospatial data'
+
+// Renders *text* segments of the heading as the accent color
+function Heading({ text }) {
+    const parts = text.split(/\*([^*]+)\*/)
+    return (
+        <h1 className="unselectable">
+            {parts.map((p, i) =>
+                i % 2 === 1 ? <span key={i}>{p}</span> : p
+            )}
+        </h1>
+    )
+}
+
 // Admin-selectable preset colors for the card body dot
 export const DOT_COLORS = {
     red: '#e5484d',
@@ -51,7 +66,10 @@ function getLandingOptions() {
             window.mmgisglobal.options.landingPage) ||
         {}
     const bg = typeof o.backgroundImageUrl === 'string' ? o.backgroundImageUrl.trim() : ''
+    const str = (v, d) => (typeof v === 'string' && v.trim() ? v : d)
     return {
+        heading: str(o.heading, DEFAULT_HEADING),
+        subheading: str(o.subheading, DEFAULT_SUBHEADING),
         theme: o.theme === 'dark' ? 'dark' : 'light',
         backgroundImageUrl: bg || null,
         hideArchived: o.hideArchived === true || o.hideArchived === 'true',
@@ -350,12 +368,8 @@ export default function LandingPage({ missions, missionsMeta, onSelectMission })
             <div className="pg">
                 <Nav />
                 <div className="main">
-                    <h1 className="unselectable">
-                        Mapping <span>Better Worlds</span>
-                    </h1>
-                    <div className="sub">
-                        Select a mission to start exploring geospatial data
-                    </div>
+                    <Heading text={opts.heading} />
+                    <div className="sub">{opts.subheading}</div>
                     <Missions
                         missions={missions}
                         missionsMeta={missionsMeta}
