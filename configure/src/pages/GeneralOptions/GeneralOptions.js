@@ -33,7 +33,7 @@ const config = {
           field: "temp.generalOptions.landingPage.heading",
           name: "Heading",
           description:
-            "Main landing page heading. Wrap words in asterisks to highlight them in the accent color, e.g. 'Mapping *Better Worlds*'. Leave blank for the default.",
+            "Main landing page heading. Wrap words in asterisks to highlight them in the accent color, e.g. 'Mapping *Any World*'. Leave blank for the default.",
           type: "text",
           width: 4,
         },

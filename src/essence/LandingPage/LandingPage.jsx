@@ -7,7 +7,7 @@ import Toggle from '../../design-system/components/Toggle/Toggle'
 const GITHUB_URL = 'https://github.com/NASA-AMMOS/MMGIS'
 const MMGIS_LOGO_URL = 'public/images/logos/mmgis.png'
 
-const DEFAULT_HEADING = 'Mapping *Better Worlds*'
+const DEFAULT_HEADING = 'Mapping *Any World*'
 const DEFAULT_SUBHEADING = 'Select a mission to start exploring geospatial data'
 const DEFAULT_CREDIT_TEXT = 'NASA/JPL-Caltech'
 const DEFAULT_CREDIT_URL = 'https://www.jpl.nasa.gov/'
