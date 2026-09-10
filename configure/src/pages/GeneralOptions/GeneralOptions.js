@@ -18,6 +18,28 @@ import SettingsIcon from "@mui/icons-material/Settings";
 const config = {
   rows: [
     {
+      name: "Landing Page",
+      components: [
+        {
+          field: "temp.generalOptions.landingPage.theme",
+          name: "Theme",
+          description: "Color theme of the mission landing page.",
+          type: "dropdown",
+          options: ["light", "dark"],
+          default: "light",
+          width: 3,
+        },
+        {
+          field: "temp.generalOptions.landingPage.backgroundImageUrl",
+          name: "Background Image URL",
+          description:
+            "Optional full-screen background image for the landing page. Supports absolute URLs and public assets (e.g., 'public/images/mars.jpg'). Leave blank for the default contour background.",
+          type: "text",
+          width: 9,
+        },
+      ],
+    },
+    {
       name: "STAC/TiTiler",
       subname: "COG Mosaicking",
       components: [

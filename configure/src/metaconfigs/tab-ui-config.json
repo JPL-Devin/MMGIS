@@ -90,39 +90,6 @@
       ]
     },
     {
-      "name": "Landing Page Card",
-      "components": [
-        {
-          "field": "look.card.color",
-          "name": "Card Accent Color",
-          "description": "Background color of the icon tile on this mission's landing page card. Leave blank for a neutral default.",
-          "type": "colorpicker",
-          "width": 3
-        },
-        {
-          "field": "look.card.imageurl",
-          "name": "Card Image URL",
-          "description": "Image shown in the card's icon tile. Supports absolute URLs, mission-relative paths (e.g., 'logo.png' for Missions/[mission]/logo.png), and public assets (e.g., 'public/images/logos/logo.png'). Leave blank for no image.",
-          "type": "text",
-          "width": 4
-        },
-        {
-          "field": "look.card.subtext",
-          "name": "Card Subtext",
-          "description": "Short line shown under the mission title on the landing page card. Leave blank to omit.",
-          "type": "text",
-          "width": 3
-        },
-        {
-          "field": "look.card.archived",
-          "name": "Archived",
-          "description": "When checked, this mission is listed under 'Archived Missions' on the landing page instead of 'Active Missions'.",
-          "type": "checkbox",
-          "width": 2
-        }
-      ]
-    },
-    {
       "name": "Map Panel",
       "components": [
         {

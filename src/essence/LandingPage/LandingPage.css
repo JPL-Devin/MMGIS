@@ -1,4 +1,22 @@
 .landingPage {
+    --lp-bg: #fafafa;
+    --lp-text: #1a1a1a;
+    --lp-text-2: #666;
+    --lp-text-3: #888;
+    --lp-text-4: #bbb;
+    --lp-accent: #0a8a5a;
+    --lp-border: rgba(0, 0, 0, 0.06);
+    --lp-border-2: rgba(0, 0, 0, 0.1);
+    --lp-hover: rgba(0, 0, 0, 0.04);
+    --lp-nav-bg: rgba(255, 255, 255, 0.8);
+    --lp-card-bg: #fff;
+    --lp-banner: #e4e9e7;
+    --lp-banner-2: #f3f5f4;
+    --lp-shadow: rgba(0, 0, 0, 0.08);
+    --lp-topo-filter: invert(1);
+    --lp-topo-blend: multiply;
+    --lp-logo-filter: invert(1) brightness(0.2);
+    --lp-scrim: rgba(250, 250, 250, 0.85);
     position: absolute;
     top: 0;
     left: 0;
@@ -7,22 +25,76 @@
     overflow: hidden;
     font-family: 'DM Sans', roboto, sans-serif;
     opacity: 0;
-    background: #fafafa;
-    color: #1a1a1a;
+    background: var(--lp-bg);
+    color: var(--lp-text);
     z-index: 1002;
+}
+.landingPage.dark {
+    --lp-bg: #121414;
+    --lp-text: #f2f2f2;
+    --lp-text-2: #b5b5b5;
+    --lp-text-3: #8c8c8c;
+    --lp-text-4: #6a6a6a;
+    --lp-accent: #2fbf86;
+    --lp-border: rgba(255, 255, 255, 0.08);
+    --lp-border-2: rgba(255, 255, 255, 0.14);
+    --lp-hover: rgba(255, 255, 255, 0.06);
+    --lp-nav-bg: rgba(18, 20, 20, 0.8);
+    --lp-card-bg: #1c1f1f;
+    --lp-banner: #2a2f2e;
+    --lp-banner-2: #363c3b;
+    --lp-shadow: rgba(0, 0, 0, 0.5);
+    --lp-topo-filter: none;
+    --lp-topo-blend: screen;
+    --lp-logo-filter: none;
+    --lp-scrim: rgba(18, 20, 20, 0.85);
+}
+.landingPage .bgimage {
+    position: absolute;
+    inset: 0;
+    background-size: cover;
+    background-position: center;
+    pointer-events: none;
+}
+.landingPage .bgimage::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+        180deg,
+        var(--lp-scrim) 0%,
+        transparent 30%,
+        transparent 70%,
+        var(--lp-scrim) 100%
+    );
+}
+.landingPage.hasBackgroundImage .main .sub,
+.landingPage.hasBackgroundImage .section h2,
+.landingPage.hasBackgroundImage .foot span,
+.landingPage.hasBackgroundImage .foot a {
+    color: var(--lp-text-2);
+}
+.landingPage.hasBackgroundImage .main .sub,
+.landingPage.hasBackgroundImage .main h1,
+.landingPage.hasBackgroundImage .section h2 {
+    text-shadow: 0 1px 12px var(--lp-bg);
+}
+.landingPage.hasBackgroundImage .card,
+.landingPage.hasBackgroundImage #landingNoMissions {
+    box-shadow: 0 8px 24px var(--lp-shadow);
 }
 .landingPage * {
     box-sizing: border-box;
 }
 
-/* Same contour tiling as the login and configure pages, inverted for the light theme */
+/* Same contour tiling as the login and configure pages */
 .landingPage .topo {
     position: absolute;
     inset: 0;
     background-image: url(/public/images/contours.png);
     background-size: 500px;
-    filter: invert(1);
-    mix-blend-mode: multiply;
+    filter: var(--lp-topo-filter);
+    mix-blend-mode: var(--lp-topo-blend);
     opacity: 0.35;
     pointer-events: none;
 }
@@ -42,10 +114,10 @@
     display: flex;
     align-items: center;
     padding: 0 40px;
-    background: rgba(255, 255, 255, 0.8);
+    background: var(--lp-nav-bg);
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
-    border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+    border-bottom: 1px solid var(--lp-border);
 }
 .landingPage .nav .logo {
     display: flex;
@@ -55,7 +127,7 @@
 .landingPage .nav .logo img {
     height: 26px;
     display: block;
-    filter: invert(1) brightness(0.2);
+    filter: var(--lp-logo-filter);
 }
 .landingPage .nav .links {
     margin-left: auto;
@@ -66,13 +138,13 @@
 .landingPage .nav .links a,
 .landingPage .nav .links a:visited {
     font-size: 13px;
-    color: #666;
+    color: var(--lp-text-2);
     text-decoration: none;
     font-weight: 500;
     transition: color 0.2s ease-in;
 }
 .landingPage .nav .links a:hover {
-    color: #0a8a5a;
+    color: var(--lp-accent);
 }
 
 /* User / logout area */
@@ -87,7 +159,7 @@
     height: 28px;
     line-height: 28px;
     border-radius: 50%;
-    background: #0a8a5a;
+    background: var(--lp-accent);
     color: #fff;
     text-align: center;
     font-size: 12px;
@@ -96,7 +168,7 @@
 }
 .landingPage .nav .user .username {
     font-size: 13px;
-    color: #1a1a1a;
+    color: var(--lp-text);
     font-weight: 500;
     max-width: 160px;
     overflow: hidden;
@@ -117,20 +189,21 @@
     transition: background 0.2s ease-in, color 0.2s ease-in;
 }
 .landingPage .nav .user .signin {
-    background: #1a1a1a;
-    color: #fff;
+    background: var(--lp-text);
+    color: var(--lp-bg);
 }
 .landingPage .nav .user .signin:hover {
-    background: #0a8a5a;
+    background: var(--lp-accent);
+    color: #fff;
 }
 .landingPage .nav .user .logout {
     background: transparent;
-    color: #666;
-    border: 1px solid rgba(0, 0, 0, 0.1);
+    color: var(--lp-text-2);
+    border: 1px solid var(--lp-border-2);
 }
 .landingPage .nav .user .logout:hover {
-    color: #1a1a1a;
-    background: rgba(0, 0, 0, 0.04);
+    color: var(--lp-text);
+    background: var(--lp-hover);
 }
 
 /* Main */
@@ -146,17 +219,17 @@
 .landingPage .main h1 {
     font-size: 48px;
     font-weight: 700;
-    color: #1a1a1a;
+    color: var(--lp-text);
     margin: 0 0 8px 0;
     text-align: center;
     cursor: default;
 }
 .landingPage .main h1 span {
-    color: #0a8a5a;
+    color: var(--lp-accent);
 }
 .landingPage .main .sub {
     font-size: 15px;
-    color: #888;
+    color: var(--lp-text-3);
     margin-bottom: 48px;
     text-align: center;
 }
@@ -171,43 +244,45 @@
     max-width: 960px;
 }
 .landingPage .card {
-    background: #fff;
+    background: var(--lp-card-bg);
     border-radius: 16px;
-    padding: 20px;
-    border: 1px solid rgba(0, 0, 0, 0.06);
+    border: 1px solid var(--lp-border);
     cursor: pointer;
     transition: all 0.2s;
     outline: none;
+    overflow: hidden;
 }
 .landingPage .card:hover,
 .landingPage .card:focus-visible {
-    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.08);
+    box-shadow: 0 12px 32px var(--lp-shadow);
     transform: translateY(-4px);
 }
 .landingPage .card:focus-visible {
-    border-color: #0a8a5a;
+    border-color: var(--lp-accent);
 }
-.landingPage .card .icon {
-    width: 44px;
-    height: 44px;
-    border-radius: 12px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-bottom: 12px;
-    background: #eef1f0;
-    overflow: hidden;
+.landingPage .card .banner {
+    width: 100%;
+    height: 110px;
+    background-color: var(--lp-banner);
+    background-image: linear-gradient(135deg, var(--lp-banner) 0%, var(--lp-banner-2) 100%);
 }
-.landingPage .card .icon img {
+.landingPage .card .banner.glass {
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.45),
+        inset 0 -1px 0 rgba(0, 0, 0, 0.15);
+}
+.landingPage .card .banner img {
     width: 100%;
     height: 100%;
     object-fit: cover;
     display: block;
 }
+.landingPage .card .body {
+    padding: 14px 16px 16px 16px;
+}
 .landingPage .card h3 {
     font-size: 15px;
     font-weight: 600;
-    color: #1a1a1a;
+    color: var(--lp-text);
     margin: 0 0 4px 0;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -215,7 +290,7 @@
 }
 .landingPage .card p {
     font-size: 12px;
-    color: #999;
+    color: var(--lp-text-3);
     line-height: 1.5;
     margin: 0;
 }
@@ -233,7 +308,7 @@
     font-weight: 600;
     letter-spacing: 1.5px;
     text-transform: uppercase;
-    color: #888;
+    color: var(--lp-text-3);
     margin: 0 0 14px 0;
     text-align: center;
 }
@@ -246,14 +321,14 @@
 
 /* Empty state */
 .landingPage #landingNoMissions {
-    color: #666;
+    color: var(--lp-text-2);
     font-size: 15px;
     line-height: 22px;
     text-align: center;
     max-width: 420px;
     padding: 24px 32px;
-    background: #fff;
-    border: 1px solid rgba(0, 0, 0, 0.06);
+    background: var(--lp-card-bg);
+    border: 1px solid var(--lp-border);
     border-radius: 16px;
 }
 
@@ -270,7 +345,7 @@
 .landingPage .foot a,
 .landingPage .foot a:visited {
     font-size: 11px;
-    color: #bbb;
+    color: var(--lp-text-4);
     text-decoration: none;
     transition: color 0.2s ease-in;
 }
@@ -279,7 +354,7 @@
 }
 .landingPage .foot .version:hover,
 .landingPage .foot a:hover {
-    color: #0a8a5a;
+    color: var(--lp-accent);
 }
 
 #configIcon,
@@ -288,7 +363,7 @@
     bottom: 12px;
     padding: 6px;
     cursor: pointer;
-    color: #aaa;
+    color: var(--lp-text-4);
     transition: color 0.2s ease-in;
     z-index: 100;
 }
@@ -300,7 +375,7 @@
 }
 #configIcon:hover,
 #docsIcon:hover {
-    color: #1a1a1a;
+    color: var(--lp-text);
 }
 
 #missionnotfound {
@@ -370,9 +445,6 @@
     }
     .landingPage .card {
         text-align: center;
-    }
-    .landingPage .card .icon {
-        margin: 0 auto 12px auto;
     }
     .landingPage #configIcon,
     .landingPage #docsIcon {

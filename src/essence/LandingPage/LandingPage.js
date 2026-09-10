@@ -201,6 +201,18 @@ function loadMission(missionName, missions) {
     })
 }
 
+// Strong base color with opposing radial highlights and a glassy sheen
+function gradientFor(color) {
+    const light = 'color-mix(in srgb, ' + color + ' 45%, #ffffff)'
+    const dark = 'color-mix(in srgb, ' + color + ' 70%, #000000)'
+    return [
+        'linear-gradient(160deg, rgba(255,255,255,0.35) 0%, rgba(255,255,255,0.05) 45%, rgba(255,255,255,0) 60%)',
+        'radial-gradient(circle at 0% 0%, ' + light + ' 0%, transparent 55%)',
+        'radial-gradient(circle at 100% 100%, ' + dark + ' 0%, transparent 60%)',
+        'linear-gradient(135deg, ' + color + ' 0%, ' + color + ' 100%)',
+    ].join(', ')
+}
+
 function makeCard(missionName, fields, missions) {
     const card = $('<div>')
         .attr('class', 'card')
@@ -209,17 +221,23 @@ function makeCard(missionName, fields, missions) {
         .attr('tabindex', 0)
         .attr('role', 'button')
 
-    const icon = $('<div>').attr('class', 'icon')
-    if (fields.color) icon.css('background', fields.color)
+    const banner = $('<div>').attr('class', 'banner')
     if (fields.imageurl) {
-        icon.addClass('hasImage')
-        icon.append(
+        banner.append(
             $('<img>').attr('src', fields.imageurl).attr('alt', fields.title)
         )
+    } else if (fields.color) {
+        banner
+            .addClass('glass')
+            .css('background-color', fields.color)
+            .css('background-image', gradientFor(fields.color))
     }
-    card.append(icon)
-    card.append($('<h3>').text(fields.title))
-    if (fields.subtext) card.append($('<p>').text(fields.subtext))
+    card.append(banner)
+
+    const body = $('<div>').attr('class', 'body')
+    body.append($('<h3>').text(fields.title))
+    if (fields.subtext) body.append($('<p>').text(fields.subtext))
+    card.append(body)
 
     const open = function () {
         loadMission($(this).attr('data-mission'), missions)
@@ -288,11 +306,38 @@ function makeUserArea() {
     return userArea
 }
 
+function getLandingOptions() {
+    const o =
+        (window.mmgisglobal.options &&
+            window.mmgisglobal.options.landingPage) ||
+        {}
+    return {
+        theme: o.theme === 'dark' ? 'dark' : 'light',
+        backgroundImageUrl:
+            typeof o.backgroundImageUrl === 'string' &&
+            o.backgroundImageUrl.trim()
+                ? o.backgroundImageUrl.trim()
+                : null,
+    }
+}
+
 function makeLandingPage(missions, missionsMeta) {
-    const background = $('<div>').attr('class', 'landingPage')
+    const opts = getLandingOptions()
+    const background = $('<div>')
+        .attr('class', 'landingPage')
+        .addClass(opts.theme)
     $('body').append(background)
 
-    background.append(makeContours())
+    if (opts.backgroundImageUrl) {
+        background.addClass('hasBackgroundImage')
+        background.append(
+            $('<div>')
+                .attr('class', 'bgimage')
+                .css('background-image', "url('" + opts.backgroundImageUrl + "')")
+        )
+    } else {
+        background.append(makeContours())
+    }
 
     const pg = $('<div>').attr('class', 'pg')
     background.append(pg)
