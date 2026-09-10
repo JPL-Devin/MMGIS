@@ -140,6 +140,17 @@ export default {
                     'padding-right': '20px'
                 })
             missionsDiv.append(missionsUl)
+            if (missions.length === 0) {
+                missionsUl.append(
+                    $('<li>')
+                        .attr('id', 'landingNoMissions')
+                        .text(
+                            window.mmgisglobal.AUTH === 'local'
+                                ? 'You do not have access to any missions. Please contact an administrator.'
+                                : 'No missions are available.'
+                        )
+                )
+            }
             for (let m in missions) {
                 const missionLi = $('<li>')
                     .attr('class', 'landingPageMission')
