@@ -18,6 +18,7 @@ router.get("/entries", function (req, res) {
       "email",
       "permission",
       "missions_managing",
+      "missions_viewing",
       "createdAt",
       "updatedAt",
     ],
@@ -141,6 +142,17 @@ router.post("/update", function (req, res, next) {
   // Clear missions_managing if user is being changed to non-admin role
   if (req.body.permission === "001") {
     toUpdateTo.missions_managing = null;
+  }
+  // Handle missions_viewing field (applies to admins and users alike)
+  if (
+    req.body.hasOwnProperty("missions_viewing") &&
+    (req.body.missions_viewing === null ||
+      Array.isArray(req.body.missions_viewing))
+  ) {
+    toUpdateTo.missions_viewing =
+      req.body.missions_viewing == null
+        ? null
+        : req.body.missions_viewing.filter((m) => typeof m === "string");
   }
   
   // Don't allow changing the main admin account's permissions

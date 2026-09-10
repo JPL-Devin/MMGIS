@@ -42,6 +42,11 @@ var User = sequelize.define(
       allowNull: true,
       defaultValue: null,
     },
+    missions_viewing: {
+      type: Sequelize.ARRAY(Sequelize.STRING),
+      allowNull: true,
+      defaultValue: null,
+    },
     reset_token: {
       type: Sequelize.DataTypes.STRING(2048),
       allowNull: true,
@@ -87,6 +92,25 @@ const up = async () => {
       logger(
         "error",
         `Failed to add users.missions_managing column. DB tables may be out of sync!`,
+        "user",
+        null,
+        err
+      );
+      return null;
+    });
+
+  // missions_viewing column
+  await sequelize
+    .query(
+      `ALTER TABLE users ADD COLUMN IF NOT EXISTS missions_viewing TEXT[] NULL;`
+    )
+    .then(() => {
+      return null;
+    })
+    .catch((err) => {
+      logger(
+        "error",
+        `Failed to add users.missions_viewing column. DB tables may be out of sync!`,
         "user",
         null,
         err

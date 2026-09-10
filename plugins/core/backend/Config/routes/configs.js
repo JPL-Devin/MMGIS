@@ -149,6 +149,62 @@ function checkMissionPermission(req, res, next) {
     });
 }
 
+// Resolves the set of missions the current session may view under AUTH=local.
+// Resolves to null when unrestricted (all missions), otherwise an array of names.
+function getViewableMissions(req) {
+  if (process.env.AUTH !== "local") return Promise.resolve(null);
+  if (req.isLongTermToken || req.session == null) return Promise.resolve(null);
+
+  const permission = req.session.permission;
+  const uid = req.session.uid;
+  if (permission === "111" || uid == null) return Promise.resolve(null);
+
+  return User.findOne({
+    where: { id: uid },
+    attributes: ["permission", "missions_managing", "missions_viewing"],
+  }).then((user) => {
+    if (!user || user.permission === "111") return null;
+    // null missions_viewing = legacy/unrestricted
+    if (user.missions_viewing == null) return null;
+
+    const viewable = new Set(user.missions_viewing);
+    if (user.permission === "110")
+      (user.missions_managing || []).forEach((m) => viewable.add(m));
+    return Array.from(viewable);
+  });
+}
+
+// Middleware guarding config loads by missions_viewing under AUTH=local
+function checkMissionViewingPermission(req, res, next) {
+  const mission = req.query.mission || (req.body && req.body.mission);
+  getViewableMissions(req)
+    .then((viewable) => {
+      if (viewable == null || mission == null || viewable.includes(mission)) {
+        next();
+        return;
+      }
+      res.send({
+        status: "failure",
+        message: `Unauthorized - no permission to view mission: ${sanitizeInput(
+          mission
+        )}`,
+      });
+    })
+    .catch((err) => {
+      logger(
+        "error",
+        "Failed to check mission viewing permissions.",
+        req.originalUrl,
+        req,
+        err
+      );
+      res.send({
+        status: "failure",
+        message: "Failed to verify mission viewing permissions.",
+      });
+    });
+}
+
 function get(req, res, next, cb, options) {
   const qMission = (options && options.mission) || req.query.mission;
   const qFull = (options && options.full) || req.query.full;
@@ -245,7 +301,7 @@ function get(req, res, next, cb, options) {
     });
   return null;
 }
-router.get("/get", function (req, res, next) {
+router.get("/get", checkMissionViewingPermission, function (req, res, next) {
   get(req, res, next);
 });
 
@@ -723,12 +779,28 @@ if (fullAccess)
   });
 
 router.get("/missions", function (req, res, next) {
+  const viewablePromise = getViewableMissions(req).catch((err) => {
+    logger(
+      "error",
+      "Failed to check mission viewing permissions.",
+      req.originalUrl,
+      req,
+      err
+    );
+    // Fail closed
+    return [];
+  });
+
   if (req.query.full === "true") {
-    sequelize
-      .query(
+    Promise.all([
+      viewablePromise,
+      sequelize.query(
         "SELECT DISTINCT ON (mission) mission, version, config FROM configs ORDER BY mission ASC, version DESC"
-      )
-      .then(([results]) => {
+      ),
+    ])
+      .then(([viewable, [results]]) => {
+        if (viewable != null)
+          results = results.filter((r) => viewable.includes(r.mission));
         res.send({ status: "success", missions: results });
         return null;
       })
@@ -738,11 +810,16 @@ router.get("/missions", function (req, res, next) {
         return null;
       });
   } else {
-    Config.aggregate("mission", "DISTINCT", { plain: false })
-      .then((missions) => {
+    Promise.all([
+      viewablePromise,
+      Config.aggregate("mission", "DISTINCT", { plain: false }),
+    ])
+      .then(([viewable, missions]) => {
         let allMissions = [];
         for (let i = 0; i < missions.length; i++)
           allMissions.push(missions[i].DISTINCT);
+        if (viewable != null)
+          allMissions = allMissions.filter((m) => viewable.includes(m));
         allMissions.sort((a, b) =>
           a.localeCompare(b, undefined, { sensitivity: "base" })
         );
