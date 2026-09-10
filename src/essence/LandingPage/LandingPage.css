@@ -494,18 +494,6 @@
     margin-top: auto;
     padding-top: 40px;
 }
-.landingPage .foot .github {
-    position: absolute;
-    right: 0;
-    bottom: -4px;
-    opacity: 0.35;
-    color: var(--lp-text-3);
-    transition: opacity 0.2s ease-in;
-}
-.landingPage .foot .github:hover {
-    opacity: 1;
-    color: var(--lp-text);
-}
 .landingPage .foot span,
 .landingPage .foot a,
 .landingPage .foot a:visited {

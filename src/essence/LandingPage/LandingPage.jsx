@@ -4,7 +4,6 @@ import Button from '../../design-system/components/Button/Button'
 import Tooltip from '../../design-system/components/Tooltip/Tooltip'
 import Toggle from '../../design-system/components/Toggle/Toggle'
 
-const GITHUB_URL = 'https://github.com/NASA-AMMOS/MMGIS'
 const MMGIS_LOGO_URL = 'public/images/logos/mmgis.png'
 
 const DEFAULT_HEADING = 'Mapping *Any World*'
@@ -443,17 +442,6 @@ function Footer({ creditText, creditUrl }) {
             {clearance && clearance !== 'undefined' && (
                 <span className="clearance">{clearance}</span>
             )}
-            <Tooltip content="MMGIS on GitHub" placement="top">
-                <a
-                    className="github"
-                    href={GITHUB_URL}
-                    target="_blank"
-                    rel="noreferrer"
-                    aria-label="MMGIS on GitHub"
-                >
-                    <i className="mdi mdi-github mdi-24px" />
-                </a>
-            </Tooltip>
         </div>
     )
 }
