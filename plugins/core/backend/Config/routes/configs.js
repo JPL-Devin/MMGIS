@@ -14,6 +14,7 @@ const logger = require("../../../../../API/logger");
 const Config = require("../models/config");
 const config_template = require("../../../../../API/templates/config_template");
 const userModel = require("../../Users/models/user");
+const Userfiles = require("../../Draw/models/userfiles").Userfiles;
 const User = userModel.User;
 const missionTemplates = require("../../Utils/missionTemplates");
 
@@ -1051,7 +1052,17 @@ if (fullAccess)
                   );
                 });
 
-                return Promise.all([...configUpdates, permissionUpdate]);
+                // Draw files are scoped by mission name too.
+                const userfilesUpdate = Userfiles.update(
+                  { mission: newName },
+                  { where: { mission: missionName }, transaction: t }
+                );
+
+                return Promise.all([
+                  ...configUpdates,
+                  permissionUpdate,
+                  userfilesUpdate,
+                ]);
               })
               .then(() => {
                 logger(
