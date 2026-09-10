@@ -240,15 +240,17 @@
       */
       #loading2 {
         position: absolute;
-        top: 54px;
+        top: 47px;
         left: 40px;
+        width: 128px;
+        display: flex;
+        justify-content: space-between;
+        line-height: 0;
       }
       #loading2 span {
-        display: inline-block;
-        vertical-align: middle;
+        display: block;
         width: 5px;
         height: 5px;
-        margin: 0px 10.4px 0px 0px;
         border-radius: 50%;
         animation: loading2 1.6s infinite alternate;
       }
@@ -308,10 +310,6 @@
         .LoadingPage #loading2 {
           left: 50%;
           transform: translateX(-50%);
-          width: 204px;
-        }
-        .LoadingPage #loading2 span {
-          margin: 0px 8px 0px 8px;
         }
       }
     </style>

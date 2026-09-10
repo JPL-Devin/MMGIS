@@ -14,6 +14,7 @@
     --lp-shadow: rgba(0, 0, 0, 0.08);
     --lp-topo-filter: invert(1);
     --lp-topo-blend: multiply;
+    --lp-topo-opacity: 0.5;
     --lp-logo-filter: invert(1) brightness(0.2);
     --lp-scrim: rgba(250, 250, 250, 0.85);
     position: absolute;
@@ -48,6 +49,7 @@
     --lp-shadow: rgba(0, 0, 0, 0.5);
     --lp-topo-filter: none;
     --lp-topo-blend: screen;
+    --lp-topo-opacity: 0.55;
     --lp-logo-filter: none;
     --lp-scrim: rgba(18, 20, 20, 0.85);
 }
@@ -97,7 +99,7 @@
     background-size: 500px;
     filter: var(--lp-topo-filter);
     mix-blend-mode: var(--lp-topo-blend);
-    opacity: 0.35;
+    opacity: var(--lp-topo-opacity);
     pointer-events: none;
 }
 
@@ -358,6 +360,9 @@
 .landingPage .card .banner.glass {
     box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.45),
         inset 0 -1px 0 rgba(0, 0, 0, 0.15);
+}
+.landingPage.dark .card .banner.glass {
+    box-shadow: inset 0 -1px 0 rgba(0, 0, 0, 0.25);
 }
 .landingPage .card .banner img {
     width: 100%;
