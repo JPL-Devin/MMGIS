@@ -65,7 +65,7 @@ const config = {
           field: "temp.generalOptions.landingPage.creditText",
           name: "Footer Credit Text",
           description:
-            "Credit link text shown in the landing page footer. Defaults to 'NASA/JPL-Caltech'.",
+            "Credit link text shown in the landing page footer. Defaults to 'NASA-AMMOS'.",
           type: "text",
           width: 3,
         },
@@ -73,7 +73,7 @@ const config = {
           field: "temp.generalOptions.landingPage.creditUrl",
           name: "Footer Credit URL",
           description:
-            "Where the footer credit links to. Defaults to 'https://www.jpl.nasa.gov/'.",
+            "Where the footer credit links to. Defaults to 'https://github.com/NASA-AMMOS/MMGIS'.",
           type: "text",
           width: 4,
         },

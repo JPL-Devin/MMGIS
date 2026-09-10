@@ -7,8 +7,8 @@ const MMGIS_LOGO_URL = 'public/images/logos/mmgis.png'
 
 const DEFAULT_HEADING = 'Mapping *Any World*'
 const DEFAULT_SUBHEADING = 'Select a mission to start exploring geospatial data'
-const DEFAULT_CREDIT_TEXT = 'NASA/JPL-Caltech'
-const DEFAULT_CREDIT_URL = 'https://www.jpl.nasa.gov/'
+const DEFAULT_CREDIT_TEXT = 'NASA-AMMOS'
+const DEFAULT_CREDIT_URL = 'https://github.com/NASA-AMMOS/MMGIS'
 
 // Renders *text* segments of the heading as the accent color
 function Heading({ text }) {
