@@ -254,14 +254,23 @@
     border-radius: 16px;
     border: 1px solid var(--lp-border);
     cursor: pointer;
-    transition: all 0.2s;
+    transition: box-shadow 0.2s, transform 0.12s ease-out;
     outline: none;
     overflow: hidden;
+    --rx: 0deg;
+    --ry: 0deg;
+    transform: perspective(900px) rotateX(var(--rx)) rotateY(var(--ry));
+    transform-style: preserve-3d;
+    will-change: transform;
 }
 .landingPage .card:hover,
 .landingPage .card:focus-visible {
     box-shadow: 0 12px 32px var(--lp-shadow);
-    transform: translateY(-4px);
+    transform: perspective(900px) rotateX(var(--rx)) rotateY(var(--ry))
+        translateY(-4px) scale(1.01);
+}
+.landingPage .card:not(:hover) {
+    transition: box-shadow 0.2s, transform 0.4s ease;
 }
 .landingPage .card:focus-visible {
     border-color: var(--lp-accent);

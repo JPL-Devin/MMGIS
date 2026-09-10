@@ -23,6 +23,8 @@ function Heading({ text }) {
     )
 }
 
+const MAX_TILT = 6
+
 // Admin-selectable preset colors for the card body dot
 export const DOT_COLORS = {
     red: '#e5484d',
@@ -167,6 +169,19 @@ function MissionCard({ missionName, fields, onOpen }) {
         }
     }, [fields.imageurl, fields.color])
 
+    // Subtle 3D tilt toward the cursor; reset on leave
+    const tilt = (e) => {
+        const r = e.currentTarget.getBoundingClientRect()
+        const x = (e.clientX - r.left) / r.width - 0.5
+        const y = (e.clientY - r.top) / r.height - 0.5
+        e.currentTarget.style.setProperty('--rx', -y * MAX_TILT + 'deg')
+        e.currentTarget.style.setProperty('--ry', x * MAX_TILT + 'deg')
+    }
+    const untilt = (e) => {
+        e.currentTarget.style.removeProperty('--rx')
+        e.currentTarget.style.removeProperty('--ry')
+    }
+
     return (
         <div
             className="card"
@@ -174,6 +189,8 @@ function MissionCard({ missionName, fields, onOpen }) {
             title={fields.title}
             tabIndex={0}
             role="button"
+            onMouseMove={tilt}
+            onMouseLeave={untilt}
             onClick={() => onOpen(missionName)}
             onKeyDown={(e) => {
                 if (e.key === 'Enter' || e.key === ' ') {
