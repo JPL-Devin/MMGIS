@@ -215,6 +215,8 @@ test.describe.serial("missions_viewing permissions", () => {
     expect(rename?.status).toBe("success");
     try {
       expect(await listMissions(user)).toEqual([renamed]);
+      const relogin = await loginAs(userName);
+      await relogin.dispose();
     } finally {
       await superadmin.post("/api/configure/rename", {
         data: { mission: renamed, newName: missionA },
