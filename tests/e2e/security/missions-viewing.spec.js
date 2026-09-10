@@ -215,6 +215,12 @@ test.describe.serial("missions_viewing permissions", () => {
     expect(
       (await superadmin.get(`/Missions/${missionB}/${assetRel}`)).status(),
     ).toBe(200);
+
+    const anon = await apiRequest.newContext({ baseURL });
+    const res = await anon.get(`/Missions/${missionA}/${assetRel}`);
+    expect(res.status()).toBe(403);
+    expect(res.headers()["content-type"] || "").not.toContain("text/html");
+    await anon.dispose();
   });
 
   test("static files honor msv.missionFolderName", async () => {

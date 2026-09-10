@@ -467,7 +467,8 @@ function validateLongTermToken(token, successCallback, failureCallback) {
     });
 }
 
-function ensureUser() {
+// options.forbid: respond 403 instead of rendering the login page (for file routes)
+function ensureUser(options = {}) {
   return (req, res, next) => {
     /* If the request is:
       - Not trying to use an authorization header (longtermtoken)
@@ -511,6 +512,8 @@ function ensureUser() {
             );
           },
         );
+      } else if (options.forbid) {
+        res.sendStatus(403);
       } else {
         res.render("login", {
           user: req.user,
@@ -756,7 +759,7 @@ setups.getBackendSetups(function (setups) {
 
   app.use(
     `${ROOT_PATH}/Missions`,
-    ensureUser(),
+    ensureUser({ forbid: true }),
     checkMissionFileViewingPermission,
     middleware.missions(ROOT_PATH),
     express.static(path.join(rootDir, "/Missions")),
