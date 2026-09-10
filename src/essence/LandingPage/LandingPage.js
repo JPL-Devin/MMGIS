@@ -3,12 +3,16 @@ import $ from 'jquery'
 import QueryURL from '../services/QueryURL'
 import calls from '../../pre/calls'
 import { mmgisAPI_ } from '../mmgisAPI/mmgisAPI'
-import attributions from '../../external/attributions'
+import Login from '../Basics/UserInterface_/components/Login/Login'
 
 import './LandingPage.css'
 
+const mmgisLogoURL = 'public/images/logos/mmgis.png'
+const DOCS_URL = 'https://nasa-ammos.github.io/MMGIS/'
+const ABOUT_URL = 'https://github.com/NASA-AMMOS/MMGIS'
+
 export default {
-    init: function (missions, forceError, forceConfig) {
+    init: function (missions, forceError, forceConfig, missionsMeta) {
         if (forceError) {
             makeMissionNotFoundDiv()
             return
@@ -22,6 +26,9 @@ export default {
             }
             return
         }
+
+        missions = missions || []
+        missionsMeta = missionsMeta || {}
 
         var missionUrl
         var forceLanding =
@@ -49,291 +56,7 @@ export default {
         }
 
         if (missionUrl == false && !forceConfig) {
-            var background = $('<div>')
-                .attr('class', 'landingPage')
-                .css({
-                    'position': 'absolute',
-                    'top': '0',
-                    'left': '0',
-                    'width': '100%',
-                    'height': '100%'
-                })
-            $('body').append(background)
-
-            background.append($('<div>').attr('class', 'gradient'))
-
-            let bottom = $('<div>').attr('class', 'landingBottom')
-            background.append(bottom)
-            var imageCredit = $('<div>').attr('class', 'imagecredit')
-            bottom.append(imageCredit)
-            imageCredit.append($('<div>').text('Wind at Work'))
-            const imageCreditLink = $('<a>')
-                .attr('target', '__blank')
-                .attr('rel', 'noreferrer')
-                .attr(
-                    'href',
-                    'https://photojournal.jpl.nasa.gov/catalog/PIA20461' //Wind at Work
-                )
-                .attr(
-                    'title',
-                    'Splash Image Credit: NASA/JPL-Caltech/Univ. of Arizona'
-                )
-            imageCreditLink.append($('<i>').attr('class', 'mdi mdi-information-outline mdi-14px'))
-            imageCredit.append(imageCreditLink)
-
-            bottom
-                .append($('<div>')
-                .attr('class', 'version')
-                .css('cursor', 'pointer')
-                .text(`v${window.mmgisglobal.version}`))
-
-            $('.version').on('click', function () {
-                window.location.href = `https://github.com/NASA-AMMOS/MMGIS/releases/tag/${window.mmgisglobal.version}`
-            })
-
-            if (
-                window.mmgisglobal.CLEARANCE_NUMBER &&
-                window.mmgisglobal.CLEARANCE_NUMBER != 'undefined'
-            ) {
-                bottom
-                    .append($('<div>')
-                    .attr('class', 'clearance')
-                    .text(window.mmgisglobal.CLEARANCE_NUMBER))
-            }
-
-            var mainDiv = $('<div>')
-                .css({
-                    'position': 'absolute',
-                    'top': '40%',
-                    'left': '50%',
-                    'transform': 'translate(-50%, -50%)'
-                })
-            background.append(mainDiv)
-
-            var mmgisLogoURL = 'public/images/logos/mmgis.png'
-            var titleDiv = $('<div>')
-                .attr('id', 'title')
-                .css('z-index', '200')
-            const titleP = $('<p>')
-                .attr('class', 'unselectable')
-                .css({
-                    'font-size': '40px',
-                    'opacity': '1',
-                    'cursor': 'default',
-                    'padding': '0px 10px'
-                })
-                //.css( 'text-shadow', '0px 4px white' )
-                .html("<img src='" + mmgisLogoURL + "' alt='Full logo'/>")
-            titleDiv.append(titleP)
-            background.append(titleDiv)
-            background.append($('<div>').attr('id', 'landingPanel'))
-
-            var missionsDiv = $('<div>')
-                .attr('id', 'landingMissionsWrapper')
-            background.append(missionsDiv)
-            //.css( 'background-color', '#222526' )
-            //.css( 'box-shadow', 'inset 0px 0px 10px #000' );
-            var missionsUl = $('<ul>')
-                .css({
-                    'margin': '0',
-                    'padding': '0',
-                    'height': 'calc( 100vh - 200px)',
-                    'overflow-y': 'auto',
-                    'padding-right': '20px'
-                })
-            missionsDiv.append(missionsUl)
-            if (missions.length === 0) {
-                missionsUl.append(
-                    $('<li>')
-                        .attr('id', 'landingNoMissions')
-                        .text(
-                            window.mmgisglobal.AUTH === 'local'
-                                ? 'You do not have access to any missions. Please contact an administrator.'
-                                : 'No missions are available.'
-                        )
-                )
-            }
-            for (let m in missions) {
-                const missionLi = $('<li>')
-                    .attr('class', 'landingPageMission')
-                    .html(missions[m])
-                    .on('click', function () {
-                        var missionName = $(this).html()
-                        $('.landingPage').animate(
-                            {
-                                opacity: 0,
-                            },
-                            1000,
-                            function () {
-                                $(this).remove()
-                                //Load the config file and initialize
-                                if (window.mmgisglobal.SERVER == 'node') {
-                                    calls.api(
-                                        'get',
-                                        {
-                                            mission: missionName,
-                                            full: true,
-                                        },
-                                        function (response) {
-                                            // Extract DB mission name and attach to config
-                                            const config = response.config || response
-                                            if (response.mission) {
-                                                config._dbMissionName = response.mission
-                                            }
-                                            s.init(config, missions)
-                                        },
-                                        function (e) {
-                                            console.log(
-                                                "Warning: Couldn't load: " +
-                                                    missionName +
-                                                    ' configuration.'
-                                            )
-                                            makeMissionNotFoundDiv()
-                                        }
-                                    )
-                                } else {
-                                    $.getJSON(
-                                        'Missions/' +
-                                            missionName +
-                                            '/' +
-                                            'config.json' +
-                                            '?nocache=' +
-                                            new Date().getTime(),
-                                        function (data) {
-                                            //Initialize
-                                            s.init(data, missions)
-                                        }
-                                    ).fail(function () {
-                                        console.log(
-                                            "Warning: Couldn't load: " +
-                                                'Missions/' +
-                                                missionName +
-                                                '/' +
-                                                'config.json'
-                                        )
-                                        makeMissionNotFoundDiv()
-                                    })
-                                }
-                            }
-                        )
-                    })
-                missionsUl.append(missionLi)
-            }
-            $('.landingPage').animate(
-                {
-                    opacity: 1,
-                },
-                1000
-            )
-
-            if (window.mmgisglobal.NODE_ENV == 'development') {
-                var configIcon = $('<div>')
-                    .attr('id', 'configIcon')
-                    .attr('class', 'mdi mdi-tune mdi-24px')
-                    .attr('title', 'Configure')
-                background.append(configIcon)
-
-                $('#configIcon').on('click', function () {
-                    if (window.mmgisglobal.SERVER === 'node')
-                        window.location.href =
-                            window.location.href.split('?')[0] + 'configure'
-                    else
-                        window.location.href =
-                            window.location.href.split('?')[0] + 'config'
-                })
-
-                var docsIcon = $('<div>')
-                    .attr('id', 'docsIcon')
-                    .attr('class', 'mdi mdi-book-open mdi-24px')
-                    .attr('title', 'Documentation')
-                background.append(docsIcon)
-
-                $('#docsIcon').on('click', function () {
-                    window.location.href = 'https://nasa-ammos.github.io/MMGIS/'
-                    //window.location.href.split('?')[0] + 'docs'
-                })
-            }
-
-            //Attributions
-            var attributionIcon = $('<div>')
-                .attr('id', 'attributionIcon')
-                .attr('class', 'mdi mdi-dna mdi-24px')
-                .attr('title', 'Attributions')
-            background.append(attributionIcon)
-
-            // prettier-ignore
-            var markupAttributions = [
-                    "<div id='attributions'>",
-                        "<div id='attributionsContent'>",
-                            "<div id='attributionsTitle'>",
-                                '<div>',
-                                    "<a class='attributionTitle_library' href='' target='_blank' rel='noreferrer'><img src='" + mmgisLogoURL + "' alt='Full logo' height='20px' alt='MMGIS logo'/></a>",
-                                    "<div class='attributionTitle_version'>v" +
-                                        window.mmgisglobal.version +
-                                    '</div>',
-                                    '</div>',
-                                    '<div>',
-                                    "<div class='attributionTitle_by'></div>",
-                                    "<a class='attributionTitle_author' href='' target='_blank' rel='noreferrer'>NASA/JPL-Caltech</a>",
-                                    "<div class='attributionTitle_under'>, under</div>",
-                                    "<a class='attributionTitle_license' href='https://www.apache.org/licenses/LICENSE-2.0' target='_blank' rel='noreferrer'>" +
-                                        'Apache-2.0' +
-                                    '</a>',
-                                    "<a class='attributionTitle_github mdi mdi-github-circle mdi-36px' href='https://github.com/NASA-AMMOS/MMGIS' target='_blank' rel='noreferrer'></a>",
-                                '</div>',
-                            '</div>',
-                            '<ul>',
-                            '</ul>',
-                        '</div>',
-                    '</div>',
-                ].join('\n')
-            $('.landingPage').append(markupAttributions)
-            var attributionList = $('#attributions ul')
-            for (var i = 0; i < attributions.length; i++) {
-                var a = attributions[i]
-
-                // prettier-ignore
-                var markupAttribution = [
-                        '<li>',
-                            '<div>',
-                                "<a class='attribution_library' href='" +
-                                    a.librarylink +
-                                    "' target='_blank' rel='noreferrer'>" +
-                                    a.library +
-                                    '</a>',
-                                "<div class='attribution_version'>v" +
-                                    a.version +
-                                    '</div>',
-                                '</div>',
-                                '<div>',
-                                "<div class='attribution_by'>by</div>",
-                                "<a class='attribution_author' href='" +
-                                    a.authorlink +
-                                    "' target='_blank' rel='noreferrer'>" +
-                                    a.author +
-                                    '</a>',
-                                "<div class='attribution_under'>, under</div>",
-                                "<a class='attribution_license' href='" +
-                                    a.licenselink +
-                                    "' target='_blank' rel='noreferrer'>" +
-                                    a.license +
-                                    '</a>',
-                                "<a class='attribution_github mdi mdi-github-circle mdi-18px' href='" +
-                                    a.githublink +
-                                    "' target='_blank' rel='noreferrer'></a>",
-                            '</div>',
-                        '</li>',
-                    ].join('\n')
-
-                attributionList.append(markupAttribution)
-            }
-            attributionList.append(
-                '<li>And to all the node packages within package.json and a special thanks to every contributor.</li>'
-            )
-
-            $('#attributionIcon').on('click', function () {
-                $('#attributions').toggleClass('active')
-            })
+            makeLandingPage(missions, missionsMeta)
         } else {
             //Load the config file and initialize
             var jsonUrl = 'Missions/' + missionUrl + '/' + 'config.json'
@@ -391,6 +114,331 @@ export default {
             }
         }
     },
+}
+
+function getCardFields(missionName, missionsMeta) {
+    const meta = missionsMeta[missionName]
+    const look = (meta && meta.config && meta.config.look) || {}
+    const card = look.card || {}
+    return {
+        title:
+            typeof look.missionname === 'string' && look.missionname.trim()
+                ? look.missionname
+                : missionName,
+        color:
+            typeof card.color === 'string' && card.color.trim()
+                ? card.color
+                : null,
+        imageurl:
+            typeof card.imageurl === 'string' && card.imageurl.trim()
+                ? resolveImageUrl(card.imageurl, missionName)
+                : null,
+        subtext:
+            typeof card.subtext === 'string' && card.subtext.trim()
+                ? card.subtext
+                : null,
+        archived: card.archived === true,
+    }
+}
+
+function resolveImageUrl(url, missionName) {
+    if (/^(https?:)?\/\//i.test(url) || url.startsWith('data:')) return url
+    if (url.startsWith('public/') || url.startsWith('/')) return url
+    return 'Missions/' + missionName + '/' + url
+}
+
+function loadMission(missionName, missions) {
+    $('.landingPage').animate({ opacity: 0 }, 1000, function () {
+        $(this).remove()
+        //Load the config file and initialize
+        if (window.mmgisglobal.SERVER == 'node') {
+            calls.api(
+                'get',
+                {
+                    mission: missionName,
+                    full: true,
+                },
+                function (response) {
+                    // Extract DB mission name and attach to config
+                    const config = response.config || response
+                    if (response.mission) {
+                        config._dbMissionName = response.mission
+                    }
+                    s.init(config, missions)
+                },
+                function (e) {
+                    console.log(
+                        "Warning: Couldn't load: " +
+                            missionName +
+                            ' configuration.'
+                    )
+                    makeMissionNotFoundDiv()
+                }
+            )
+        } else {
+            $.getJSON(
+                'Missions/' +
+                    missionName +
+                    '/' +
+                    'config.json' +
+                    '?nocache=' +
+                    new Date().getTime(),
+                function (data) {
+                    //Initialize
+                    s.init(data, missions)
+                }
+            ).fail(function () {
+                console.log(
+                    "Warning: Couldn't load: " +
+                        'Missions/' +
+                        missionName +
+                        '/' +
+                        'config.json'
+                )
+                makeMissionNotFoundDiv()
+            })
+        }
+    })
+}
+
+function makeCard(missionName, fields, missions) {
+    const card = $('<div>')
+        .attr('class', 'card')
+        .attr('data-mission', missionName)
+        .attr('title', fields.title)
+        .attr('tabindex', 0)
+        .attr('role', 'button')
+
+    const icon = $('<div>').attr('class', 'icon')
+    if (fields.color) icon.css('background', fields.color)
+    if (fields.imageurl) {
+        icon.addClass('hasImage')
+        icon.append(
+            $('<img>').attr('src', fields.imageurl).attr('alt', fields.title)
+        )
+    }
+    card.append(icon)
+    card.append($('<h3>').text(fields.title))
+    if (fields.subtext) card.append($('<p>').text(fields.subtext))
+
+    const open = function () {
+        loadMission($(this).attr('data-mission'), missions)
+    }
+    card.on('click', open).on('keydown', function (e) {
+        if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault()
+            open.call(this)
+        }
+    })
+    return card
+}
+
+function makeCardGrid(names, missions, missionsMeta) {
+    const grid = $('<div>').attr('class', 'cards')
+    names.forEach((name) => {
+        grid.append(makeCard(name, getCardFields(name, missionsMeta), missions))
+    })
+    return grid
+}
+
+function makeContours() {
+    return $('<div>').attr('class', 'topo')
+}
+
+function makeUserArea() {
+    const userArea = $('<div>').attr('class', 'user')
+    const renderState = function () {
+        userArea.empty()
+        const user = window.mmgisglobal.user
+        const loggedIn = user != null && user !== 'guest' && user !== ''
+        if (loggedIn) {
+            userArea.append(
+                $('<div>')
+                    .attr('class', 'avatar')
+                    .attr('title', user)
+                    .text(String(user)[0])
+            )
+            userArea.append($('<div>').attr('class', 'username').text(user))
+            userArea.append(
+                $('<button>')
+                    .attr('class', 'logout')
+                    .attr('title', 'Logout')
+                    .attr('type', 'button')
+                    .append($('<i>').attr('class', 'mdi mdi-logout mdi-18px'))
+                    .append($('<span>').text('Logout'))
+                    .on('click', function () {
+                        Login.logout(renderState)
+                    })
+            )
+        } else {
+            userArea.append(
+                $('<button>')
+                    .attr('class', 'signin')
+                    .attr('type', 'button')
+                    .text('Sign In')
+                    .on('click', function () {
+                        Login.signUp = false
+                        Login.openModal()
+                    })
+            )
+        }
+    }
+    renderState()
+    document.addEventListener('mmgis:loginchange', renderState)
+    return userArea
+}
+
+function makeLandingPage(missions, missionsMeta) {
+    const background = $('<div>').attr('class', 'landingPage')
+    $('body').append(background)
+
+    background.append(makeContours())
+
+    const pg = $('<div>').attr('class', 'pg')
+    background.append(pg)
+
+    // Nav
+    const nav = $('<div>').attr('class', 'nav')
+    pg.append(nav)
+    nav.append(
+        $('<div>')
+            .attr('class', 'logo')
+            .append(
+                $('<img>')
+                    .attr('src', mmgisLogoURL)
+                    .attr('alt', 'MMGIS logo')
+            )
+    )
+    const links = $('<div>').attr('class', 'links')
+    nav.append(links)
+    links.append(
+        $('<a>')
+            .attr('href', DOCS_URL)
+            .attr('target', '_blank')
+            .attr('rel', 'noreferrer')
+            .text('Documentation')
+    )
+    links.append(
+        $('<a>')
+            .attr('href', ABOUT_URL)
+            .attr('target', '_blank')
+            .attr('rel', 'noreferrer')
+            .text('About')
+    )
+    if (window.mmgisglobal.AUTH !== 'off') links.append(makeUserArea())
+
+    // Main
+    const main = $('<div>').attr('class', 'main')
+    pg.append(main)
+    main.append(
+        $('<h1>')
+            .attr('class', 'unselectable')
+            .append(document.createTextNode('Mapping '))
+            .append($('<span>').text('Better Worlds'))
+    )
+    main.append(
+        $('<div>')
+            .attr('class', 'sub')
+            .text('Select a mission to start exploring geospatial data')
+    )
+
+    if (missions.length === 0) {
+        main.append(
+            $('<div>')
+                .attr('id', 'landingNoMissions')
+                .text(
+                    window.mmgisglobal.AUTH === 'local'
+                        ? 'You do not have access to any missions. Please contact an administrator.'
+                        : 'No missions are available.'
+                )
+        )
+    } else {
+        const hasMeta = missions.some((m) => missionsMeta[m] != null)
+        const archived = hasMeta
+            ? missions.filter(
+                  (m) => getCardFields(m, missionsMeta).archived === true
+              )
+            : []
+        if (archived.length > 0) {
+            const active = missions.filter((m) => !archived.includes(m))
+            const sections = $('<div>').attr('class', 'sections')
+            main.append(sections)
+            if (active.length > 0) {
+                sections.append(
+                    $('<div>')
+                        .attr('class', 'section')
+                        .append($('<h2>').text('Active Missions'))
+                        .append(makeCardGrid(active, missions, missionsMeta))
+                )
+            }
+            sections.append(
+                $('<div>')
+                    .attr('class', 'section archived')
+                    .append($('<h2>').text('Archived Missions'))
+                    .append(makeCardGrid(archived, missions, missionsMeta))
+            )
+        } else {
+            main.append(makeCardGrid(missions, missions, missionsMeta))
+        }
+    }
+
+    // Footer
+    const foot = $('<div>').attr('class', 'foot')
+    pg.append(foot)
+    foot.append(
+        $('<span>')
+            .attr('class', 'version')
+            .attr('title', 'Release notes')
+            .text(`v${window.mmgisglobal.version}`)
+            .on('click', function () {
+                window.location.href = `https://github.com/NASA-AMMOS/MMGIS/releases/tag/${window.mmgisglobal.version}`
+            })
+    )
+    foot.append(
+        $('<a>')
+            .attr('class', 'imagecredit')
+            .attr('target', '_blank')
+            .attr('rel', 'noreferrer')
+            .attr('href', 'https://www.jpl.nasa.gov/')
+            .text('NASA/JPL-Caltech')
+    )
+    if (
+        window.mmgisglobal.CLEARANCE_NUMBER &&
+        window.mmgisglobal.CLEARANCE_NUMBER != 'undefined'
+    ) {
+        foot.append(
+            $('<span>')
+                .attr('class', 'clearance')
+                .text(window.mmgisglobal.CLEARANCE_NUMBER)
+        )
+    }
+
+    if (window.mmgisglobal.NODE_ENV == 'development') {
+        const configIcon = $('<div>')
+            .attr('id', 'configIcon')
+            .attr('class', 'mdi mdi-tune mdi-24px')
+            .attr('title', 'Configure')
+            .on('click', function () {
+                if (window.mmgisglobal.SERVER === 'node')
+                    window.location.href =
+                        window.location.href.split('?')[0] + 'configure'
+                else
+                    window.location.href =
+                        window.location.href.split('?')[0] + 'config'
+            })
+        background.append(configIcon)
+
+        const docsIcon = $('<div>')
+            .attr('id', 'docsIcon')
+            .attr('class', 'mdi mdi-book-open mdi-24px')
+            .attr('title', 'Documentation')
+            .on('click', function () {
+                window.location.href = DOCS_URL
+            })
+        background.append(docsIcon)
+    }
+
+    $('.landingPage').animate({ opacity: 1 }, 1000)
 }
 
 export const makeMissionNotFoundDiv = () => {
