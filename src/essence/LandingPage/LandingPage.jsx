@@ -78,16 +78,70 @@ function getLandingOptions() {
     }
 }
 
-// Strong base color with opposing radial highlights and a glassy sheen
-function gradientFor(color) {
-    const light = 'color-mix(in srgb, ' + color + ' 45%, #ffffff)'
-    const dark = 'color-mix(in srgb, ' + color + ' 70%, #000000)'
+// [dark, base, light] palettes used when a card has no image or admin color
+export const DEFAULT_GRADIENTS = [
+    ['#0a5c7a', '#08aeea', '#8fe3ff'],
+    ['#0b2a4a', '#1f6fb2', '#6fc3ff'],
+    ['#0d6e57', '#3ec99a', '#9fe6c9'],
+    ['#5a1f14', '#c2552e', '#f2a266'],
+    ['#2e2a26', '#6b5f52', '#b8a894'],
+    ['#1a1f24', '#3c4652', '#7f8c99'],
+    ['#1e2a44', '#3f5a8a', '#8aa6d6'],
+    ['#3a5a7a', '#8fb8d8', '#e6f3fb'],
+    ['#6a4a12', '#c9962b', '#f4d98a'],
+    ['#0f2f3f', '#1fa38a', '#a8f0c8'],
+    ['#2a1a4a', '#6b3fa8', '#c99af0'],
+    ['#7a2a3a', '#e0605a', '#ffc27a'],
+    ['#4a4f55', '#9aa2aa', '#e2e6ea'],
+    ['#5a3a2a', '#b87a4a', '#f0c9a0'],
+    ['#05070d', '#1b2540', '#4a5f8a'],
+    ['#5f9c8a', '#a6d8c8', '#eef8f4'],
+]
+
+function hashString(s) {
+    let h = 5381
+    for (let i = 0; i < s.length; i++) h = ((h << 5) + h + s.charCodeAt(i)) | 0
+    return Math.abs(h)
+}
+
+const SHEEN =
+    'linear-gradient(160deg, rgba(255,255,255,0.35) 0%, rgba(255,255,255,0.05) 45%, rgba(255,255,255,0) 60%)'
+
+// Glassy banner: base color with opposing dark/light radial highlights
+function gradientFor(dark, base, light) {
     return [
-        'linear-gradient(160deg, rgba(255,255,255,0.35) 0%, rgba(255,255,255,0.05) 45%, rgba(255,255,255,0) 60%)',
-        'radial-gradient(circle at 0% 0%, ' + light + ' 0%, transparent 55%)',
-        'radial-gradient(circle at 100% 100%, ' + dark + ' 0%, transparent 60%)',
-        'linear-gradient(135deg, ' + color + ' 0%, ' + color + ' 100%)',
+        SHEEN,
+        'radial-gradient(circle at 100% 0%, ' + light + ' 0%, transparent 55%)',
+        'radial-gradient(circle at 0% 100%, ' + dark + ' 0%, transparent 65%)',
+        'linear-gradient(135deg, ' + dark + ' 0%, ' + base + ' 100%)',
     ].join(', ')
+}
+
+function gradientForColor(color) {
+    return gradientFor(
+        'color-mix(in srgb, ' + color + ' 70%, #000000)',
+        color,
+        'color-mix(in srgb, ' + color + ' 45%, #ffffff)'
+    )
+}
+
+// Fallback order: admin card color, dot color, then a name-hashed default palette
+export function bannerStyleFor(missionName, fields) {
+    if (fields.imageurl) return undefined
+    if (fields.color) {
+        return {
+            backgroundColor: fields.color,
+            backgroundImage: gradientForColor(fields.color),
+        }
+    }
+    if (fields.dotColor) {
+        return {
+            backgroundColor: fields.dotColor,
+            backgroundImage: gradientForColor(fields.dotColor),
+        }
+    }
+    const g = DEFAULT_GRADIENTS[hashString(missionName) % DEFAULT_GRADIENTS.length]
+    return { backgroundColor: g[1], backgroundImage: gradientFor(...g) }
 }
 
 function useCurrentUser() {
@@ -161,13 +215,10 @@ function Nav() {
 }
 
 function MissionCard({ missionName, fields, onOpen }) {
-    const bannerStyle = useMemo(() => {
-        if (fields.imageurl || !fields.color) return undefined
-        return {
-            backgroundColor: fields.color,
-            backgroundImage: gradientFor(fields.color),
-        }
-    }, [fields.imageurl, fields.color])
+    const bannerStyle = useMemo(
+        () => bannerStyleFor(missionName, fields),
+        [missionName, fields.imageurl, fields.color, fields.dotColor]
+    )
 
     // Subtle 3D tilt toward the cursor; reset on leave
     const tilt = (e) => {
