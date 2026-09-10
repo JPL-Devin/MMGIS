@@ -130,10 +130,26 @@
     align-items: center;
     gap: 12px;
 }
-.landingPage .nav .logo img {
+.landingPage .nav .logo {
+    width: 128px;
     height: 26px;
+}
+/* Matches .LoadingPage #title img (index.html) until docked into the nav */
+.landingPage .nav .logo img {
+    position: absolute;
+    top: 45px;
+    left: 44px;
+    height: 44px;
     display: block;
     filter: var(--lp-logo-filter);
+    transition: top 0.6s cubic-bezier(0.4, 0, 0.2, 1),
+        left 0.6s cubic-bezier(0.4, 0, 0.2, 1),
+        height 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.landingPage.docked .nav .logo img {
+    top: 17px;
+    left: 40px;
+    height: 26px;
 }
 .landingPage .nav .links {
     margin-left: auto;
@@ -537,6 +553,12 @@
 @media screen and (max-width: 600px) {
     .landingPage .nav {
         padding: 0 16px;
+    }
+    .landingPage .nav .logo img,
+    .landingPage.docked .nav .logo img {
+        position: static;
+        height: 26px;
+        transition: none;
     }
     .landingPage .nav .links {
         gap: 12px;

@@ -353,10 +353,16 @@ export default function LandingPage({ missions, missionsMeta, onSelectMission })
     const opts = useMemo(getLandingOptions, [])
     const [visible, setVisible] = useState(false)
     const [leaving, setLeaving] = useState(false)
+    // Logo starts where the loading screen's logo sits, then docks into the nav
+    const [docked, setDocked] = useState(false)
 
     useEffect(() => {
         const id = requestAnimationFrame(() => setVisible(true))
-        return () => cancelAnimationFrame(id)
+        const t = setTimeout(() => setDocked(true), 1000)
+        return () => {
+            cancelAnimationFrame(id)
+            clearTimeout(t)
+        }
     }, [])
 
     const open = useCallback(
@@ -371,6 +377,7 @@ export default function LandingPage({ missions, missionsMeta, onSelectMission })
     const classes = ['landingPage', opts.theme]
     if (opts.backgroundImageUrl) classes.push('hasBackgroundImage')
     if (visible && !leaving) classes.push('visible')
+    if (docked) classes.push('docked')
 
     return (
         <div className={classes.join(' ')}>
