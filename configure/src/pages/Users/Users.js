@@ -254,10 +254,6 @@ const headCells = [
     label: "Assigned Missions",
   },
   {
-    id: "missions_viewing",
-    label: "Viewable Missions",
-  },
-  {
     id: "createdAt",
     label: "Joined",
   },
@@ -510,23 +506,6 @@ export default function Users() {
                         ) : (
                           <div style={{ fontSize: "12px", fontStyle: "italic", color: "#888" }}>
                             N/A
-                          </div>
-                        )}
-                      </TableCell>
-                      <TableCell align="right">
-                        {row.permission === "111" ? (
-                          <div style={{ fontSize: "12px", fontStyle: "italic", color: "#888" }}>
-                            All Missions
-                          </div>
-                        ) : row.missions_viewing != null ? (
-                          <div style={{ fontSize: "12px" }}>
-                            {row.missions_viewing.length > 0
-                              ? row.missions_viewing.join(", ")
-                              : "None"}
-                          </div>
-                        ) : (
-                          <div style={{ fontSize: "12px", fontStyle: "italic", color: "#888" }}>
-                            All Missions
                           </div>
                         )}
                       </TableCell>
