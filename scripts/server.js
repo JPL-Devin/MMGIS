@@ -467,6 +467,13 @@ function validateLongTermToken(token, successCallback, failureCallback) {
     });
 }
 
+// 403 for file routes: styled page for browsers, plain status otherwise
+function sendForbidden(req, res) {
+  if (req.accepts(["json", "html"]) === "html")
+    res.status(403).render("forbidden", { HOME: `${ROOT_PATH}/` });
+  else res.sendStatus(403);
+}
+
 // options.forbid: respond 403 instead of rendering the login page (for file routes)
 function ensureUser(options = {}) {
   return (req, res, next) => {
@@ -513,7 +520,7 @@ function ensureUser(options = {}) {
           },
         );
       } else if (options.forbid) {
-        res.sendStatus(403);
+        sendForbidden(req, res);
       } else {
         res.render("login", {
           user: req.user,
@@ -738,29 +745,29 @@ setups.getBackendSetups(function (setups) {
 
   app.use(
     `${ROOT_PATH}/build`,
-    ensureUser(),
+    ensureUser({ forbid: true }),
     express.static(path.join(rootDir, "/build")),
   );
   app.use(
     `${ROOT_PATH}/docs`,
-    ensureUser(),
+    ensureUser({ forbid: true }),
     express.static(path.join(rootDir, "/docs")),
   );
   app.use(
     `${ROOT_PATH}/configure/build`,
-    ensureUser(),
+    ensureUser({ forbid: true }),
     express.static(path.join(rootDir, "/configure/build")),
   );
   app.use(
     `${ROOT_PATH}/configure/public`,
-    ensureUser(),
+    ensureUser({ forbid: true }),
     express.static(path.join(rootDir, "/configure/public")),
   );
 
   app.use(
     `${ROOT_PATH}/Missions`,
     ensureUser({ forbid: true }),
-    checkMissionFileViewingPermission,
+    checkMissionFileViewingPermission(sendForbidden),
     middleware.missions(ROOT_PATH),
     express.static(path.join(rootDir, "/Missions")),
   );

@@ -252,31 +252,34 @@ function getViewableMissionFolders(req) {
 }
 
 // Middleware guarding /Missions/<folder>/... static files by missions_viewing
-function checkMissionFileViewingPermission(req, res, next) {
-  if (process.env.AUTH !== "local") return next();
-  let folder = null;
-  try {
-    folder = decodeURIComponent(req.path.split("?")[0])
-      .split("/")
-      .filter((s) => s.length > 0)[0];
-  } catch (err) {
-    return res.sendStatus(404);
-  }
-  getViewableMissionFolders(req)
-    .then((folders) => {
-      if (folders == null || folder == null || folders.has(folder)) next();
-      else res.sendStatus(403);
-    })
-    .catch((err) => {
-      logger(
-        "error",
-        "Failed to check mission file viewing permissions.",
-        req.originalUrl,
-        req,
-        err
-      );
-      res.sendStatus(500);
-    });
+// forbid(req, res) sends the 403 response
+function checkMissionFileViewingPermission(forbid) {
+  return function (req, res, next) {
+    if (process.env.AUTH !== "local") return next();
+    let folder = null;
+    try {
+      folder = decodeURIComponent(req.path.split("?")[0])
+        .split("/")
+        .filter((s) => s.length > 0)[0];
+    } catch (err) {
+      return res.sendStatus(404);
+    }
+    getViewableMissionFolders(req)
+      .then((folders) => {
+        if (folders == null || folder == null || folders.has(folder)) next();
+        else forbid(req, res);
+      })
+      .catch((err) => {
+        logger(
+          "error",
+          "Failed to check mission file viewing permissions.",
+          req.originalUrl,
+          req,
+          err
+        );
+        res.sendStatus(500);
+      });
+  };
 }
 
 function get(req, res, next, cb, options) {

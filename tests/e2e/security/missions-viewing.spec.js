@@ -217,10 +217,24 @@ test.describe.serial("missions_viewing permissions", () => {
     ).toBe(200);
 
     const anon = await apiRequest.newContext({ baseURL });
-    const res = await anon.get(`/Missions/${missionA}/${assetRel}`);
-    expect(res.status()).toBe(403);
-    expect(res.headers()["content-type"] || "").not.toContain("text/html");
+    for (const url of [`/Missions/${missionA}/${assetRel}`, "/build/mmgis.css"]) {
+      const res = await anon.get(url);
+      expect(res.status()).toBe(403);
+      expect(res.headers()["content-type"] || "").not.toContain("text/html");
+
+      const page = await anon.get(url, { headers: { Accept: "text/html" } });
+      expect(page.status()).toBe(403);
+      expect(page.headers()["content-type"]).toContain("text/html");
+      expect(await page.text()).toContain('href="/"');
+    }
     await anon.dispose();
+
+    await setViewing(userIds[userName], [missionA]);
+    const denied = await user.get(`/Missions/${missionB}/${assetRel}`, {
+      headers: { Accept: "text/html" },
+    });
+    expect(denied.status()).toBe(403);
+    expect(denied.headers()["content-type"]).toContain("text/html");
   });
 
   test("static files honor msv.missionFolderName", async () => {
