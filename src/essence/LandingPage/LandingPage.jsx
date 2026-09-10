@@ -1,7 +1,6 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import Login from '../Basics/UserInterface_/components/Login/Login'
 import Button from '../../design-system/components/Button/Button'
-import Tooltip from '../../design-system/components/Tooltip/Tooltip'
 import Toggle from '../../design-system/components/Toggle/Toggle'
 
 const MMGIS_LOGO_URL = 'public/images/logos/mmgis.png'
