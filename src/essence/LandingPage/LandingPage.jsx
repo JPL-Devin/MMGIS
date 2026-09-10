@@ -38,14 +38,16 @@ export const DOT_COLORS = {
 
 export function getCardFields(missionName, missionsMeta) {
     const meta = missionsMeta[missionName]
-    const look = (meta && meta.config && meta.config.look) || {}
+    const config = (meta && meta.config) || {}
+    const look = config.look || {}
     const card = look.card || {}
     const str = (v) => (typeof v === 'string' && v.trim() ? v : null)
+    const folder = str(config.msv && config.msv.missionFolderName) || missionName
     return {
         title: str(look.missionname) || missionName,
         color: str(card.color),
         imageurl: str(card.imageurl)
-            ? resolveImageUrl(card.imageurl, missionName)
+            ? resolveImageUrl(card.imageurl, folder)
             : null,
         subtext: str(card.subtext),
         description: str(card.description),
@@ -56,13 +58,23 @@ export function getCardFields(missionName, missionsMeta) {
     }
 }
 
-function resolveImageUrl(url, missionName) {
+function resolveImageUrl(url, missionFolder) {
     if (/^(https?:)?\/\//i.test(url) || url.startsWith('data:')) return url
     if (url.startsWith('public/') || url.startsWith('/')) return url
-    return 'Missions/' + missionName + '/' + url
+    return 'Missions/' + missionFolder + '/' + url
 }
 
-function getLandingOptions() {
+// Missions shown as cards: never hidden, and not archived when Hide Archived is on
+export function isListedMission(missionName, missionsMeta, opts) {
+    const f = getCardFields(missionName, missionsMeta)
+    return !f.hidden && !(opts.hideArchived && f.archived)
+}
+
+function cssUrl(url) {
+    return 'url("' + url.replace(/["\\\n\r]/g, '') + '")'
+}
+
+export function getLandingOptions() {
     const o =
         (window.mmgisglobal.options &&
             window.mmgisglobal.options.landingPage) ||
@@ -339,12 +351,9 @@ const byTitle = (missionsMeta) => (a, b) =>
     )
 
 function Missions({ missions, missionsMeta, onOpen, hideArchived, query, groupBy }) {
-    missions = missions.filter((m) => !getCardFields(m, missionsMeta).hidden)
-    if (hideArchived) {
-        missions = missions.filter(
-            (m) => !getCardFields(m, missionsMeta).archived
-        )
-    }
+    missions = missions.filter((m) =>
+        isListedMission(m, missionsMeta, { hideArchived })
+    )
     if (missions.length === 0) {
         return (
             <div id="landingNoMissions">
@@ -476,7 +485,7 @@ export default function LandingPage({ missions, missionsMeta, onSelectMission })
             {opts.backgroundImageUrl ? (
                 <div
                     className="bgimage"
-                    style={{ backgroundImage: `url('${opts.backgroundImageUrl}')` }}
+                    style={{ backgroundImage: cssUrl(opts.backgroundImageUrl) }}
                 />
             ) : (
                 <div className="topo" />
