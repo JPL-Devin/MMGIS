@@ -35,7 +35,15 @@ const config = {
           description:
             "Optional full-screen background image for the landing page. Supports absolute URLs and public assets (e.g., 'public/images/mars.jpg'). Leave blank for the default contour background.",
           type: "text",
-          width: 9,
+          width: 6,
+        },
+        {
+          field: "temp.generalOptions.landingPage.hideArchived",
+          name: "Hide Archived Missions",
+          description:
+            "When enabled, missions marked as Archived (Home tab) are omitted from the landing page instead of being listed under 'Archived Missions'.",
+          type: "checkbox",
+          width: 3,
         },
       ],
     },

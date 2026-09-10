@@ -8,6 +8,18 @@ export const DOCS_URL = 'https://nasa-ammos.github.io/MMGIS/'
 const ABOUT_URL = 'https://github.com/NASA-AMMOS/MMGIS'
 const MMGIS_LOGO_URL = 'public/images/logos/mmgis.png'
 
+// Admin-selectable preset colors for the card body dot
+export const DOT_COLORS = {
+    red: '#e5484d',
+    orange: '#f0883e',
+    yellow: '#e2b53e',
+    green: '#3fb27f',
+    teal: '#2aa8a0',
+    blue: '#4a8fe7',
+    purple: '#9b6be8',
+    gray: '#8b9299',
+}
+
 export function getCardFields(missionName, missionsMeta) {
     const meta = missionsMeta[missionName]
     const look = (meta && meta.config && meta.config.look) || {}
@@ -20,6 +32,8 @@ export function getCardFields(missionName, missionsMeta) {
             ? resolveImageUrl(card.imageurl, missionName)
             : null,
         subtext: str(card.subtext),
+        body: str(card.body),
+        dotColor: DOT_COLORS[card.dotColor] || null,
         archived: card.archived === true,
     }
 }
@@ -39,6 +53,7 @@ function getLandingOptions() {
     return {
         theme: o.theme === 'dark' ? 'dark' : 'light',
         backgroundImageUrl: bg || null,
+        hideArchived: o.hideArchived === true || o.hideArchived === 'true',
     }
 }
 
@@ -159,6 +174,19 @@ function MissionCard({ missionName, fields, onOpen }) {
             <div className="body">
                 <h3>{fields.title}</h3>
                 {fields.subtext && <p>{fields.subtext}</p>}
+                {(fields.dotColor || fields.body) && (
+                    <div className="meta">
+                        {fields.dotColor && (
+                            <span
+                                className="dot"
+                                style={{ '--dot': fields.dotColor }}
+                            />
+                        )}
+                        {fields.body && (
+                            <span className="bodyname">{fields.body}</span>
+                        )}
+                    </div>
+                )}
             </div>
         </div>
     )
@@ -179,7 +207,12 @@ function CardGrid({ names, missionsMeta, onOpen }) {
     )
 }
 
-function Missions({ missions, missionsMeta, onOpen }) {
+function Missions({ missions, missionsMeta, onOpen, hideArchived }) {
+    if (hideArchived) {
+        missions = missions.filter(
+            (m) => !getCardFields(m, missionsMeta).archived
+        )
+    }
     if (missions.length === 0) {
         return (
             <div id="landingNoMissions">
@@ -319,6 +352,7 @@ export default function LandingPage({ missions, missionsMeta, onSelectMission })
                         missions={missions}
                         missionsMeta={missionsMeta}
                         onOpen={open}
+                        hideArchived={opts.hideArchived}
                     />
                 </div>
                 <Footer />
