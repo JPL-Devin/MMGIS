@@ -286,7 +286,7 @@ function MissionCard({ missionName, fields, onOpen }) {
 
 function CardGrid({ names, missionsMeta, onOpen }) {
     return (
-        <div className="cards">
+        <div className={names.length <= 2 ? 'cards few' : 'cards'}>
             {names.map((name) => (
                 <MissionCard
                     key={name}

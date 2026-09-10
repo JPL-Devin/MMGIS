@@ -255,6 +255,7 @@
 }
 .landingPage .main .toolbar .search {
     flex: 1;
+    min-width: 0;
     display: flex;
     align-items: center;
     gap: 8px;
@@ -271,6 +272,7 @@
 }
 .landingPage .main .toolbar .search input {
     flex: 1;
+    min-width: 0;
     border: none;
     outline: none;
     background: transparent;
@@ -282,6 +284,7 @@
     color: var(--lp-text-3);
 }
 .landingPage .main .toolbar [role='group'] {
+    flex-shrink: 0;
     height: 36px;
     border-radius: 10px;
     background: var(--lp-card-bg);
@@ -291,6 +294,7 @@
     color: var(--lp-text-3);
     border-right: 1px solid var(--lp-border-2);
     padding: 0 14px;
+    white-space: nowrap;
 }
 .landingPage .main .toolbar [role='switch']:hover {
     color: var(--lp-text);
@@ -324,6 +328,10 @@
     gap: 16px;
     width: 100%;
     max-width: 1080px;
+}
+.landingPage .cards.few {
+    grid-template-columns: repeat(auto-fit, 349px);
+    justify-content: center;
 }
 .landingPage .card {
     background: var(--lp-card-bg);
@@ -625,7 +633,8 @@
     .landingPage .main .sub {
         margin-bottom: 16px;
     }
-    .landingPage .cards {
+    .landingPage .cards,
+    .landingPage .cards.few {
         grid-template-columns: 1fr;
     }
     .landingPage .card {
