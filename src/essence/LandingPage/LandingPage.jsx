@@ -53,7 +53,8 @@ export function getCardFields(missionName, missionsMeta) {
         description: str(card.description),
         body: str(card.body),
         dotColor: DOT_COLORS[card.dotColor] || null,
-        archived: card.archived === true,
+        archived: card.status === 'archived' || (card.status == null && card.archived === true),
+        hidden: card.status === 'hidden',
     }
 }
 
@@ -340,6 +341,7 @@ const byTitle = (missionsMeta) => (a, b) =>
     )
 
 function Missions({ missions, missionsMeta, onOpen, hideArchived, query, groupBy }) {
+    missions = missions.filter((m) => !getCardFields(m, missionsMeta).hidden)
     if (hideArchived) {
         missions = missions.filter(
             (m) => !getCardFields(m, missionsMeta).archived

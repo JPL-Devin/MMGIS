@@ -4,10 +4,11 @@
       "name": "Mission Status",
       "components": [
         {
-          "field": "look.card.archived",
-          "name": "Archived",
-          "description": "Mark this mission as archived. Archived missions are listed under 'Archived Missions' on the landing page (or hidden entirely if 'Hide Archived Missions' is enabled in General Options) but remain fully accessible.",
-          "type": "checkbox",
+          "field": "look.card.status",
+          "name": "Status",
+          "description": "Active: listed normally on the landing page. Archived: listed under 'Archived Missions' (or omitted if 'Hide Archived Missions' is enabled in General Options) but fully accessible. Hidden: never shown on the landing page and only visible here in Configure; other missions can still point to its data and it remains reachable by URL.",
+          "type": "dropdown",
+          "options": ["active", "archived", "hidden"],
           "width": 4
         }
       ]

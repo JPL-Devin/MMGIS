@@ -4,7 +4,7 @@ import s from '../essence'
 import QueryURL from '../services/QueryURL'
 import calls from '../../pre/calls'
 import { mmgisAPI_ } from '../mmgisAPI/mmgisAPI'
-import LandingPageView, { MissionNotFound } from './LandingPage.jsx'
+import LandingPageView, { MissionNotFound, getCardFields } from './LandingPage.jsx'
 
 import './LandingPage.css'
 
@@ -54,8 +54,11 @@ export default {
         if (!forceConfig) {
             missionUrl = QueryURL.checkIfMission()
 
-            //If there's only one mission, go straight to it
-            if (missions.length == 1 && !forceLanding) missionUrl = missions[0]
+            //If there's only one listed mission, go straight to it
+            const listed = missions.filter(
+                (m) => !getCardFields(m, missionsMeta).hidden
+            )
+            if (listed.length == 1 && !forceLanding) missionUrl = listed[0]
         }
 
         if (
