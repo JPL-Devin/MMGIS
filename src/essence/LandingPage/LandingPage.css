@@ -232,9 +232,78 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
-    padding: 40px;
+    padding: 0 40px 40px 40px;
     overflow-y: auto;
+}
+/* Heading + toolbar stay pinned while the cards scroll beneath */
+.landingPage .main .hero {
+    position: sticky;
+    top: 0;
+    z-index: 2;
+    align-self: stretch;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 40px 40px 24px 40px;
+    margin: 0 -40px 24px -40px;
+    background: var(--lp-scrim);
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
+    -webkit-mask-image: linear-gradient(180deg, #000 85%, transparent 100%);
+    mask-image: linear-gradient(180deg, #000 85%, transparent 100%);
+}
+.landingPage .main .toolbar {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    width: 100%;
+    max-width: 1080px;
+}
+.landingPage .main .toolbar .search {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    height: 36px;
+    padding: 0 12px;
+    border-radius: 10px;
+    background: var(--lp-card-bg);
+    border: 1px solid var(--lp-border-2);
+    color: var(--lp-text-3);
+    transition: border-color 0.2s;
+}
+.landingPage .main .toolbar .search:focus-within {
+    border-color: var(--color-mmgis, #08aeea);
+}
+.landingPage .main .toolbar .search input {
+    flex: 1;
+    border: none;
+    outline: none;
+    background: transparent;
+    font: inherit;
+    font-size: 14px;
+    color: var(--lp-text);
+}
+.landingPage .main .toolbar .search input::placeholder {
+    color: var(--lp-text-3);
+}
+.landingPage .main .toolbar [role='group'] {
+    height: 36px;
+    border-radius: 10px;
+    background: var(--lp-card-bg);
+    border: 1px solid var(--lp-border-2);
+}
+.landingPage .main .toolbar [role='switch'] {
+    color: var(--lp-text-3);
+    border-right: 1px solid var(--lp-border-2);
+    padding: 0 14px;
+}
+.landingPage .main .toolbar [role='switch']:hover {
+    color: var(--lp-text);
+}
+.landingPage .main .toolbar [role='switch'][aria-checked='true'] {
+    color: var(--color-mmgis, #08aeea);
+    background: var(--lp-hover);
 }
 .landingPage .main h1 {
     font-size: 48px;
@@ -250,18 +319,18 @@
 .landingPage .main .sub {
     font-size: 15px;
     color: var(--lp-text-3);
-    margin-bottom: 48px;
+    margin-bottom: 24px;
     text-align: center;
 }
 
 /* Cards */
 .landingPage .cards {
     display: grid;
-    grid-template-columns: repeat(auto-fit, 220px);
+    grid-template-columns: repeat(auto-fit, 260px);
     justify-content: center;
     gap: 16px;
     width: 100%;
-    max-width: 960px;
+    max-width: 1080px;
 }
 .landingPage .card {
     background: var(--lp-card-bg);
@@ -273,14 +342,14 @@
     overflow: hidden;
     --rx: 0deg;
     --ry: 0deg;
-    transform: perspective(700px) rotateX(var(--rx)) rotateY(var(--ry));
+    transform: perspective(600px) rotateX(var(--rx)) rotateY(var(--ry));
     transform-style: preserve-3d;
     will-change: transform;
 }
 .landingPage .card:hover,
 .landingPage .card:focus-visible {
     box-shadow: 0 12px 32px var(--lp-shadow);
-    transform: perspective(900px) rotateX(var(--rx)) rotateY(var(--ry))
+    transform: perspective(600px) rotateX(var(--rx)) rotateY(var(--ry))
         translateY(-6px) scale(1.03);
 }
 .landingPage .card:not(:hover) {
@@ -378,7 +447,7 @@
     flex-direction: column;
     gap: 40px;
     width: 100%;
-    max-width: 960px;
+    max-width: 1080px;
 }
 .landingPage .section h2 {
     font-size: 12px;
@@ -560,14 +629,17 @@
         display: none;
     }
     .landingPage .main {
-        padding: 24px 16px;
-        justify-content: flex-start;
+        padding: 0 16px 24px 16px;
+    }
+    .landingPage .main .hero {
+        padding: 24px 16px 16px 16px;
+        margin: 0 -16px 16px -16px;
     }
     .landingPage .main h1 {
         font-size: 32px;
     }
     .landingPage .main .sub {
-        margin-bottom: 28px;
+        margin-bottom: 16px;
     }
     .landingPage .cards {
         grid-template-columns: 1fr;

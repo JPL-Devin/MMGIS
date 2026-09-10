@@ -3,6 +3,7 @@ import Login from '../Basics/UserInterface_/components/Login/Login'
 import Button from '../../design-system/components/Button/Button'
 import IconButton from '../../design-system/components/IconButton/IconButton'
 import Tooltip from '../../design-system/components/Tooltip/Tooltip'
+import Toggle from '../../design-system/components/Toggle/Toggle'
 
 export const DOCS_URL = 'https://nasa-ammos.github.io/MMGIS/'
 const ABOUT_URL = 'https://github.com/NASA-AMMOS/MMGIS'
@@ -23,7 +24,7 @@ function Heading({ text }) {
     )
 }
 
-const MAX_TILT = 14
+const MAX_TILT = 22
 
 // Admin-selectable preset colors for the card body dot
 export const DOT_COLORS = {
@@ -75,6 +76,7 @@ function getLandingOptions() {
         theme: o.theme === 'dark' ? 'dark' : 'light',
         backgroundImageUrl: bg || null,
         hideArchived: o.hideArchived === true || o.hideArchived === 'true',
+        hideSearch: o.hideSearch === true || o.hideSearch === 'true',
     }
 }
 
@@ -301,7 +303,47 @@ function CardGrid({ names, missionsMeta, onOpen }) {
     )
 }
 
-function Missions({ missions, missionsMeta, onOpen, hideArchived }) {
+function Toolbar({ query, onQuery, groupBy, onGroupBy }) {
+    return (
+        <div className="toolbar">
+            <div className="search">
+                <i className="mdi mdi-magnify mdi-18px" />
+                <input
+                    type="search"
+                    placeholder="Search missions"
+                    aria-label="Search missions"
+                    value={query}
+                    onChange={(e) => onQuery(e.target.value)}
+                />
+            </div>
+            <Toggle.Group aria-label="Group missions">
+                <Toggle
+                    pressed={groupBy === 'alpha'}
+                    onPressedChange={() => onGroupBy('alpha')}
+                    title="Alphabetical"
+                >
+                    A–Z
+                </Toggle>
+                <Toggle
+                    pressed={groupBy === 'planet'}
+                    onPressedChange={() => onGroupBy('planet')}
+                    title="Group by planet / moon"
+                >
+                    Planet
+                </Toggle>
+            </Toggle.Group>
+        </div>
+    )
+}
+
+const byTitle = (missionsMeta) => (a, b) =>
+    getCardFields(a, missionsMeta).title.localeCompare(
+        getCardFields(b, missionsMeta).title,
+        undefined,
+        { sensitivity: 'base' }
+    )
+
+function Missions({ missions, missionsMeta, onOpen, hideArchived, query, groupBy }) {
     if (hideArchived) {
         missions = missions.filter(
             (m) => !getCardFields(m, missionsMeta).archived
@@ -316,28 +358,64 @@ function Missions({ missions, missionsMeta, onOpen, hideArchived }) {
             </div>
         )
     }
+    const q = query.trim().toLowerCase()
+    if (q) {
+        missions = missions.filter(
+            (m) =>
+                m.toLowerCase().includes(q) ||
+                getCardFields(m, missionsMeta).title.toLowerCase().includes(q)
+        )
+        if (missions.length === 0)
+            return (
+                <div id="landingNoMissions">
+                    No missions match &ldquo;{query.trim()}&rdquo;.
+                </div>
+            )
+    }
+    missions = [...missions].sort(byTitle(missionsMeta))
+
     const hasMeta = missions.some((m) => missionsMeta[m] != null)
     const archived = hasMeta
         ? missions.filter((m) => getCardFields(m, missionsMeta).archived)
         : []
-    if (archived.length === 0) {
+    const active = missions.filter((m) => !archived.includes(m))
+
+    let sections = []
+    if (groupBy === 'planet' && hasMeta) {
+        const groups = new Map()
+        active.forEach((m) => {
+            const body = getCardFields(m, missionsMeta).body || 'Other'
+            if (!groups.has(body)) groups.set(body, [])
+            groups.get(body).push(m)
+        })
+        sections = [...groups.keys()]
+            .sort((a, b) =>
+                a === 'Other' ? 1 : b === 'Other' ? -1 : a.localeCompare(b)
+            )
+            .map((body) => ({ title: body, names: groups.get(body) }))
+    } else if (archived.length > 0) {
+        sections = [{ title: 'Active Missions', names: active }]
+    } else {
         return (
             <CardGrid names={missions} missionsMeta={missionsMeta} onOpen={onOpen} />
         )
     }
-    const active = missions.filter((m) => !archived.includes(m))
     return (
         <div className="sections">
-            {active.length > 0 && (
-                <div className="section">
-                    <h2>Active Missions</h2>
-                    <CardGrid names={active} missionsMeta={missionsMeta} onOpen={onOpen} />
+            {sections
+                .filter((s) => s.names.length > 0)
+                .map((s) => (
+                    <div className="section" key={s.title}>
+                        <h2>{s.title}</h2>
+                        <CardGrid names={s.names} missionsMeta={missionsMeta} onOpen={onOpen} />
+                    </div>
+                ))}
+            {archived.length > 0 && (
+                <div className="section archived">
+                    <h2>Archived Missions</h2>
+                    <CardGrid names={archived} missionsMeta={missionsMeta} onOpen={onOpen} />
                 </div>
             )}
-            <div className="section archived">
-                <h2>Archived Missions</h2>
-                <CardGrid names={archived} missionsMeta={missionsMeta} onOpen={onOpen} />
-            </div>
         </div>
     )
 }
@@ -406,6 +484,8 @@ export default function LandingPage({ missions, missionsMeta, onSelectMission })
     const [leaving, setLeaving] = useState(false)
     // Logo starts where the loading screen's logo sits, then docks into the nav
     const [docked, setDocked] = useState(false)
+    const [query, setQuery] = useState('')
+    const [groupBy, setGroupBy] = useState('alpha')
 
     useEffect(() => {
         const id = requestAnimationFrame(() => setVisible(true))
@@ -443,13 +523,25 @@ export default function LandingPage({ missions, missionsMeta, onSelectMission })
             <div className="pg">
                 <Nav />
                 <div className="main">
-                    <Heading text={opts.heading} />
-                    <div className="sub">{opts.subheading}</div>
+                    <div className="hero">
+                        <Heading text={opts.heading} />
+                        <div className="sub">{opts.subheading}</div>
+                        {missions.length > 0 && !opts.hideSearch && (
+                            <Toolbar
+                                query={query}
+                                onQuery={setQuery}
+                                groupBy={groupBy}
+                                onGroupBy={setGroupBy}
+                            />
+                        )}
+                    </div>
                     <Missions
                         missions={missions}
                         missionsMeta={missionsMeta}
                         onOpen={open}
                         hideArchived={opts.hideArchived}
+                        query={query}
+                        groupBy={groupBy}
                     />
                 </div>
                 <Footer />

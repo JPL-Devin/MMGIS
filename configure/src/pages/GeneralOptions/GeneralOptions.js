@@ -61,6 +61,14 @@ const config = {
           type: "checkbox",
           width: 3,
         },
+        {
+          field: "temp.generalOptions.landingPage.hideSearch",
+          name: "Hide Search & Grouping",
+          description:
+            "When enabled, the mission search box and the A–Z / Planet grouping toggle are not shown on the landing page.",
+          type: "checkbox",
+          width: 3,
+        },
       ],
     },
     {
