@@ -1030,6 +1030,7 @@ const L_ = {
     clearGeoJSONData: function (layer) {
         if (layer._sourceGeoJSON) layer._sourceGeoJSON = F_.getBaseGeoJSON()
         layer.clearLayers()
+        if (layer._layerName) L_.notifyLayerDataChange(layer._layerName)
 
         // If for some reason we still have layers, explicitly clear them
         if (Object.keys(layer._layers).length > 0) {
