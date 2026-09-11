@@ -1,0 +1,18 @@
+{
+    "id": "experiments-layerstats",
+    "version": "0.1.0",
+    "type": "tool",
+    "tier": "experimental",
+    "defaultIcon": "chart-histogram",
+    "description": "Attribute statistics and charts for the selected vector layer.",
+    "descriptionFull": {
+        "title": "Computes per-property count/min/max/mean/unique statistics for an on vector layer, renders histograms for numeric properties and top-N frequency charts for categorical ones. Optionally restricts to features in the current viewport. Click a bar to highlight matching features on the map."
+    },
+    "hasVars": false,
+    "name": "LayerStats",
+    "paths": {
+        "LayerStatsTool": "./LayerStatsTool"
+    },
+    "author": "MMGIS experiments",
+    "license": "Apache-2.0"
+}
