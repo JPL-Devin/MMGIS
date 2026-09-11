@@ -1,0 +1,49 @@
+#mmgisMiniMapContainer {
+    position: absolute;
+    z-index: 1001;
+    display: flex;
+    flex-direction: column;
+    background: var(--color-a);
+    border: 1px solid var(--color-k, #333);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+    pointer-events: all;
+}
+#mmgisMiniMapContainer.mmgis-minimap-bottomright {
+    right: 10px;
+    bottom: 40px;
+}
+#mmgisMiniMapContainer.mmgis-minimap-bottomleft {
+    left: 10px;
+    bottom: 40px;
+}
+#mmgisMiniMapContainer.mmgis-minimap-topright {
+    right: 10px;
+    top: 50px;
+}
+#mmgisMiniMapContainer.mmgis-minimap-topleft {
+    left: 10px;
+    top: 50px;
+}
+#mmgisMiniMapToggle {
+    height: 24px;
+    line-height: 24px;
+    padding: 0 6px;
+    color: var(--color-f, #ddd);
+    background: var(--color-a, #111);
+    cursor: pointer;
+    text-align: right;
+    user-select: none;
+}
+#mmgisMiniMapToggle:hover {
+    color: #fff;
+}
+#mmgisMiniMap {
+    background: #000;
+    cursor: crosshair;
+}
+#mmgisMiniMap .leaflet-interactive {
+    cursor: move;
+}
+#mmgisMiniMapContainer.collapsed #mmgisMiniMap {
+    display: none;
+}

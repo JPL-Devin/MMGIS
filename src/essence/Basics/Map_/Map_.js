@@ -18,6 +18,7 @@ import { Kinds } from '../../../pre/tools'
 import DataShaders from '../../Ancillary/DataShaders'
 import calls from '../../../pre/calls'
 import TimeControl from '../../Ancillary/TimeControl'
+import MiniMap from './MiniMap'
 
 import gjv from 'geojson-validation'
 
@@ -228,6 +229,10 @@ let Map_ = {
         //Build the toolbar
         buildToolBar()
 
+        //Add the overview minimap
+        if (L_.configData.look && L_.configData.look.minimap)
+            MiniMap.init(this.map, L_.configData.look.minimap)
+
         //Set the time for any time enabled layers
         TimeControl.updateLayersTime()
     },
@@ -257,6 +262,7 @@ let Map_ = {
         }
     },
     clear: function () {
+        MiniMap.destroy()
         this.map.eachLayer(function (layer) {
             Map_.map.removeLayer(layer)
         })
@@ -320,6 +326,7 @@ let Map_ = {
     },
     //Redraws all layers, starting with the bottom one
     orderedBringToFront: function () {
+        MiniMap.refreshTileLayer()
         let hasIndex = []
         let hasIndexRaster = []
 
@@ -1164,6 +1171,7 @@ function allLayersLoaded() {
         essenceFina()
         L_.addVisible(Map_)
         L_.enforceVisibilityCutoffs()
+        MiniMap.refreshTileLayer()
 
         ToolController_.finalizeTools()
 
