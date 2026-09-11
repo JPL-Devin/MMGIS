@@ -1,0 +1,18 @@
+{
+  "uuid": "6b1f0c2e-8d3a-4f1b-9c7e-2a5d4e6f8a91",
+  "id": "experiments-auditlog",
+  "name": "AuditLog",
+  "display_name": "Audit Log",
+  "description": "Records an audit trail (who, when, mission, endpoint, diff summary) of /api/configure/* mutations and exposes admin-only query endpoints.",
+  "aliases": ["auditlog"],
+  "version": "0.1.0",
+  "type": "backend",
+  "tier": "experimental",
+  "priority": 500,
+  "routes": {
+    "prefix": "/api/auditlog",
+    "auth": "admin"
+  },
+  "author": "JPL-Devin",
+  "license": "Apache-2.0"
+}

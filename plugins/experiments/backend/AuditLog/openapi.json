@@ -1,0 +1,33 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "MMGIS AuditLog API",
+    "version": "0.1.0",
+    "description": "Admin-only audit trail of /api/configure/* mutations."
+  },
+  "paths": {
+    "/api/auditlog/list": {
+      "get": {
+        "summary": "List audit entries (paginated, newest first)",
+        "parameters": [
+          { "name": "mission", "in": "query", "schema": { "type": "string" } },
+          { "name": "user", "in": "query", "schema": { "type": "string" } },
+          { "name": "action", "in": "query", "schema": { "type": "string" }, "description": "e.g. add, upsert, addLayer, destroy" },
+          { "name": "endpoint", "in": "query", "schema": { "type": "string" }, "description": "substring match" },
+          { "name": "since", "in": "query", "schema": { "type": "string", "format": "date-time" } },
+          { "name": "until", "in": "query", "schema": { "type": "string", "format": "date-time" } },
+          { "name": "page", "in": "query", "schema": { "type": "integer", "default": 1 } },
+          { "name": "limit", "in": "query", "schema": { "type": "integer", "default": 50, "maximum": 200 } }
+        ],
+        "responses": { "200": { "description": "Paginated entries" } }
+      }
+    },
+    "/api/auditlog/{id}": {
+      "get": {
+        "summary": "Get a single audit entry",
+        "parameters": [{ "name": "id", "in": "path", "required": true, "schema": { "type": "integer" } }],
+        "responses": { "200": { "description": "Entry" }, "404": { "description": "Not found" } }
+      }
+    }
+  }
+}
