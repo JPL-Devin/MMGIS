@@ -122,3 +122,52 @@ test.describe('Default Earth config has standard projection', () => {
         expect(config.projection.epsg).toBe('EPSG:3857');
     });
 });
+
+test.describe('Heatmap variants', () => {
+    test('registry contains Heatmap and HeatmapPolar', () => {
+        expect(REFERENCE_MISSION_VARIANTS['Heatmap'].missionName).toBe('Heatmap');
+        expect(REFERENCE_MISSION_VARIANTS['HeatmapPolar'].missionName).toBe('HeatmapPolar');
+    });
+
+    const readConfig = (key) => {
+        const r = resolveVariantBlueprintPath(key);
+        return JSON.parse(fs.readFileSync(path.join(r.sourcePath, r.configFile), 'utf8'));
+    };
+    const flat = (layers, out = []) => {
+        for (const l of layers) {
+            out.push(l);
+            if (l.sublayers) flat(l.sublayers, out);
+        }
+        return out;
+    };
+
+    test('Heatmap config: every heatmap layer names an existing source layer', () => {
+        for (const key of ['Heatmap', 'HeatmapPolar']) {
+            const layers = flat(readConfig(key).layers);
+            const names = new Set(layers.map((l) => l.name));
+            const heatmaps = layers.filter((l) => l.type === 'heatmap');
+            expect(heatmaps.length).toBeGreaterThan(0);
+            for (const h of heatmaps) {
+                expect(names.has(h.variables.sourceLayer)).toBe(true);
+            }
+        }
+    });
+
+    test('Heatmap config: committed source files exist and are < 1 MB', () => {
+        for (const key of ['Heatmap', 'HeatmapPolar']) {
+            const r = resolveVariantBlueprintPath(key);
+            for (const l of flat(readConfig(key).layers)) {
+                if (l.type !== 'vector' || l.visibility === false) continue;
+                const size = fs.statSync(path.join(r.sourcePath, l.url)).size;
+                expect(size).toBeLessThan(1024 * 1024);
+            }
+        }
+    });
+
+    test('HeatmapPolar uses a custom polar stereographic projection', () => {
+        const p = readConfig('HeatmapPolar').projection;
+        expect(p.custom).toBe(true);
+        expect(p.proj).toContain('+proj=stere');
+        expect(p.proj).toContain('+lat_0=90');
+    });
+});

@@ -1,0 +1,343 @@
+{
+  "uuid": "6f2b9c1e-3d47-4a8b-9e5c-7a1d2f0b8e43",
+  "id": "core-layertype-heatmap",
+  "name": "Heatmap",
+  "type": "layertype",
+  "typeId": "heatmap",
+  "version": "core",
+  "tier": "core",
+  "overridable": false,
+  "color": "#c8402e",
+  "defaultIcon": "Blur",
+  "description": "Density heatmap of another vector layer's features, rendered on a canvas over the 2D map. Points are weighted directly; lines and polygons are sampled into points.",
+  "descriptionFull": "A heatmap layer loads no data of its own. It acquires the features of an existing vector layer in the mission (variables.sourceLayer) and rasterizes them into a density heatmap on a canvas overlay. Points contribute directly; LineStrings are densified along their length (variables.lineSampleSpacingMeters); Polygons contribute their densified boundary plus an interior grid sample. All rasterization happens in the map's projected pixel space, so custom/polar CRSs are supported. Only features in or near the current viewport are drawn, and the canvas is redrawn on moveend/zoomend and whenever the source layer's time window changes. 2D map only.",
+  "capabilities": {
+    "renderers": {
+      "map": {
+        "engines": [
+          "leaflet"
+        ]
+      },
+      "globe": false
+    },
+    "map": {
+      "stacking": "overlay",
+      "tracksLoad": true,
+      "picking": false,
+      "styling": false
+    },
+    "time": true
+  },
+  "fileTypes": [],
+  "supportedData": [
+    {
+      "label": "Features of another vector layer in the mission",
+      "category": "vector",
+      "standards": [
+        "GeoJSON"
+      ],
+      "description": "The heatmap has no URL. It acquires the GeoJSON of the layer named by variables.sourceLayer through that layer's own type (file, geodataset, source plugin...) and renders a weighted density surface from it.",
+      "procurement": "Configure any vector layer in the same mission and name it as the source."
+    }
+  ],
+  "config": {
+    "tabs": [
+      {
+        "name": "Core",
+        "rows": [
+          {
+            "name": "Core",
+            "components": [
+              {
+                "field": "type",
+                "name": "Layer Type",
+                "description": "",
+                "type": "dropdown",
+                "optionsFrom": "layerTypes",
+                "width": 2
+              },
+              {
+                "field": "name",
+                "name": "Layer Name",
+                "description": "A display name for the layer.",
+                "type": "textnotrim",
+                "width": 6,
+                "required": true
+              },
+              {
+                "field": "visibility",
+                "name": "Initial Visibility",
+                "description": "Whether the layer is on initially.",
+                "type": "checkbox",
+                "width": 2,
+                "defaultChecked": true
+              }
+            ]
+          },
+          {
+            "components": [
+              {
+                "field": "variables.sourceLayer",
+                "name": "Source Layer",
+                "description": "The name of the vector layer in this mission whose features are rendered as a heatmap. Required.",
+                "type": "dropdown",
+                "optionsFrom": "layers",
+                "width": 6,
+                "required": true
+              },
+              {
+                "field": "variables.weightProperty",
+                "name": "Weight Property",
+                "description": "Optional numeric feature property used as each sample's intensity weight. When empty, every sample weighs 1. Options come from the source layer's features; a nested path can be typed.",
+                "type": "searchdropdown",
+                "optionsFrom": "sourceLayerProperties",
+                "freeSolo": true,
+                "options": [],
+                "noOptionsText": "No properties found - type one",
+                "width": 3
+              },
+              {
+                "field": "variables.weightMin",
+                "name": "Weight Min",
+                "description": "Optional. Weights are clamped to this minimum and, together with Weight Max, normalized into 0..1.",
+                "type": "number",
+                "width": 1
+              },
+              {
+                "field": "variables.weightMax",
+                "name": "Weight Max",
+                "description": "Optional. Weights are clamped to this maximum and, together with Weight Min, normalized into 0..1.",
+                "type": "number",
+                "width": 1
+              }
+            ]
+          },
+          {
+            "components": [
+              {
+                "field": "minZoom",
+                "name": "Minimum Zoom",
+                "description": "The lowest (smallest number) zoom level for which to show this layer.",
+                "type": "number",
+                "min": 0,
+                "step": 1,
+                "width": 2
+              },
+              {
+                "field": "maxZoom",
+                "name": "Maximum Zoom",
+                "description": "The highest (greatest number) zoom level for which to show this layer.",
+                "type": "number",
+                "min": 0,
+                "step": 1,
+                "width": 2
+              },
+              {
+                "field": "initialOpacity",
+                "name": "Initial Opacity",
+                "description": "A value from 0 (transparent) to 1 (opaque) of the layer's initial opacity.",
+                "type": "number",
+                "min": 0,
+                "max": 1,
+                "width": 2
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Style",
+        "rows": [
+          {
+            "name": "Style",
+            "components": [
+              {
+                "field": "variables.radius",
+                "name": "Radius",
+                "description": "Kernel radius of each sample. Default 25.",
+                "type": "number",
+                "min": 0,
+                "width": 2
+              },
+              {
+                "field": "variables.radiusUnits",
+                "name": "Radius Units",
+                "description": "'px' keeps the radius constant on screen across zooms. 'm' sizes the radius in map meters using the CRS resolution at the current zoom.",
+                "type": "dropdown",
+                "options": [
+                  "px",
+                  "m"
+                ],
+                "width": 2
+              },
+              {
+                "field": "variables.blur",
+                "name": "Blur",
+                "description": "Kernel blur in pixels. Default 15.",
+                "type": "number",
+                "min": 0,
+                "width": 2
+              },
+              {
+                "field": "variables.maxIntensity",
+                "name": "Max Intensity",
+                "description": "Accumulated weight that maps to the top of the gradient. Default 1 (or the max sample weight when a Weight Property is set).",
+                "type": "number",
+                "min": 0,
+                "width": 2
+              },
+              {
+                "field": "variables.lineSampleSpacingMeters",
+                "name": "Line Sample Spacing (m)",
+                "description": "Spacing in meters between samples along LineStrings and Polygon boundaries (geodesic). Default 10.",
+                "type": "number",
+                "min": 0,
+                "width": 2
+              },
+              {
+                "field": "variables.polygonInteriorSamples",
+                "name": "Polygon Interior Samples",
+                "description": "Approximate number of interior grid samples per polygon (in addition to its boundary). Default 64.",
+                "type": "number",
+                "min": 0,
+                "step": 1,
+                "width": 2
+              }
+            ]
+          },
+          {
+            "subname": "Gradient",
+            "subdescription": "JSON of gradient stops (0..1) to CSS colors. Ex. {\"0.4\":\"blue\",\"0.65\":\"lime\",\"1\":\"red\"}",
+            "components": [
+              {
+                "field": "variables.gradient",
+                "name": "Gradient",
+                "description": "",
+                "type": "json",
+                "width": 12
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Information",
+        "rows": [
+          {
+            "name": "Information",
+            "subname": "Layer Tags",
+            "subdescription": "Assign tags to this layer so that they may be searched upon through the LayersTool. A category may be specified with the following pattern: 'category:tag'",
+            "components": [
+              {
+                "field": "tags.0",
+                "name": "Tag",
+                "description": "",
+                "type": "text",
+                "width": 2
+              },
+              {
+                "field": "tags.1",
+                "name": "Tag",
+                "description": "",
+                "type": "text",
+                "width": 2
+              },
+              {
+                "field": "tags.2",
+                "name": "Tag",
+                "description": "",
+                "type": "text",
+                "width": 2
+              },
+              {
+                "field": "tags.3",
+                "name": "Tag",
+                "description": "",
+                "type": "text",
+                "width": 2
+              },
+              {
+                "field": "tags.4",
+                "name": "Tag",
+                "description": "",
+                "type": "text",
+                "width": 2
+              },
+              {
+                "field": "tags.5",
+                "name": "Tag",
+                "description": "",
+                "type": "text",
+                "width": 2
+              }
+            ]
+          },
+          {
+            "components": [
+              {
+                "field": "tags.6",
+                "name": "Tag",
+                "description": "",
+                "type": "text",
+                "width": 2
+              },
+              {
+                "field": "tags.7",
+                "name": "Tag",
+                "description": "",
+                "type": "text",
+                "width": 2
+              },
+              {
+                "field": "tags.8",
+                "name": "Tag",
+                "description": "",
+                "type": "text",
+                "width": 2
+              },
+              {
+                "field": "tags.9",
+                "name": "Tag",
+                "description": "",
+                "type": "text",
+                "width": 2
+              },
+              {
+                "field": "tags.10",
+                "name": "Tag",
+                "description": "",
+                "type": "text",
+                "width": 2
+              },
+              {
+                "field": "tags.11",
+                "name": "Tag",
+                "description": "",
+                "type": "text",
+                "width": 2
+              }
+            ]
+          },
+          {
+            "subname": "Description",
+            "subdescription": "A freeform markdown description of the layer. In the LayersTool, users may click the information icon beside the layer's name to view this information.",
+            "components": [
+              {
+                "field": "description",
+                "name": "Description",
+                "description": "",
+                "type": "markdown",
+                "width": 12
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "modules": {
+    "map": "./map",
+    "source": "./source",
+    "config": "./config"
+  }
+}

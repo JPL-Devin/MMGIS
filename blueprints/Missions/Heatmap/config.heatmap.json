@@ -1,0 +1,338 @@
+{
+  "coordinates": {
+    "coordll": true,
+    "coorden": false,
+    "coordelev": false
+  },
+  "msv": {
+    "mission": "Heatmap",
+    "missionFolderName": "Heatmap",
+    "site": "SF Bay",
+    "masterdb": false,
+    "view": [
+      37.78,
+      -122.4,
+      12
+    ],
+    "radius": {
+      "major": "6378137",
+      "minor": "6356752"
+    },
+    "mapscale": "12"
+  },
+  "projection": {
+    "custom": false,
+    "epsg": "EPSG:3857",
+    "proj": "+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0 +k=1.0 +units=m +nadgrids=@null +wktext +no_defs",
+    "globeproj": "webmercator",
+    "xmlpath": "",
+    "bounds": [
+      "",
+      "",
+      "",
+      ""
+    ],
+    "origin": [
+      "",
+      ""
+    ],
+    "reszoomlevel": "",
+    "resunitsperpixel": ""
+  },
+  "look": {
+    "pagename": "MMGIS Heatmap",
+    "missionname": "Heatmap",
+    "missionsubtitle": "Heatmap layer demo",
+    "minimalist": false,
+    "topbar": true,
+    "toolbar": true,
+    "scalebar": true,
+    "noscalebar": false,
+    "coordinates": true,
+    "zoomcontrol": false,
+    "graticule": true,
+    "miscellaneous": true,
+    "timestamp": false,
+    "radiusdivs": false,
+    "bodycolor": "",
+    "topbarcolor": "",
+    "toolbarcolor": "",
+    "mapcolor": "",
+    "swap": true,
+    "copylink": true,
+    "screenshot": true,
+    "fullscreen": true,
+    "help": true,
+    "logourl": "",
+    "helpurl": "https://nasa-ammos.github.io/MMGIS/",
+    "aboutModalContent": "Welcome to the **MMGIS Reference Mission**.\n\nThis mission demonstrates the full capabilities of the Multi-Mission Geographic Information System."
+  },
+  "time": {
+    "enabled": true,
+    "visible": true,
+    "initiallyOpen": true,
+    "startInPointMode": false,
+    "format": "%Y-%m-%dT%H:%M:%SZ",
+    "initialstart": "2024-01-01T00:00:00Z",
+    "initialend": "2024-01-20T00:00:00Z",
+    "loop": false,
+    "loopDelay": 0,
+    "step": 86400,
+    "relativeto": null
+  },
+  "panels": {
+    "viewer": false,
+    "map": true,
+    "globe": false,
+    "defaultWidths": {
+      "viewer": 0,
+      "map": 100,
+      "globe": 0
+    }
+  },
+  "tools": [
+    {
+      "name": "Layers",
+      "icon": "layers",
+      "js": "LayersTool",
+      "variables": {
+        "expanded": true
+      }
+    },
+    {
+      "name": "Legend",
+      "icon": "map-legend",
+      "js": "LegendTool",
+      "separatedTool": true,
+      "variables": {
+        "displayOnStart": false,
+        "showHeadersInLegend": false
+      }
+    },
+    {
+      "name": "Info",
+      "icon": "information-variant",
+      "js": "InfoTool",
+      "variables": {
+        "sortAlphabetically": true
+      }
+    },
+    {
+      "name": "Measure",
+      "icon": "tape-measure",
+      "js": "MeasureTool",
+      "variables": {
+        "dem": "Data/DEMs/USGS_13_n38w123_20250826_SFHill.tif",
+        "layerDems": [],
+        "onlyShowDemIfLayerOn": false,
+        "defaultMode": "continuous"
+      }
+    }
+  ],
+  "layers": [
+    {
+      "name": "Heatmaps",
+      "type": "header",
+      "uuid": "5ccb2d3f-101d-438e-9565-948e5932eeea",
+      "expanded": true,
+      "description": "",
+      "sublayers": [
+        {
+          "name": "Rock Density",
+          "type": "heatmap",
+          "uuid": "93e7b85d-a06f-456d-978b-445097a04423",
+          "visibility": true,
+          "initialOpacity": 0.8,
+          "controlled": false,
+          "description": "Weighted by `size`; follows Rocks' time filter.",
+          "variables": {
+            "sourceLayer": "Rocks",
+            "weightProperty": "size",
+            "radius": 25,
+            "blur": 15,
+            "maxIntensity": 10,
+            "gradient": {
+              "0.4": "blue",
+              "0.65": "lime",
+              "1": "red"
+            },
+            "lineSampleSpacingMeters": 5,
+            "radiusUnits": "px"
+          }
+        },
+        {
+          "name": "Traverse Density",
+          "type": "heatmap",
+          "uuid": "212fff26-76b0-4716-a566-c92481045c37",
+          "visibility": true,
+          "initialOpacity": 0.8,
+          "controlled": false,
+          "description": "Lines densified every 50 m; polygons sampled on boundary + interior.",
+          "variables": {
+            "sourceLayer": "Traverse",
+            "radius": 20,
+            "blur": 15,
+            "lineSampleSpacingMeters": 50,
+            "radiusUnits": "px",
+            "gradient": {
+              "0.3": "#2c7bb6",
+              "0.6": "#ffffbf",
+              "1": "#d7191c"
+            },
+            "maxIntensity": 12
+          }
+        },
+        {
+          "name": "Rock Density (200 m)",
+          "type": "heatmap",
+          "uuid": "bc3aaa51-0d0d-40a1-a8d4-e22d743d329d",
+          "visibility": false,
+          "initialOpacity": 0.8,
+          "controlled": false,
+          "description": "Radius in meters via the CRS resolution at the current zoom.",
+          "variables": {
+            "sourceLayer": "Rocks",
+            "radius": 200,
+            "blur": 15,
+            "radiusUnits": "m",
+            "maxIntensity": 20
+          }
+        },
+        {
+          "name": "Rocks50k Density",
+          "type": "heatmap",
+          "uuid": "925b111a-5571-49ca-9968-a3a24f81b3a5",
+          "visibility": false,
+          "initialOpacity": 0.8,
+          "controlled": false,
+          "description": "Perf test heatmap (50k source points).",
+          "variables": {
+            "sourceLayer": "Rocks50k",
+            "weightProperty": "size",
+            "radius": 15,
+            "blur": 10,
+            "radiusUnits": "px"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Sources",
+      "type": "header",
+      "uuid": "9afe482d-9025-4ece-aab2-ceea6ddc6ab6",
+      "expanded": true,
+      "description": "",
+      "sublayers": [
+        {
+          "name": "Rocks",
+          "type": "vector",
+          "uuid": "e7278ec7-8486-44a1-bcde-2df61372272f",
+          "url": "Layers/rocks.geojson",
+          "visibility": true,
+          "initialOpacity": 1,
+          "controlled": false,
+          "demparser": "",
+          "description": "2,000 seeded points with numeric `size` and ISO `time` (2024-01-01..20).",
+          "style": {
+            "className": "rocks",
+            "color": "#ffffff",
+            "fillColor": "#ffcc00",
+            "fillOpacity": 0.8,
+            "weight": 1,
+            "radius": 3
+          },
+          "time": {
+            "enabled": true,
+            "type": "local",
+            "startProp": "time",
+            "endProp": "time",
+            "format": "%Y-%m-%dT%H:%M:%SZ"
+          }
+        },
+        {
+          "name": "Traverse",
+          "type": "vector",
+          "uuid": "a92e94be-8848-4ba7-8545-00f8372520c8",
+          "url": "Layers/traverse.geojson",
+          "visibility": true,
+          "initialOpacity": 1,
+          "controlled": false,
+          "demparser": "",
+          "description": "LineStrings, a MultiLineString and 3 Polygons with numeric `priority`.",
+          "style": {
+            "className": "traverse",
+            "color": "#00ccff",
+            "fillColor": "#00ccff",
+            "fillOpacity": 0.15,
+            "weight": 3
+          }
+        },
+        {
+          "name": "Rocks50k",
+          "type": "vector",
+          "uuid": "5a7075e8-0984-41a9-be53-0d17a61038c5",
+          "url": "Layers/rocks-50k.geojson",
+          "visibility": false,
+          "initialOpacity": 1,
+          "controlled": false,
+          "demparser": "",
+          "description": "50,000 points for the heatmap performance test. Generate with `node scripts/generate-heatmap-demo-data.js --with-50k`.",
+          "style": {
+            "className": "rocks50k",
+            "color": "#ffffff",
+            "fillColor": "#ff8800",
+            "fillOpacity": 0.6,
+            "weight": 0,
+            "radius": 2
+          }
+        }
+      ]
+    },
+    {
+      "name": "Basemap",
+      "type": "header",
+      "uuid": "37f36a5c-d3e7-450a-97e0-4577ab22c53b",
+      "expanded": false,
+      "description": "",
+      "sublayers": [
+        {
+          "name": "ArcGIS World Imagery",
+          "uuid": "9473bb45-f7da-4650-9036-f44d2a300c4b",
+          "type": "tile",
+          "visibility": true,
+          "sourceType": "url",
+          "url": "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
+          "tileformat": "wmts",
+          "controlled": false,
+          "initialOpacity": 1,
+          "minZoom": 0,
+          "maxNativeZoom": 18,
+          "maxZoom": 18,
+          "demparser": "",
+          "throughTileServer": false,
+          "cogResampling": "nearest",
+          "cogExpressionEditable": false,
+          "cogTransform": false,
+          "cogColormap": "Accent",
+          "style": {
+            "brightness": 1,
+            "contrast": 1,
+            "saturation": 1,
+            "blend": "none"
+          },
+          "time": {
+            "enabled": false,
+            "type": "requery",
+            "compositeTile": false,
+            "refreshIntervalEnabled": false
+          },
+          "variables": {
+            "legendOrientation": "vertical"
+          },
+          "description": "",
+          "attribution": "Esri, Maxar, Earthstar Geographics, and the GIS User Community"
+        }
+      ]
+    }
+  ]
+}

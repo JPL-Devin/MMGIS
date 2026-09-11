@@ -16,6 +16,7 @@ const CHECKED_LAYER_TYPES = [
   "model",
   "image",
   "video",
+  "heatmap",
 ];
 
 // Which set of per-type checks a layer is held to. `null` means the type is
@@ -204,6 +205,13 @@ export const validateLayer = (layer, layerTypeConfiguration) => {
 
     case "header":
       // No additional required fields for header
+      break;
+
+    case "heatmap":
+      // No URL: the heatmap draws another layer's features.
+      if (!layer.variables?.sourceLayer || String(layer.variables.sourceLayer).trim() === "") {
+        errors.push({ field: "variables.sourceLayer", message: "Source Layer is required" });
+      }
       break;
 
     default:

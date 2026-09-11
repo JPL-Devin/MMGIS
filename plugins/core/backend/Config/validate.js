@@ -19,6 +19,7 @@ const CHECKED_LAYER_TYPES = [
   "model",
   "image",
   "video",
+  "heatmap",
 ];
 
 const LAYER_TYPE_REGISTRY_PATH = path.join(
@@ -180,6 +181,10 @@ const validateLayers = (config) => {
         // Check bounding box
         errs = errs.concat(isValidBoundingBox(layer));
         break;
+      case "heatmap":
+        // No url: the heatmap draws another layer's features.
+        errs = errs.concat(isValidHeatmapSource(layer));
+        break;
       default:
         // A plugin-provided type with no built-in ancestor: its own manifest
         // and modules are what validate it, not this file.
@@ -198,6 +203,18 @@ const validateLayers = (config) => {
   });
 
   return errs;
+};
+
+const isValidHeatmapSource = (layer) => {
+  const source = layer.variables?.sourceLayer;
+  if (source == null || String(source).trim() === "")
+    return [
+      err(
+        `Heatmap layer '${layer.name}' requires variables.sourceLayer (the name of a vector layer in this mission).`,
+        ["layers[layer].variables.sourceLayer"]
+      ),
+    ];
+  return [];
 };
 
 const isValidLayerName = (name) => {

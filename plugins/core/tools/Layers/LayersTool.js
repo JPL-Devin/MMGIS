@@ -4,6 +4,7 @@ import F_ from '@basics/Formulae_/Formulae_'
 import L_ from '@basics/Layers_/Layers_'
 import Map_ from '@basics/Map_/Map_'
 import LayerTypeRegistry from '@basics/Layers_/registry/LayerTypeRegistry'
+import LayerInterface from '@basics/Layers_/interface/LayerInterface'
 import LayerAttachmentRegistry from '@basics/Layers_/registry/LayerAttachmentRegistry'
 import { deriveLegend } from '@basics/Layers_/legend/LayerLegend'
 import {
@@ -114,6 +115,11 @@ function generateMarkup() {
             type: 'model',
             title: 'Hide/Show Model Layers',
             icon: 'mdi-cube-outline',
+        },
+        {
+            type: 'heatmap',
+            title: 'Hide/Show Heatmap Layers',
+            icon: 'mdi-blur',
         },
     ]
 
@@ -1449,6 +1455,9 @@ function interfaceWithMMGIS(fromInit) {
                             '</li>',
                         '</ul>',
                     ].join('\n')
+                    break
+                case 'heatmap':
+                    settings = getHeatmapLayerSettings(node[i])
                     break
                 default:
                     settings = ''
@@ -3615,7 +3624,88 @@ function interfaceWithMMGIS(fromInit) {
         layer.addTo(Map_.map)
     }
 
+    function getHeatmapLayerSettings(layerObj) {
+        const escapedLayerName = F_.escapeHtml(layerObj.name)
+        let currentOpacity = L_.getLayerOpacity(layerObj.name)
+        if (currentOpacity == null)
+            currentOpacity = L_.layers.opacity[layerObj.name]
+        const v = layerObj.variables || {}
+        const live = L_.layers.layer[layerObj.name]
+        const props = live?._heatmapNumericProps || []
+        const numberRow = (label, key, value, min, step) =>
+            `<li><div><div>${label}</div><input class="heatmapControl" style="width: 120px; border: none; height: 28px; margin: 1px 0px;" layername="${escapedLayerName}" parameter="${key}" type="number" min="${min}" step="${step}" value="${F_.escapeHtml(
+                value == null ? '' : value
+            )}"></div></li>`
+        const propOptions = ['<option value="">(none — weight 1)</option>']
+            .concat(
+                props.map(
+                    (p) =>
+                        `<option value="${F_.escapeHtml(p)}" ${
+                            p === v.weightProperty ? 'selected' : ''
+                        }>${F_.escapeHtml(p)}</option>`
+                )
+            )
+            .join('')
+        // prettier-ignore
+        return [
+            '<ul>',
+                '<li>',
+                    '<div>',
+                        '<div>Opacity</div>',
+                        '<input class="transparencyslider slider2" layername="' + escapedLayerName + '" type="range" min="0" max="1" step="0.01" value="' + currentOpacity + '" default="' + L_.layers.opacity[layerObj.name] + '">',
+                    '</div>',
+                '</li>',
+                '<div class="layerSettingsTitle"><div>Heatmap Settings</div></div>',
+                numberRow('Radius (' + (v.radiusUnits === 'm' ? 'm' : 'px') + ')', 'radius', v.radius ?? 25, 1, 1),
+                numberRow('Blur (px)', 'blur', v.blur ?? 15, 0, 1),
+                numberRow('Max Intensity', 'maxIntensity', v.maxIntensity, 0, 'any'),
+                '<li>',
+                    '<div>',
+                        '<div>Weight Property</div>',
+                        `<select class="heatmapControl dropdown" style="width: 160px; height: 28px; margin: 1px 0px;" layername="${escapedLayerName}" parameter="weightProperty">${propOptions}</select>`,
+                    '</div>',
+                '</li>',
+                live?.lastRenderMs != null
+                    ? `<li class="heatmapRenderMs" layername="${escapedLayerName}"><div><div>Last render</div><div>${live.lastRenderMs.toFixed(1)} ms</div></div></li>`
+                    : '',
+            '</ul>',
+        ].join('\n')
+    }
+
+    function setHeatmapEvents() {
+        $('.heatmapControl').off('input change')
+        $('.heatmapControl').on('input change', function () {
+            const layerObj =
+                L_.layers.data[L_.asLayerUUID($(this).attr('layername'))]
+            if (!layerObj) return
+            const key = $(this).attr('parameter')
+            const raw = $(this).val()
+            layerObj.variables = layerObj.variables || {}
+            if (key === 'weightProperty') {
+                if (raw === '') delete layerObj.variables[key]
+                else layerObj.variables[key] = raw
+            } else {
+                const n = parseFloat(raw)
+                if (raw === '' || !Number.isFinite(n)) {
+                    if (key === 'maxIntensity') delete layerObj.variables[key]
+                    else return
+                } else layerObj.variables[key] = n
+            }
+            LayerInterface.runSync(
+                LayerTypeRegistry.get('heatmap')?.map,
+                'setStyle',
+                [layerObj, { resample: key === 'weightProperty' }]
+            )
+            const live = L_.layers.layer[layerObj.name]
+            if (live?.lastRenderMs != null)
+                $(
+                    `.heatmapRenderMs[layername="${F_.escapeHtml(layerObj.name)}"] div div:last-child`
+                ).text(live.lastRenderMs.toFixed(1) + ' ms')
+        })
+    }
+
     function setSublayerEvents() {
+        setHeatmapEvents()
         //Applies slider values to map layers
         $('.transparencyslider').off('input')
         $('.transparencyslider').on('input', function () {

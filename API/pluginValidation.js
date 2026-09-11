@@ -331,6 +331,7 @@ const METACONFIG_OPTION_PROVIDERS = new Set([
   "layerProperties",
   "layers",
   "layerTypes",
+  "sourceLayerProperties",
 ]);
 
 /**
