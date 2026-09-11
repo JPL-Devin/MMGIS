@@ -35,6 +35,7 @@ const REGISTRY_PATH = path.join(
 const BUILT_IN_TYPES = [
     '3dtiles',
     'data',
+    'heatmap',
     'header',
     'image',
     'model',
