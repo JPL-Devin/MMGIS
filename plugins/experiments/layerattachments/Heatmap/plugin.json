@@ -1,0 +1,106 @@
+{
+    "name": "Heatmap",
+    "type": "layerattachment",
+    "attachmentId": "heatmap",
+    "version": "1.0.0",
+    "tier": "community",
+    "overridable": true,
+    "configPath": "variables.layerAttachments.heatmap",
+    "description": "Renders a canvas-based kernel-density heatmap of the host layer's point features, with configurable radius, blur, gradient and an optional weight property. Toggles alongside its host as a sublayer.",
+    "capabilities": {
+        "renderers": {
+            "map": {
+                "engines": [
+                    "leaflet"
+                ]
+            },
+            "globe": false
+        },
+        "host": {
+            "order": 7
+        }
+    },
+    "applicableLayerTypes": [
+        "vector",
+        "query"
+    ],
+    "config": {
+        "tab": "Attachment - Markers",
+        "tabOrder": 12,
+        "order": 8,
+        "rows": [
+            {
+                "subname": "Heatmap",
+                "components": [
+                    {
+                        "field": "variables.layerAttachments.heatmap.enabled",
+                        "name": "Enabled",
+                        "description": "Draws a density heatmap of this layer's point features as a toggleable sublayer.",
+                        "type": "switch",
+                        "width": 3,
+                        "defaultChecked": false
+                    },
+                    {
+                        "field": "variables.layerAttachments.heatmap.initialVisibility",
+                        "name": "Initial Visibility",
+                        "description": "Whether the heatmap is shown when the host layer is first turned on.",
+                        "type": "checkbox",
+                        "width": 3,
+                        "defaultChecked": true
+                    }
+                ]
+            },
+            {
+                "components": [
+                    {
+                        "field": "variables.layerAttachments.heatmap.radius",
+                        "name": "Radius (px)",
+                        "description": "Radius in screen pixels of each point's influence. Default 25.",
+                        "type": "number",
+                        "width": 2
+                    },
+                    {
+                        "field": "variables.layerAttachments.heatmap.blur",
+                        "name": "Blur (px)",
+                        "description": "Blur in screen pixels applied to each point. Default 15.",
+                        "type": "number",
+                        "width": 2
+                    },
+                    {
+                        "field": "variables.layerAttachments.heatmap.weightProp",
+                        "name": "Weight Property",
+                        "description": "Optional dot.notated feature property whose numeric value weights each point. Unset weights all points equally.",
+                        "type": "text",
+                        "width": 3
+                    },
+                    {
+                        "field": "variables.layerAttachments.heatmap.maxIntensity",
+                        "name": "Max Intensity",
+                        "description": "Value that saturates the gradient. Leave blank to use the maximum weight found in the data (or 1 when unweighted).",
+                        "type": "number",
+                        "width": 2
+                    },
+                    {
+                        "field": "variables.layerAttachments.heatmap.minOpacity",
+                        "name": "Min Opacity",
+                        "description": "Minimum alpha (0-1) a single point contributes. Default 0.05.",
+                        "type": "number",
+                        "width": 2
+                    }
+                ]
+            },
+            {
+                "components": [
+                    {
+                        "field": "variables.layerAttachments.heatmap.gradient",
+                        "name": "Gradient",
+                        "description": "Color ramp as JSON {\"0.4\":\"blue\",\"1\":\"red\"} or shorthand 0.4:blue,0.6:cyan,0.7:lime,0.8:yellow,1:red (the default).",
+                        "type": "text",
+                        "width": 12
+                    }
+                ]
+            }
+        ]
+    },
+    "module": "./heatmap"
+}
