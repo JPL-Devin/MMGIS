@@ -86,6 +86,9 @@ const validateLayers = (config) => {
         // Check model params (pos, rot, scale)
         errs = errs.concat(isValidModelParams(layer));
         break;
+      case "graticule":
+        // No url; drawn client-side
+        break;
       default:
         errs = errs.concat(
           err(`Unknown layer type: '${layer.type}'`, ["layers[layer].type"])

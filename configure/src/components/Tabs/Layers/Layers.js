@@ -27,6 +27,7 @@ import TravelExploreIcon from "@mui/icons-material/TravelExplore"; // Query
 import LanguageIcon from "@mui/icons-material/Language"; // Tile
 import GridViewIcon from "@mui/icons-material/GridView"; // Vector tile
 import ViewInArIcon from "@mui/icons-material/ViewInAr"; // Model
+import Grid4x4Icon from "@mui/icons-material/Grid4x4"; // Graticule
 import AddIcon from "@mui/icons-material/Add";
 
 import VisibilityIcon from "@mui/icons-material/Visibility";
@@ -356,6 +357,10 @@ export default function Layers() {
                     case "model":
                       iconType = <ViewInArIcon fontSize="small" />;
                       color = "#a98732";
+                      break;
+                    case "graticule":
+                      iconType = <Grid4x4Icon fontSize="small" />;
+                      color = "#2e8b86";
                       break;
                     default:
                   }
