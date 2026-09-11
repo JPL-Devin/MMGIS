@@ -3696,12 +3696,25 @@ function interfaceWithMMGIS(fromInit) {
                 'setStyle',
                 [layerObj, { resample: key === 'weightProperty' }]
             )
-            const live = L_.layers.layer[layerObj.name]
-            if (live?.lastRenderMs != null)
-                $(
-                    `.heatmapRenderMs[layername="${F_.escapeHtml(layerObj.name)}"] div div:last-child`
-                ).text(live.lastRenderMs.toFixed(1) + ' ms')
+            updateHeatmapRenderMs(layerObj.name)
         })
+        // Keep the readout live across pan/zoom/time redraws too
+        $('.heatmapRenderMs').each(function () {
+            const name = $(this).attr('layername')
+            const live = L_.layers.layer[name]
+            if (!live?.on) return
+            live.off('heatmaprender', live._layersToolRenderMs)
+            live._layersToolRenderMs = () => updateHeatmapRenderMs(name)
+            live.on('heatmaprender', live._layersToolRenderMs)
+        })
+    }
+
+    function updateHeatmapRenderMs(layerName) {
+        const live = L_.layers.layer[layerName]
+        if (live?.lastRenderMs != null)
+            $(
+                `.heatmapRenderMs[layername="${F_.escapeHtml(layerName)}"] div div:last-child`
+            ).text(live.lastRenderMs.toFixed(1) + ' ms')
     }
 
     function setSublayerEvents() {
