@@ -1,0 +1,17 @@
+{
+    "uuid": "5b1f3d2e-8c4a-4f6b-9e1d-2a7c0b3f8e91",
+    "id": "experiments-bookmarks",
+    "name": "Bookmarks",
+    "display_name": "Bookmarks",
+    "version": "0.1.0",
+    "type": "backend",
+    "tier": "experimental",
+    "description": "Saved map views (center, zoom, active layers, time) scoped per mission and per user, with optional sharing.",
+    "routes": {
+        "prefix": "/api/bookmarks",
+        "auth": "user"
+    },
+    "author": "NASA-AMMOS/MMGIS",
+    "license": "Apache-2.0",
+    "repository": "https://github.com/NASA-AMMOS/MMGIS"
+}

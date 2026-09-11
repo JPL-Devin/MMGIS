@@ -1,0 +1,25 @@
+{
+    "uuid": "c7e2a9d4-1f3b-4e8c-a5d6-9b0f2e4c7a13",
+    "id": "experiments-bookmarks-tool",
+    "name": "Bookmarks",
+    "version": "0.1.0",
+    "type": "tool",
+    "tier": "experimental",
+    "defaultIcon": "bookmark-multiple",
+    "description": "Save the current map view (center, zoom, active layers, time) as a named bookmark and fly back to it later. Bookmarks are per user and per mission, optionally shared.",
+    "descriptionFull": {
+        "title": "Bookmarks stores named map views on the server, scoped per mission and per user. Shared bookmarks are visible to everyone in the mission. Clicking a bookmark flies the map (and globe, if active) to that view and restores the active layers and time.",
+        "example": {}
+    },
+    "hasVars": false,
+    "toolbarPriority": 60,
+    "paths": {
+        "BookmarksTool": "./BookmarksTool"
+    },
+    "author": "NASA-AMMOS/MMGIS",
+    "license": "Apache-2.0",
+    "repository": "https://github.com/NASA-AMMOS/MMGIS",
+    "pluginDependencies": [
+        "experiments/backend/Bookmarks"
+    ]
+}
