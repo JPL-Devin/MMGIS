@@ -6,6 +6,9 @@
 /API/logs/*
 /Missions/*
 !/Missions/.gitkeep
+!/Missions/Heatmap/
+/Missions/Heatmap/Layers/rocks50k.geojson
+!/Missions/HeatmapPolar/
 /private/api/spice/kernels/*
 
 #Nested repo where private backend might reside

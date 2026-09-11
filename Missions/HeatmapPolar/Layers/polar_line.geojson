@@ -1,0 +1,61 @@
+{
+ "type": "FeatureCollection",
+ "features": [
+  {
+   "type": "Feature",
+   "properties": {
+    "id": 1,
+    "name": "Pole crossing"
+   },
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      0,
+      82
+     ],
+     [
+      0,
+      89.9
+     ],
+     [
+      180,
+      89.9
+     ],
+     [
+      180,
+      82
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": 2,
+    "name": "Antimeridian crossing"
+   },
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      150,
+      85
+     ],
+     [
+      179.9,
+      85
+     ],
+     [
+      -179.9,
+      85
+     ],
+     [
+      -150,
+      85
+     ]
+    ]
+   }
+  }
+ ]
+}

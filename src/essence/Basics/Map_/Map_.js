@@ -16,6 +16,7 @@ import Description from '../../Ancillary/Description'
 import QueryURL from '../../Ancillary/QueryURL'
 import { Kinds } from '../../../pre/tools'
 import DataShaders from '../../Ancillary/DataShaders'
+import '../Layers_/HeatmapLayer'
 import calls from '../../../pre/calls'
 import TimeControl from '../../Ancillary/TimeControl'
 
@@ -346,7 +347,8 @@ let Map_ = {
                         hasIndex.push(i)
                     } else if (
                         L_.layers.data[L_._layersOrdered[i]].type === 'tile' ||
-                        L_.layers.data[L_._layersOrdered[i]].type === 'data'
+                        L_.layers.data[L_._layersOrdered[i]].type === 'data' ||
+                        L_.layers.data[L_._layersOrdered[i]].type === 'heatmap'
                     ) {
                         hasIndexRaster.push(i)
                     }
@@ -590,6 +592,9 @@ async function makeLayer(
                     //Globe only
                     makeModelLayer(layerObj)
                     break
+                case 'heatmap':
+                    makeHeatmapLayer(layerObj)
+                    break
                 default:
                     console.warn('Unknown layer type: ' + layerObj.type)
             }
@@ -597,6 +602,10 @@ async function makeLayer(
 
         // release hold on layer
         L_._layersBeingMade[layerName] = false
+
+        // Let derived layers (heatmaps) know this layer's features changed
+        if (layerObj.type === 'vector' || layerObj.type === 'query')
+            L_.notifyLayerDataChange(layerObj.name)
 
         if (stopLoops !== true && layerObj.type === 'vector') {
             Filtering.updateGeoJSON(layerObj.name)
@@ -1102,6 +1111,60 @@ function makeVectorTileLayer(layerObj) {
 }
 
 function makeModelLayer(layerObj) {
+    L_._layersLoaded[L_._layersOrdered.indexOf(layerObj.name)] = true
+    allLayersLoaded()
+}
+
+// Heatmap derived from another vector layer in the mission (2D map only)
+function makeHeatmapLayer(layerObj) {
+    const v = layerObj.variables || {}
+    const options = { opacity: L_.layers.opacity[layerObj.name] }
+    ;[
+        'radius',
+        'blur',
+        'maxIntensity',
+        'gradient',
+        'weightProperty',
+        'weightMin',
+        'weightMax',
+        'lineSampleSpacingMeters',
+        'radiusUnits',
+        'minOpacity',
+    ].forEach((k) => {
+        if (v[k] != null && v[k] !== '') options[k] = v[k]
+    })
+    const heat = new L.HeatmapLayer(layerObj, options, Map_.map)
+    L_.layers.layer[layerObj.name] = heat
+
+    // Follow the source layer: initial load, refreshes, and local time filtering all remake it
+    const sourceName = L_.asLayerUUID(v.sourceLayer)
+    if (sourceName == null)
+        console.warn(
+            `Heatmap layer '${layerObj.display_name}' has unknown sourceLayer '${v.sourceLayer}'`
+        )
+    else {
+        // If the source was never turned on, fetch its features directly (source stays off)
+        const fetchSourceDirectly = () => {
+            const sourceObj = L_.layers.data[sourceName]
+            if (!sourceObj || L_.layers.layer[sourceName] !== false) return
+            captureVector(sourceObj, { evenIfOff: true }, (data) => {
+                if (data == null || data === 'off') return
+                data = F_.parseIntoGeoJSON(data)
+                if (data && data.features) heat.setSourceGeoJSON(data)
+            })
+        }
+        const sync = () => {
+            if (!heat.syncFromSource()) fetchSourceDirectly()
+        }
+        L_.subscribeOnLayerDataChange(
+            `heatmap_${layerObj.name}`,
+            sourceName,
+            sync
+        )
+        L_.subscribeTimeChange(`heatmap_${layerObj.name}`, fetchSourceDirectly)
+        sync()
+    }
+
     L_._layersLoaded[L_._layersOrdered.indexOf(layerObj.name)] = true
     allLayersLoaded()
 }
