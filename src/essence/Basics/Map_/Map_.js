@@ -586,6 +586,9 @@ async function makeLayer(
                 case 'data':
                     makeDataLayer(layerObj)
                     break
+                case 'graticule':
+                    makeGraticuleLayer(layerObj)
+                    break
                 case 'model':
                     //Globe only
                     makeModelLayer(layerObj)
@@ -918,6 +921,73 @@ async function makeTileLayer(layerObj) {
     })
 
     L_.setLayerOpacity(layerObj.name, L_.layers.opacity[layerObj.name])
+
+    L_._layersLoaded[L_._layersOrdered.indexOf(layerObj.name)] = true
+    allLayersLoaded()
+}
+
+// Default zoom->degree spacing; used when the layer config has no zoomInterval
+const GRATICULE_DEFAULT_ZOOM_INTERVAL = [
+    { start: 0, end: 1, interval: 60 },
+    { start: 2, end: 3, interval: 40 },
+    { start: 4, end: 5, interval: 20 },
+    { start: 6, end: 7, interval: 10 },
+    { start: 8, end: 9, interval: 5 },
+    { start: 10, end: 11, interval: 0.4 },
+    { start: 12, end: 13, interval: 0.2 },
+    { start: 14, end: 15, interval: 0.1 },
+    { start: 16, end: 17, interval: 0.01 },
+    { start: 18, end: 19, interval: 0.005 },
+    { start: 20, end: 21, interval: 0.0025 },
+    { start: 21, end: 30, interval: 0.00125 },
+]
+
+function formatGraticuleDMS(deg, posSuffix, negSuffix) {
+    const suffix = deg < 0 ? negSuffix : deg > 0 ? posSuffix : ''
+    const a = Math.abs(deg)
+    const d = Math.floor(a)
+    const mFloat = (a - d) * 60
+    const m = Math.floor(mFloat)
+    const s = Math.round((mFloat - m) * 60 * 100) / 100
+    let out = `${d}°`
+    if (m > 0 || s > 0) out += `${m}'`
+    if (s > 0) out += `${s}"`
+    return out + suffix
+}
+
+function makeGraticuleLayer(layerObj) {
+    const v = layerObj.variables || {}
+    const labelFormat = v.labelFormat === 'dms' ? 'dms' : 'decimal'
+    const opacity =
+        L_.layers.opacity[layerObj.name] != null
+            ? L_.layers.opacity[layerObj.name]
+            : 1
+
+    const options = {
+        showLabel: v.showLabels !== false && v.showLabels !== 'false',
+        color: v.color || 'rgba(255,255,255,0.75)',
+        fontColor: v.fontColor || v.color || 'rgba(255,255,255,0.9)',
+        font: v.font || '12px Verdana',
+        weight: v.weight != null ? parseFloat(v.weight) : 1,
+        opacity: opacity,
+        zoomInterval: Array.isArray(v.zoomInterval)
+            ? v.zoomInterval
+            : GRATICULE_DEFAULT_ZOOM_INTERVAL,
+    }
+    if (labelFormat === 'dms') {
+        options.latFormatTickLabel = (lat) => formatGraticuleDMS(lat, 'N', 'S')
+        options.lngFormatTickLabel = (lng) => {
+            if (lng > 180) lng = lng - 360
+            return formatGraticuleDMS(lng, 'E', 'W')
+        }
+    }
+
+    const graticule = L.latlngGraticule(options)
+    // Canvas overlay has no z-index stack; keep the shared layer API uniform
+    graticule.setZIndex = function () {
+        return this
+    }
+    L_.layers.layer[layerObj.name] = graticule
 
     L_._layersLoaded[L_._layersOrdered.indexOf(layerObj.name)] = true
     allLayersLoaded()

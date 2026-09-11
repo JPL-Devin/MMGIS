@@ -38,6 +38,7 @@ var markup = [
                     '<div class="query" type="query" title="Hide/Show Query Layers"><i class="mdi mdi-binoculars mdi-18px"></i></div>',
                     '<div class="data" type="data" title="Hide/Show Data Layers"><i class="mdi mdi-file-table mdi-18px"></i></div>',
                     '<div class="model" type="model" title="Hide/Show Model Layers"><i class="mdi mdi-cube-outline mdi-18px"></i></div>',
+                    '<div class="graticule" type="graticule" title="Hide/Show Graticule Layers"><i class="mdi mdi-grid-large mdi-18px"></i></div>',
                     '<div class="visible" type="visible" title="Hide/Show Off Layers"><i class="mdi mdi-eye mdi-18px"></i></div>',
                 "</div>",
             "</div>",
@@ -529,6 +530,10 @@ function interfaceWithMMGIS(fromInit) {
                     break
                 case 'model':
                 case 'query':
+                case 'graticule':
+                    currentOpacity = L_.getLayerOpacity(node[i].name)
+                    if (currentOpacity == null)
+                        currentOpacity = L_.layers.opacity[node[i].name]
                     // prettier-ignore
                     settings = [
                         '<ul>',
@@ -1248,6 +1253,7 @@ function interfaceWithMMGIS(fromInit) {
             query: $('#filterLayers .right > .query').hasClass('on'),
             data: $('#filterLayers .right > .data').hasClass('on'),
             model: $('#filterLayers .right > .model').hasClass('on'),
+            graticule: $('#filterLayers .right > .graticule').hasClass('on'),
             visible: $('#filterLayers .right > .visible').hasClass('on'),
         }
         $('#layersToolList > li').each(function () {
@@ -1265,7 +1271,8 @@ function interfaceWithMMGIS(fromInit) {
                         !ons.tile &&
                         !ons.query &&
                         !ons.data &&
-                        !ons.model
+                        !ons.model &&
+                        !ons.graticule
                     )
                         $(this).removeClass('forceOff')
                     else {

@@ -34,6 +34,7 @@ import useMediaQuery from "@mui/material/useMediaQuery";
 import Maker from "../../../../../core/Maker";
 
 import dataConfig from "../../../../../metaconfigs/layer-data-config.json";
+import graticuleConfig from "../../../../../metaconfigs/layer-graticule-config.json";
 import headerConfig from "../../../../../metaconfigs/layer-header-config.json";
 import modelConfig from "../../../../../metaconfigs/layer-model-config.json";
 import queryConfig from "../../../../../metaconfigs/layer-query-config.json";
@@ -166,6 +167,10 @@ const LayerModal = (props) => {
   switch (layer.type) {
     case "data":
       config = dataConfig;
+      break;
+
+    case "graticule":
+      config = graticuleConfig;
       break;
 
     case "header":

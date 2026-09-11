@@ -28,7 +28,90 @@
               "name": "Layer Name",
               "description": "",
               "type": "text",
-              "width": 8
+              "width": 4
+            },
+            {
+              "field": "visibility",
+              "name": "Initially On",
+              "description": "",
+              "type": "checkbox",
+              "width": 2,
+              "defaultChecked": false
+            }
+          ]
+        },
+        {
+          "name": "Graticule",
+          "components": [
+            {
+              "field": "initialOpacity",
+              "name": "Initial Opacity",
+              "description": "0 (transparent) to 1 (opaque)",
+              "type": "number",
+              "min": 0,
+              "max": 1,
+              "step": 0.01,
+              "width": 2
+            },
+            {
+              "field": "variables.color",
+              "name": "Line Color",
+              "description": "Any CSS color (e.g. #ffffff or rgba(255,255,255,0.75))",
+              "type": "text",
+              "width": 3
+            },
+            {
+              "field": "variables.fontColor",
+              "name": "Label Color",
+              "description": "Defaults to Line Color",
+              "type": "text",
+              "width": 3
+            },
+            {
+              "field": "variables.weight",
+              "name": "Line Weight",
+              "description": "Line width in pixels",
+              "type": "number",
+              "min": 0,
+              "step": 0.5,
+              "width": 2
+            },
+            {
+              "field": "variables.labelFormat",
+              "name": "Label Format",
+              "description": "decimal degrees or degrees-minutes-seconds",
+              "type": "dropdown",
+              "width": 2,
+              "options": [
+                "decimal",
+                "dms"
+              ]
+            }
+          ]
+        },
+        {
+          "components": [
+            {
+              "field": "variables.showLabels",
+              "name": "Show Labels",
+              "description": "",
+              "type": "checkbox",
+              "width": 2,
+              "defaultChecked": true
+            },
+            {
+              "field": "variables.font",
+              "name": "Label Font",
+              "description": "CSS font (e.g. 12px Verdana)",
+              "type": "text",
+              "width": 3
+            },
+            {
+              "field": "variables.zoomInterval",
+              "name": "Zoom Intervals",
+              "description": "Optional JSON array of {start, end, interval} (zoom range -> degree spacing). Leave blank for defaults.",
+              "type": "json",
+              "width": 7
             }
           ]
         }
