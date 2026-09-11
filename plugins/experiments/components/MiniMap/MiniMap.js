@@ -10,7 +10,6 @@ const MiniMap = {
         tile: null,
         collapsed: false,
         dragging: false,
-        syncing: false,
     },
     config: {
         width: 200,
@@ -29,6 +28,11 @@ const MiniMap = {
         this.sync()
         Map_.map.on('move zoom', () => this.sync())
         L_.subscribeOnLayerToggle('MiniMap', () => this.attachTileLayer())
+        // Layers are made asynchronously after components init; poll until a basemap exists.
+        const poll = setInterval(() => {
+            this.attachTileLayer()
+            if (this.state.tile) clearInterval(poll)
+        }, 500)
     },
 
     build: function () {
@@ -143,6 +147,7 @@ const MiniMap = {
         const s = this.state
         if (!s.miniMap || s.collapsed) return
         const map = Map_.map
+        this.attachTileLayer()
         s.rect.setBounds(map.getBounds())
         const z = Math.max(0, map.getZoom() - this.config.zoomOffset)
         s.miniMap.setView(map.getCenter(), z, { animate: false })
