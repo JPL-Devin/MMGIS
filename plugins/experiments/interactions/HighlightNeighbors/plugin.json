@@ -1,0 +1,59 @@
+{
+    "name": "HighlightNeighbors",
+    "type": "interaction",
+    "interactionId": "highlight:neighbors",
+    "description": "On feature click, highlights all other features within a configurable radius (meters, on the mission body) and lists them with distance and bearing. Clears on deselect.",
+    "applicableLayerTypes": [
+        "vector",
+        "vectortile",
+        "query"
+    ],
+    "applicableEvents": [
+        "click"
+    ],
+    "phase": "postamble",
+    "order": 50,
+    "configPath": "variables.interactions.highlightNeighbors",
+    "config": {
+        "rows": [
+            {
+                "components": [
+                    {
+                        "type": "number",
+                        "name": "Radius (m)",
+                        "width": 3,
+                        "field": "variables.interactions.highlightNeighbors.radius",
+                        "default": 500,
+                        "description": "Search radius in meters around the clicked feature."
+                    },
+                    {
+                        "type": "number",
+                        "name": "Max results",
+                        "width": 3,
+                        "field": "variables.interactions.highlightNeighbors.maxResults",
+                        "default": 25
+                    },
+                    {
+                        "type": "colorpicker",
+                        "name": "Highlight color",
+                        "width": 3,
+                        "field": "variables.interactions.highlightNeighbors.color",
+                        "default": "#ffdd00"
+                    },
+                    {
+                        "type": "checkbox",
+                        "name": "Include other enabled vector layers",
+                        "width": 3,
+                        "field": "variables.interactions.highlightNeighbors.includeOtherLayers",
+                        "default": false
+                    }
+                ]
+            }
+        ]
+    },
+    "paths": {
+        "HighlightNeighbors": "./HighlightNeighbors"
+    },
+    "author": "NASA-AMMOS/MMGIS",
+    "license": "Apache-2.0"
+}
