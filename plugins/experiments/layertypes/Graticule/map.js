@@ -47,11 +47,12 @@ function decimals(interval) {
 
 function formatDMS(value, isLat) {
     const hemi = isLat ? (value < 0 ? 'S' : 'N') : value < 0 ? 'W' : 'E'
-    const abs = Math.abs(value)
-    const d = Math.floor(abs)
-    const mFloat = (abs - d) * 60
-    const m = Math.floor(mFloat)
-    const s = Math.round((mFloat - m) * 60 * 100) / 100
+    // Work in hundredths of arcseconds so carries (60″ → 1′) resolve cleanly.
+    let total = Math.round(Math.abs(value) * 3600 * 100)
+    const d = Math.floor(total / 360000)
+    total -= d * 360000
+    const m = Math.floor(total / 6000)
+    const s = (total - m * 6000) / 100
     let out = `${d}°`
     if (m > 0 || s > 0) out += `${String(m).padStart(2, '0')}′`
     if (s > 0) out += `${s}″`
