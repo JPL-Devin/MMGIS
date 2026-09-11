@@ -1,0 +1,59 @@
+#MiniMap {
+    position: absolute;
+    z-index: 1600;
+    background: #111;
+    border: 2px solid rgba(255, 255, 255, 0.6);
+    border-radius: 3px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+    overflow: hidden;
+}
+#MiniMap.minimap-bottom-right {
+    right: 12px;
+    bottom: 48px;
+}
+#MiniMap.minimap-bottom-left {
+    left: 12px;
+    bottom: 48px;
+}
+#MiniMap.minimap-top-right {
+    right: 12px;
+    top: 52px;
+}
+#MiniMap.minimap-top-left {
+    left: 60px;
+    top: 52px;
+}
+#MiniMapMap {
+    background: #111;
+    cursor: crosshair;
+}
+#MiniMapMap.minimap-grabbing,
+#MiniMapMap .leaflet-interactive {
+    cursor: move;
+}
+#MiniMapToggle {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    width: 22px;
+    height: 22px;
+    line-height: 22px;
+    text-align: center;
+    color: #fff;
+    background: rgba(0, 0, 0, 0.7);
+    cursor: pointer;
+    z-index: 1000;
+}
+#MiniMapToggle:hover {
+    background: rgba(0, 0, 0, 0.95);
+}
+#MiniMap.minimap-collapsed #MiniMapMap {
+    display: none;
+}
+#MiniMap.minimap-collapsed {
+    width: 22px;
+    height: 22px;
+}
+#MiniMap.minimap-collapsed #MiniMapToggle i::before {
+    content: '\F0143';
+}
