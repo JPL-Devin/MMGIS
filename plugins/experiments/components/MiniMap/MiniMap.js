@@ -95,18 +95,34 @@ const MiniMap = {
                 break
             }
         }
-        if (!source || (s.tile && s.tile._url === source._url)) return
-        if (s.tile) s.miniMap.removeLayer(s.tile)
-        const o = source.options || {}
-        s.tile = L.tileLayer(source._url, {
-            minZoom: 0,
-            maxZoom: o.maxZoom,
-            maxNativeZoom: o.maxNativeZoom,
-            tms: o.tms,
-            noWrap: o.noWrap,
-            bounds: o.bounds,
-        }).addTo(s.miniMap)
+        if (source && source === s.source) {
+            this.syncTileOptions()
+            return
+        }
+        if (s.tile) {
+            s.miniMap.removeLayer(s.tile)
+            s.tile = null
+        }
+        s.source = source
+        if (!source) return
+        // Same layer class/options as the main map so WMS/STAC/COG/time requests match.
+        s.tile = L.tileLayer
+            .colorFilter(source._url, { ...source.options, minZoom: 0 })
+            .addTo(s.miniMap)
         s.tile.bringToBack()
+    },
+
+    // Time params are stamped onto the live source layer in place; mirror them.
+    syncTileOptions: function () {
+        const s = this.state
+        let changed = false
+        for (const k of ['time', 'starttime', 'endtime']) {
+            if (s.tile.options[k] !== s.source.options[k]) {
+                s.tile.options[k] = s.source.options[k]
+                changed = true
+            }
+        }
+        if (changed) s.tile.redraw()
     },
 
     setupInteractions: function () {
