@@ -1,0 +1,220 @@
+{
+  "coordinates": {
+    "coordll": true,
+    "coorden": true,
+    "coordelev": false
+  },
+  "msv": {
+    "mission": "HeatmapPolar",
+    "missionFolderName": "HeatmapPolar",
+    "site": "Mars North Pole",
+    "masterdb": false,
+    "view": [
+      89,
+      0,
+      2
+    ],
+    "radius": {
+      "major": "3396190",
+      "minor": "3396190"
+    },
+    "mapscale": "3"
+  },
+  "projection": {
+    "custom": true,
+    "epsg": "IAU2000:49918",
+    "proj": "+proj=stere +lat_0=90 +lon_0=0 +k=1 +x_0=0 +y_0=0 +a=3396190 +b=3396190 +units=m +no_defs",
+    "globeproj": "",
+    "xmlpath": "",
+    "bounds": [
+      "-2000000",
+      "-2000000",
+      "2000000",
+      "2000000"
+    ],
+    "origin": [
+      "-2000000",
+      "2000000"
+    ],
+    "reszoomlevel": "0",
+    "resunitsperpixel": "15625.00000000000000"
+  },
+  "look": {
+    "pagename": "MMGIS Heatmap Polar",
+    "missionname": "Heatmap Polar",
+    "missionsubtitle": "Mars north polar stereographic",
+    "minimalist": false,
+    "topbar": true,
+    "toolbar": true,
+    "scalebar": true,
+    "noscalebar": false,
+    "coordinates": true,
+    "zoomcontrol": true,
+    "graticule": true,
+    "miscellaneous": true,
+    "timestamp": false,
+    "radiusdivs": false,
+    "bodycolor": "",
+    "topbarcolor": "",
+    "toolbarcolor": "",
+    "mapcolor": "",
+    "swap": true,
+    "copylink": true,
+    "screenshot": true,
+    "fullscreen": true,
+    "help": true,
+    "logourl": "",
+    "helpurl": "",
+    "aboutModalContent": ""
+  },
+  "time": {
+    "enabled": false,
+    "visible": false,
+    "initiallyOpen": false,
+    "startInPointMode": false,
+    "format": "%Y-%m-%dT%H:%M:%SZ",
+    "initialstart": "2027-01-01T00:00:00Z",
+    "initialend": "2027-01-15T00:00:00Z",
+    "loop": false,
+    "loopDelay": 0,
+    "step": 3600,
+    "relativeto": null
+  },
+  "panels": {
+    "viewer": false,
+    "map": true,
+    "globe": false,
+    "defaultWidths": {
+      "viewer": 0,
+      "map": 100,
+      "globe": 0
+    }
+  },
+  "tools": [
+    {
+      "name": "Layers",
+      "icon": "layers",
+      "js": "LayersTool"
+    },
+    {
+      "name": "Legend",
+      "icon": "format-list-bulleted-type",
+      "js": "LegendTool",
+      "variables": {
+        "displayOnStart": false,
+        "showHeadersInLegend": false
+      }
+    },
+    {
+      "name": "Info",
+      "icon": "information-variant",
+      "js": "InfoTool",
+      "variables": {
+        "sortAlphabetically": false
+      }
+    },
+    {
+      "name": "Measure",
+      "icon": "ruler",
+      "js": "MeasureTool",
+      "on": false,
+      "variables": {
+        "onlyShowDemIfLayerOn": false,
+        "defaultMode": "segment"
+      }
+    }
+  ],
+  "layers": [
+    {
+      "name": "Heatmaps",
+      "type": "header",
+      "uuid": "91db23bb-8efe-4026-b1d0-7b5d380c17a3",
+      "expanded": true,
+      "description": "",
+      "sublayers": [
+        {
+          "name": "Polar Point Density",
+          "type": "heatmap",
+          "uuid": "9aae67fb-7ba2-49c6-86f6-a14b72f2486c",
+          "visibility": true,
+          "initialOpacity": 0.8,
+          "controlled": false,
+          "description": "Rasterized in the polar stereographic container space.",
+          "variables": {
+            "sourceLayer": "Polar Points",
+            "weightProperty": "intensity",
+            "radius": 25,
+            "blur": 15,
+            "radiusUnits": "px"
+          }
+        },
+        {
+          "name": "Pole Crossing Density",
+          "type": "heatmap",
+          "uuid": "ea1b7dbb-08c8-45f3-8d2d-6213b47fae46",
+          "visibility": true,
+          "initialOpacity": 0.8,
+          "controlled": false,
+          "description": "Geodesically densified every 5 km so the line tracks straight over the pole.",
+          "variables": {
+            "sourceLayer": "Pole Crossing Line",
+            "radius": 12,
+            "blur": 8,
+            "lineSampleSpacingMeters": 5000,
+            "radiusUnits": "px",
+            "gradient": {
+              "0.3": "#2c7bb6",
+              "0.6": "#ffffbf",
+              "1": "#d7191c"
+            },
+            "maxIntensity": 10
+          }
+        }
+      ]
+    },
+    {
+      "name": "Sources",
+      "type": "header",
+      "uuid": "cd2a9158-fd1e-4b3b-ad98-441fabb76038",
+      "expanded": true,
+      "description": "",
+      "sublayers": [
+        {
+          "name": "Polar Points",
+          "type": "vector",
+          "uuid": "2fdaab68-4765-4580-92d8-1ac77f7e7896",
+          "url": "Layers/polar-points.geojson",
+          "visibility": true,
+          "initialOpacity": 1,
+          "controlled": false,
+          "demparser": "",
+          "description": "600 points clustered within ~3 deg of the north pole, all longitudes.",
+          "style": {
+            "className": "polarpoints",
+            "color": "#ffffff",
+            "fillColor": "#ffcc00",
+            "fillOpacity": 0.8,
+            "weight": 1,
+            "radius": 3
+          }
+        },
+        {
+          "name": "Pole Crossing Line",
+          "type": "vector",
+          "uuid": "a413df9d-86e7-4821-9cac-8ff7cfe0149a",
+          "url": "Layers/polar-lines.geojson",
+          "visibility": true,
+          "initialOpacity": 1,
+          "controlled": false,
+          "demparser": "",
+          "description": "A line over the pole (lon -120 -> +60) and a ring at 86.5N.",
+          "style": {
+            "className": "polarlines",
+            "color": "#00ccff",
+            "weight": 3
+          }
+        }
+      ]
+    }
+  ]
+}

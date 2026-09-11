@@ -79,12 +79,32 @@ async function layers({ configuration }) {
   return names
 }
 
+/** Property names of the features of the layer named by `variables.sourceLayer`. */
+async function sourceLayerProperties({ layer, configuration, missionPath }) {
+  const sourceName = layer?.variables?.sourceLayer
+  if (!sourceName) return []
+  let source = null
+  const walk = (list) => {
+    ;(list || []).forEach((l) => {
+      if (source == null && l?.name === sourceName) source = l
+      else if (source == null && l?.sublayers) walk(l.sublayers)
+    })
+  }
+  walk(configuration?.layers)
+  return source ? layerProperties({ layer: source, missionPath }) : []
+}
+
 /** Registered layer type ids, including plugin types. */
 async function layerTypes({ layerTypeConfiguration }) {
   return Object.keys(layerTypeConfiguration || {}).sort()
 }
 
-export const OPTION_PROVIDERS = { layerProperties, layers, layerTypes }
+export const OPTION_PROVIDERS = {
+  layerProperties,
+  layers,
+  layerTypes,
+  sourceLayerProperties,
+}
 
 /** Provider names, for validation and for the docs table. */
 export const OPTION_PROVIDER_NAMES = Object.keys(OPTION_PROVIDERS)
@@ -110,7 +130,7 @@ export async function resolveOptions(name, ctx = {}) {
 
   const key = `${name}|${ctx.layer?.uuid || ctx.layer?.name || ""}|${
     ctx.layer?.url || ""
-  }`
+  }|${ctx.layer?.variables?.sourceLayer || ""}`
   if (_cache[key] !== undefined) return _cache[key]
 
   try {

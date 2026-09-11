@@ -32,6 +32,20 @@ const REFERENCE_MISSION_VARIANTS = {
         label: 'Mars',
         description: 'Mars mission stub with SightlineTool (Sol observers)',
     },
+    Heatmap: {
+        missionName: 'Heatmap',
+        blueprintDir: 'Heatmap',
+        configFile: 'config.heatmap.json',
+        label: 'Heatmap',
+        description: 'Heatmap layers derived from time-enabled points, lines and polygons (EPSG:3857)',
+    },
+    HeatmapPolar: {
+        missionName: 'HeatmapPolar',
+        blueprintDir: 'HeatmapPolar',
+        configFile: 'config.heatmappolar.json',
+        label: 'Heatmap Polar',
+        description: 'Heatmap layers on a Mars north polar stereographic projection',
+    },
 };
 
 /**

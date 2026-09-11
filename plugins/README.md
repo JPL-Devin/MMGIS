@@ -867,6 +867,7 @@ every plugin that reads feature properties:
 | `layerProperties` | the property names of the layer's own features — from the geodataset's schema for a `geodatasets:` layer, or by sampling the file for a `.geojson`/`.json` one. A layer whose data core can't see (a tile layer, a `source` type fetching from elsewhere) offers nothing |
 | `layers` | every layer in the mission being configured, by name |
 | `layerTypes` | the registered layer type ids, plugin types included |
+| `sourceLayerProperties` | `layerProperties`, but of the layer named by this layer's `variables.sourceLayer` (for types derived from another layer, e.g. `heatmap`) |
 
 The provider is asked once per layer and cached for the session. Until it
 answers — and if it answers with nothing — the control shows whatever `options`

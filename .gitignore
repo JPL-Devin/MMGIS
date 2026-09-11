@@ -73,3 +73,6 @@ docker-compose.env.yml
 plugin-package.json
 plugin-python-requirements.txt
 plugin-conda-deps.txt
+
+# Generated 50k-point heatmap perf file (node scripts/generate-heatmap-demo-data.js --with-50k)
+blueprints/Missions/Heatmap/Layers/rocks-50k.geojson
