@@ -326,6 +326,7 @@ let Map_ = {
     },
     //Redraws all layers, starting with the bottom one
     orderedBringToFront: function () {
+        MiniMap.refreshTileLayer()
         let hasIndex = []
         let hasIndexRaster = []
 
@@ -1170,6 +1171,7 @@ function allLayersLoaded() {
         essenceFina()
         L_.addVisible(Map_)
         L_.enforceVisibilityCutoffs()
+        MiniMap.refreshTileLayer()
 
         ToolController_.finalizeTools()
 
