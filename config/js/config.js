@@ -572,6 +572,9 @@ function initialize() {
                 if (cData.look && cData.look.graticule != false) {
                   $("#tab_look #look_graticule").prop("checked", true);
                 }
+                if (cData.look && cData.look.minimap) {
+                  $("#tab_look #look_minimap").prop("checked", true);
+                }
                 if (cData.look && cData.look.miscellaneous != false) {
                   $("#tab_look #look_miscellaneous").prop("checked", true);
                 }
@@ -2143,6 +2146,7 @@ function save(returnJSON) {
     json.look["coordinates"] = $("#tab_look #look_coordinates").prop("checked");
     json.look["zoomcontrol"] = $("#tab_look #look_zoomcontrol").prop("checked");
     json.look["graticule"] = $("#tab_look #look_graticule").prop("checked");
+    json.look["minimap"] = $("#tab_look #look_minimap").prop("checked");
     json.look["miscellaneous"] = $("#tab_look #look_miscellaneous").prop(
       "checked"
     );

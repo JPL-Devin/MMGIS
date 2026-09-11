@@ -18,6 +18,7 @@ import { Kinds } from '../../../pre/tools'
 import DataShaders from '../../Ancillary/DataShaders'
 import calls from '../../../pre/calls'
 import TimeControl from '../../Ancillary/TimeControl'
+import MiniMap from './MiniMap'
 
 import gjv from 'geojson-validation'
 
@@ -228,6 +229,10 @@ let Map_ = {
         //Build the toolbar
         buildToolBar()
 
+        //Add the overview minimap
+        if (L_.configData.look && L_.configData.look.minimap)
+            MiniMap.init(this.map, L_.configData.look.minimap)
+
         //Set the time for any time enabled layers
         TimeControl.updateLayersTime()
     },
@@ -257,6 +262,7 @@ let Map_ = {
         }
     },
     clear: function () {
+        MiniMap.destroy()
         this.map.eachLayer(function (layer) {
             Map_.map.removeLayer(layer)
         })

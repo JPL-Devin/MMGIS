@@ -160,6 +160,19 @@
         }
       ]
     },
+    {
+      "name": "MiniMap",
+      "components": [
+        {
+          "field": "look.minimap",
+          "name": "MiniMap",
+          "description": "Show an overview inset map in the corner of the 2D map. In the raw config, look.minimap may also be an object: { width, height, zoomOffset, position ('bottomright'|'bottomleft'|'topright'|'topleft'), collapsed }.",
+          "type": "checkbox",
+          "width": 3,
+          "defaultChecked": false
+        }
+      ]
+    },
 
     {
       "name": "Colors",
