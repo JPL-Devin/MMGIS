@@ -1,0 +1,165 @@
+{
+    "name": "Graticule",
+    "type": "layertype",
+    "typeId": "graticule",
+    "version": "1.0.0",
+    "tier": "experimental",
+    "overridable": true,
+    "color": "#4e9a06",
+    "defaultIcon": "Grid4x4",
+    "description": "A latitude/longitude grid drawn over the 2D map. Line spacing adapts to the current zoom level and each line is labeled with its coordinate in decimal degrees or DMS. Color, weight, opacity, dashing and label format are configurable.",
+    "capabilities": {
+        "renderers": {
+            "map": {
+                "engines": [
+                    "leaflet"
+                ]
+            },
+            "globe": false
+        },
+        "map": {
+            "stacking": "overlay",
+            "picking": false,
+            "styling": true
+        },
+        "time": false
+    },
+    "supportedData": [
+        {
+            "label": "None (procedural grid)",
+            "category": "none",
+            "description": "The grid is generated in the browser from the map's current bounds. No source data is procured.",
+            "procurement": "None — configuration only."
+        }
+    ],
+    "config": {
+        "tabs": [
+            {
+                "name": "Core",
+                "rows": [
+                    {
+                        "forceHeight": "64px",
+                        "components": [
+                            {
+                                "field": "type",
+                                "name": "Layer Type",
+                                "description": "",
+                                "type": "dropdown",
+                                "width": 2,
+                                "options": [
+                                    "graticule"
+                                ]
+                            },
+                            {
+                                "field": "name",
+                                "name": "Layer Name",
+                                "description": "",
+                                "type": "textnotrim",
+                                "width": 8,
+                                "required": true
+                            },
+                            {
+                                "field": "visibility",
+                                "name": "Initially On",
+                                "description": "",
+                                "type": "checkbox",
+                                "width": 2,
+                                "defaultChecked": false
+                            }
+                        ]
+                    },
+                    {
+                        "name": "Grid",
+                        "components": [
+                            {
+                                "field": "variables.labelFormat",
+                                "name": "Label Format",
+                                "description": "Decimal degrees (12.5°N) or degrees-minutes-seconds (12°30′N).",
+                                "type": "dropdown",
+                                "options": ["dd", "dms"],
+                                "default": "dd",
+                                "width": 2
+                            },
+                            {
+                                "field": "variables.showLabels",
+                                "name": "Show Labels",
+                                "description": "",
+                                "type": "checkbox",
+                                "defaultChecked": true,
+                                "width": 2
+                            },
+                            {
+                                "field": "variables.linesPerView",
+                                "name": "Lines Per View",
+                                "description": "Target minimum number of grid lines across the shorter dimension of the view. The grid interval adapts to zoom to meet this.",
+                                "type": "number",
+                                "default": 6,
+                                "min": 1,
+                                "max": 40,
+                                "width": 2
+                            },
+                            {
+                                "field": "variables.interval",
+                                "name": "Fixed Interval (deg)",
+                                "description": "If set, always use this spacing in degrees instead of adapting to zoom.",
+                                "type": "number",
+                                "width": 2
+                            },
+                            {
+                                "field": "variables.fontSize",
+                                "name": "Label Font Size (px)",
+                                "description": "",
+                                "type": "number",
+                                "default": 11,
+                                "width": 2
+                            },
+                            {
+                                "field": "variables.dashed",
+                                "name": "Dashed Lines",
+                                "description": "",
+                                "type": "checkbox",
+                                "defaultChecked": false,
+                                "width": 2
+                            }
+                        ]
+                    },
+                    {
+                        "name": "Style",
+                        "components": [
+                            {
+                                "field": "style.color",
+                                "name": "Color",
+                                "description": "Line and label color.",
+                                "type": "colorpicker",
+                                "default": "#FFFFFF",
+                                "width": 2
+                            },
+                            {
+                                "field": "style.weight",
+                                "name": "Line Weight",
+                                "description": "",
+                                "type": "number",
+                                "default": 1,
+                                "width": 2
+                            },
+                            {
+                                "field": "style.opacity",
+                                "name": "Line Opacity",
+                                "description": "",
+                                "type": "slider",
+                                "default": 0.6,
+                                "min": 0,
+                                "max": 1,
+                                "step": 0.01,
+                                "width": 2
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
+    },
+    "modules": {
+        "map": "./map"
+    }
+}
