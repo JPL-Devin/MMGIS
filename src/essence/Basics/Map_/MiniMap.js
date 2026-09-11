@@ -177,6 +177,7 @@ const MiniMap = {
     },
     sync: function () {
         if (this.map == null || this._collapsed) return
+        if (this.tileLayer == null) this.refreshTileLayer()
         const z = Math.max(
             0,
             this.mainMap.getZoom() + this.options.zoomOffset
