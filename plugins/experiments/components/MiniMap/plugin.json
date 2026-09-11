@@ -1,0 +1,71 @@
+{
+    "name": "MiniMap",
+    "type": "component",
+    "description": "Inset overview map showing a zoomed-out view with a draggable viewport rectangle synced to the main map",
+    "defaultIcon": "map-outline",
+    "hasVars": true,
+    "paths": {
+        "MiniMap": "./MiniMap"
+    },
+    "config": {
+        "rows": [
+            {
+                "name": "Layout",
+                "description": "Size and placement of the minimap.",
+                "components": [
+                    {
+                        "field": "variables.width",
+                        "name": "Width (px)",
+                        "type": "number",
+                        "width": 4,
+                        "default": 200,
+                        "min": 80,
+                        "max": 600,
+                        "step": 10
+                    },
+                    {
+                        "field": "variables.height",
+                        "name": "Height (px)",
+                        "type": "number",
+                        "width": 4,
+                        "default": 150,
+                        "min": 60,
+                        "max": 600,
+                        "step": 10
+                    },
+                    {
+                        "field": "variables.zoomOffset",
+                        "name": "Zoom Offset",
+                        "description": "How many zoom levels below the main map the minimap sits.",
+                        "type": "number",
+                        "width": 4,
+                        "default": 4,
+                        "min": 1,
+                        "max": 10,
+                        "step": 1
+                    },
+                    {
+                        "field": "variables.position",
+                        "name": "Position",
+                        "type": "dropdown",
+                        "width": 6,
+                        "default": "bottom-right",
+                        "options": [
+                            "bottom-right",
+                            "bottom-left",
+                            "top-right",
+                            "top-left"
+                        ]
+                    },
+                    {
+                        "field": "variables.startCollapsed",
+                        "name": "Start Collapsed",
+                        "type": "switch",
+                        "width": 6,
+                        "default": false
+                    }
+                ]
+            }
+        ]
+    }
+}
