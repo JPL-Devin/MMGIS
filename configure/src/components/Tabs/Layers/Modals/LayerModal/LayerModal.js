@@ -35,6 +35,7 @@ import Maker from "../../../../../core/Maker";
 
 import dataConfig from "../../../../../metaconfigs/layer-data-config.json";
 import headerConfig from "../../../../../metaconfigs/layer-header-config.json";
+import heatmapConfig from "../../../../../metaconfigs/layer-heatmap-config.json";
 import modelConfig from "../../../../../metaconfigs/layer-model-config.json";
 import queryConfig from "../../../../../metaconfigs/layer-query-config.json";
 import tileConfig from "../../../../../metaconfigs/layer-tile-config.json";
@@ -170,6 +171,10 @@ const LayerModal = (props) => {
 
     case "header":
       config = headerConfig;
+      break;
+
+    case "heatmap":
+      config = heatmapConfig;
       break;
 
     case "model":

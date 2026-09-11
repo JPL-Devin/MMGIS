@@ -242,6 +242,26 @@ const L_ = {
         if (L_._onSpecificLayerToggleSubscriptions[fid] != null)
             delete L_._onSpecificLayerToggleSubscriptions[fid]
     },
+    // Fired whenever a vector layer's loaded features are (re)made (load, refresh, time filter)
+    _onLayerDataChangeSubscriptions: {},
+    subscribeOnLayerDataChange: function (fid, layerId, func) {
+        if (typeof func === 'function')
+            L_._onLayerDataChangeSubscriptions[fid] = {
+                layer: L_.asLayerUUID(layerId) || layerId,
+                func: func,
+            }
+    },
+    unsubscribeOnLayerDataChange: function (fid) {
+        if (L_._onLayerDataChangeSubscriptions[fid] != null)
+            delete L_._onLayerDataChangeSubscriptions[fid]
+    },
+    notifyLayerDataChange: function (layerName) {
+        layerName = L_.asLayerUUID(layerName) || layerName
+        Object.keys(L_._onLayerDataChangeSubscriptions).forEach((k) => {
+            const subs = L_._onLayerDataChangeSubscriptions[k]
+            if (subs.layer === layerName) subs.func(layerName)
+        })
+    },
     //Takes in config layer obj
     //Toggles a layer on and off and accounts for sublayers
     //Takes in a config layer object
@@ -835,7 +855,8 @@ const L_ = {
                 if (
                     s.type === 'tile' ||
                     s.type === 'data' ||
-                    s.type === 'vectortile'
+                    s.type === 'vectortile' ||
+                    s.type === 'heatmap'
                 ) {
                     // Make sure all tile layers follow z-index order at start instead of element order
                     L_.layers.layer[s.name].setZIndex(

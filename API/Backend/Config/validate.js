@@ -86,6 +86,10 @@ const validateLayers = (config) => {
         // Check model params (pos, rot, scale)
         errs = errs.concat(isValidModelParams(layer));
         break;
+      case "heatmap":
+        // No url: derived from another vector layer in this config
+        errs = errs.concat(isValidHeatmapParams(layer, config));
+        break;
       default:
         errs = errs.concat(
           err(`Unknown layer type: '${layer.type}'`, ["layers[layer].type"])
@@ -270,6 +274,67 @@ const isValidModelParams = (layer) => {
   return errs;
 };
 
+const isValidHeatmapParams = (layer, config) => {
+  const errs = [];
+  const v = layer.variables || {};
+
+  if (v.sourceLayer == null || v.sourceLayer === "") {
+    errs.push(
+      err(
+        `Heatmap layer '${layer.name}' is missing 'variables.sourceLayer'.`,
+        ["layers[layer].variables.sourceLayer"]
+      )
+    );
+  } else {
+    let found = false;
+    Utils.traverseLayers(config.layers, (l) => {
+      if (
+        (l.name === v.sourceLayer || l.uuid === v.sourceLayer) &&
+        l.type === "vector"
+      )
+        found = true;
+    });
+    if (!found)
+      errs.push(
+        err(
+          `Heatmap layer '${layer.name}' sourceLayer '${v.sourceLayer}' is not a vector layer in this configuration.`,
+          ["layers[layer].variables.sourceLayer"],
+          true
+        )
+      );
+  }
+
+  ["radius", "blur", "maxIntensity", "weightMin", "weightMax", "lineSampleSpacingMeters"].forEach(
+    (k) => {
+      if (v[k] != null && v[k] !== "" && isNaN(parseFloat(v[k])))
+        errs.push(
+          err(`Heatmap layer '${layer.name}' has non-numeric '${k}'.`, [
+            `layers[layer].variables.${k}`,
+          ])
+        );
+    }
+  );
+  if (v.radiusUnits != null && !["px", "m"].includes(v.radiusUnits))
+    errs.push(
+      err(
+        `Heatmap layer '${layer.name}' radiusUnits must be 'px' or 'm'.`,
+        ["layers[layer].variables.radiusUnits"]
+      )
+    );
+  if (v.gradient != null && typeof v.gradient === "string") {
+    try {
+      v.gradient = JSON.parse(v.gradient);
+    } catch (e) {
+      errs.push(
+        err(`Heatmap layer '${layer.name}' gradient is not valid JSON.`, [
+          "layers[layer].variables.gradient",
+        ])
+      );
+    }
+  }
+  return errs;
+};
+
 const hasNonHeaderWithSublayers = (config) => {
   const errs = [];
   Utils.traverseLayers(config.layers, (layer) => {
@@ -314,6 +379,9 @@ const fillInMissingFieldsWithDefaults = (layer) => {
       layer.style.className = layer.name.replace(/ /g, "").toLowerCase();
       break;
     case "model":
+      break;
+    case "heatmap":
+      layer.variables = layer.variables || {};
       break;
     default:
   }

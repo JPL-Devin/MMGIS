@@ -1,0 +1,163 @@
+{
+  "tabs": [
+    {
+      "name": "Core",
+      "rows": [
+        {
+          "name": "Core",
+          "components": [
+            {
+              "field": "type",
+              "name": "Layer Type",
+              "description": "",
+              "type": "dropdown",
+              "width": 2,
+              "options": [
+                "data",
+                "header",
+                "heatmap",
+                "model",
+                "query",
+                "tile",
+                "vector",
+                "vectortile"
+              ]
+            },
+            {
+              "field": "name",
+              "name": "Layer Name",
+              "description": "A display name for the layer.",
+              "type": "text",
+              "width": 6
+            },
+            {
+              "field": "visibility",
+              "name": "Initial Visibility",
+              "description": "Whether the layer is on initially.",
+              "type": "checkbox",
+              "width": 2,
+              "defaultChecked": false
+            },
+            {
+              "field": "initialOpacity",
+              "name": "Initial Opacity",
+              "description": "A value from 0 (transparent) to 1 (opaque) of the layer's initial opacity.",
+              "type": "number",
+              "min": 0,
+              "max": 1,
+              "step": 0.05,
+              "width": 2
+            }
+          ]
+        },
+        {
+          "name": "Source",
+          "subdescription": "A heatmap layer does not load its own data. It renders a density heatmap of the features currently loaded by another vector layer in this mission (2D Map only).",
+          "components": [
+            {
+              "field": "variables.sourceLayer",
+              "name": "Source Layer",
+              "description": "(Required) The Layer Name of an existing vector layer in this mission whose features feed this heatmap. Points are weighted directly; lines and polygons are sampled into points.",
+              "type": "text",
+              "width": 6
+            },
+            {
+              "field": "variables.weightProperty",
+              "name": "Weight Property",
+              "description": "Optional numeric feature property used as each sample's intensity weight. Leave blank for a weight of 1.",
+              "type": "text",
+              "width": 6
+            },
+            {
+              "field": "variables.weightMin",
+              "name": "Weight Min",
+              "description": "Optional. Weights are clamped to this minimum and, together with Weight Max, normalized to 0-1.",
+              "type": "number",
+              "width": 3
+            },
+            {
+              "field": "variables.weightMax",
+              "name": "Weight Max",
+              "description": "Optional. Weights are clamped to this maximum and, together with Weight Min, normalized to 0-1.",
+              "type": "number",
+              "width": 3
+            },
+            {
+              "field": "variables.lineSampleSpacingMeters",
+              "name": "Line Sample Spacing (m)",
+              "description": "Distance in meters between sample points along LineStrings and Polygon boundaries/interiors. Default 5.",
+              "type": "number",
+              "min": 0.01,
+              "width": 6
+            }
+          ]
+        },
+        {
+          "name": "Rendering",
+          "components": [
+            {
+              "field": "variables.radius",
+              "name": "Radius",
+              "description": "Radius of influence of each sample. Default 25.",
+              "type": "number",
+              "min": 1,
+              "width": 3
+            },
+            {
+              "field": "variables.radiusUnits",
+              "name": "Radius Units",
+              "description": "'px' keeps a constant screen-pixel radius across zooms. 'm' converts meters to pixels using the map's CRS resolution at the current zoom.",
+              "type": "dropdown",
+              "width": 3,
+              "options": ["px", "m"]
+            },
+            {
+              "field": "variables.blur",
+              "name": "Blur (px)",
+              "description": "Blur applied to each sample's stamp. Default 15.",
+              "type": "number",
+              "min": 0,
+              "width": 3
+            },
+            {
+              "field": "variables.maxIntensity",
+              "name": "Max Intensity",
+              "description": "Summed weight at which the heatmap saturates to the top gradient color. Default 1.",
+              "type": "number",
+              "min": 0.0001,
+              "width": 3
+            }
+          ]
+        },
+        {
+          "components": [
+            {
+              "field": "variables.gradient",
+              "name": "Gradient",
+              "description": "JSON object of gradient stops (0-1) to CSS colors. Default {\"0.4\":\"blue\",\"0.65\":\"lime\",\"1\":\"red\"}",
+              "type": "json",
+              "height": "160px",
+              "width": 12
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Raw",
+      "rows": [
+        {
+          "components": [
+            {
+              "field": "variables",
+              "name": "Raw Variables",
+              "description": "",
+              "type": "json",
+              "width": 12
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

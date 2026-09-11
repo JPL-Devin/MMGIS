@@ -15,6 +15,7 @@
               "options": [
                 "data",
                 "header",
+                "heatmap",
                 "model",
                 "query",
                 "tile",

@@ -38,6 +38,7 @@ var markup = [
                     '<div class="query" type="query" title="Hide/Show Query Layers"><i class="mdi mdi-binoculars mdi-18px"></i></div>',
                     '<div class="data" type="data" title="Hide/Show Data Layers"><i class="mdi mdi-file-table mdi-18px"></i></div>',
                     '<div class="model" type="model" title="Hide/Show Model Layers"><i class="mdi mdi-cube-outline mdi-18px"></i></div>',
+                    '<div class="heatmap" type="heatmap" title="Hide/Show Heatmap Layers"><i class="mdi mdi-blur mdi-18px"></i></div>',
                     '<div class="visible" type="visible" title="Hide/Show Off Layers"><i class="mdi mdi-eye mdi-18px"></i></div>',
                 "</div>",
             "</div>",
@@ -540,6 +541,9 @@ function interfaceWithMMGIS(fromInit) {
                             '</li>',
                         '</ul>',
                     ].join('\n')
+                    break
+                case 'heatmap':
+                    settings = getHeatmapLayerSettings(node[i].name)
                     break
                 default:
                     settings = ''
@@ -1248,6 +1252,7 @@ function interfaceWithMMGIS(fromInit) {
             query: $('#filterLayers .right > .query').hasClass('on'),
             data: $('#filterLayers .right > .data').hasClass('on'),
             model: $('#filterLayers .right > .model').hasClass('on'),
+            heatmap: $('#filterLayers .right > .heatmap').hasClass('on'),
             visible: $('#filterLayers .right > .visible').hasClass('on'),
         }
         $('#layersToolList > li').each(function () {
@@ -1265,7 +1270,8 @@ function interfaceWithMMGIS(fromInit) {
                         !ons.tile &&
                         !ons.query &&
                         !ons.data &&
-                        !ons.model
+                        !ons.model &&
+                        !ons.heatmap
                     )
                         $(this).removeClass('forceOff')
                     else {
@@ -1522,6 +1528,63 @@ function interfaceWithMMGIS(fromInit) {
             ].join('\n')
     }
 
+    // Live heatmap controls: radius, blur, max intensity, weight property
+    function getHeatmapLayerSettings(layerName) {
+        let currentOpacity = L_.getLayerOpacity(layerName)
+        if (currentOpacity == null)
+            currentOpacity = L_.layers.opacity[layerName]
+        const heat = L_.layers.layer[layerName]
+        const o = (heat && heat.options) || {}
+        const radius = o.radius != null ? o.radius : 25
+        const blur = o.blur != null ? o.blur : 15
+        const maxIntensity = o.maxIntensity != null ? o.maxIntensity : 1
+        const weightProperty = o.weightProperty || ''
+        const props = heat ? heat.getSourceProperties() : []
+        if (weightProperty && !props.includes(weightProperty))
+            props.unshift(weightProperty)
+        const radiusUnits = o.radiusUnits === 'm' ? 'm' : 'px'
+        const radiusMax = radiusUnits === 'm' ? Math.max(1000, radius * 4) : 100
+
+        // prettier-ignore
+        return [
+            '<ul>',
+                '<li>',
+                    '<div>',
+                        '<div>Opacity</div>',
+                        '<input class="transparencyslider slider2" layername="' + layerName + '" type="range" min="0" max="1" step="0.01" value="' + currentOpacity + '" default="' + L_.layers.opacity[layerName] + '">',
+                    '</div>',
+                '</li>',
+                '<li>',
+                    '<div>',
+                        `<div>Radius (${radiusUnits})</div>`,
+                        '<input class="heatmapslider slider2" option="radius" layername="' + layerName + '" type="range" min="1" max="' + radiusMax + '" step="1" value="' + radius + '" default="' + radius + '">',
+                    '</div>',
+                '</li>',
+                '<li>',
+                    '<div>',
+                        '<div>Blur (px)</div>',
+                        '<input class="heatmapslider slider2" option="blur" layername="' + layerName + '" type="range" min="0" max="60" step="1" value="' + blur + '" default="' + blur + '">',
+                    '</div>',
+                '</li>',
+                '<li>',
+                    '<div>',
+                        '<div>Max Intensity</div>',
+                        '<input class="heatmapslider slider2" option="maxIntensity" layername="' + layerName + '" type="range" min="0.1" max="' + Math.max(20, maxIntensity * 2) + '" step="0.1" value="' + maxIntensity + '" default="' + maxIntensity + '">',
+                    '</div>',
+                '</li>',
+                '<li>',
+                    '<div>',
+                        '<div>Weight Property</div>',
+                        '<select class="heatmapweight dropdown" layername="' + layerName + '">',
+                            '<option value=""' + (weightProperty === '' ? ' selected' : '') + '>None (weight 1)</option>',
+                            props.map((p) => `<option value="${p}"${p === weightProperty ? ' selected' : ''}>${p}</option>`).join('\n'),
+                        '</select>',
+                    '</div>',
+                '</li>',
+            '</ul>',
+        ].join('\n')
+    }
+
     function setSublayerEvents() {
         //Applies slider values to map layers
         $('.transparencyslider').off('input')
@@ -1532,6 +1595,22 @@ function interfaceWithMMGIS(fromInit) {
                 .parent()
                 .find('span')
                 .text(parseInt(texttransp * 100) + '%')
+        })
+
+        $('.heatmapslider').off('input')
+        $('.heatmapslider').on('input', function () {
+            const heat = L_.layers.layer[$(this).attr('layername')]
+            if (heat && typeof heat.setOptions === 'function') {
+                const opts = {}
+                opts[$(this).attr('option')] = parseFloat($(this).val())
+                heat.setOptions(opts)
+            }
+        })
+        $('.heatmapweight').off('change')
+        $('.heatmapweight').on('change', function () {
+            const heat = L_.layers.layer[$(this).attr('layername')]
+            if (heat && typeof heat.setOptions === 'function')
+                heat.setOptions({ weightProperty: $(this).val() || null })
         })
 
         $('#layersToolList > li > .settings .sublayer .dropdown').off('change')

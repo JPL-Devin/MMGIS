@@ -1,0 +1,214 @@
+{
+ "type": "FeatureCollection",
+ "features": [
+  {
+   "type": "Feature",
+   "properties": {
+    "id": 1,
+    "kind": "traverse",
+    "sol": 1
+   },
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      137.362,
+      -4.676
+     ],
+     [
+      137.366,
+      -4.672
+     ],
+     [
+      137.37,
+      -4.674
+     ],
+     [
+      137.374,
+      -4.67
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": 2,
+    "kind": "traverse",
+    "sol": 2
+   },
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      137.374,
+      -4.67
+     ],
+     [
+      137.376,
+      -4.666
+     ],
+     [
+      137.372,
+      -4.662
+     ],
+     [
+      137.368,
+      -4.66
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": 3,
+    "kind": "traverse",
+    "sol": 3
+   },
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      137.362,
+      -4.66
+     ],
+     [
+      137.364,
+      -4.666
+     ],
+     [
+      137.368,
+      -4.668
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": 4,
+    "kind": "traverse",
+    "sol": 4
+   },
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      137.36,
+      -4.668
+     ],
+     [
+      137.38,
+      -4.6672
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": 1,
+    "kind": "workspace",
+    "area_class": 1
+   },
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       137.36520000000002,
+       -4.6728000000000005
+      ],
+      [
+       137.3676,
+       -4.6732000000000005
+      ],
+      [
+       137.368,
+       -4.6708
+      ],
+      [
+       137.3656,
+       -4.6704
+      ],
+      [
+       137.36520000000002,
+       -4.6728000000000005
+      ]
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": 2,
+    "kind": "workspace",
+    "area_class": 2
+   },
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       137.3732,
+       -4.6656
+      ],
+      [
+       137.37640000000002,
+       -4.6652000000000005
+      ],
+      [
+       137.3756,
+       -4.6624
+      ],
+      [
+       137.3728,
+       -4.6632
+      ],
+      [
+       137.3732,
+       -4.6656
+      ]
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": 3,
+    "kind": "workspace",
+    "area_class": 3
+   },
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       137.3612,
+       -4.6632
+      ],
+      [
+       137.3636,
+       -4.6636
+      ],
+      [
+       137.3632,
+       -4.6608
+      ],
+      [
+       137.3608,
+       -4.6612
+      ],
+      [
+       137.3612,
+       -4.6632
+      ]
+     ]
+    ]
+   }
+  }
+ ]
+}
