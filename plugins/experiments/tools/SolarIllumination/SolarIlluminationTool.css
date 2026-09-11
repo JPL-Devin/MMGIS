@@ -1,0 +1,14 @@
+.solarIlluminationTool_content { padding: 10px 12px; font-size: 13px; color: var(--color-a, #ddd); }
+.si_body { margin-bottom: 8px; }
+.si_hint { opacity: 0.8; font-style: italic; }
+.si_row { display: flex; justify-content: space-between; align-items: center; margin: 6px 0; }
+.si_row input { background: rgba(255,255,255,0.08); color: inherit; border: 1px solid rgba(255,255,255,0.2); border-radius: 3px; padding: 2px 4px; }
+.si_slider { width: 100%; margin: 4px 0 10px 0; }
+.si_values { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.si_value { background: rgba(255,255,255,0.06); border-radius: 4px; padding: 6px 8px; }
+.si_label { font-size: 11px; opacity: 0.7; text-transform: uppercase; }
+.si_num { font-size: 18px; font-weight: bold; }
+.si_day { color: #ffd54f; }
+.si_night { color: #90a4ae; }
+.si_status { margin-top: 10px; opacity: 0.85; }
+.si_time { margin-top: 4px; font-size: 11px; opacity: 0.6; font-family: monospace; }

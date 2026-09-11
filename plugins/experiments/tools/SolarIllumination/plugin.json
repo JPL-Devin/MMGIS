@@ -1,0 +1,35 @@
+{
+    "uuid": "5b7e1c2a-3d4f-4a6b-9c8d-2e1f0a9b8c7d",
+    "id": "experiments-solarillumination",
+    "version": "0.1.0",
+    "type": "tool",
+    "tier": "experimental",
+    "overridable": true,
+    "defaultIcon": "white-balance-sunny",
+    "description": "Computes solar azimuth/elevation at a clicked point and time for Earth or Mars and draws sun and shadow directions.",
+    "descriptionFull": {
+        "title": "Click a point on the map to compute the sun's azimuth and elevation at the mission time (or any time via a slider). Supports Earth (NOAA approximation) and Mars (Allison & McEwen 2000). Draws sun-direction and shadow-direction lines on the map.",
+        "example": { "body": "EARTH || MARS (optional; auto-detected from mission radius)" }
+    },
+    "hasVars": true,
+    "name": "SolarIllumination",
+    "paths": { "SolarIlluminationTool": "./SolarIlluminationTool" },
+    "config": {
+        "rows": [
+            {
+                "components": [
+                    {
+                        "field": "variables.body",
+                        "name": "Planetary Body",
+                        "description": "Override the auto-detected body (from mission radius).",
+                        "type": "dropdown",
+                        "width": 3,
+                        "options": ["", "EARTH", "MARS"]
+                    }
+                ]
+            }
+        ]
+    },
+    "author": "Devin experiment",
+    "license": "Apache-2.0"
+}
