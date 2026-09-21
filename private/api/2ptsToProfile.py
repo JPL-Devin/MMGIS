@@ -9,7 +9,12 @@
 
 import sys
 import math
+import os
 import numpy as np
+
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+from gdal_dataset_guard import check_dataset_path
+
 from osgeo import gdal
 from osgeo import osr
 from osgeo.gdalconst import *
@@ -160,7 +165,7 @@ def latLonsToPixel(latLonPairs):
 
 
 # Get arguments
-raster = unquote(sys.argv[1])
+raster = check_dataset_path(unquote(sys.argv[1]))
 lat1 = float(sys.argv[2])
 lon1 = float(sys.argv[3])
 lat2 = float(sys.argv[4])

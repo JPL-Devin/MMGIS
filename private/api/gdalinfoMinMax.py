@@ -6,6 +6,10 @@
 import sys
 import ast
 import json
+import os
+
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+from gdal_dataset_guard import check_dataset_path
 
 from osgeo import gdal
 try:
@@ -40,11 +44,11 @@ def getStatsAtBand(b):
 
 
 # Get arguments
-raster = unquote(sys.argv[1])  # path
+raster = check_dataset_path(unquote(sys.argv[1]))  # path
 bands = ast.literal_eval(unquote(sys.argv[2]))  # bands
 
 # Open the image
-ds = gdal.Open(raster.strip(), gdal.GA_ReadOnly)
+ds = gdal.Open(raster, gdal.GA_ReadOnly)
 if ds is None:
     print("Could not open image")
     sys.exit(1)
