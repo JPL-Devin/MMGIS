@@ -580,6 +580,8 @@ const getComponent = (
 ) => {
   const directConf =
     layer == null ? (tool == null ? (component == null ? configuration : component) : tool) : layer;
+  // A component can opt into inline help text instead of the tab-wide tooltip default
+  inlineHelp = inlineHelp || com.inlineHelp === true;
 
   // An objectarray item's field is relative to its item, so a like-named key
   // of what's being configured must not stand in for an unset one.
@@ -1611,7 +1613,7 @@ const getComponent = (
       let source = "";
       if (window.mmgisglobal.WITH_TITILER === "true") {
         // Get colors from TiTiler if it is available
-        source = `${domain}titiler/colorMaps/${dropdown_value.toLowerCase()}?format=png`
+        source = `${domain}titiler/colorMaps/${dropdown_value.toLowerCase()}?f=png`
       }
 
       return (

@@ -53,6 +53,18 @@ const middleware = require("./middleware").middleware;
 const {
   checkMissionFileViewingPermission,
 } = require("../plugins/core/backend/Config/routes/configs");
+const GeneralOptions = require("../plugins/core/backend/GeneralOptions/models/generaloptions");
+
+// Landing page theme from General Options; the loading page is themed to match it
+async function getLandingTheme() {
+  try {
+    const row = await GeneralOptions.findOne({ where: { id: 1 } });
+    const lp = (row && row.options && row.options.landingPage) || {};
+    return lp.theme === "light" ? "light" : "dark";
+  } catch (err) {
+    return "dark";
+  }
+}
 
 const isDevEnv = process.env.NODE_ENV === "development";
 
@@ -873,7 +885,7 @@ setups.getBackendSetups(function (setups) {
         `${ROOT_PATH}/`,
         ensureUser(),
         ensureGroup(permissions.users),
-        (req, res) => {
+        async (req, res) => {
           let user = guestUsername;
           if (process.env.AUTH === "csso" || req.user != null) user = req.user;
 
@@ -906,6 +918,7 @@ setups.getBackendSetups(function (setups) {
             HOSTS: JSON.stringify({
               scienceIntent: process.env.SCIENCE_INTENT_HOST,
             }),
+            LANDING_THEME: await getLandingTheme(),
           });
         },
       );
